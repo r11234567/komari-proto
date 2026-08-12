@@ -1,13 +1,13 @@
 {
   "name": "@komari/proto",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "private": true,
   "type": "module",
   "files": [
     "gen/ts"
   ],
   "exports": {
-    "./*": "./gen/ts/*"
+    "./komari/*": "./gen/ts/komari/*.ts"
   },
   "peerDependencies": {
     "@bufbuild/protobuf": "^2.10.0"
