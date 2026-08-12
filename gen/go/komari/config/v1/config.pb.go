@@ -79,16 +79,22 @@ func (ConfigApplyStatus) EnumDescriptor() ([]byte, []int) {
 
 // RuntimeConfig contains settings that can be atomically applied without reinstalling.
 type RuntimeConfig struct {
-	state                protoimpl.MessageState `protogen:"open.v1"`
-	MemoryIncludeCache   *bool                  `protobuf:"varint,1,opt,name=memory_include_cache,json=memoryIncludeCache,proto3,oneof" json:"memory_include_cache,omitempty"`
-	EnableGpu            *bool                  `protobuf:"varint,2,opt,name=enable_gpu,json=enableGpu,proto3,oneof" json:"enable_gpu,omitempty"`
-	DetailedGpu          *bool                  `protobuf:"varint,3,opt,name=detailed_gpu,json=detailedGpu,proto3,oneof" json:"detailed_gpu,omitempty"`
-	IncludeNics          []string               `protobuf:"bytes,4,rep,name=include_nics,json=includeNics,proto3" json:"include_nics,omitempty"`
-	ExcludeNics          []string               `protobuf:"bytes,5,rep,name=exclude_nics,json=excludeNics,proto3" json:"exclude_nics,omitempty"`
-	IncludeMountpoints   []string               `protobuf:"bytes,6,rep,name=include_mountpoints,json=includeMountpoints,proto3" json:"include_mountpoints,omitempty"`
-	ReportInterval       *durationpb.Duration   `protobuf:"bytes,7,opt,name=report_interval,json=reportInterval,proto3,oneof" json:"report_interval,omitempty"`
-	TrafficResetDay      *uint32                `protobuf:"varint,8,opt,name=traffic_reset_day,json=trafficResetDay,proto3,oneof" json:"traffic_reset_day,omitempty"`
-	RemoteControlEnabled *bool                  `protobuf:"varint,9,opt,name=remote_control_enabled,json=remoteControlEnabled,proto3,oneof" json:"remote_control_enabled,omitempty"`
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	MemoryIncludeCache *bool                  `protobuf:"varint,1,opt,name=memory_include_cache,json=memoryIncludeCache,proto3,oneof" json:"memory_include_cache,omitempty"`
+	// Deprecated: GPU enablement requires reinstalling the Agent.
+	//
+	// Deprecated: Marked as deprecated in komari/config/v1/config.proto.
+	EnableGpu          *bool                `protobuf:"varint,2,opt,name=enable_gpu,json=enableGpu,proto3,oneof" json:"enable_gpu,omitempty"`
+	DetailedGpu        *bool                `protobuf:"varint,3,opt,name=detailed_gpu,json=detailedGpu,proto3,oneof" json:"detailed_gpu,omitempty"`
+	IncludeNics        []string             `protobuf:"bytes,4,rep,name=include_nics,json=includeNics,proto3" json:"include_nics,omitempty"`
+	ExcludeNics        []string             `protobuf:"bytes,5,rep,name=exclude_nics,json=excludeNics,proto3" json:"exclude_nics,omitempty"`
+	IncludeMountpoints []string             `protobuf:"bytes,6,rep,name=include_mountpoints,json=includeMountpoints,proto3" json:"include_mountpoints,omitempty"`
+	ReportInterval     *durationpb.Duration `protobuf:"bytes,7,opt,name=report_interval,json=reportInterval,proto3,oneof" json:"report_interval,omitempty"`
+	TrafficResetDay    *uint32              `protobuf:"varint,8,opt,name=traffic_reset_day,json=trafficResetDay,proto3,oneof" json:"traffic_reset_day,omitempty"`
+	// Deprecated: remote-control enablement requires reinstalling the Agent.
+	//
+	// Deprecated: Marked as deprecated in komari/config/v1/config.proto.
+	RemoteControlEnabled *bool `protobuf:"varint,9,opt,name=remote_control_enabled,json=remoteControlEnabled,proto3,oneof" json:"remote_control_enabled,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -130,6 +136,7 @@ func (x *RuntimeConfig) GetMemoryIncludeCache() bool {
 	return false
 }
 
+// Deprecated: Marked as deprecated in komari/config/v1/config.proto.
 func (x *RuntimeConfig) GetEnableGpu() bool {
 	if x != nil && x.EnableGpu != nil {
 		return *x.EnableGpu
@@ -179,6 +186,7 @@ func (x *RuntimeConfig) GetTrafficResetDay() uint32 {
 	return 0
 }
 
+// Deprecated: Marked as deprecated in komari/config/v1/config.proto.
 func (x *RuntimeConfig) GetRemoteControlEnabled() bool {
 	if x != nil && x.RemoteControlEnabled != nil {
 		return *x.RemoteControlEnabled
@@ -732,18 +740,18 @@ var File_komari_config_v1_config_proto protoreflect.FileDescriptor
 
 const file_komari_config_v1_config_proto_rawDesc = "" +
 	"\n" +
-	"\x1dkomari/config/v1/config.proto\x12\x10komari.config.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\"\xbc\x04\n" +
+	"\x1dkomari/config/v1/config.proto\x12\x10komari.config.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\"\xc4\x04\n" +
 	"\rRuntimeConfig\x125\n" +
-	"\x14memory_include_cache\x18\x01 \x01(\bH\x00R\x12memoryIncludeCache\x88\x01\x01\x12\"\n" +
+	"\x14memory_include_cache\x18\x01 \x01(\bH\x00R\x12memoryIncludeCache\x88\x01\x01\x12&\n" +
 	"\n" +
-	"enable_gpu\x18\x02 \x01(\bH\x01R\tenableGpu\x88\x01\x01\x12&\n" +
+	"enable_gpu\x18\x02 \x01(\bB\x02\x18\x01H\x01R\tenableGpu\x88\x01\x01\x12&\n" +
 	"\fdetailed_gpu\x18\x03 \x01(\bH\x02R\vdetailedGpu\x88\x01\x01\x12!\n" +
 	"\finclude_nics\x18\x04 \x03(\tR\vincludeNics\x12!\n" +
 	"\fexclude_nics\x18\x05 \x03(\tR\vexcludeNics\x12/\n" +
 	"\x13include_mountpoints\x18\x06 \x03(\tR\x12includeMountpoints\x12G\n" +
 	"\x0freport_interval\x18\a \x01(\v2\x19.google.protobuf.DurationH\x03R\x0ereportInterval\x88\x01\x01\x12/\n" +
-	"\x11traffic_reset_day\x18\b \x01(\rH\x04R\x0ftrafficResetDay\x88\x01\x01\x129\n" +
-	"\x16remote_control_enabled\x18\t \x01(\bH\x05R\x14remoteControlEnabled\x88\x01\x01B\x17\n" +
+	"\x11traffic_reset_day\x18\b \x01(\rH\x04R\x0ftrafficResetDay\x88\x01\x01\x12=\n" +
+	"\x16remote_control_enabled\x18\t \x01(\bB\x02\x18\x01H\x05R\x14remoteControlEnabled\x88\x01\x01B\x17\n" +
 	"\x15_memory_include_cacheB\r\n" +
 	"\v_enable_gpuB\x0f\n" +
 	"\r_detailed_gpuB\x12\n" +

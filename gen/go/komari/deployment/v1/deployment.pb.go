@@ -457,6 +457,10 @@ type InstallConfig struct {
 	GithubProxy             string                 `protobuf:"bytes,7,opt,name=github_proxy,json=githubProxy,proto3" json:"github_proxy,omitempty"`
 	RuntimeIdentity         AgentRuntimeIdentity   `protobuf:"varint,8,opt,name=runtime_identity,json=runtimeIdentity,proto3,enum=komari.deployment.v1.AgentRuntimeIdentity" json:"runtime_identity,omitempty"`
 	Rescue                  *RescueInstallConfig   `protobuf:"bytes,9,opt,name=rescue,proto3" json:"rescue,omitempty"`
+	EnableGpu               bool                   `protobuf:"varint,10,opt,name=enable_gpu,json=enableGpu,proto3" json:"enable_gpu,omitempty"`
+	RemoteControlEnabled    bool                   `protobuf:"varint,11,opt,name=remote_control_enabled,json=remoteControlEnabled,proto3" json:"remote_control_enabled,omitempty"`
+	DisableWebSsh           bool                   `protobuf:"varint,12,opt,name=disable_web_ssh,json=disableWebSsh,proto3" json:"disable_web_ssh,omitempty"`
+	GetIpAddressFromNic     bool                   `protobuf:"varint,13,opt,name=get_ip_address_from_nic,json=getIpAddressFromNic,proto3" json:"get_ip_address_from_nic,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -552,6 +556,34 @@ func (x *InstallConfig) GetRescue() *RescueInstallConfig {
 		return x.Rescue
 	}
 	return nil
+}
+
+func (x *InstallConfig) GetEnableGpu() bool {
+	if x != nil {
+		return x.EnableGpu
+	}
+	return false
+}
+
+func (x *InstallConfig) GetRemoteControlEnabled() bool {
+	if x != nil {
+		return x.RemoteControlEnabled
+	}
+	return false
+}
+
+func (x *InstallConfig) GetDisableWebSsh() bool {
+	if x != nil {
+		return x.DisableWebSsh
+	}
+	return false
+}
+
+func (x *InstallConfig) GetGetIpAddressFromNic() bool {
+	if x != nil {
+		return x.GetIpAddressFromNic
+	}
+	return false
 }
 
 // RescueInstallConfig controls the separately privileged rescue helper.
@@ -830,7 +862,7 @@ const file_komari_deployment_v1_deployment_proto_rawDesc = "" +
 	"\x11DeploymentProfile\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12=\n" +
 	"\ainstall\x18\x02 \x01(\v2#.komari.deployment.v1.InstallConfigR\ainstall\x129\n" +
-	"\aruntime\x18\x03 \x01(\v2\x1f.komari.config.v1.RuntimeConfigR\aruntime\"\xf4\x03\n" +
+	"\aruntime\x18\x03 \x01(\v2\x1f.komari.config.v1.RuntimeConfigR\aruntime\"\xa7\x05\n" +
 	"\rInstallConfig\x12:\n" +
 	"\bplatform\x18\x01 \x01(\x0e2\x1e.komari.deployment.v1.PlatformR\bplatform\x12+\n" +
 	"\x11install_directory\x18\x02 \x01(\tR\x10installDirectory\x12!\n" +
@@ -840,7 +872,13 @@ const file_komari_deployment_v1_deployment_proto_rawDesc = "" +
 	"\x13enable_github_proxy\x18\x06 \x01(\bR\x11enableGithubProxy\x12!\n" +
 	"\fgithub_proxy\x18\a \x01(\tR\vgithubProxy\x12U\n" +
 	"\x10runtime_identity\x18\b \x01(\x0e2*.komari.deployment.v1.AgentRuntimeIdentityR\x0fruntimeIdentity\x12A\n" +
-	"\x06rescue\x18\t \x01(\v2).komari.deployment.v1.RescueInstallConfigR\x06rescue\"^\n" +
+	"\x06rescue\x18\t \x01(\v2).komari.deployment.v1.RescueInstallConfigR\x06rescue\x12\x1d\n" +
+	"\n" +
+	"enable_gpu\x18\n" +
+	" \x01(\bR\tenableGpu\x124\n" +
+	"\x16remote_control_enabled\x18\v \x01(\bR\x14remoteControlEnabled\x12&\n" +
+	"\x0fdisable_web_ssh\x18\f \x01(\bR\rdisableWebSsh\x124\n" +
+	"\x17get_ip_address_from_nic\x18\r \x01(\bR\x13getIpAddressFromNic\"^\n" +
 	"\x13RescueInstallConfig\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12-\n" +
 	"\x12configure_firewall\x18\x02 \x01(\bR\x11configureFirewall\"\xb0\x03\n" +

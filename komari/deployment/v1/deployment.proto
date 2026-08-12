@@ -66,6 +66,10 @@ message InstallConfig {
   string github_proxy = 7;
   AgentRuntimeIdentity runtime_identity = 8;
   RescueInstallConfig rescue = 9;
+  bool enable_gpu = 10;
+  bool remote_control_enabled = 11;
+  bool disable_web_ssh = 12;
+  bool get_ip_address_from_nic = 13;
 }
 
 // RescueInstallConfig controls the separately privileged rescue helper.

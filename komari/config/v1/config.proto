@@ -23,14 +23,16 @@ service ConfigService {
 // RuntimeConfig contains settings that can be atomically applied without reinstalling.
 message RuntimeConfig {
   optional bool memory_include_cache = 1;
-  optional bool enable_gpu = 2;
+  // Deprecated: GPU enablement requires reinstalling the Agent.
+  optional bool enable_gpu = 2 [deprecated = true];
   optional bool detailed_gpu = 3;
   repeated string include_nics = 4;
   repeated string exclude_nics = 5;
   repeated string include_mountpoints = 6;
   optional google.protobuf.Duration report_interval = 7;
   optional uint32 traffic_reset_day = 8;
-  optional bool remote_control_enabled = 9;
+  // Deprecated: remote-control enablement requires reinstalling the Agent.
+  optional bool remote_control_enabled = 9 [deprecated = true];
 }
 
 // DesiredConfig is an immutable desired runtime snapshot.
