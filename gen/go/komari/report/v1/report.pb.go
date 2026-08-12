@@ -427,6 +427,9 @@ type ResourceUsage struct {
 	SwapTotalBytes       uint64                 `protobuf:"varint,6,opt,name=swap_total_bytes,json=swapTotalBytes,proto3" json:"swap_total_bytes,omitempty"`
 	LoadAverage          []float64              `protobuf:"fixed64,7,rep,packed,name=load_average,json=loadAverage,proto3" json:"load_average,omitempty"`
 	Gpus                 []*GpuUsage            `protobuf:"bytes,8,rep,name=gpus,proto3" json:"gpus,omitempty"`
+	ProcessCount         uint64                 `protobuf:"varint,9,opt,name=process_count,json=processCount,proto3" json:"process_count,omitempty"`
+	TcpConnectionCount   uint64                 `protobuf:"varint,10,opt,name=tcp_connection_count,json=tcpConnectionCount,proto3" json:"tcp_connection_count,omitempty"`
+	UdpConnectionCount   uint64                 `protobuf:"varint,11,opt,name=udp_connection_count,json=udpConnectionCount,proto3" json:"udp_connection_count,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -515,6 +518,27 @@ func (x *ResourceUsage) GetGpus() []*GpuUsage {
 		return x.Gpus
 	}
 	return nil
+}
+
+func (x *ResourceUsage) GetProcessCount() uint64 {
+	if x != nil {
+		return x.ProcessCount
+	}
+	return 0
+}
+
+func (x *ResourceUsage) GetTcpConnectionCount() uint64 {
+	if x != nil {
+		return x.TcpConnectionCount
+	}
+	return 0
+}
+
+func (x *ResourceUsage) GetUdpConnectionCount() uint64 {
+	if x != nil {
+		return x.UdpConnectionCount
+	}
+	return 0
 }
 
 // GpuUsage describes one visible GPU without failing the whole report when unavailable.
@@ -612,13 +636,15 @@ func (x *GpuUsage) GetLimitation() string {
 
 // NetworkInterface contains counters for one interface.
 type NetworkInterface struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Addresses     []string               `protobuf:"bytes,2,rep,name=addresses,proto3" json:"addresses,omitempty"`
-	BytesSent     uint64                 `protobuf:"varint,3,opt,name=bytes_sent,json=bytesSent,proto3" json:"bytes_sent,omitempty"`
-	BytesReceived uint64                 `protobuf:"varint,4,opt,name=bytes_received,json=bytesReceived,proto3" json:"bytes_received,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	Name                   string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Addresses              []string               `protobuf:"bytes,2,rep,name=addresses,proto3" json:"addresses,omitempty"`
+	BytesSent              uint64                 `protobuf:"varint,3,opt,name=bytes_sent,json=bytesSent,proto3" json:"bytes_sent,omitempty"`
+	BytesReceived          uint64                 `protobuf:"varint,4,opt,name=bytes_received,json=bytesReceived,proto3" json:"bytes_received,omitempty"`
+	BytesSentPerSecond     uint64                 `protobuf:"varint,5,opt,name=bytes_sent_per_second,json=bytesSentPerSecond,proto3" json:"bytes_sent_per_second,omitempty"`
+	BytesReceivedPerSecond uint64                 `protobuf:"varint,6,opt,name=bytes_received_per_second,json=bytesReceivedPerSecond,proto3" json:"bytes_received_per_second,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *NetworkInterface) Reset() {
@@ -675,6 +701,20 @@ func (x *NetworkInterface) GetBytesSent() uint64 {
 func (x *NetworkInterface) GetBytesReceived() uint64 {
 	if x != nil {
 		return x.BytesReceived
+	}
+	return 0
+}
+
+func (x *NetworkInterface) GetBytesSentPerSecond() uint64 {
+	if x != nil {
+		return x.BytesSentPerSecond
+	}
+	return 0
+}
+
+func (x *NetworkInterface) GetBytesReceivedPerSecond() uint64 {
+	if x != nil {
+		return x.BytesReceivedPerSecond
 	}
 	return 0
 }
@@ -1053,7 +1093,7 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\farchitecture\x18\x06 \x01(\tR\farchitecture\x12\x1b\n" +
 	"\tcpu_count\x18\a \x01(\rR\bcpuCount\x12,\n" +
 	"\x12memory_total_bytes\x18\b \x01(\x04R\x10memoryTotalBytes\x121\n" +
-	"\x06uptime\x18\t \x01(\v2\x19.google.protobuf.DurationR\x06uptime\"\xde\x02\n" +
+	"\x06uptime\x18\t \x01(\v2\x19.google.protobuf.DurationR\x06uptime\"\xe7\x03\n" +
 	"\rResourceUsage\x12\x1f\n" +
 	"\vcpu_percent\x18\x01 \x01(\x01R\n" +
 	"cpuPercent\x12*\n" +
@@ -1063,7 +1103,11 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\x0fswap_used_bytes\x18\x05 \x01(\x04R\rswapUsedBytes\x12(\n" +
 	"\x10swap_total_bytes\x18\x06 \x01(\x04R\x0eswapTotalBytes\x12!\n" +
 	"\fload_average\x18\a \x03(\x01R\vloadAverage\x12.\n" +
-	"\x04gpus\x18\b \x03(\v2\x1a.komari.report.v1.GpuUsageR\x04gpus\"\xfb\x02\n" +
+	"\x04gpus\x18\b \x03(\v2\x1a.komari.report.v1.GpuUsageR\x04gpus\x12#\n" +
+	"\rprocess_count\x18\t \x01(\x04R\fprocessCount\x120\n" +
+	"\x14tcp_connection_count\x18\n" +
+	" \x01(\x04R\x12tcpConnectionCount\x120\n" +
+	"\x14udp_connection_count\x18\v \x01(\x04R\x12udpConnectionCount\"\xfb\x02\n" +
 	"\bGpuUsage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x124\n" +
@@ -1077,13 +1121,15 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\x14_utilization_percentB\x14\n" +
 	"\x12_memory_used_bytesB\x15\n" +
 	"\x13_memory_total_bytesB\x16\n" +
-	"\x14_temperature_celsius\"\x8a\x01\n" +
+	"\x14_temperature_celsius\"\xf8\x01\n" +
 	"\x10NetworkInterface\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1c\n" +
 	"\taddresses\x18\x02 \x03(\tR\taddresses\x12\x1d\n" +
 	"\n" +
 	"bytes_sent\x18\x03 \x01(\x04R\tbytesSent\x12%\n" +
-	"\x0ebytes_received\x18\x04 \x01(\x04R\rbytesReceived\"\xc9\x01\n" +
+	"\x0ebytes_received\x18\x04 \x01(\x04R\rbytesReceived\x121\n" +
+	"\x15bytes_sent_per_second\x18\x05 \x01(\x04R\x12bytesSentPerSecond\x129\n" +
+	"\x19bytes_received_per_second\x18\x06 \x01(\x04R\x16bytesReceivedPerSecond\"\xc9\x01\n" +
 	"\bDiskInfo\x12\x16\n" +
 	"\x06device\x18\x01 \x01(\tR\x06device\x12\x1f\n" +
 	"\vmount_point\x18\x02 \x01(\tR\n" +

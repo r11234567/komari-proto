@@ -64,6 +64,9 @@ message ResourceUsage {
   uint64 swap_total_bytes = 6;
   repeated double load_average = 7;
   repeated GpuUsage gpus = 8;
+  uint64 process_count = 9;
+  uint64 tcp_connection_count = 10;
+  uint64 udp_connection_count = 11;
 }
 
 // GpuUsage describes one visible GPU without failing the whole report when unavailable.
@@ -83,6 +86,8 @@ message NetworkInterface {
   repeated string addresses = 2;
   uint64 bytes_sent = 3;
   uint64 bytes_received = 4;
+  uint64 bytes_sent_per_second = 5;
+  uint64 bytes_received_per_second = 6;
 }
 
 // DiskInfo contains usage for one mount point.
