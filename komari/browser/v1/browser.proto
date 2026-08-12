@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package komari.browser.v1;
 
+import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
 import "komari/report/v1/report.proto";
@@ -31,6 +32,16 @@ message GetPublicInfoResponse {
   string site_description = 2;
   string version = 3;
   string default_theme = 4;
+  bool cors_origin_check_enabled = 5;
+  string custom_body = 6;
+  string custom_head = 7;
+  bool disable_password_login = 8;
+  string oauth_provider = 9;
+  bool oauth_enabled = 10;
+  uint32 metric_retention_days = 11;
+  bool private_site = 12;
+  google.protobuf.Struct theme_settings = 13;
+  bool visitor_audit_enabled = 14;
 }
 
 // ListAgentsRequest contains bounded filters and pagination.
@@ -78,6 +89,36 @@ message AgentSummary {
   double memory_percent = 6;
   string event_id = 7;
   komari.report.v1.AgentCapabilities capabilities = 8;
+  AgentBasicInfo basic_info = 9;
+}
+
+// AgentBasicInfo is the stable non-secret browser node model.
+message AgentBasicInfo {
+  string cpu_name = 1;
+  string virtualization = 2;
+  string architecture = 3;
+  uint32 cpu_cores = 4;
+  string os = 5;
+  string kernel_version = 6;
+  string gpu_name = 7;
+  string region = 8;
+  uint64 memory_total_bytes = 9;
+  uint64 swap_total_bytes = 10;
+  uint64 disk_total_bytes = 11;
+  string agent_version = 12;
+  int32 weight = 13;
+  double price = 14;
+  string tags = 15;
+  uint32 billing_cycle_days = 16;
+  string currency = 17;
+  string group = 18;
+  uint64 traffic_limit_bytes = 19;
+  string traffic_limit_type = 20;
+  google.protobuf.Timestamp expires_at = 21;
+  google.protobuf.Timestamp created_at = 22;
+  google.protobuf.Timestamp updated_at = 23;
+  string ipv4 = 24;
+  string ipv6 = 25;
 }
 
 // GetThemeContractRequest is intentionally empty.

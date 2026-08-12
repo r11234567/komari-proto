@@ -5,18 +5,18 @@
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import { enumDesc, fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
-import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
+import { file_google_protobuf_struct, file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
 import type { PageRequest, PageResponse } from "../../common/v1/common_pb";
 import { file_komari_common_v1_common } from "../../common/v1/common_pb";
 import type { AgentCapabilities, AgentReport } from "../../report/v1/report_pb";
 import { file_komari_report_v1_report } from "../../report/v1/report_pb";
-import type { Message } from "@bufbuild/protobuf";
+import type { JsonObject, Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file komari/browser/v1/browser.proto.
  */
 export const file_komari_browser_v1_browser: GenFile = /*@__PURE__*/
-  fileDesc("Ch9rb21hcmkvYnJvd3Nlci92MS9icm93c2VyLnByb3RvEhFrb21hcmkuYnJvd3Nlci52MSIWChRHZXRQdWJsaWNJbmZvUmVxdWVzdCJsChVHZXRQdWJsaWNJbmZvUmVzcG9uc2USEQoJc2l0ZV9uYW1lGAEgASgJEhgKEHNpdGVfZGVzY3JpcHRpb24YAiABKAkSDwoHdmVyc2lvbhgDIAEoCRIVCg1kZWZhdWx0X3RoZW1lGAQgASgJImMKEUxpc3RBZ2VudHNSZXF1ZXN0EisKBHBhZ2UYASABKAsyHS5rb21hcmkuY29tbW9uLnYxLlBhZ2VSZXF1ZXN0EhEKCWFnZW50X2lkcxgCIAMoCRIOCgZzZWFyY2gYAyABKAkicwoSTGlzdEFnZW50c1Jlc3BvbnNlEi8KBmFnZW50cxgBIAMoCzIfLmtvbWFyaS5icm93c2VyLnYxLkFnZW50U3VtbWFyeRIsCgRwYWdlGAIgASgLMh4ua29tYXJpLmNvbW1vbi52MS5QYWdlUmVzcG9uc2UiIwoPR2V0QWdlbnRSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJIngKEEdldEFnZW50UmVzcG9uc2USLgoFYWdlbnQYASABKAsyHy5rb21hcmkuYnJvd3Nlci52MS5BZ2VudFN1bW1hcnkSNAoNbGF0ZXN0X3JlcG9ydBgCIAEoCzIdLmtvbWFyaS5yZXBvcnQudjEuQWdlbnRSZXBvcnQiRAoXV2F0Y2hBZ2VudFN0YXR1c1JlcXVlc3QSEQoJYWdlbnRfaWRzGAEgAygJEhYKDmFmdGVyX2V2ZW50X2lkGAIgASgJIkoKGFdhdGNoQWdlbnRTdGF0dXNSZXNwb25zZRIuCgVhZ2VudBgBIAEoCzIfLmtvbWFyaS5icm93c2VyLnYxLkFnZW50U3VtbWFyeSKHAgoMQWdlbnRTdW1tYXJ5EhAKCGFnZW50X2lkGAEgASgJEgwKBG5hbWUYAiABKAkSLgoGc3RhdHVzGAMgASgOMh4ua29tYXJpLmJyb3dzZXIudjEuQWdlbnRTdGF0dXMSLQoJbGFzdF9zZWVuGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBITCgtjcHVfcGVyY2VudBgFIAEoARIWCg5tZW1vcnlfcGVyY2VudBgGIAEoARIQCghldmVudF9pZBgHIAEoCRI5CgxjYXBhYmlsaXRpZXMYCCABKAsyIy5rb21hcmkucmVwb3J0LnYxLkFnZW50Q2FwYWJpbGl0aWVzIhkKF0dldFRoZW1lQ29udHJhY3RSZXF1ZXN0IocBChhHZXRUaGVtZUNvbnRyYWN0UmVzcG9uc2USFgoOc2NoZW1hX3ZlcnNpb24YASABKA0SFQoNbWFuaWZlc3RfbmFtZRgCIAEoCRIZChFjb25uZWN0X2Jhc2VfcGF0aBgDIAEoCRIhChlsZWdhY3lfanNvbl9ycGNfYXZhaWxhYmxlGAQgASgIKl4KC0FnZW50U3RhdHVzEhwKGEFHRU5UX1NUQVRVU19VTlNQRUNJRklFRBAAEhcKE0FHRU5UX1NUQVRVU19PTkxJTkUQARIYChRBR0VOVF9TVEFUVVNfT0ZGTElORRACMoAECg5Ccm93c2VyU2VydmljZRJiCg1HZXRQdWJsaWNJbmZvEicua29tYXJpLmJyb3dzZXIudjEuR2V0UHVibGljSW5mb1JlcXVlc3QaKC5rb21hcmkuYnJvd3Nlci52MS5HZXRQdWJsaWNJbmZvUmVzcG9uc2USWQoKTGlzdEFnZW50cxIkLmtvbWFyaS5icm93c2VyLnYxLkxpc3RBZ2VudHNSZXF1ZXN0GiUua29tYXJpLmJyb3dzZXIudjEuTGlzdEFnZW50c1Jlc3BvbnNlElMKCEdldEFnZW50EiIua29tYXJpLmJyb3dzZXIudjEuR2V0QWdlbnRSZXF1ZXN0GiMua29tYXJpLmJyb3dzZXIudjEuR2V0QWdlbnRSZXNwb25zZRJtChBXYXRjaEFnZW50U3RhdHVzEioua29tYXJpLmJyb3dzZXIudjEuV2F0Y2hBZ2VudFN0YXR1c1JlcXVlc3QaKy5rb21hcmkuYnJvd3Nlci52MS5XYXRjaEFnZW50U3RhdHVzUmVzcG9uc2UwARJrChBHZXRUaGVtZUNvbnRyYWN0Eioua29tYXJpLmJyb3dzZXIudjEuR2V0VGhlbWVDb250cmFjdFJlcXVlc3QaKy5rb21hcmkuYnJvd3Nlci52MS5HZXRUaGVtZUNvbnRyYWN0UmVzcG9uc2VC0QEKFWNvbS5rb21hcmkuYnJvd3Nlci52MUIMQnJvd3NlclByb3RvUAFaRGdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL2Jyb3dzZXIvdjE7YnJvd3NlcnYxogIDS0JYqgIRS29tYXJpLkJyb3dzZXIuVjHKAhFLb21hcmlcQnJvd3NlclxWMeICHUtvbWFyaVxCcm93c2VyXFYxXEdQQk1ldGFkYXRh6gITS29tYXJpOjpCcm93c2VyOjpWMWIGcHJvdG8z", [file_google_protobuf_timestamp, file_komari_common_v1_common, file_komari_report_v1_report]);
+  fileDesc("Ch9rb21hcmkvYnJvd3Nlci92MS9icm93c2VyLnByb3RvEhFrb21hcmkuYnJvd3Nlci52MSIWChRHZXRQdWJsaWNJbmZvUmVxdWVzdCKNAwoVR2V0UHVibGljSW5mb1Jlc3BvbnNlEhEKCXNpdGVfbmFtZRgBIAEoCRIYChBzaXRlX2Rlc2NyaXB0aW9uGAIgASgJEg8KB3ZlcnNpb24YAyABKAkSFQoNZGVmYXVsdF90aGVtZRgEIAEoCRIhChljb3JzX29yaWdpbl9jaGVja19lbmFibGVkGAUgASgIEhMKC2N1c3RvbV9ib2R5GAYgASgJEhMKC2N1c3RvbV9oZWFkGAcgASgJEh4KFmRpc2FibGVfcGFzc3dvcmRfbG9naW4YCCABKAgSFgoOb2F1dGhfcHJvdmlkZXIYCSABKAkSFQoNb2F1dGhfZW5hYmxlZBgKIAEoCBIdChVtZXRyaWNfcmV0ZW50aW9uX2RheXMYCyABKA0SFAoMcHJpdmF0ZV9zaXRlGAwgASgIEi8KDnRoZW1lX3NldHRpbmdzGA0gASgLMhcuZ29vZ2xlLnByb3RvYnVmLlN0cnVjdBIdChV2aXNpdG9yX2F1ZGl0X2VuYWJsZWQYDiABKAgiYwoRTGlzdEFnZW50c1JlcXVlc3QSKwoEcGFnZRgBIAEoCzIdLmtvbWFyaS5jb21tb24udjEuUGFnZVJlcXVlc3QSEQoJYWdlbnRfaWRzGAIgAygJEg4KBnNlYXJjaBgDIAEoCSJzChJMaXN0QWdlbnRzUmVzcG9uc2USLwoGYWdlbnRzGAEgAygLMh8ua29tYXJpLmJyb3dzZXIudjEuQWdlbnRTdW1tYXJ5EiwKBHBhZ2UYAiABKAsyHi5rb21hcmkuY29tbW9uLnYxLlBhZ2VSZXNwb25zZSIjCg9HZXRBZ2VudFJlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkieAoQR2V0QWdlbnRSZXNwb25zZRIuCgVhZ2VudBgBIAEoCzIfLmtvbWFyaS5icm93c2VyLnYxLkFnZW50U3VtbWFyeRI0Cg1sYXRlc3RfcmVwb3J0GAIgASgLMh0ua29tYXJpLnJlcG9ydC52MS5BZ2VudFJlcG9ydCJEChdXYXRjaEFnZW50U3RhdHVzUmVxdWVzdBIRCglhZ2VudF9pZHMYASADKAkSFgoOYWZ0ZXJfZXZlbnRfaWQYAiABKAkiSgoYV2F0Y2hBZ2VudFN0YXR1c1Jlc3BvbnNlEi4KBWFnZW50GAEgASgLMh8ua29tYXJpLmJyb3dzZXIudjEuQWdlbnRTdW1tYXJ5Ir4CCgxBZ2VudFN1bW1hcnkSEAoIYWdlbnRfaWQYASABKAkSDAoEbmFtZRgCIAEoCRIuCgZzdGF0dXMYAyABKA4yHi5rb21hcmkuYnJvd3Nlci52MS5BZ2VudFN0YXR1cxItCglsYXN0X3NlZW4YBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhMKC2NwdV9wZXJjZW50GAUgASgBEhYKDm1lbW9yeV9wZXJjZW50GAYgASgBEhAKCGV2ZW50X2lkGAcgASgJEjkKDGNhcGFiaWxpdGllcxgIIAEoCzIjLmtvbWFyaS5yZXBvcnQudjEuQWdlbnRDYXBhYmlsaXRpZXMSNQoKYmFzaWNfaW5mbxgJIAEoCzIhLmtvbWFyaS5icm93c2VyLnYxLkFnZW50QmFzaWNJbmZvIt8ECg5BZ2VudEJhc2ljSW5mbxIQCghjcHVfbmFtZRgBIAEoCRIWCg52aXJ0dWFsaXphdGlvbhgCIAEoCRIUCgxhcmNoaXRlY3R1cmUYAyABKAkSEQoJY3B1X2NvcmVzGAQgASgNEgoKAm9zGAUgASgJEhYKDmtlcm5lbF92ZXJzaW9uGAYgASgJEhAKCGdwdV9uYW1lGAcgASgJEg4KBnJlZ2lvbhgIIAEoCRIaChJtZW1vcnlfdG90YWxfYnl0ZXMYCSABKAQSGAoQc3dhcF90b3RhbF9ieXRlcxgKIAEoBBIYChBkaXNrX3RvdGFsX2J5dGVzGAsgASgEEhUKDWFnZW50X3ZlcnNpb24YDCABKAkSDgoGd2VpZ2h0GA0gASgFEg0KBXByaWNlGA4gASgBEgwKBHRhZ3MYDyABKAkSGgoSYmlsbGluZ19jeWNsZV9kYXlzGBAgASgNEhAKCGN1cnJlbmN5GBEgASgJEg0KBWdyb3VwGBIgASgJEhsKE3RyYWZmaWNfbGltaXRfYnl0ZXMYEyABKAQSGgoSdHJhZmZpY19saW1pdF90eXBlGBQgASgJEi4KCmV4cGlyZXNfYXQYFSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCmNyZWF0ZWRfYXQYFiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYFyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEgwKBGlwdjQYGCABKAkSDAoEaXB2NhgZIAEoCSIZChdHZXRUaGVtZUNvbnRyYWN0UmVxdWVzdCKHAQoYR2V0VGhlbWVDb250cmFjdFJlc3BvbnNlEhYKDnNjaGVtYV92ZXJzaW9uGAEgASgNEhUKDW1hbmlmZXN0X25hbWUYAiABKAkSGQoRY29ubmVjdF9iYXNlX3BhdGgYAyABKAkSIQoZbGVnYWN5X2pzb25fcnBjX2F2YWlsYWJsZRgEIAEoCCpeCgtBZ2VudFN0YXR1cxIcChhBR0VOVF9TVEFUVVNfVU5TUEVDSUZJRUQQABIXChNBR0VOVF9TVEFUVVNfT05MSU5FEAESGAoUQUdFTlRfU1RBVFVTX09GRkxJTkUQAjKABAoOQnJvd3NlclNlcnZpY2USYgoNR2V0UHVibGljSW5mbxInLmtvbWFyaS5icm93c2VyLnYxLkdldFB1YmxpY0luZm9SZXF1ZXN0Gigua29tYXJpLmJyb3dzZXIudjEuR2V0UHVibGljSW5mb1Jlc3BvbnNlElkKCkxpc3RBZ2VudHMSJC5rb21hcmkuYnJvd3Nlci52MS5MaXN0QWdlbnRzUmVxdWVzdBolLmtvbWFyaS5icm93c2VyLnYxLkxpc3RBZ2VudHNSZXNwb25zZRJTCghHZXRBZ2VudBIiLmtvbWFyaS5icm93c2VyLnYxLkdldEFnZW50UmVxdWVzdBojLmtvbWFyaS5icm93c2VyLnYxLkdldEFnZW50UmVzcG9uc2USbQoQV2F0Y2hBZ2VudFN0YXR1cxIqLmtvbWFyaS5icm93c2VyLnYxLldhdGNoQWdlbnRTdGF0dXNSZXF1ZXN0Gisua29tYXJpLmJyb3dzZXIudjEuV2F0Y2hBZ2VudFN0YXR1c1Jlc3BvbnNlMAESawoQR2V0VGhlbWVDb250cmFjdBIqLmtvbWFyaS5icm93c2VyLnYxLkdldFRoZW1lQ29udHJhY3RSZXF1ZXN0Gisua29tYXJpLmJyb3dzZXIudjEuR2V0VGhlbWVDb250cmFjdFJlc3BvbnNlQtEBChVjb20ua29tYXJpLmJyb3dzZXIudjFCDEJyb3dzZXJQcm90b1ABWkRnaXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9icm93c2VyL3YxO2Jyb3dzZXJ2MaICA0tCWKoCEUtvbWFyaS5Ccm93c2VyLlYxygIRS29tYXJpXEJyb3dzZXJcVjHiAh1Lb21hcmlcQnJvd3NlclxWMVxHUEJNZXRhZGF0YeoCE0tvbWFyaTo6QnJvd3Nlcjo6VjFiBnByb3RvMw", [file_google_protobuf_struct, file_google_protobuf_timestamp, file_komari_common_v1_common, file_komari_report_v1_report]);
 
 /**
  * GetPublicInfoRequest is intentionally empty.
@@ -58,6 +58,56 @@ export type GetPublicInfoResponse = Message<"komari.browser.v1.GetPublicInfoResp
    * @generated from field: string default_theme = 4;
    */
   defaultTheme: string;
+
+  /**
+   * @generated from field: bool cors_origin_check_enabled = 5;
+   */
+  corsOriginCheckEnabled: boolean;
+
+  /**
+   * @generated from field: string custom_body = 6;
+   */
+  customBody: string;
+
+  /**
+   * @generated from field: string custom_head = 7;
+   */
+  customHead: string;
+
+  /**
+   * @generated from field: bool disable_password_login = 8;
+   */
+  disablePasswordLogin: boolean;
+
+  /**
+   * @generated from field: string oauth_provider = 9;
+   */
+  oauthProvider: string;
+
+  /**
+   * @generated from field: bool oauth_enabled = 10;
+   */
+  oauthEnabled: boolean;
+
+  /**
+   * @generated from field: uint32 metric_retention_days = 11;
+   */
+  metricRetentionDays: number;
+
+  /**
+   * @generated from field: bool private_site = 12;
+   */
+  privateSite: boolean;
+
+  /**
+   * @generated from field: google.protobuf.Struct theme_settings = 13;
+   */
+  themeSettings?: JsonObject | undefined;
+
+  /**
+   * @generated from field: bool visitor_audit_enabled = 14;
+   */
+  visitorAuditEnabled: boolean;
 };
 
 /**
@@ -251,6 +301,11 @@ export type AgentSummary = Message<"komari.browser.v1.AgentSummary"> & {
    * @generated from field: komari.report.v1.AgentCapabilities capabilities = 8;
    */
   capabilities?: AgentCapabilities | undefined;
+
+  /**
+   * @generated from field: komari.browser.v1.AgentBasicInfo basic_info = 9;
+   */
+  basicInfo?: AgentBasicInfo | undefined;
 };
 
 /**
@@ -259,6 +314,145 @@ export type AgentSummary = Message<"komari.browser.v1.AgentSummary"> & {
  */
 export const AgentSummarySchema: GenMessage<AgentSummary> = /*@__PURE__*/
   messageDesc(file_komari_browser_v1_browser, 8);
+
+/**
+ * AgentBasicInfo is the stable non-secret browser node model.
+ *
+ * @generated from message komari.browser.v1.AgentBasicInfo
+ */
+export type AgentBasicInfo = Message<"komari.browser.v1.AgentBasicInfo"> & {
+  /**
+   * @generated from field: string cpu_name = 1;
+   */
+  cpuName: string;
+
+  /**
+   * @generated from field: string virtualization = 2;
+   */
+  virtualization: string;
+
+  /**
+   * @generated from field: string architecture = 3;
+   */
+  architecture: string;
+
+  /**
+   * @generated from field: uint32 cpu_cores = 4;
+   */
+  cpuCores: number;
+
+  /**
+   * @generated from field: string os = 5;
+   */
+  os: string;
+
+  /**
+   * @generated from field: string kernel_version = 6;
+   */
+  kernelVersion: string;
+
+  /**
+   * @generated from field: string gpu_name = 7;
+   */
+  gpuName: string;
+
+  /**
+   * @generated from field: string region = 8;
+   */
+  region: string;
+
+  /**
+   * @generated from field: uint64 memory_total_bytes = 9;
+   */
+  memoryTotalBytes: bigint;
+
+  /**
+   * @generated from field: uint64 swap_total_bytes = 10;
+   */
+  swapTotalBytes: bigint;
+
+  /**
+   * @generated from field: uint64 disk_total_bytes = 11;
+   */
+  diskTotalBytes: bigint;
+
+  /**
+   * @generated from field: string agent_version = 12;
+   */
+  agentVersion: string;
+
+  /**
+   * @generated from field: int32 weight = 13;
+   */
+  weight: number;
+
+  /**
+   * @generated from field: double price = 14;
+   */
+  price: number;
+
+  /**
+   * @generated from field: string tags = 15;
+   */
+  tags: string;
+
+  /**
+   * @generated from field: uint32 billing_cycle_days = 16;
+   */
+  billingCycleDays: number;
+
+  /**
+   * @generated from field: string currency = 17;
+   */
+  currency: string;
+
+  /**
+   * @generated from field: string group = 18;
+   */
+  group: string;
+
+  /**
+   * @generated from field: uint64 traffic_limit_bytes = 19;
+   */
+  trafficLimitBytes: bigint;
+
+  /**
+   * @generated from field: string traffic_limit_type = 20;
+   */
+  trafficLimitType: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp expires_at = 21;
+   */
+  expiresAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 22;
+   */
+  createdAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp updated_at = 23;
+   */
+  updatedAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: string ipv4 = 24;
+   */
+  ipv4: string;
+
+  /**
+   * @generated from field: string ipv6 = 25;
+   */
+  ipv6: string;
+};
+
+/**
+ * Describes the message komari.browser.v1.AgentBasicInfo.
+ * Use `create(AgentBasicInfoSchema)` to create a new message.
+ */
+export const AgentBasicInfoSchema: GenMessage<AgentBasicInfo> = /*@__PURE__*/
+  messageDesc(file_komari_browser_v1_browser, 9);
 
 /**
  * GetThemeContractRequest is intentionally empty.
@@ -273,7 +467,7 @@ export type GetThemeContractRequest = Message<"komari.browser.v1.GetThemeContrac
  * Use `create(GetThemeContractRequestSchema)` to create a new message.
  */
 export const GetThemeContractRequestSchema: GenMessage<GetThemeContractRequest> = /*@__PURE__*/
-  messageDesc(file_komari_browser_v1_browser, 9);
+  messageDesc(file_komari_browser_v1_browser, 10);
 
 /**
  * GetThemeContractResponse describes the stable theme schema and RPC migration.
@@ -307,7 +501,7 @@ export type GetThemeContractResponse = Message<"komari.browser.v1.GetThemeContra
  * Use `create(GetThemeContractResponseSchema)` to create a new message.
  */
 export const GetThemeContractResponseSchema: GenMessage<GetThemeContractResponse> = /*@__PURE__*/
-  messageDesc(file_komari_browser_v1_browser, 10);
+  messageDesc(file_komari_browser_v1_browser, 11);
 
 /**
  * AgentStatus is the coarse online state for browser lists.

@@ -11,6 +11,7 @@ import (
 	v11 "github.com/r11234567/komari-proto/gen/go/komari/report/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
@@ -113,13 +114,23 @@ func (*GetPublicInfoRequest) Descriptor() ([]byte, []int) {
 
 // GetPublicInfoResponse contains public site metadata.
 type GetPublicInfoResponse struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	SiteName        string                 `protobuf:"bytes,1,opt,name=site_name,json=siteName,proto3" json:"site_name,omitempty"`
-	SiteDescription string                 `protobuf:"bytes,2,opt,name=site_description,json=siteDescription,proto3" json:"site_description,omitempty"`
-	Version         string                 `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
-	DefaultTheme    string                 `protobuf:"bytes,4,opt,name=default_theme,json=defaultTheme,proto3" json:"default_theme,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	SiteName               string                 `protobuf:"bytes,1,opt,name=site_name,json=siteName,proto3" json:"site_name,omitempty"`
+	SiteDescription        string                 `protobuf:"bytes,2,opt,name=site_description,json=siteDescription,proto3" json:"site_description,omitempty"`
+	Version                string                 `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	DefaultTheme           string                 `protobuf:"bytes,4,opt,name=default_theme,json=defaultTheme,proto3" json:"default_theme,omitempty"`
+	CorsOriginCheckEnabled bool                   `protobuf:"varint,5,opt,name=cors_origin_check_enabled,json=corsOriginCheckEnabled,proto3" json:"cors_origin_check_enabled,omitempty"`
+	CustomBody             string                 `protobuf:"bytes,6,opt,name=custom_body,json=customBody,proto3" json:"custom_body,omitempty"`
+	CustomHead             string                 `protobuf:"bytes,7,opt,name=custom_head,json=customHead,proto3" json:"custom_head,omitempty"`
+	DisablePasswordLogin   bool                   `protobuf:"varint,8,opt,name=disable_password_login,json=disablePasswordLogin,proto3" json:"disable_password_login,omitempty"`
+	OauthProvider          string                 `protobuf:"bytes,9,opt,name=oauth_provider,json=oauthProvider,proto3" json:"oauth_provider,omitempty"`
+	OauthEnabled           bool                   `protobuf:"varint,10,opt,name=oauth_enabled,json=oauthEnabled,proto3" json:"oauth_enabled,omitempty"`
+	MetricRetentionDays    uint32                 `protobuf:"varint,11,opt,name=metric_retention_days,json=metricRetentionDays,proto3" json:"metric_retention_days,omitempty"`
+	PrivateSite            bool                   `protobuf:"varint,12,opt,name=private_site,json=privateSite,proto3" json:"private_site,omitempty"`
+	ThemeSettings          *structpb.Struct       `protobuf:"bytes,13,opt,name=theme_settings,json=themeSettings,proto3" json:"theme_settings,omitempty"`
+	VisitorAuditEnabled    bool                   `protobuf:"varint,14,opt,name=visitor_audit_enabled,json=visitorAuditEnabled,proto3" json:"visitor_audit_enabled,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *GetPublicInfoResponse) Reset() {
@@ -178,6 +189,76 @@ func (x *GetPublicInfoResponse) GetDefaultTheme() string {
 		return x.DefaultTheme
 	}
 	return ""
+}
+
+func (x *GetPublicInfoResponse) GetCorsOriginCheckEnabled() bool {
+	if x != nil {
+		return x.CorsOriginCheckEnabled
+	}
+	return false
+}
+
+func (x *GetPublicInfoResponse) GetCustomBody() string {
+	if x != nil {
+		return x.CustomBody
+	}
+	return ""
+}
+
+func (x *GetPublicInfoResponse) GetCustomHead() string {
+	if x != nil {
+		return x.CustomHead
+	}
+	return ""
+}
+
+func (x *GetPublicInfoResponse) GetDisablePasswordLogin() bool {
+	if x != nil {
+		return x.DisablePasswordLogin
+	}
+	return false
+}
+
+func (x *GetPublicInfoResponse) GetOauthProvider() string {
+	if x != nil {
+		return x.OauthProvider
+	}
+	return ""
+}
+
+func (x *GetPublicInfoResponse) GetOauthEnabled() bool {
+	if x != nil {
+		return x.OauthEnabled
+	}
+	return false
+}
+
+func (x *GetPublicInfoResponse) GetMetricRetentionDays() uint32 {
+	if x != nil {
+		return x.MetricRetentionDays
+	}
+	return 0
+}
+
+func (x *GetPublicInfoResponse) GetPrivateSite() bool {
+	if x != nil {
+		return x.PrivateSite
+	}
+	return false
+}
+
+func (x *GetPublicInfoResponse) GetThemeSettings() *structpb.Struct {
+	if x != nil {
+		return x.ThemeSettings
+	}
+	return nil
+}
+
+func (x *GetPublicInfoResponse) GetVisitorAuditEnabled() bool {
+	if x != nil {
+		return x.VisitorAuditEnabled
+	}
+	return false
 }
 
 // ListAgentsRequest contains bounded filters and pagination.
@@ -501,6 +582,7 @@ type AgentSummary struct {
 	MemoryPercent float64                `protobuf:"fixed64,6,opt,name=memory_percent,json=memoryPercent,proto3" json:"memory_percent,omitempty"`
 	EventId       string                 `protobuf:"bytes,7,opt,name=event_id,json=eventId,proto3" json:"event_id,omitempty"`
 	Capabilities  *v11.AgentCapabilities `protobuf:"bytes,8,opt,name=capabilities,proto3" json:"capabilities,omitempty"`
+	BasicInfo     *AgentBasicInfo        `protobuf:"bytes,9,opt,name=basic_info,json=basicInfo,proto3" json:"basic_info,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -591,6 +673,250 @@ func (x *AgentSummary) GetCapabilities() *v11.AgentCapabilities {
 	return nil
 }
 
+func (x *AgentSummary) GetBasicInfo() *AgentBasicInfo {
+	if x != nil {
+		return x.BasicInfo
+	}
+	return nil
+}
+
+// AgentBasicInfo is the stable non-secret browser node model.
+type AgentBasicInfo struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	CpuName           string                 `protobuf:"bytes,1,opt,name=cpu_name,json=cpuName,proto3" json:"cpu_name,omitempty"`
+	Virtualization    string                 `protobuf:"bytes,2,opt,name=virtualization,proto3" json:"virtualization,omitempty"`
+	Architecture      string                 `protobuf:"bytes,3,opt,name=architecture,proto3" json:"architecture,omitempty"`
+	CpuCores          uint32                 `protobuf:"varint,4,opt,name=cpu_cores,json=cpuCores,proto3" json:"cpu_cores,omitempty"`
+	Os                string                 `protobuf:"bytes,5,opt,name=os,proto3" json:"os,omitempty"`
+	KernelVersion     string                 `protobuf:"bytes,6,opt,name=kernel_version,json=kernelVersion,proto3" json:"kernel_version,omitempty"`
+	GpuName           string                 `protobuf:"bytes,7,opt,name=gpu_name,json=gpuName,proto3" json:"gpu_name,omitempty"`
+	Region            string                 `protobuf:"bytes,8,opt,name=region,proto3" json:"region,omitempty"`
+	MemoryTotalBytes  uint64                 `protobuf:"varint,9,opt,name=memory_total_bytes,json=memoryTotalBytes,proto3" json:"memory_total_bytes,omitempty"`
+	SwapTotalBytes    uint64                 `protobuf:"varint,10,opt,name=swap_total_bytes,json=swapTotalBytes,proto3" json:"swap_total_bytes,omitempty"`
+	DiskTotalBytes    uint64                 `protobuf:"varint,11,opt,name=disk_total_bytes,json=diskTotalBytes,proto3" json:"disk_total_bytes,omitempty"`
+	AgentVersion      string                 `protobuf:"bytes,12,opt,name=agent_version,json=agentVersion,proto3" json:"agent_version,omitempty"`
+	Weight            int32                  `protobuf:"varint,13,opt,name=weight,proto3" json:"weight,omitempty"`
+	Price             float64                `protobuf:"fixed64,14,opt,name=price,proto3" json:"price,omitempty"`
+	Tags              string                 `protobuf:"bytes,15,opt,name=tags,proto3" json:"tags,omitempty"`
+	BillingCycleDays  uint32                 `protobuf:"varint,16,opt,name=billing_cycle_days,json=billingCycleDays,proto3" json:"billing_cycle_days,omitempty"`
+	Currency          string                 `protobuf:"bytes,17,opt,name=currency,proto3" json:"currency,omitempty"`
+	Group             string                 `protobuf:"bytes,18,opt,name=group,proto3" json:"group,omitempty"`
+	TrafficLimitBytes uint64                 `protobuf:"varint,19,opt,name=traffic_limit_bytes,json=trafficLimitBytes,proto3" json:"traffic_limit_bytes,omitempty"`
+	TrafficLimitType  string                 `protobuf:"bytes,20,opt,name=traffic_limit_type,json=trafficLimitType,proto3" json:"traffic_limit_type,omitempty"`
+	ExpiresAt         *timestamppb.Timestamp `protobuf:"bytes,21,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	CreatedAt         *timestamppb.Timestamp `protobuf:"bytes,22,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt         *timestamppb.Timestamp `protobuf:"bytes,23,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Ipv4              string                 `protobuf:"bytes,24,opt,name=ipv4,proto3" json:"ipv4,omitempty"`
+	Ipv6              string                 `protobuf:"bytes,25,opt,name=ipv6,proto3" json:"ipv6,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *AgentBasicInfo) Reset() {
+	*x = AgentBasicInfo{}
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AgentBasicInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AgentBasicInfo) ProtoMessage() {}
+
+func (x *AgentBasicInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AgentBasicInfo.ProtoReflect.Descriptor instead.
+func (*AgentBasicInfo) Descriptor() ([]byte, []int) {
+	return file_komari_browser_v1_browser_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *AgentBasicInfo) GetCpuName() string {
+	if x != nil {
+		return x.CpuName
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetVirtualization() string {
+	if x != nil {
+		return x.Virtualization
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetArchitecture() string {
+	if x != nil {
+		return x.Architecture
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetCpuCores() uint32 {
+	if x != nil {
+		return x.CpuCores
+	}
+	return 0
+}
+
+func (x *AgentBasicInfo) GetOs() string {
+	if x != nil {
+		return x.Os
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetKernelVersion() string {
+	if x != nil {
+		return x.KernelVersion
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetGpuName() string {
+	if x != nil {
+		return x.GpuName
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetRegion() string {
+	if x != nil {
+		return x.Region
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetMemoryTotalBytes() uint64 {
+	if x != nil {
+		return x.MemoryTotalBytes
+	}
+	return 0
+}
+
+func (x *AgentBasicInfo) GetSwapTotalBytes() uint64 {
+	if x != nil {
+		return x.SwapTotalBytes
+	}
+	return 0
+}
+
+func (x *AgentBasicInfo) GetDiskTotalBytes() uint64 {
+	if x != nil {
+		return x.DiskTotalBytes
+	}
+	return 0
+}
+
+func (x *AgentBasicInfo) GetAgentVersion() string {
+	if x != nil {
+		return x.AgentVersion
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetWeight() int32 {
+	if x != nil {
+		return x.Weight
+	}
+	return 0
+}
+
+func (x *AgentBasicInfo) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *AgentBasicInfo) GetTags() string {
+	if x != nil {
+		return x.Tags
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetBillingCycleDays() uint32 {
+	if x != nil {
+		return x.BillingCycleDays
+	}
+	return 0
+}
+
+func (x *AgentBasicInfo) GetCurrency() string {
+	if x != nil {
+		return x.Currency
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetGroup() string {
+	if x != nil {
+		return x.Group
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetTrafficLimitBytes() uint64 {
+	if x != nil {
+		return x.TrafficLimitBytes
+	}
+	return 0
+}
+
+func (x *AgentBasicInfo) GetTrafficLimitType() string {
+	if x != nil {
+		return x.TrafficLimitType
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return nil
+}
+
+func (x *AgentBasicInfo) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *AgentBasicInfo) GetUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return nil
+}
+
+func (x *AgentBasicInfo) GetIpv4() string {
+	if x != nil {
+		return x.Ipv4
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetIpv6() string {
+	if x != nil {
+		return x.Ipv6
+	}
+	return ""
+}
+
 // GetThemeContractRequest is intentionally empty.
 type GetThemeContractRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -600,7 +926,7 @@ type GetThemeContractRequest struct {
 
 func (x *GetThemeContractRequest) Reset() {
 	*x = GetThemeContractRequest{}
-	mi := &file_komari_browser_v1_browser_proto_msgTypes[9]
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -612,7 +938,7 @@ func (x *GetThemeContractRequest) String() string {
 func (*GetThemeContractRequest) ProtoMessage() {}
 
 func (x *GetThemeContractRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_browser_v1_browser_proto_msgTypes[9]
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -625,7 +951,7 @@ func (x *GetThemeContractRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetThemeContractRequest.ProtoReflect.Descriptor instead.
 func (*GetThemeContractRequest) Descriptor() ([]byte, []int) {
-	return file_komari_browser_v1_browser_proto_rawDescGZIP(), []int{9}
+	return file_komari_browser_v1_browser_proto_rawDescGZIP(), []int{10}
 }
 
 // GetThemeContractResponse describes the stable theme schema and RPC migration.
@@ -641,7 +967,7 @@ type GetThemeContractResponse struct {
 
 func (x *GetThemeContractResponse) Reset() {
 	*x = GetThemeContractResponse{}
-	mi := &file_komari_browser_v1_browser_proto_msgTypes[10]
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -653,7 +979,7 @@ func (x *GetThemeContractResponse) String() string {
 func (*GetThemeContractResponse) ProtoMessage() {}
 
 func (x *GetThemeContractResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_browser_v1_browser_proto_msgTypes[10]
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -666,7 +992,7 @@ func (x *GetThemeContractResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetThemeContractResponse.ProtoReflect.Descriptor instead.
 func (*GetThemeContractResponse) Descriptor() ([]byte, []int) {
-	return file_komari_browser_v1_browser_proto_rawDescGZIP(), []int{10}
+	return file_komari_browser_v1_browser_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *GetThemeContractResponse) GetSchemaVersion() uint32 {
@@ -701,13 +1027,26 @@ var File_komari_browser_v1_browser_proto protoreflect.FileDescriptor
 
 const file_komari_browser_v1_browser_proto_rawDesc = "" +
 	"\n" +
-	"\x1fkomari/browser/v1/browser.proto\x12\x11komari.browser.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/report/v1/report.proto\"\x16\n" +
-	"\x14GetPublicInfoRequest\"\x9e\x01\n" +
+	"\x1fkomari/browser/v1/browser.proto\x12\x11komari.browser.v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/report/v1/report.proto\"\x16\n" +
+	"\x14GetPublicInfoRequest\"\xe8\x04\n" +
 	"\x15GetPublicInfoResponse\x12\x1b\n" +
 	"\tsite_name\x18\x01 \x01(\tR\bsiteName\x12)\n" +
 	"\x10site_description\x18\x02 \x01(\tR\x0fsiteDescription\x12\x18\n" +
 	"\aversion\x18\x03 \x01(\tR\aversion\x12#\n" +
-	"\rdefault_theme\x18\x04 \x01(\tR\fdefaultTheme\"{\n" +
+	"\rdefault_theme\x18\x04 \x01(\tR\fdefaultTheme\x129\n" +
+	"\x19cors_origin_check_enabled\x18\x05 \x01(\bR\x16corsOriginCheckEnabled\x12\x1f\n" +
+	"\vcustom_body\x18\x06 \x01(\tR\n" +
+	"customBody\x12\x1f\n" +
+	"\vcustom_head\x18\a \x01(\tR\n" +
+	"customHead\x124\n" +
+	"\x16disable_password_login\x18\b \x01(\bR\x14disablePasswordLogin\x12%\n" +
+	"\x0eoauth_provider\x18\t \x01(\tR\roauthProvider\x12#\n" +
+	"\roauth_enabled\x18\n" +
+	" \x01(\bR\foauthEnabled\x122\n" +
+	"\x15metric_retention_days\x18\v \x01(\rR\x13metricRetentionDays\x12!\n" +
+	"\fprivate_site\x18\f \x01(\bR\vprivateSite\x12>\n" +
+	"\x0etheme_settings\x18\r \x01(\v2\x17.google.protobuf.StructR\rthemeSettings\x122\n" +
+	"\x15visitor_audit_enabled\x18\x0e \x01(\bR\x13visitorAuditEnabled\"{\n" +
 	"\x11ListAgentsRequest\x121\n" +
 	"\x04page\x18\x01 \x01(\v2\x1d.komari.common.v1.PageRequestR\x04page\x12\x1b\n" +
 	"\tagent_ids\x18\x02 \x03(\tR\bagentIds\x12\x16\n" +
@@ -724,7 +1063,7 @@ const file_komari_browser_v1_browser_proto_rawDesc = "" +
 	"\tagent_ids\x18\x01 \x03(\tR\bagentIds\x12$\n" +
 	"\x0eafter_event_id\x18\x02 \x01(\tR\fafterEventId\"Q\n" +
 	"\x18WatchAgentStatusResponse\x125\n" +
-	"\x05agent\x18\x01 \x01(\v2\x1f.komari.browser.v1.AgentSummaryR\x05agent\"\xda\x02\n" +
+	"\x05agent\x18\x01 \x01(\v2\x1f.komari.browser.v1.AgentSummaryR\x05agent\"\x9c\x03\n" +
 	"\fAgentSummary\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x126\n" +
@@ -734,7 +1073,39 @@ const file_komari_browser_v1_browser_proto_rawDesc = "" +
 	"cpuPercent\x12%\n" +
 	"\x0ememory_percent\x18\x06 \x01(\x01R\rmemoryPercent\x12\x19\n" +
 	"\bevent_id\x18\a \x01(\tR\aeventId\x12G\n" +
-	"\fcapabilities\x18\b \x01(\v2#.komari.report.v1.AgentCapabilitiesR\fcapabilities\"\x19\n" +
+	"\fcapabilities\x18\b \x01(\v2#.komari.report.v1.AgentCapabilitiesR\fcapabilities\x12@\n" +
+	"\n" +
+	"basic_info\x18\t \x01(\v2!.komari.browser.v1.AgentBasicInfoR\tbasicInfo\"\xfe\x06\n" +
+	"\x0eAgentBasicInfo\x12\x19\n" +
+	"\bcpu_name\x18\x01 \x01(\tR\acpuName\x12&\n" +
+	"\x0evirtualization\x18\x02 \x01(\tR\x0evirtualization\x12\"\n" +
+	"\farchitecture\x18\x03 \x01(\tR\farchitecture\x12\x1b\n" +
+	"\tcpu_cores\x18\x04 \x01(\rR\bcpuCores\x12\x0e\n" +
+	"\x02os\x18\x05 \x01(\tR\x02os\x12%\n" +
+	"\x0ekernel_version\x18\x06 \x01(\tR\rkernelVersion\x12\x19\n" +
+	"\bgpu_name\x18\a \x01(\tR\agpuName\x12\x16\n" +
+	"\x06region\x18\b \x01(\tR\x06region\x12,\n" +
+	"\x12memory_total_bytes\x18\t \x01(\x04R\x10memoryTotalBytes\x12(\n" +
+	"\x10swap_total_bytes\x18\n" +
+	" \x01(\x04R\x0eswapTotalBytes\x12(\n" +
+	"\x10disk_total_bytes\x18\v \x01(\x04R\x0ediskTotalBytes\x12#\n" +
+	"\ragent_version\x18\f \x01(\tR\fagentVersion\x12\x16\n" +
+	"\x06weight\x18\r \x01(\x05R\x06weight\x12\x14\n" +
+	"\x05price\x18\x0e \x01(\x01R\x05price\x12\x12\n" +
+	"\x04tags\x18\x0f \x01(\tR\x04tags\x12,\n" +
+	"\x12billing_cycle_days\x18\x10 \x01(\rR\x10billingCycleDays\x12\x1a\n" +
+	"\bcurrency\x18\x11 \x01(\tR\bcurrency\x12\x14\n" +
+	"\x05group\x18\x12 \x01(\tR\x05group\x12.\n" +
+	"\x13traffic_limit_bytes\x18\x13 \x01(\x04R\x11trafficLimitBytes\x12,\n" +
+	"\x12traffic_limit_type\x18\x14 \x01(\tR\x10trafficLimitType\x129\n" +
+	"\n" +
+	"expires_at\x18\x15 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x129\n" +
+	"\n" +
+	"created_at\x18\x16 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"updated_at\x18\x17 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x12\n" +
+	"\x04ipv4\x18\x18 \x01(\tR\x04ipv4\x12\x12\n" +
+	"\x04ipv6\x18\x19 \x01(\tR\x04ipv6\"\x19\n" +
 	"\x17GetThemeContractRequest\"\xcd\x01\n" +
 	"\x18GetThemeContractResponse\x12%\n" +
 	"\x0eschema_version\x18\x01 \x01(\rR\rschemaVersion\x12#\n" +
@@ -767,7 +1138,7 @@ func file_komari_browser_v1_browser_proto_rawDescGZIP() []byte {
 }
 
 var file_komari_browser_v1_browser_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_komari_browser_v1_browser_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_komari_browser_v1_browser_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_komari_browser_v1_browser_proto_goTypes = []any{
 	(AgentStatus)(0),                 // 0: komari.browser.v1.AgentStatus
 	(*GetPublicInfoRequest)(nil),     // 1: komari.browser.v1.GetPublicInfoRequest
@@ -779,39 +1150,46 @@ var file_komari_browser_v1_browser_proto_goTypes = []any{
 	(*WatchAgentStatusRequest)(nil),  // 7: komari.browser.v1.WatchAgentStatusRequest
 	(*WatchAgentStatusResponse)(nil), // 8: komari.browser.v1.WatchAgentStatusResponse
 	(*AgentSummary)(nil),             // 9: komari.browser.v1.AgentSummary
-	(*GetThemeContractRequest)(nil),  // 10: komari.browser.v1.GetThemeContractRequest
-	(*GetThemeContractResponse)(nil), // 11: komari.browser.v1.GetThemeContractResponse
-	(*v1.PageRequest)(nil),           // 12: komari.common.v1.PageRequest
-	(*v1.PageResponse)(nil),          // 13: komari.common.v1.PageResponse
-	(*v11.AgentReport)(nil),          // 14: komari.report.v1.AgentReport
-	(*timestamppb.Timestamp)(nil),    // 15: google.protobuf.Timestamp
-	(*v11.AgentCapabilities)(nil),    // 16: komari.report.v1.AgentCapabilities
+	(*AgentBasicInfo)(nil),           // 10: komari.browser.v1.AgentBasicInfo
+	(*GetThemeContractRequest)(nil),  // 11: komari.browser.v1.GetThemeContractRequest
+	(*GetThemeContractResponse)(nil), // 12: komari.browser.v1.GetThemeContractResponse
+	(*structpb.Struct)(nil),          // 13: google.protobuf.Struct
+	(*v1.PageRequest)(nil),           // 14: komari.common.v1.PageRequest
+	(*v1.PageResponse)(nil),          // 15: komari.common.v1.PageResponse
+	(*v11.AgentReport)(nil),          // 16: komari.report.v1.AgentReport
+	(*timestamppb.Timestamp)(nil),    // 17: google.protobuf.Timestamp
+	(*v11.AgentCapabilities)(nil),    // 18: komari.report.v1.AgentCapabilities
 }
 var file_komari_browser_v1_browser_proto_depIdxs = []int32{
-	12, // 0: komari.browser.v1.ListAgentsRequest.page:type_name -> komari.common.v1.PageRequest
-	9,  // 1: komari.browser.v1.ListAgentsResponse.agents:type_name -> komari.browser.v1.AgentSummary
-	13, // 2: komari.browser.v1.ListAgentsResponse.page:type_name -> komari.common.v1.PageResponse
-	9,  // 3: komari.browser.v1.GetAgentResponse.agent:type_name -> komari.browser.v1.AgentSummary
-	14, // 4: komari.browser.v1.GetAgentResponse.latest_report:type_name -> komari.report.v1.AgentReport
-	9,  // 5: komari.browser.v1.WatchAgentStatusResponse.agent:type_name -> komari.browser.v1.AgentSummary
-	0,  // 6: komari.browser.v1.AgentSummary.status:type_name -> komari.browser.v1.AgentStatus
-	15, // 7: komari.browser.v1.AgentSummary.last_seen:type_name -> google.protobuf.Timestamp
-	16, // 8: komari.browser.v1.AgentSummary.capabilities:type_name -> komari.report.v1.AgentCapabilities
-	1,  // 9: komari.browser.v1.BrowserService.GetPublicInfo:input_type -> komari.browser.v1.GetPublicInfoRequest
-	3,  // 10: komari.browser.v1.BrowserService.ListAgents:input_type -> komari.browser.v1.ListAgentsRequest
-	5,  // 11: komari.browser.v1.BrowserService.GetAgent:input_type -> komari.browser.v1.GetAgentRequest
-	7,  // 12: komari.browser.v1.BrowserService.WatchAgentStatus:input_type -> komari.browser.v1.WatchAgentStatusRequest
-	10, // 13: komari.browser.v1.BrowserService.GetThemeContract:input_type -> komari.browser.v1.GetThemeContractRequest
-	2,  // 14: komari.browser.v1.BrowserService.GetPublicInfo:output_type -> komari.browser.v1.GetPublicInfoResponse
-	4,  // 15: komari.browser.v1.BrowserService.ListAgents:output_type -> komari.browser.v1.ListAgentsResponse
-	6,  // 16: komari.browser.v1.BrowserService.GetAgent:output_type -> komari.browser.v1.GetAgentResponse
-	8,  // 17: komari.browser.v1.BrowserService.WatchAgentStatus:output_type -> komari.browser.v1.WatchAgentStatusResponse
-	11, // 18: komari.browser.v1.BrowserService.GetThemeContract:output_type -> komari.browser.v1.GetThemeContractResponse
-	14, // [14:19] is the sub-list for method output_type
-	9,  // [9:14] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	13, // 0: komari.browser.v1.GetPublicInfoResponse.theme_settings:type_name -> google.protobuf.Struct
+	14, // 1: komari.browser.v1.ListAgentsRequest.page:type_name -> komari.common.v1.PageRequest
+	9,  // 2: komari.browser.v1.ListAgentsResponse.agents:type_name -> komari.browser.v1.AgentSummary
+	15, // 3: komari.browser.v1.ListAgentsResponse.page:type_name -> komari.common.v1.PageResponse
+	9,  // 4: komari.browser.v1.GetAgentResponse.agent:type_name -> komari.browser.v1.AgentSummary
+	16, // 5: komari.browser.v1.GetAgentResponse.latest_report:type_name -> komari.report.v1.AgentReport
+	9,  // 6: komari.browser.v1.WatchAgentStatusResponse.agent:type_name -> komari.browser.v1.AgentSummary
+	0,  // 7: komari.browser.v1.AgentSummary.status:type_name -> komari.browser.v1.AgentStatus
+	17, // 8: komari.browser.v1.AgentSummary.last_seen:type_name -> google.protobuf.Timestamp
+	18, // 9: komari.browser.v1.AgentSummary.capabilities:type_name -> komari.report.v1.AgentCapabilities
+	10, // 10: komari.browser.v1.AgentSummary.basic_info:type_name -> komari.browser.v1.AgentBasicInfo
+	17, // 11: komari.browser.v1.AgentBasicInfo.expires_at:type_name -> google.protobuf.Timestamp
+	17, // 12: komari.browser.v1.AgentBasicInfo.created_at:type_name -> google.protobuf.Timestamp
+	17, // 13: komari.browser.v1.AgentBasicInfo.updated_at:type_name -> google.protobuf.Timestamp
+	1,  // 14: komari.browser.v1.BrowserService.GetPublicInfo:input_type -> komari.browser.v1.GetPublicInfoRequest
+	3,  // 15: komari.browser.v1.BrowserService.ListAgents:input_type -> komari.browser.v1.ListAgentsRequest
+	5,  // 16: komari.browser.v1.BrowserService.GetAgent:input_type -> komari.browser.v1.GetAgentRequest
+	7,  // 17: komari.browser.v1.BrowserService.WatchAgentStatus:input_type -> komari.browser.v1.WatchAgentStatusRequest
+	11, // 18: komari.browser.v1.BrowserService.GetThemeContract:input_type -> komari.browser.v1.GetThemeContractRequest
+	2,  // 19: komari.browser.v1.BrowserService.GetPublicInfo:output_type -> komari.browser.v1.GetPublicInfoResponse
+	4,  // 20: komari.browser.v1.BrowserService.ListAgents:output_type -> komari.browser.v1.ListAgentsResponse
+	6,  // 21: komari.browser.v1.BrowserService.GetAgent:output_type -> komari.browser.v1.GetAgentResponse
+	8,  // 22: komari.browser.v1.BrowserService.WatchAgentStatus:output_type -> komari.browser.v1.WatchAgentStatusResponse
+	12, // 23: komari.browser.v1.BrowserService.GetThemeContract:output_type -> komari.browser.v1.GetThemeContractResponse
+	19, // [19:24] is the sub-list for method output_type
+	14, // [14:19] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_komari_browser_v1_browser_proto_init() }
@@ -825,7 +1203,7 @@ func file_komari_browser_v1_browser_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_browser_v1_browser_proto_rawDesc), len(file_komari_browser_v1_browser_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   11,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
