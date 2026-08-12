@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package komari.common.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/common/v1;commonv1";
+
+// ErrorDetail is a stable, machine-readable error returned by application services.
+message ErrorDetail {
+  string code = 1;
+  string message = 2;
+  map<string, string> metadata = 3;
+}
+
+// PageRequest describes cursor-based pagination.
+message PageRequest {
+  uint32 page_size = 1;
+  string page_token = 2;
+}
+
+// PageResponse contains the cursor for the next page.
+message PageResponse {
+  string next_page_token = 1;
+  uint64 total_size = 2;
+}
+
+// TwoFactorProof carries a single-use proof for a sensitive operation.
+message TwoFactorProof {
+  string code = 1;
+  string challenge_id = 2;
+}
+
+// Actor identifies the authenticated caller for auditing.
+message Actor {
+  string id = 1;
+  string role = 2;
+  string request_id = 3;
+  google.protobuf.Timestamp authenticated_at = 4;
+}
+
+// OperationState is the canonical state of a long-running operation.
+enum OperationState {
+  OPERATION_STATE_UNSPECIFIED = 0;
+  OPERATION_STATE_QUEUED = 1;
+  OPERATION_STATE_RUNNING = 2;
+  OPERATION_STATE_CANCEL_REQUESTED = 3;
+  OPERATION_STATE_CANCELLED = 4;
+  OPERATION_STATE_DEADLINE_EXCEEDED = 5;
+  OPERATION_STATE_FAILED = 6;
+  OPERATION_STATE_SUCCEEDED = 7;
+}
+
+// DeliveryState is the canonical desired-config delivery state.
+enum DeliveryState {
+  DELIVERY_STATE_UNSPECIFIED = 0;
+  DELIVERY_STATE_SAVED = 1;
+  DELIVERY_STATE_SENT = 2;
+  DELIVERY_STATE_APPLIED = 3;
+  DELIVERY_STATE_REJECTED = 4;
+  DELIVERY_STATE_OFFLINE = 5;
+  DELIVERY_STATE_UPGRADE_REQUIRED = 6;
+}

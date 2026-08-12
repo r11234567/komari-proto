@@ -1,0 +1,11 @@
+version: v2
+modules:
+  - path: .
+lint:
+  use:
+    - STANDARD
+  except:
+    - COMMENT_ENUM_VALUE
+breaking:
+  use:
+    - FILE

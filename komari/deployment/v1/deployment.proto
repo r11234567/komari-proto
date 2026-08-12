@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package komari.deployment.v1;
+
+import "google/protobuf/timestamp.proto";
+import "komari/common/v1/common.proto";
+import "komari/config/v1/config.proto";
+import "komari/report/v1/report.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/deployment/v1;deploymentv1";
+
+// DeploymentService owns install-only settings and runtime delivery status.
+service DeploymentService {
+  // GetDeployment returns one agent deployment state.
+  rpc GetDeployment(GetDeploymentRequest) returns (GetDeploymentResponse);
+  // SaveDeploymentProfile updates install settings and desired runtime config.
+  rpc SaveDeploymentProfile(SaveDeploymentProfileRequest) returns (SaveDeploymentProfileResponse);
+  // GenerateInstallCommand creates a platform-specific command without exposing tokens in logs.
+  rpc GenerateInstallCommand(GenerateInstallCommandRequest) returns (GenerateInstallCommandResponse);
+}
+
+// GetDeploymentRequest identifies one agent.
+message GetDeploymentRequest {
+  string agent_id = 1;
+}
+
+// GetDeploymentResponse contains install profile, runtime revisions, and capabilities.
+message GetDeploymentResponse {
+  DeploymentProfile profile = 1;
+  ConfigDelivery delivery = 2;
+  komari.report.v1.AgentCapabilities capabilities = 3;
+}
+
+// SaveDeploymentProfileRequest uses optimistic concurrency for runtime settings.
+message SaveDeploymentProfileRequest {
+  string agent_id = 1;
+  DeploymentProfile profile = 2;
+  uint64 expected_revision = 3;
+}
+
+// SaveDeploymentProfileResponse returns the normalized stored state.
+message SaveDeploymentProfileResponse {
+  DeploymentProfile profile = 1;
+  ConfigDelivery delivery = 2;
+}
+
+// DeploymentProfile separates install-only and runtime-managed settings.
+message DeploymentProfile {
+  string agent_id = 1;
+  InstallConfig install = 2;
+  komari.config.v1.RuntimeConfig runtime = 3;
+}
+
+// InstallConfig contains values that require reinstalling or service changes.
+message InstallConfig {
+  Platform platform = 1;
+  string install_directory = 2;
+  string service_name = 3;
+  bool disable_auto_update = 4;
+  bool ignore_unsafe_certificate = 5;
+  bool enable_github_proxy = 6;
+  string github_proxy = 7;
+}
+
+// ConfigDelivery exposes desired/applied revisions and terminal delivery state.
+message ConfigDelivery {
+  uint64 desired_revision = 1;
+  uint64 applied_revision = 2;
+  komari.common.v1.DeliveryState state = 3;
+  optional komari.common.v1.ErrorDetail error = 4;
+  google.protobuf.Timestamp saved_at = 5;
+  optional google.protobuf.Timestamp sent_at = 6;
+  optional google.protobuf.Timestamp finished_at = 7;
+}
+
+// GenerateInstallCommandRequest identifies one platform and profile.
+message GenerateInstallCommandRequest {
+  string agent_id = 1;
+  Platform platform = 2;
+}
+
+// GenerateInstallCommandResponse contains a shell-specific command and checksum.
+message GenerateInstallCommandResponse {
+  string command = 1;
+  string sha256 = 2;
+}
+
+// Platform identifies supported installation targets.
+enum Platform {
+  PLATFORM_UNSPECIFIED = 0;
+  PLATFORM_LINUX_AMD64 = 1;
+  PLATFORM_LINUX_ARM64 = 2;
+  PLATFORM_LINUX_386 = 3;
+  PLATFORM_WINDOWS_AMD64 = 4;
+  PLATFORM_WINDOWS_386 = 5;
+  PLATFORM_DARWIN_AMD64 = 6;
+  PLATFORM_DARWIN_ARM64 = 7;
+  PLATFORM_FREEBSD_AMD64 = 8;
+  PLATFORM_FREEBSD_ARM64 = 9;
+}

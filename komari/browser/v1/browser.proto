@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+package komari.browser.v1;
+
+import "google/protobuf/timestamp.proto";
+import "komari/common/v1/common.proto";
+import "komari/report/v1/report.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/browser/v1;browserv1";
+
+// BrowserService owns typed browser-facing read models and theme compatibility metadata.
+service BrowserService {
+  // GetPublicInfo returns public site metadata.
+  rpc GetPublicInfo(GetPublicInfoRequest) returns (GetPublicInfoResponse);
+  // ListAgents returns a bounded typed node list.
+  rpc ListAgents(ListAgentsRequest) returns (ListAgentsResponse);
+  // GetAgent returns one typed node detail.
+  rpc GetAgent(GetAgentRequest) returns (GetAgentResponse);
+  // WatchAgentStatus streams status changes until AbortSignal/deadline cancellation.
+  rpc WatchAgentStatus(WatchAgentStatusRequest) returns (stream WatchAgentStatusResponse);
+  // GetThemeContract returns the stable third-party theme integration contract.
+  rpc GetThemeContract(GetThemeContractRequest) returns (GetThemeContractResponse);
+}
+
+// GetPublicInfoRequest is intentionally empty.
+message GetPublicInfoRequest {}
+
+// GetPublicInfoResponse contains public site metadata.
+message GetPublicInfoResponse {
+  string site_name = 1;
+  string site_description = 2;
+  string version = 3;
+  string default_theme = 4;
+}
+
+// ListAgentsRequest contains bounded filters and pagination.
+message ListAgentsRequest {
+  komari.common.v1.PageRequest page = 1;
+  repeated string agent_ids = 2;
+  string search = 3;
+}
+
+// ListAgentsResponse contains typed agent summaries.
+message ListAgentsResponse {
+  repeated AgentSummary agents = 1;
+  komari.common.v1.PageResponse page = 2;
+}
+
+// GetAgentRequest identifies one agent.
+message GetAgentRequest {
+  string agent_id = 1;
+}
+
+// GetAgentResponse contains current report data.
+message GetAgentResponse {
+  AgentSummary agent = 1;
+  komari.report.v1.AgentReport latest_report = 2;
+}
+
+// WatchAgentStatusRequest resumes after a browser event ID.
+message WatchAgentStatusRequest {
+  repeated string agent_ids = 1;
+  string after_event_id = 2;
+}
+
+// WatchAgentStatusResponse wraps one changed agent summary.
+message WatchAgentStatusResponse {
+  AgentSummary agent = 1;
+}
+
+// AgentSummary is the stable browser node list representation.
+message AgentSummary {
+  string agent_id = 1;
+  string name = 2;
+  AgentStatus status = 3;
+  google.protobuf.Timestamp last_seen = 4;
+  double cpu_percent = 5;
+  double memory_percent = 6;
+  string event_id = 7;
+  komari.report.v1.AgentCapabilities capabilities = 8;
+}
+
+// GetThemeContractRequest is intentionally empty.
+message GetThemeContractRequest {}
+
+// GetThemeContractResponse describes the stable theme schema and RPC migration.
+message GetThemeContractResponse {
+  uint32 schema_version = 1;
+  string manifest_name = 2;
+  string connect_base_path = 3;
+  bool legacy_json_rpc_available = 4;
+}
+
+// AgentStatus is the coarse online state for browser lists.
+enum AgentStatus {
+  AGENT_STATUS_UNSPECIFIED = 0;
+  AGENT_STATUS_ONLINE = 1;
+  AGENT_STATUS_OFFLINE = 2;
+}

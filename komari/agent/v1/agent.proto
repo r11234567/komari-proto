@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package komari.agent.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/agent/v1;agentv1";
+
+// AgentEventService owns lifecycle events and replay acknowledgements only.
+service AgentEventService {
+  // PublishEvent stores one idempotent agent event.
+  rpc PublishEvent(PublishEventRequest) returns (PublishEventResponse);
+  // SubscribeEvents delivers server events after a known event ID.
+  rpc SubscribeEvents(SubscribeEventsRequest) returns (stream SubscribeEventsResponse);
+  // AcknowledgeEvent advances the replay cursor.
+  rpc AcknowledgeEvent(AcknowledgeEventRequest) returns (AcknowledgeEventResponse);
+}
+
+// AgentEvent is one agent-originated lifecycle event.
+message AgentEvent {
+  string agent_id = 1;
+  string event_id = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  AgentEventType type = 4;
+  string message = 5;
+  map<string, string> metadata = 6;
+}
+
+// PublishEventRequest publishes one event.
+message PublishEventRequest {
+  AgentEvent event = 1;
+}
+
+// PublishEventResponse acknowledges one event ID.
+message PublishEventResponse {
+  bool accepted = 1;
+  string event_id = 2;
+}
+
+// SubscribeEventsRequest resumes after an acknowledged event.
+message SubscribeEventsRequest {
+  string agent_id = 1;
+  string after_event_id = 2;
+}
+
+// SubscribeEventsResponse wraps one server event for forward-compatible stream metadata.
+message SubscribeEventsResponse {
+  ServerEvent event = 1;
+}
+
+// ServerEvent is a typed server-originated lifecycle notification.
+message ServerEvent {
+  string event_id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  ServerEventType type = 3;
+  map<string, string> metadata = 4;
+}
+
+// AcknowledgeEventRequest advances a replay cursor idempotently.
+message AcknowledgeEventRequest {
+  string agent_id = 1;
+  string event_id = 2;
+}
+
+// AcknowledgeEventResponse confirms the replay cursor.
+message AcknowledgeEventResponse {
+  bool accepted = 1;
+}
+
+// AgentEventType classifies agent-originated lifecycle events.
+enum AgentEventType {
+  AGENT_EVENT_TYPE_UNSPECIFIED = 0;
+  AGENT_EVENT_TYPE_STARTED = 1;
+  AGENT_EVENT_TYPE_STOPPING = 2;
+  AGENT_EVENT_TYPE_CONFIG_APPLIED = 3;
+  AGENT_EVENT_TYPE_CONFIG_REJECTED = 4;
+  AGENT_EVENT_TYPE_CAPABILITY_CHANGED = 5;
+}
+
+// ServerEventType classifies transport-neutral server notifications.
+enum ServerEventType {
+  SERVER_EVENT_TYPE_UNSPECIFIED = 0;
+  SERVER_EVENT_TYPE_CONFIG_AVAILABLE = 1;
+  SERVER_EVENT_TYPE_UPDATE_AVAILABLE = 2;
+  SERVER_EVENT_TYPE_SHUTDOWN_REQUESTED = 3;
+}

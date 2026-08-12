@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+package komari.config.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "komari/common/v1/common.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/config/v1;configv1";
+
+// ConfigService owns desired runtime configuration and revision acknowledgements.
+service ConfigService {
+  // GetDesiredConfig returns immediately and is suitable for reconnect recovery.
+  rpc GetDesiredConfig(GetDesiredConfigRequest) returns (GetDesiredConfigResponse);
+  // WatchDesiredConfig streams only configuration revisions.
+  rpc WatchDesiredConfig(WatchDesiredConfigRequest) returns (stream WatchDesiredConfigResponse);
+  // AcknowledgeConfig records applied or rejected as a business-level terminal state.
+  rpc AcknowledgeConfig(AcknowledgeConfigRequest) returns (AcknowledgeConfigResponse);
+  // UpdateDesiredConfig stores a new revision for one agent.
+  rpc UpdateDesiredConfig(UpdateDesiredConfigRequest) returns (UpdateDesiredConfigResponse);
+}
+
+// RuntimeConfig contains settings that can be atomically applied without reinstalling.
+message RuntimeConfig {
+  optional bool memory_include_cache = 1;
+  optional bool enable_gpu = 2;
+  optional bool detailed_gpu = 3;
+  repeated string include_nics = 4;
+  repeated string exclude_nics = 5;
+  repeated string include_mountpoints = 6;
+  optional google.protobuf.Duration report_interval = 7;
+  optional uint32 traffic_reset_day = 8;
+  optional bool remote_control_enabled = 9;
+}
+
+// DesiredConfig is an immutable desired runtime snapshot.
+message DesiredConfig {
+  string agent_id = 1;
+  uint64 revision = 2;
+  RuntimeConfig runtime = 3;
+  google.protobuf.Timestamp saved_at = 4;
+  string minimum_agent_version = 5;
+}
+
+// GetDesiredConfigRequest asks for a revision newer than the currently applied one.
+message GetDesiredConfigRequest {
+  string agent_id = 1;
+  uint64 applied_revision = 2;
+}
+
+// GetDesiredConfigResponse contains the current desired snapshot when it differs.
+message GetDesiredConfigResponse {
+  optional DesiredConfig desired = 1;
+  komari.common.v1.DeliveryState delivery_state = 2;
+}
+
+// WatchDesiredConfigRequest subscribes after a known revision.
+message WatchDesiredConfigRequest {
+  string agent_id = 1;
+  uint64 after_revision = 2;
+}
+
+// WatchDesiredConfigResponse wraps one immutable desired revision.
+message WatchDesiredConfigResponse {
+  DesiredConfig desired = 1;
+}
+
+// AcknowledgeConfigRequest reports the atomic apply result.
+message AcknowledgeConfigRequest {
+  string agent_id = 1;
+  uint64 revision = 2;
+  ConfigApplyStatus status = 3;
+  repeated komari.common.v1.ErrorDetail errors = 4;
+  google.protobuf.Timestamp finished_at = 5;
+}
+
+// AcknowledgeConfigResponse returns the canonical delivery state.
+message AcknowledgeConfigResponse {
+  bool accepted = 1;
+  komari.common.v1.DeliveryState delivery_state = 2;
+}
+
+// UpdateDesiredConfigRequest creates a revision using optimistic concurrency.
+message UpdateDesiredConfigRequest {
+  string agent_id = 1;
+  RuntimeConfig runtime = 2;
+  uint64 expected_revision = 3;
+  string reason = 4;
+}
+
+// UpdateDesiredConfigResponse contains the stored immutable snapshot.
+message UpdateDesiredConfigResponse {
+  DesiredConfig desired = 1;
+  komari.common.v1.DeliveryState delivery_state = 2;
+}
+
+// ConfigApplyStatus is the agent's terminal apply result.
+enum ConfigApplyStatus {
+  CONFIG_APPLY_STATUS_UNSPECIFIED = 0;
+  CONFIG_APPLY_STATUS_APPLIED = 1;
+  CONFIG_APPLY_STATUS_REJECTED = 2;
+  CONFIG_APPLY_STATUS_UPGRADE_REQUIRED = 3;
+}

@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package komari.metrics.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/metrics/v1;metricsv1";
+
+// MetricsService owns metric ingest, bounded queries, and live subscriptions.
+service MetricsService {
+  // SubmitMetrics stores one idempotent batch.
+  rpc SubmitMetrics(SubmitMetricsRequest) returns (SubmitMetricsResponse);
+  // UploadMetrics stores a bounded client stream without sharing other lifecycles.
+  rpc UploadMetrics(stream UploadMetricsRequest) returns (UploadMetricsResponse);
+  // QueryMetrics retrieves a bounded time window.
+  rpc QueryMetrics(QueryMetricsRequest) returns (QueryMetricsResponse);
+  // WatchMetrics streams live samples until cancellation or deadline.
+  rpc WatchMetrics(WatchMetricsRequest) returns (stream WatchMetricsResponse);
+}
+
+// MetricsPoint is one typed metric sample.
+message MetricsPoint {
+  string metric = 1;
+  double value = 2;
+  google.protobuf.Timestamp observed_at = 3;
+  map<string, string> labels = 4;
+}
+
+// SubmitMetricsRequest contains one sequenced metric batch.
+message SubmitMetricsRequest {
+  string agent_id = 1;
+  uint64 sequence = 2;
+  repeated MetricsPoint points = 3;
+}
+
+// SubmitMetricsResponse acknowledges one batch.
+message SubmitMetricsResponse {
+  uint64 accepted_sequence = 1;
+  uint32 accepted_points = 2;
+}
+
+// UploadMetricsRequest is one batch in a bounded upload stream.
+message UploadMetricsRequest {
+  SubmitMetricsRequest batch = 1;
+}
+
+// UploadMetricsResponse acknowledges the complete upload stream.
+message UploadMetricsResponse {
+  uint64 accepted_sequence = 1;
+  uint64 accepted_points = 2;
+}
+
+// QueryMetricsRequest describes a bounded metrics query.
+message QueryMetricsRequest {
+  repeated string agent_ids = 1;
+  repeated string metrics = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp end_time = 4;
+  uint32 max_points = 5;
+}
+
+// QueryMetricsResponse contains grouped metric series.
+message QueryMetricsResponse {
+  repeated MetricsSeries series = 1;
+}
+
+// MetricsSeries groups ordered points for one agent and metric.
+message MetricsSeries {
+  string agent_id = 1;
+  string metric = 2;
+  map<string, string> labels = 3;
+  repeated MetricsPoint points = 4;
+}
+
+// WatchMetricsRequest subscribes to current samples with a server-enforced interval.
+message WatchMetricsRequest {
+  repeated string agent_ids = 1;
+  repeated string metrics = 2;
+  google.protobuf.Duration minimum_interval = 3;
+}
+
+// WatchMetricsResponse wraps one live sample.
+message WatchMetricsResponse {
+  MetricsPoint point = 1;
+}

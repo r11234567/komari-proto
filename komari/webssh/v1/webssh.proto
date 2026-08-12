@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package komari.webssh.v1;
+
+import "google/protobuf/timestamp.proto";
+import "komari/common/v1/common.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/webssh/v1;websshv1";
+
+// WebSSHService owns interactive terminal sessions; this is the only bidi API.
+service WebSSHService {
+  // OpenSession carries terminal input and output until cancellation or close.
+  rpc OpenSession(stream OpenSessionRequest) returns (stream OpenSessionResponse);
+  // CloseSession records explicit cleanup with a short independent deadline.
+  rpc CloseSession(CloseSessionRequest) returns (CloseSessionResponse);
+}
+
+// SessionRequest carries exactly one client-side terminal event.
+message OpenSessionRequest {
+  oneof event {
+    SessionStart start = 1;
+    TerminalInput input = 2;
+    TerminalResize resize = 3;
+  }
+}
+
+// SessionResponse carries exactly one server-side terminal event.
+message OpenSessionResponse {
+  oneof event {
+    SessionStarted started = 1;
+    TerminalOutput output = 2;
+    SessionClosed closed = 3;
+  }
+}
+
+// SessionStart authorizes and opens one session with fresh 2FA.
+message SessionStart {
+  string agent_id = 1;
+  string shell = 2;
+  TerminalSize size = 3;
+  string working_directory = 4;
+  komari.common.v1.TwoFactorProof two_factor = 5;
+}
+
+// SessionStarted confirms one allocated session.
+message SessionStarted {
+  string session_id = 1;
+  google.protobuf.Timestamp started_at = 2;
+}
+
+// TerminalInput is one sequenced input chunk.
+message TerminalInput {
+  string session_id = 1;
+  uint64 sequence = 2;
+  bytes data = 3;
+}
+
+// TerminalOutput is one sequenced output chunk.
+message TerminalOutput {
+  string session_id = 1;
+  uint64 sequence = 2;
+  bytes data = 3;
+}
+
+// TerminalResize changes terminal dimensions without opening another lifecycle.
+message TerminalResize {
+  string session_id = 1;
+  TerminalSize size = 2;
+}
+
+// TerminalSize describes rows and columns.
+message TerminalSize {
+  uint32 rows = 1;
+  uint32 columns = 2;
+}
+
+// SessionClosed is the canonical session terminal state.
+message SessionClosed {
+  string session_id = 1;
+  CloseReason reason = 2;
+  optional int32 exit_code = 3;
+  google.protobuf.Timestamp closed_at = 4;
+}
+
+// CloseSessionRequest explicitly closes one session.
+message CloseSessionRequest {
+  string session_id = 1;
+  string reason = 2;
+}
+
+// CloseSessionResponse confirms canonical cleanup.
+message CloseSessionResponse {
+  SessionClosed closed = 1;
+}
+
+// CloseReason classifies terminal session cleanup.
+enum CloseReason {
+  CLOSE_REASON_UNSPECIFIED = 0;
+  CLOSE_REASON_NORMAL = 1;
+  CLOSE_REASON_CANCELLED = 2;
+  CLOSE_REASON_DEADLINE_EXCEEDED = 3;
+  CLOSE_REASON_REMOTE_CONTROL_DISABLED = 4;
+  CLOSE_REASON_AGENT_DISCONNECTED = 5;
+  CLOSE_REASON_FAILED = 6;
+}

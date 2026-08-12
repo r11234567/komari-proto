@@ -1,0 +1,48 @@
+name: Protocol
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  lint-generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: bufbuild/buf-setup-action@v1
+        with:
+          version: "1.57.0"
+      - name: Format
+        run: buf format --diff --exit-code
+      - name: Lint
+        run: buf lint
+      - name: Breaking
+        if: github.event_name == 'pull_request'
+        run: buf breaking --against '.git#branch=${{ github.base_ref }}'
+      - name: Generate
+        run: buf generate
+      - name: Generated files are current
+        run: git diff --exit-code -- gen
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Compile generated Go
+        run: go test ./...
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate npm package
+        run: npm pack --dry-run
+      - name: Package generated clients
+        run: tar -czf komari-proto-generated-${GITHUB_SHA}.tar.gz gen
+      - uses: actions/upload-artifact@v4
+        with:
+          name: komari-proto-generated-${{ github.sha }}
+          path: komari-proto-generated-${{ github.sha }}.tar.gz

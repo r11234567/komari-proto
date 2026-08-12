@@ -1,0 +1,131 @@
+syntax = "proto3";
+
+package komari.report.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/report/v1;reportv1";
+
+// AgentReportService accepts transport-neutral agent identity and health reports.
+service AgentReportService {
+  // SubmitReport stores one idempotent report.
+  rpc SubmitReport(SubmitReportRequest) returns (SubmitReportResponse);
+}
+
+// SubmitReportRequest contains one sequenced agent report.
+message SubmitReportRequest {
+  AgentReport report = 1;
+}
+
+// SubmitReportResponse acknowledges the stored report.
+message SubmitReportResponse {
+  bool accepted = 1;
+  uint64 accepted_sequence = 2;
+  google.protobuf.Duration next_report_interval = 3;
+  google.protobuf.Timestamp server_time = 4;
+}
+
+// AgentReport contains basic system state and capability declarations.
+message AgentReport {
+  string agent_id = 1;
+  uint64 sequence = 2;
+  google.protobuf.Timestamp observed_at = 3;
+  SystemInfo system = 4;
+  ResourceUsage resources = 5;
+  repeated NetworkInterface network_interfaces = 6;
+  repeated DiskInfo disks = 7;
+  AgentMetadata metadata = 8;
+}
+
+// SystemInfo describes the operating system and hardware baseline.
+message SystemInfo {
+  string hostname = 1;
+  string os = 2;
+  string platform = 3;
+  string platform_version = 4;
+  string kernel_version = 5;
+  string architecture = 6;
+  uint32 cpu_count = 7;
+  uint64 memory_total_bytes = 8;
+  google.protobuf.Duration uptime = 9;
+}
+
+// ResourceUsage is the current aggregate resource usage.
+message ResourceUsage {
+  double cpu_percent = 1;
+  uint64 memory_used_bytes = 2;
+  uint64 memory_available_bytes = 3;
+  double memory_percent = 4;
+  uint64 swap_used_bytes = 5;
+  uint64 swap_total_bytes = 6;
+  repeated double load_average = 7;
+  repeated GpuUsage gpus = 8;
+}
+
+// GpuUsage describes one visible GPU without failing the whole report when unavailable.
+message GpuUsage {
+  string id = 1;
+  string name = 2;
+  optional double utilization_percent = 3;
+  optional uint64 memory_used_bytes = 4;
+  optional uint64 memory_total_bytes = 5;
+  optional double temperature_celsius = 6;
+  string limitation = 7;
+}
+
+// NetworkInterface contains counters for one interface.
+message NetworkInterface {
+  string name = 1;
+  repeated string addresses = 2;
+  uint64 bytes_sent = 3;
+  uint64 bytes_received = 4;
+}
+
+// DiskInfo contains usage for one mount point.
+message DiskInfo {
+  string device = 1;
+  string mount_point = 2;
+  string file_system = 3;
+  uint64 total_bytes = 4;
+  uint64 used_bytes = 5;
+  double usage_percent = 6;
+}
+
+// AgentMetadata identifies the runtime and its applied configuration.
+message AgentMetadata {
+  string version = 1;
+  string git_commit = 2;
+  google.protobuf.Timestamp build_time = 3;
+  AgentCapabilities capabilities = 4;
+  uint64 applied_config_revision = 5;
+}
+
+// AgentCapabilities declares independently degradable runtime features.
+message AgentCapabilities {
+  PrivilegeMode privilege_mode = 1;
+  CapabilityState gpu = 2;
+  CapabilityState detailed_gpu = 3;
+  CapabilityState network_interfaces = 4;
+  CapabilityState mount_points = 5;
+  CapabilityState remote_control = 6;
+  CapabilityState service_control = 7;
+  CapabilityState execution = 8;
+  CapabilityState webssh = 9;
+}
+
+// CapabilityState describes whether a feature is available and why it is limited.
+message CapabilityState {
+  bool available = 1;
+  string limitation = 2;
+}
+
+// PrivilegeMode describes the effective privilege level without implying elevation.
+enum PrivilegeMode {
+  PRIVILEGE_MODE_UNSPECIFIED = 0;
+  PRIVILEGE_MODE_LINUX_ROOT = 1;
+  PRIVILEGE_MODE_LINUX_NON_ROOT = 2;
+  PRIVILEGE_MODE_WINDOWS_ADMINISTRATOR = 3;
+  PRIVILEGE_MODE_WINDOWS_STANDARD_USER = 4;
+  PRIVILEGE_MODE_OTHER = 5;
+}

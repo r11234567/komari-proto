@@ -1,0 +1,136 @@
+syntax = "proto3";
+
+package komari.exec.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "komari/common/v1/common.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/exec/v1;execv1";
+
+// ExecutionService owns non-interactive remote execution and cancellation.
+service ExecutionService {
+  // CreateExecution authorizes and queues a task; fresh 2FA is mandatory.
+  rpc CreateExecution(CreateExecutionRequest) returns (CreateExecutionResponse);
+  // WatchExecution streams task state and bounded output until a terminal state.
+  rpc WatchExecution(WatchExecutionRequest) returns (stream WatchExecutionResponse);
+  // CancelExecution requests a business-level terminal cancellation.
+  rpc CancelExecution(CancelExecutionRequest) returns (CancelExecutionResponse);
+  // GetExecution returns canonical state after reconnect or cleanup.
+  rpc GetExecution(GetExecutionRequest) returns (GetExecutionResponse);
+  // LeaseExecution lets an agent receive tasks on an independent stream.
+  rpc LeaseExecution(LeaseExecutionRequest) returns (stream LeaseExecutionResponse);
+  // ReportExecutionEvent records sequenced agent output and state.
+  rpc ReportExecutionEvent(ReportExecutionEventRequest) returns (ReportExecutionEventResponse);
+}
+
+// CreateExecutionRequest describes one bounded command execution.
+message CreateExecutionRequest {
+  string agent_id = 1;
+  string command = 2;
+  repeated string arguments = 3;
+  map<string, string> environment = 4;
+  string working_directory = 5;
+  google.protobuf.Duration timeout = 6;
+  uint64 max_output_bytes = 7;
+  string idempotency_key = 8;
+  komari.common.v1.TwoFactorProof two_factor = 9;
+}
+
+// CreateExecutionResponse returns the queued task.
+message CreateExecutionResponse {
+  Execution execution = 1;
+}
+
+// WatchExecutionRequest resumes after a sequence number.
+message WatchExecutionRequest {
+  string execution_id = 1;
+  uint64 after_sequence = 2;
+}
+
+// WatchExecutionResponse wraps one sequenced task event.
+message WatchExecutionResponse {
+  ExecutionEvent event = 1;
+}
+
+// CancelExecutionRequest requests task termination with a fresh proof.
+message CancelExecutionRequest {
+  string execution_id = 1;
+  string reason = 2;
+  komari.common.v1.TwoFactorProof two_factor = 3;
+}
+
+// CancelExecutionResponse returns the canonical cancellation state.
+message CancelExecutionResponse {
+  Execution execution = 1;
+}
+
+// GetExecutionRequest identifies one task.
+message GetExecutionRequest {
+  string execution_id = 1;
+}
+
+// GetExecutionResponse returns one task.
+message GetExecutionResponse {
+  Execution execution = 1;
+}
+
+// LeaseExecutionRequest opens an agent task assignment stream.
+message LeaseExecutionRequest {
+  string agent_id = 1;
+  string after_assignment_id = 2;
+}
+
+// LeaseExecutionResponse wraps one immutable task assignment.
+message LeaseExecutionResponse {
+  ExecutionAssignment assignment = 1;
+}
+
+// ExecutionAssignment is an immutable task assignment.
+message ExecutionAssignment {
+  string assignment_id = 1;
+  Execution execution = 2;
+  google.protobuf.Timestamp lease_expires_at = 3;
+}
+
+// ReportExecutionEventRequest records one idempotent execution event.
+message ReportExecutionEventRequest {
+  string agent_id = 1;
+  ExecutionEvent event = 2;
+}
+
+// ReportExecutionEventResponse acknowledges a sequence number.
+message ReportExecutionEventResponse {
+  uint64 accepted_sequence = 1;
+}
+
+// Execution is the canonical task state.
+message Execution {
+  string execution_id = 1;
+  string agent_id = 2;
+  komari.common.v1.OperationState state = 3;
+  google.protobuf.Timestamp created_at = 4;
+  optional google.protobuf.Timestamp started_at = 5;
+  optional google.protobuf.Timestamp finished_at = 6;
+  optional int32 exit_code = 7;
+  uint64 output_bytes = 8;
+}
+
+// ExecutionEvent is a sequenced state or output update.
+message ExecutionEvent {
+  string execution_id = 1;
+  uint64 sequence = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  komari.common.v1.OperationState state = 4;
+  OutputStream stream = 5;
+  bytes output = 6;
+  optional int32 exit_code = 7;
+  optional komari.common.v1.ErrorDetail error = 8;
+}
+
+// OutputStream identifies an execution output stream.
+enum OutputStream {
+  OUTPUT_STREAM_UNSPECIFIED = 0;
+  OUTPUT_STREAM_STDOUT = 1;
+  OUTPUT_STREAM_STDERR = 2;
+}
