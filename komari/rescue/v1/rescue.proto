@@ -56,6 +56,8 @@ message WatchRescueSessionRequest {
 
 message WatchRescueSessionResponse {
   RescueEvent event = 1;
+  // session is emitted initially and whenever its business state changes.
+  RescueSession session = 2;
 }
 
 message CancelRescueSessionRequest {
@@ -126,6 +128,7 @@ message RescueSession {
   optional google.protobuf.Timestamp finished_at = 8;
   uint64 output_bytes = 9;
   optional komari.common.v1.ErrorDetail error = 10;
+  optional google.protobuf.Timestamp deadline_at = 11;
 }
 
 message RescueEvent {
