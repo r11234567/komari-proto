@@ -15,6 +15,12 @@ service MetricsService {
   rpc UploadMetrics(stream UploadMetricsRequest) returns (UploadMetricsResponse);
   // QueryMetrics retrieves a bounded time window.
   rpc QueryMetrics(QueryMetricsRequest) returns (QueryMetricsResponse);
+  // ListMetricDefinitions returns the public metric catalog used by themes.
+  rpc ListMetricDefinitions(ListMetricDefinitionsRequest) returns (ListMetricDefinitionsResponse);
+  // ListPingTasks returns public latency targets without their secret addresses.
+  rpc ListPingTasks(ListPingTasksRequest) returns (ListPingTasksResponse);
+  // GetPingStats returns bounded server-computed latency statistics.
+  rpc GetPingStats(GetPingStatsRequest) returns (GetPingStatsResponse);
   // WatchMetrics streams live samples until cancellation or deadline.
   rpc WatchMetrics(WatchMetricsRequest) returns (stream WatchMetricsResponse);
 }
@@ -58,6 +64,10 @@ message QueryMetricsRequest {
   google.protobuf.Timestamp start_time = 3;
   google.protobuf.Timestamp end_time = 4;
   uint32 max_points = 5;
+  map<string, string> tags = 6;
+  optional bool downsample = 7;
+  string aggregation = 8;
+  bool fill_empty = 9;
 }
 
 // QueryMetricsResponse contains grouped metric series.
@@ -71,6 +81,89 @@ message MetricsSeries {
   string metric = 2;
   map<string, string> labels = 3;
   repeated MetricsPoint points = 4;
+  repeated QueryPoint query_points = 5;
+  string type = 6;
+  string unit = 7;
+  uint32 retention_days = 8;
+  bool downsampled = 9;
+  string aggregation = 10;
+  google.protobuf.Duration interval = 11;
+}
+
+// QueryPoint is one historical bucket. Missing value distinguishes an empty bucket from zero.
+message QueryPoint {
+  google.protobuf.Timestamp observed_at = 1;
+  optional double value = 2;
+  uint32 sample_count = 3;
+  map<string, string> labels = 4;
+}
+
+// ListMetricDefinitionsRequest is intentionally empty.
+message ListMetricDefinitionsRequest {}
+
+message ListMetricDefinitionsResponse {
+  repeated MetricDefinition definitions = 1;
+}
+
+message MetricDefinition {
+  string name = 1;
+  string description = 2;
+  string type = 3;
+  string unit = 4;
+  uint32 retention_days = 5;
+  map<string, string> metadata = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+// ListPingTasksRequest is intentionally empty.
+message ListPingTasksRequest {}
+
+message ListPingTasksResponse {
+  repeated PingTask tasks = 1;
+}
+
+message PingTask {
+  uint64 task_id = 1;
+  string name = 2;
+  string type = 3;
+  google.protobuf.Duration interval = 4;
+}
+
+message GetPingStatsRequest {
+  repeated string agent_ids = 1;
+  repeated uint64 task_ids = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp end_time = 4;
+  uint32 max_points = 5;
+}
+
+message GetPingStatsResponse {
+  google.protobuf.Timestamp start_time = 1;
+  google.protobuf.Timestamp end_time = 2;
+  google.protobuf.Duration interval = 3;
+  repeated PingStat stats = 4;
+}
+
+message PingStat {
+  string agent_id = 1;
+  uint64 task_id = 2;
+  string name = 3;
+  string type = 4;
+  google.protobuf.Duration probe_interval = 5;
+  map<string, string> tags = 6;
+  uint32 total = 7;
+  uint32 valid = 8;
+  double loss_percent = 9;
+  bool loss_approximate = 10;
+  optional double minimum = 11;
+  optional double maximum = 12;
+  optional double average = 13;
+  optional double latest = 14;
+  optional double p50 = 15;
+  optional double p99 = 16;
+  optional double standard_deviation = 17;
+  double p99_p50_ratio = 18;
 }
 
 // WatchMetricsRequest subscribes to current samples with a server-enforced interval.

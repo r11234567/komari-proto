@@ -77,6 +77,7 @@ message WatchAgentStatusRequest {
 // WatchAgentStatusResponse wraps one changed agent summary.
 message WatchAgentStatusResponse {
   AgentSummary agent = 1;
+  komari.report.v1.AgentReport latest_report = 2;
 }
 
 // AgentSummary is the stable browser node list representation.

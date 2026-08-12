@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file komari/metrics/v1/metrics.proto.
  */
 export const file_komari_metrics_v1_metrics: GenFile = /*@__PURE__*/
-  fileDesc("Ch9rb21hcmkvbWV0cmljcy92MS9tZXRyaWNzLnByb3RvEhFrb21hcmkubWV0cmljcy52MSLKAQoMTWV0cmljc1BvaW50Eg4KBm1ldHJpYxgBIAEoCRINCgV2YWx1ZRgCIAEoARIvCgtvYnNlcnZlZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASOwoGbGFiZWxzGAQgAygLMisua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50LkxhYmVsc0VudHJ5Gi0KC0xhYmVsc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiawoUU3VibWl0TWV0cmljc1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSEAoIc2VxdWVuY2UYAiABKAQSLwoGcG9pbnRzGAMgAygLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50IksKFVN1Ym1pdE1ldHJpY3NSZXNwb25zZRIZChFhY2NlcHRlZF9zZXF1ZW5jZRgBIAEoBBIXCg9hY2NlcHRlZF9wb2ludHMYAiABKA0iTgoUVXBsb2FkTWV0cmljc1JlcXVlc3QSNgoFYmF0Y2gYASABKAsyJy5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVxdWVzdCJLChVVcGxvYWRNZXRyaWNzUmVzcG9uc2USGQoRYWNjZXB0ZWRfc2VxdWVuY2UYASABKAQSFwoPYWNjZXB0ZWRfcG9pbnRzGAIgASgEIqsBChNRdWVyeU1ldHJpY3NSZXF1ZXN0EhEKCWFnZW50X2lkcxgBIAMoCRIPCgdtZXRyaWNzGAIgAygJEi4KCnN0YXJ0X3RpbWUYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiwKCGVuZF90aW1lGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBISCgptYXhfcG9pbnRzGAUgASgNIkgKFFF1ZXJ5TWV0cmljc1Jlc3BvbnNlEjAKBnNlcmllcxgBIAMoCzIgLmtvbWFyaS5tZXRyaWNzLnYxLk1ldHJpY3NTZXJpZXMizwEKDU1ldHJpY3NTZXJpZXMSEAoIYWdlbnRfaWQYASABKAkSDgoGbWV0cmljGAIgASgJEjwKBmxhYmVscxgDIAMoCzIsLmtvbWFyaS5tZXRyaWNzLnYxLk1ldHJpY3NTZXJpZXMuTGFiZWxzRW50cnkSLwoGcG9pbnRzGAQgAygLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50Gi0KC0xhYmVsc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEibgoTV2F0Y2hNZXRyaWNzUmVxdWVzdBIRCglhZ2VudF9pZHMYASADKAkSDwoHbWV0cmljcxgCIAMoCRIzChBtaW5pbXVtX2ludGVydmFsGAMgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uIkYKFFdhdGNoTWV0cmljc1Jlc3BvbnNlEi4KBXBvaW50GAEgASgLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50Mp4DCg5NZXRyaWNzU2VydmljZRJiCg1TdWJtaXRNZXRyaWNzEicua29tYXJpLm1ldHJpY3MudjEuU3VibWl0TWV0cmljc1JlcXVlc3QaKC5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVzcG9uc2USZAoNVXBsb2FkTWV0cmljcxInLmtvbWFyaS5tZXRyaWNzLnYxLlVwbG9hZE1ldHJpY3NSZXF1ZXN0Gigua29tYXJpLm1ldHJpY3MudjEuVXBsb2FkTWV0cmljc1Jlc3BvbnNlKAESXwoMUXVlcnlNZXRyaWNzEiYua29tYXJpLm1ldHJpY3MudjEuUXVlcnlNZXRyaWNzUmVxdWVzdBonLmtvbWFyaS5tZXRyaWNzLnYxLlF1ZXJ5TWV0cmljc1Jlc3BvbnNlEmEKDFdhdGNoTWV0cmljcxImLmtvbWFyaS5tZXRyaWNzLnYxLldhdGNoTWV0cmljc1JlcXVlc3QaJy5rb21hcmkubWV0cmljcy52MS5XYXRjaE1ldHJpY3NSZXNwb25zZTABQtEBChVjb20ua29tYXJpLm1ldHJpY3MudjFCDE1ldHJpY3NQcm90b1ABWkRnaXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9tZXRyaWNzL3YxO21ldHJpY3N2MaICA0tNWKoCEUtvbWFyaS5NZXRyaWNzLlYxygIRS29tYXJpXE1ldHJpY3NcVjHiAh1Lb21hcmlcTWV0cmljc1xWMVxHUEJNZXRhZGF0YeoCE0tvbWFyaTo6TWV0cmljczo6VjFiBnByb3RvMw", [file_google_protobuf_duration, file_google_protobuf_timestamp]);
+  fileDesc("Ch9rb21hcmkvbWV0cmljcy92MS9tZXRyaWNzLnByb3RvEhFrb21hcmkubWV0cmljcy52MSLKAQoMTWV0cmljc1BvaW50Eg4KBm1ldHJpYxgBIAEoCRINCgV2YWx1ZRgCIAEoARIvCgtvYnNlcnZlZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASOwoGbGFiZWxzGAQgAygLMisua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50LkxhYmVsc0VudHJ5Gi0KC0xhYmVsc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiawoUU3VibWl0TWV0cmljc1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSEAoIc2VxdWVuY2UYAiABKAQSLwoGcG9pbnRzGAMgAygLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50IksKFVN1Ym1pdE1ldHJpY3NSZXNwb25zZRIZChFhY2NlcHRlZF9zZXF1ZW5jZRgBIAEoBBIXCg9hY2NlcHRlZF9wb2ludHMYAiABKA0iTgoUVXBsb2FkTWV0cmljc1JlcXVlc3QSNgoFYmF0Y2gYASABKAsyJy5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVxdWVzdCJLChVVcGxvYWRNZXRyaWNzUmVzcG9uc2USGQoRYWNjZXB0ZWRfc2VxdWVuY2UYASABKAQSFwoPYWNjZXB0ZWRfcG9pbnRzGAIgASgEIukCChNRdWVyeU1ldHJpY3NSZXF1ZXN0EhEKCWFnZW50X2lkcxgBIAMoCRIPCgdtZXRyaWNzGAIgAygJEi4KCnN0YXJ0X3RpbWUYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiwKCGVuZF90aW1lGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBISCgptYXhfcG9pbnRzGAUgASgNEj4KBHRhZ3MYBiADKAsyMC5rb21hcmkubWV0cmljcy52MS5RdWVyeU1ldHJpY3NSZXF1ZXN0LlRhZ3NFbnRyeRIXCgpkb3duc2FtcGxlGAcgASgISACIAQESEwoLYWdncmVnYXRpb24YCCABKAkSEgoKZmlsbF9lbXB0eRgJIAEoCBorCglUYWdzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4AUINCgtfZG93bnNhbXBsZSJIChRRdWVyeU1ldHJpY3NSZXNwb25zZRIwCgZzZXJpZXMYASADKAsyIC5rb21hcmkubWV0cmljcy52MS5NZXRyaWNzU2VyaWVzIo8DCg1NZXRyaWNzU2VyaWVzEhAKCGFnZW50X2lkGAEgASgJEg4KBm1ldHJpYxgCIAEoCRI8CgZsYWJlbHMYAyADKAsyLC5rb21hcmkubWV0cmljcy52MS5NZXRyaWNzU2VyaWVzLkxhYmVsc0VudHJ5Ei8KBnBvaW50cxgEIAMoCzIfLmtvbWFyaS5tZXRyaWNzLnYxLk1ldHJpY3NQb2ludBIzCgxxdWVyeV9wb2ludHMYBSADKAsyHS5rb21hcmkubWV0cmljcy52MS5RdWVyeVBvaW50EgwKBHR5cGUYBiABKAkSDAoEdW5pdBgHIAEoCRIWCg5yZXRlbnRpb25fZGF5cxgIIAEoDRITCgtkb3duc2FtcGxlZBgJIAEoCBITCgthZ2dyZWdhdGlvbhgKIAEoCRIrCghpbnRlcnZhbBgLIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhotCgtMYWJlbHNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBItsBCgpRdWVyeVBvaW50Ei8KC29ic2VydmVkX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBISCgV2YWx1ZRgCIAEoAUgAiAEBEhQKDHNhbXBsZV9jb3VudBgDIAEoDRI5CgZsYWJlbHMYBCADKAsyKS5rb21hcmkubWV0cmljcy52MS5RdWVyeVBvaW50LkxhYmVsc0VudHJ5Gi0KC0xhYmVsc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAFCCAoGX3ZhbHVlIh4KHExpc3RNZXRyaWNEZWZpbml0aW9uc1JlcXVlc3QiWQodTGlzdE1ldHJpY0RlZmluaXRpb25zUmVzcG9uc2USOAoLZGVmaW5pdGlvbnMYASADKAsyIy5rb21hcmkubWV0cmljcy52MS5NZXRyaWNEZWZpbml0aW9uIr8CChBNZXRyaWNEZWZpbml0aW9uEgwKBG5hbWUYASABKAkSEwoLZGVzY3JpcHRpb24YAiABKAkSDAoEdHlwZRgDIAEoCRIMCgR1bml0GAQgASgJEhYKDnJldGVudGlvbl9kYXlzGAUgASgNEkMKCG1ldGFkYXRhGAYgAygLMjEua29tYXJpLm1ldHJpY3MudjEuTWV0cmljRGVmaW5pdGlvbi5NZXRhZGF0YUVudHJ5Ei4KCmNyZWF0ZWRfYXQYByABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYCCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wGi8KDU1ldGFkYXRhRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ASIWChRMaXN0UGluZ1Rhc2tzUmVxdWVzdCJDChVMaXN0UGluZ1Rhc2tzUmVzcG9uc2USKgoFdGFza3MYASADKAsyGy5rb21hcmkubWV0cmljcy52MS5QaW5nVGFzayJkCghQaW5nVGFzaxIPCgd0YXNrX2lkGAEgASgEEgwKBG5hbWUYAiABKAkSDAoEdHlwZRgDIAEoCRIrCghpbnRlcnZhbBgEIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbiKsAQoTR2V0UGluZ1N0YXRzUmVxdWVzdBIRCglhZ2VudF9pZHMYASADKAkSEAoIdGFza19pZHMYAiADKAQSLgoKc3RhcnRfdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLAoIZW5kX3RpbWUYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhIKCm1heF9wb2ludHMYBSABKA0izQEKFEdldFBpbmdTdGF0c1Jlc3BvbnNlEi4KCnN0YXJ0X3RpbWUYASABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiwKCGVuZF90aW1lGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIrCghpbnRlcnZhbBgDIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhIqCgVzdGF0cxgEIAMoCzIbLmtvbWFyaS5tZXRyaWNzLnYxLlBpbmdTdGF0IrUECghQaW5nU3RhdBIQCghhZ2VudF9pZBgBIAEoCRIPCgd0YXNrX2lkGAIgASgEEgwKBG5hbWUYAyABKAkSDAoEdHlwZRgEIAEoCRIxCg5wcm9iZV9pbnRlcnZhbBgFIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhIzCgR0YWdzGAYgAygLMiUua29tYXJpLm1ldHJpY3MudjEuUGluZ1N0YXQuVGFnc0VudHJ5Eg0KBXRvdGFsGAcgASgNEg0KBXZhbGlkGAggASgNEhQKDGxvc3NfcGVyY2VudBgJIAEoARIYChBsb3NzX2FwcHJveGltYXRlGAogASgIEhQKB21pbmltdW0YCyABKAFIAIgBARIUCgdtYXhpbXVtGAwgASgBSAGIAQESFAoHYXZlcmFnZRgNIAEoAUgCiAEBEhMKBmxhdGVzdBgOIAEoAUgDiAEBEhAKA3A1MBgPIAEoAUgEiAEBEhAKA3A5ORgQIAEoAUgFiAEBEh8KEnN0YW5kYXJkX2RldmlhdGlvbhgRIAEoAUgGiAEBEhUKDXA5OV9wNTBfcmF0aW8YEiABKAEaKwoJVGFnc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAFCCgoIX21pbmltdW1CCgoIX21heGltdW1CCgoIX2F2ZXJhZ2VCCQoHX2xhdGVzdEIGCgRfcDUwQgYKBF9wOTlCFQoTX3N0YW5kYXJkX2RldmlhdGlvbiJuChNXYXRjaE1ldHJpY3NSZXF1ZXN0EhEKCWFnZW50X2lkcxgBIAMoCRIPCgdtZXRyaWNzGAIgAygJEjMKEG1pbmltdW1faW50ZXJ2YWwYAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24iRgoUV2F0Y2hNZXRyaWNzUmVzcG9uc2USLgoFcG9pbnQYASABKAsyHy5rb21hcmkubWV0cmljcy52MS5NZXRyaWNzUG9pbnQy3wUKDk1ldHJpY3NTZXJ2aWNlEmIKDVN1Ym1pdE1ldHJpY3MSJy5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVxdWVzdBooLmtvbWFyaS5tZXRyaWNzLnYxLlN1Ym1pdE1ldHJpY3NSZXNwb25zZRJkCg1VcGxvYWRNZXRyaWNzEicua29tYXJpLm1ldHJpY3MudjEuVXBsb2FkTWV0cmljc1JlcXVlc3QaKC5rb21hcmkubWV0cmljcy52MS5VcGxvYWRNZXRyaWNzUmVzcG9uc2UoARJfCgxRdWVyeU1ldHJpY3MSJi5rb21hcmkubWV0cmljcy52MS5RdWVyeU1ldHJpY3NSZXF1ZXN0Gicua29tYXJpLm1ldHJpY3MudjEuUXVlcnlNZXRyaWNzUmVzcG9uc2USegoVTGlzdE1ldHJpY0RlZmluaXRpb25zEi8ua29tYXJpLm1ldHJpY3MudjEuTGlzdE1ldHJpY0RlZmluaXRpb25zUmVxdWVzdBowLmtvbWFyaS5tZXRyaWNzLnYxLkxpc3RNZXRyaWNEZWZpbml0aW9uc1Jlc3BvbnNlEmIKDUxpc3RQaW5nVGFza3MSJy5rb21hcmkubWV0cmljcy52MS5MaXN0UGluZ1Rhc2tzUmVxdWVzdBooLmtvbWFyaS5tZXRyaWNzLnYxLkxpc3RQaW5nVGFza3NSZXNwb25zZRJfCgxHZXRQaW5nU3RhdHMSJi5rb21hcmkubWV0cmljcy52MS5HZXRQaW5nU3RhdHNSZXF1ZXN0Gicua29tYXJpLm1ldHJpY3MudjEuR2V0UGluZ1N0YXRzUmVzcG9uc2USYQoMV2F0Y2hNZXRyaWNzEiYua29tYXJpLm1ldHJpY3MudjEuV2F0Y2hNZXRyaWNzUmVxdWVzdBonLmtvbWFyaS5tZXRyaWNzLnYxLldhdGNoTWV0cmljc1Jlc3BvbnNlMAFC0QEKFWNvbS5rb21hcmkubWV0cmljcy52MUIMTWV0cmljc1Byb3RvUAFaRGdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL21ldHJpY3MvdjE7bWV0cmljc3YxogIDS01YqgIRS29tYXJpLk1ldHJpY3MuVjHKAhFLb21hcmlcTWV0cmljc1xWMeICHUtvbWFyaVxNZXRyaWNzXFYxXEdQQk1ldGFkYXRh6gITS29tYXJpOjpNZXRyaWNzOjpWMWIGcHJvdG8z", [file_google_protobuf_duration, file_google_protobuf_timestamp]);
 
 /**
  * MetricsPoint is one typed metric sample.
@@ -174,6 +174,26 @@ export type QueryMetricsRequest = Message<"komari.metrics.v1.QueryMetricsRequest
    * @generated from field: uint32 max_points = 5;
    */
   maxPoints: number;
+
+  /**
+   * @generated from field: map<string, string> tags = 6;
+   */
+  tags: { [key: string]: string };
+
+  /**
+   * @generated from field: optional bool downsample = 7;
+   */
+  downsample?: boolean | undefined;
+
+  /**
+   * @generated from field: string aggregation = 8;
+   */
+  aggregation: string;
+
+  /**
+   * @generated from field: bool fill_empty = 9;
+   */
+  fillEmpty: boolean;
 };
 
 /**
@@ -227,6 +247,41 @@ export type MetricsSeries = Message<"komari.metrics.v1.MetricsSeries"> & {
    * @generated from field: repeated komari.metrics.v1.MetricsPoint points = 4;
    */
   points: MetricsPoint[];
+
+  /**
+   * @generated from field: repeated komari.metrics.v1.QueryPoint query_points = 5;
+   */
+  queryPoints: QueryPoint[];
+
+  /**
+   * @generated from field: string type = 6;
+   */
+  type: string;
+
+  /**
+   * @generated from field: string unit = 7;
+   */
+  unit: string;
+
+  /**
+   * @generated from field: uint32 retention_days = 8;
+   */
+  retentionDays: number;
+
+  /**
+   * @generated from field: bool downsampled = 9;
+   */
+  downsampled: boolean;
+
+  /**
+   * @generated from field: string aggregation = 10;
+   */
+  aggregation: string;
+
+  /**
+   * @generated from field: google.protobuf.Duration interval = 11;
+   */
+  interval?: Duration | undefined;
 };
 
 /**
@@ -235,6 +290,359 @@ export type MetricsSeries = Message<"komari.metrics.v1.MetricsSeries"> & {
  */
 export const MetricsSeriesSchema: GenMessage<MetricsSeries> = /*@__PURE__*/
   messageDesc(file_komari_metrics_v1_metrics, 7);
+
+/**
+ * QueryPoint is one historical bucket. Missing value distinguishes an empty bucket from zero.
+ *
+ * @generated from message komari.metrics.v1.QueryPoint
+ */
+export type QueryPoint = Message<"komari.metrics.v1.QueryPoint"> & {
+  /**
+   * @generated from field: google.protobuf.Timestamp observed_at = 1;
+   */
+  observedAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: optional double value = 2;
+   */
+  value?: number | undefined;
+
+  /**
+   * @generated from field: uint32 sample_count = 3;
+   */
+  sampleCount: number;
+
+  /**
+   * @generated from field: map<string, string> labels = 4;
+   */
+  labels: { [key: string]: string };
+};
+
+/**
+ * Describes the message komari.metrics.v1.QueryPoint.
+ * Use `create(QueryPointSchema)` to create a new message.
+ */
+export const QueryPointSchema: GenMessage<QueryPoint> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 8);
+
+/**
+ * ListMetricDefinitionsRequest is intentionally empty.
+ *
+ * @generated from message komari.metrics.v1.ListMetricDefinitionsRequest
+ */
+export type ListMetricDefinitionsRequest = Message<"komari.metrics.v1.ListMetricDefinitionsRequest"> & {
+};
+
+/**
+ * Describes the message komari.metrics.v1.ListMetricDefinitionsRequest.
+ * Use `create(ListMetricDefinitionsRequestSchema)` to create a new message.
+ */
+export const ListMetricDefinitionsRequestSchema: GenMessage<ListMetricDefinitionsRequest> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 9);
+
+/**
+ * @generated from message komari.metrics.v1.ListMetricDefinitionsResponse
+ */
+export type ListMetricDefinitionsResponse = Message<"komari.metrics.v1.ListMetricDefinitionsResponse"> & {
+  /**
+   * @generated from field: repeated komari.metrics.v1.MetricDefinition definitions = 1;
+   */
+  definitions: MetricDefinition[];
+};
+
+/**
+ * Describes the message komari.metrics.v1.ListMetricDefinitionsResponse.
+ * Use `create(ListMetricDefinitionsResponseSchema)` to create a new message.
+ */
+export const ListMetricDefinitionsResponseSchema: GenMessage<ListMetricDefinitionsResponse> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 10);
+
+/**
+ * @generated from message komari.metrics.v1.MetricDefinition
+ */
+export type MetricDefinition = Message<"komari.metrics.v1.MetricDefinition"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string description = 2;
+   */
+  description: string;
+
+  /**
+   * @generated from field: string type = 3;
+   */
+  type: string;
+
+  /**
+   * @generated from field: string unit = 4;
+   */
+  unit: string;
+
+  /**
+   * @generated from field: uint32 retention_days = 5;
+   */
+  retentionDays: number;
+
+  /**
+   * @generated from field: map<string, string> metadata = 6;
+   */
+  metadata: { [key: string]: string };
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 7;
+   */
+  createdAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp updated_at = 8;
+   */
+  updatedAt?: Timestamp | undefined;
+};
+
+/**
+ * Describes the message komari.metrics.v1.MetricDefinition.
+ * Use `create(MetricDefinitionSchema)` to create a new message.
+ */
+export const MetricDefinitionSchema: GenMessage<MetricDefinition> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 11);
+
+/**
+ * ListPingTasksRequest is intentionally empty.
+ *
+ * @generated from message komari.metrics.v1.ListPingTasksRequest
+ */
+export type ListPingTasksRequest = Message<"komari.metrics.v1.ListPingTasksRequest"> & {
+};
+
+/**
+ * Describes the message komari.metrics.v1.ListPingTasksRequest.
+ * Use `create(ListPingTasksRequestSchema)` to create a new message.
+ */
+export const ListPingTasksRequestSchema: GenMessage<ListPingTasksRequest> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 12);
+
+/**
+ * @generated from message komari.metrics.v1.ListPingTasksResponse
+ */
+export type ListPingTasksResponse = Message<"komari.metrics.v1.ListPingTasksResponse"> & {
+  /**
+   * @generated from field: repeated komari.metrics.v1.PingTask tasks = 1;
+   */
+  tasks: PingTask[];
+};
+
+/**
+ * Describes the message komari.metrics.v1.ListPingTasksResponse.
+ * Use `create(ListPingTasksResponseSchema)` to create a new message.
+ */
+export const ListPingTasksResponseSchema: GenMessage<ListPingTasksResponse> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 13);
+
+/**
+ * @generated from message komari.metrics.v1.PingTask
+ */
+export type PingTask = Message<"komari.metrics.v1.PingTask"> & {
+  /**
+   * @generated from field: uint64 task_id = 1;
+   */
+  taskId: bigint;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string type = 3;
+   */
+  type: string;
+
+  /**
+   * @generated from field: google.protobuf.Duration interval = 4;
+   */
+  interval?: Duration | undefined;
+};
+
+/**
+ * Describes the message komari.metrics.v1.PingTask.
+ * Use `create(PingTaskSchema)` to create a new message.
+ */
+export const PingTaskSchema: GenMessage<PingTask> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 14);
+
+/**
+ * @generated from message komari.metrics.v1.GetPingStatsRequest
+ */
+export type GetPingStatsRequest = Message<"komari.metrics.v1.GetPingStatsRequest"> & {
+  /**
+   * @generated from field: repeated string agent_ids = 1;
+   */
+  agentIds: string[];
+
+  /**
+   * @generated from field: repeated uint64 task_ids = 2;
+   */
+  taskIds: bigint[];
+
+  /**
+   * @generated from field: google.protobuf.Timestamp start_time = 3;
+   */
+  startTime?: Timestamp | undefined;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp end_time = 4;
+   */
+  endTime?: Timestamp | undefined;
+
+  /**
+   * @generated from field: uint32 max_points = 5;
+   */
+  maxPoints: number;
+};
+
+/**
+ * Describes the message komari.metrics.v1.GetPingStatsRequest.
+ * Use `create(GetPingStatsRequestSchema)` to create a new message.
+ */
+export const GetPingStatsRequestSchema: GenMessage<GetPingStatsRequest> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 15);
+
+/**
+ * @generated from message komari.metrics.v1.GetPingStatsResponse
+ */
+export type GetPingStatsResponse = Message<"komari.metrics.v1.GetPingStatsResponse"> & {
+  /**
+   * @generated from field: google.protobuf.Timestamp start_time = 1;
+   */
+  startTime?: Timestamp | undefined;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp end_time = 2;
+   */
+  endTime?: Timestamp | undefined;
+
+  /**
+   * @generated from field: google.protobuf.Duration interval = 3;
+   */
+  interval?: Duration | undefined;
+
+  /**
+   * @generated from field: repeated komari.metrics.v1.PingStat stats = 4;
+   */
+  stats: PingStat[];
+};
+
+/**
+ * Describes the message komari.metrics.v1.GetPingStatsResponse.
+ * Use `create(GetPingStatsResponseSchema)` to create a new message.
+ */
+export const GetPingStatsResponseSchema: GenMessage<GetPingStatsResponse> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 16);
+
+/**
+ * @generated from message komari.metrics.v1.PingStat
+ */
+export type PingStat = Message<"komari.metrics.v1.PingStat"> & {
+  /**
+   * @generated from field: string agent_id = 1;
+   */
+  agentId: string;
+
+  /**
+   * @generated from field: uint64 task_id = 2;
+   */
+  taskId: bigint;
+
+  /**
+   * @generated from field: string name = 3;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string type = 4;
+   */
+  type: string;
+
+  /**
+   * @generated from field: google.protobuf.Duration probe_interval = 5;
+   */
+  probeInterval?: Duration | undefined;
+
+  /**
+   * @generated from field: map<string, string> tags = 6;
+   */
+  tags: { [key: string]: string };
+
+  /**
+   * @generated from field: uint32 total = 7;
+   */
+  total: number;
+
+  /**
+   * @generated from field: uint32 valid = 8;
+   */
+  valid: number;
+
+  /**
+   * @generated from field: double loss_percent = 9;
+   */
+  lossPercent: number;
+
+  /**
+   * @generated from field: bool loss_approximate = 10;
+   */
+  lossApproximate: boolean;
+
+  /**
+   * @generated from field: optional double minimum = 11;
+   */
+  minimum?: number | undefined;
+
+  /**
+   * @generated from field: optional double maximum = 12;
+   */
+  maximum?: number | undefined;
+
+  /**
+   * @generated from field: optional double average = 13;
+   */
+  average?: number | undefined;
+
+  /**
+   * @generated from field: optional double latest = 14;
+   */
+  latest?: number | undefined;
+
+  /**
+   * @generated from field: optional double p50 = 15;
+   */
+  p50?: number | undefined;
+
+  /**
+   * @generated from field: optional double p99 = 16;
+   */
+  p99?: number | undefined;
+
+  /**
+   * @generated from field: optional double standard_deviation = 17;
+   */
+  standardDeviation?: number | undefined;
+
+  /**
+   * @generated from field: double p99_p50_ratio = 18;
+   */
+  p99P50Ratio: number;
+};
+
+/**
+ * Describes the message komari.metrics.v1.PingStat.
+ * Use `create(PingStatSchema)` to create a new message.
+ */
+export const PingStatSchema: GenMessage<PingStat> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 17);
 
 /**
  * WatchMetricsRequest subscribes to current samples with a server-enforced interval.
@@ -263,7 +671,7 @@ export type WatchMetricsRequest = Message<"komari.metrics.v1.WatchMetricsRequest
  * Use `create(WatchMetricsRequestSchema)` to create a new message.
  */
 export const WatchMetricsRequestSchema: GenMessage<WatchMetricsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 8);
+  messageDesc(file_komari_metrics_v1_metrics, 18);
 
 /**
  * WatchMetricsResponse wraps one live sample.
@@ -282,7 +690,7 @@ export type WatchMetricsResponse = Message<"komari.metrics.v1.WatchMetricsRespon
  * Use `create(WatchMetricsResponseSchema)` to create a new message.
  */
 export const WatchMetricsResponseSchema: GenMessage<WatchMetricsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 9);
+  messageDesc(file_komari_metrics_v1_metrics, 19);
 
 /**
  * MetricsService owns metric ingest, bounded queries, and live subscriptions.
@@ -319,6 +727,36 @@ export const MetricsService: GenService<{
     methodKind: "unary";
     input: typeof QueryMetricsRequestSchema;
     output: typeof QueryMetricsResponseSchema;
+  },
+  /**
+   * ListMetricDefinitions returns the public metric catalog used by themes.
+   *
+   * @generated from rpc komari.metrics.v1.MetricsService.ListMetricDefinitions
+   */
+  listMetricDefinitions: {
+    methodKind: "unary";
+    input: typeof ListMetricDefinitionsRequestSchema;
+    output: typeof ListMetricDefinitionsResponseSchema;
+  },
+  /**
+   * ListPingTasks returns public latency targets without their secret addresses.
+   *
+   * @generated from rpc komari.metrics.v1.MetricsService.ListPingTasks
+   */
+  listPingTasks: {
+    methodKind: "unary";
+    input: typeof ListPingTasksRequestSchema;
+    output: typeof ListPingTasksResponseSchema;
+  },
+  /**
+   * GetPingStats returns bounded server-computed latency statistics.
+   *
+   * @generated from rpc komari.metrics.v1.MetricsService.GetPingStats
+   */
+  getPingStats: {
+    methodKind: "unary";
+    input: typeof GetPingStatsRequestSchema;
+    output: typeof GetPingStatsResponseSchema;
   },
   /**
    * WatchMetrics streams live samples until cancellation or deadline.

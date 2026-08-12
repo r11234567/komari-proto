@@ -42,6 +42,15 @@ const (
 	// MetricsServiceQueryMetricsProcedure is the fully-qualified name of the MetricsService's
 	// QueryMetrics RPC.
 	MetricsServiceQueryMetricsProcedure = "/komari.metrics.v1.MetricsService/QueryMetrics"
+	// MetricsServiceListMetricDefinitionsProcedure is the fully-qualified name of the MetricsService's
+	// ListMetricDefinitions RPC.
+	MetricsServiceListMetricDefinitionsProcedure = "/komari.metrics.v1.MetricsService/ListMetricDefinitions"
+	// MetricsServiceListPingTasksProcedure is the fully-qualified name of the MetricsService's
+	// ListPingTasks RPC.
+	MetricsServiceListPingTasksProcedure = "/komari.metrics.v1.MetricsService/ListPingTasks"
+	// MetricsServiceGetPingStatsProcedure is the fully-qualified name of the MetricsService's
+	// GetPingStats RPC.
+	MetricsServiceGetPingStatsProcedure = "/komari.metrics.v1.MetricsService/GetPingStats"
 	// MetricsServiceWatchMetricsProcedure is the fully-qualified name of the MetricsService's
 	// WatchMetrics RPC.
 	MetricsServiceWatchMetricsProcedure = "/komari.metrics.v1.MetricsService/WatchMetrics"
@@ -55,6 +64,12 @@ type MetricsServiceClient interface {
 	UploadMetrics(context.Context) *connect.ClientStreamForClient[v1.UploadMetricsRequest, v1.UploadMetricsResponse]
 	// QueryMetrics retrieves a bounded time window.
 	QueryMetrics(context.Context, *connect.Request[v1.QueryMetricsRequest]) (*connect.Response[v1.QueryMetricsResponse], error)
+	// ListMetricDefinitions returns the public metric catalog used by themes.
+	ListMetricDefinitions(context.Context, *connect.Request[v1.ListMetricDefinitionsRequest]) (*connect.Response[v1.ListMetricDefinitionsResponse], error)
+	// ListPingTasks returns public latency targets without their secret addresses.
+	ListPingTasks(context.Context, *connect.Request[v1.ListPingTasksRequest]) (*connect.Response[v1.ListPingTasksResponse], error)
+	// GetPingStats returns bounded server-computed latency statistics.
+	GetPingStats(context.Context, *connect.Request[v1.GetPingStatsRequest]) (*connect.Response[v1.GetPingStatsResponse], error)
 	// WatchMetrics streams live samples until cancellation or deadline.
 	WatchMetrics(context.Context, *connect.Request[v1.WatchMetricsRequest]) (*connect.ServerStreamForClient[v1.WatchMetricsResponse], error)
 }
@@ -88,6 +103,24 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			connect.WithSchema(metricsServiceMethods.ByName("QueryMetrics")),
 			connect.WithClientOptions(opts...),
 		),
+		listMetricDefinitions: connect.NewClient[v1.ListMetricDefinitionsRequest, v1.ListMetricDefinitionsResponse](
+			httpClient,
+			baseURL+MetricsServiceListMetricDefinitionsProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("ListMetricDefinitions")),
+			connect.WithClientOptions(opts...),
+		),
+		listPingTasks: connect.NewClient[v1.ListPingTasksRequest, v1.ListPingTasksResponse](
+			httpClient,
+			baseURL+MetricsServiceListPingTasksProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("ListPingTasks")),
+			connect.WithClientOptions(opts...),
+		),
+		getPingStats: connect.NewClient[v1.GetPingStatsRequest, v1.GetPingStatsResponse](
+			httpClient,
+			baseURL+MetricsServiceGetPingStatsProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("GetPingStats")),
+			connect.WithClientOptions(opts...),
+		),
 		watchMetrics: connect.NewClient[v1.WatchMetricsRequest, v1.WatchMetricsResponse](
 			httpClient,
 			baseURL+MetricsServiceWatchMetricsProcedure,
@@ -99,10 +132,13 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 
 // metricsServiceClient implements MetricsServiceClient.
 type metricsServiceClient struct {
-	submitMetrics *connect.Client[v1.SubmitMetricsRequest, v1.SubmitMetricsResponse]
-	uploadMetrics *connect.Client[v1.UploadMetricsRequest, v1.UploadMetricsResponse]
-	queryMetrics  *connect.Client[v1.QueryMetricsRequest, v1.QueryMetricsResponse]
-	watchMetrics  *connect.Client[v1.WatchMetricsRequest, v1.WatchMetricsResponse]
+	submitMetrics         *connect.Client[v1.SubmitMetricsRequest, v1.SubmitMetricsResponse]
+	uploadMetrics         *connect.Client[v1.UploadMetricsRequest, v1.UploadMetricsResponse]
+	queryMetrics          *connect.Client[v1.QueryMetricsRequest, v1.QueryMetricsResponse]
+	listMetricDefinitions *connect.Client[v1.ListMetricDefinitionsRequest, v1.ListMetricDefinitionsResponse]
+	listPingTasks         *connect.Client[v1.ListPingTasksRequest, v1.ListPingTasksResponse]
+	getPingStats          *connect.Client[v1.GetPingStatsRequest, v1.GetPingStatsResponse]
+	watchMetrics          *connect.Client[v1.WatchMetricsRequest, v1.WatchMetricsResponse]
 }
 
 // SubmitMetrics calls komari.metrics.v1.MetricsService.SubmitMetrics.
@@ -120,6 +156,21 @@ func (c *metricsServiceClient) QueryMetrics(ctx context.Context, req *connect.Re
 	return c.queryMetrics.CallUnary(ctx, req)
 }
 
+// ListMetricDefinitions calls komari.metrics.v1.MetricsService.ListMetricDefinitions.
+func (c *metricsServiceClient) ListMetricDefinitions(ctx context.Context, req *connect.Request[v1.ListMetricDefinitionsRequest]) (*connect.Response[v1.ListMetricDefinitionsResponse], error) {
+	return c.listMetricDefinitions.CallUnary(ctx, req)
+}
+
+// ListPingTasks calls komari.metrics.v1.MetricsService.ListPingTasks.
+func (c *metricsServiceClient) ListPingTasks(ctx context.Context, req *connect.Request[v1.ListPingTasksRequest]) (*connect.Response[v1.ListPingTasksResponse], error) {
+	return c.listPingTasks.CallUnary(ctx, req)
+}
+
+// GetPingStats calls komari.metrics.v1.MetricsService.GetPingStats.
+func (c *metricsServiceClient) GetPingStats(ctx context.Context, req *connect.Request[v1.GetPingStatsRequest]) (*connect.Response[v1.GetPingStatsResponse], error) {
+	return c.getPingStats.CallUnary(ctx, req)
+}
+
 // WatchMetrics calls komari.metrics.v1.MetricsService.WatchMetrics.
 func (c *metricsServiceClient) WatchMetrics(ctx context.Context, req *connect.Request[v1.WatchMetricsRequest]) (*connect.ServerStreamForClient[v1.WatchMetricsResponse], error) {
 	return c.watchMetrics.CallServerStream(ctx, req)
@@ -133,6 +184,12 @@ type MetricsServiceHandler interface {
 	UploadMetrics(context.Context, *connect.ClientStream[v1.UploadMetricsRequest]) (*connect.Response[v1.UploadMetricsResponse], error)
 	// QueryMetrics retrieves a bounded time window.
 	QueryMetrics(context.Context, *connect.Request[v1.QueryMetricsRequest]) (*connect.Response[v1.QueryMetricsResponse], error)
+	// ListMetricDefinitions returns the public metric catalog used by themes.
+	ListMetricDefinitions(context.Context, *connect.Request[v1.ListMetricDefinitionsRequest]) (*connect.Response[v1.ListMetricDefinitionsResponse], error)
+	// ListPingTasks returns public latency targets without their secret addresses.
+	ListPingTasks(context.Context, *connect.Request[v1.ListPingTasksRequest]) (*connect.Response[v1.ListPingTasksResponse], error)
+	// GetPingStats returns bounded server-computed latency statistics.
+	GetPingStats(context.Context, *connect.Request[v1.GetPingStatsRequest]) (*connect.Response[v1.GetPingStatsResponse], error)
 	// WatchMetrics streams live samples until cancellation or deadline.
 	WatchMetrics(context.Context, *connect.Request[v1.WatchMetricsRequest], *connect.ServerStream[v1.WatchMetricsResponse]) error
 }
@@ -162,6 +219,24 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 		connect.WithSchema(metricsServiceMethods.ByName("QueryMetrics")),
 		connect.WithHandlerOptions(opts...),
 	)
+	metricsServiceListMetricDefinitionsHandler := connect.NewUnaryHandler(
+		MetricsServiceListMetricDefinitionsProcedure,
+		svc.ListMetricDefinitions,
+		connect.WithSchema(metricsServiceMethods.ByName("ListMetricDefinitions")),
+		connect.WithHandlerOptions(opts...),
+	)
+	metricsServiceListPingTasksHandler := connect.NewUnaryHandler(
+		MetricsServiceListPingTasksProcedure,
+		svc.ListPingTasks,
+		connect.WithSchema(metricsServiceMethods.ByName("ListPingTasks")),
+		connect.WithHandlerOptions(opts...),
+	)
+	metricsServiceGetPingStatsHandler := connect.NewUnaryHandler(
+		MetricsServiceGetPingStatsProcedure,
+		svc.GetPingStats,
+		connect.WithSchema(metricsServiceMethods.ByName("GetPingStats")),
+		connect.WithHandlerOptions(opts...),
+	)
 	metricsServiceWatchMetricsHandler := connect.NewServerStreamHandler(
 		MetricsServiceWatchMetricsProcedure,
 		svc.WatchMetrics,
@@ -176,6 +251,12 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 			metricsServiceUploadMetricsHandler.ServeHTTP(w, r)
 		case MetricsServiceQueryMetricsProcedure:
 			metricsServiceQueryMetricsHandler.ServeHTTP(w, r)
+		case MetricsServiceListMetricDefinitionsProcedure:
+			metricsServiceListMetricDefinitionsHandler.ServeHTTP(w, r)
+		case MetricsServiceListPingTasksProcedure:
+			metricsServiceListPingTasksHandler.ServeHTTP(w, r)
+		case MetricsServiceGetPingStatsProcedure:
+			metricsServiceGetPingStatsHandler.ServeHTTP(w, r)
 		case MetricsServiceWatchMetricsProcedure:
 			metricsServiceWatchMetricsHandler.ServeHTTP(w, r)
 		default:
@@ -197,6 +278,18 @@ func (UnimplementedMetricsServiceHandler) UploadMetrics(context.Context, *connec
 
 func (UnimplementedMetricsServiceHandler) QueryMetrics(context.Context, *connect.Request[v1.QueryMetricsRequest]) (*connect.Response[v1.QueryMetricsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.QueryMetrics is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) ListMetricDefinitions(context.Context, *connect.Request[v1.ListMetricDefinitionsRequest]) (*connect.Response[v1.ListMetricDefinitionsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.ListMetricDefinitions is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) ListPingTasks(context.Context, *connect.Request[v1.ListPingTasksRequest]) (*connect.Response[v1.ListPingTasksResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.ListPingTasks is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) GetPingStats(context.Context, *connect.Request[v1.GetPingStatsRequest]) (*connect.Response[v1.GetPingStatsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.GetPingStats is not implemented"))
 }
 
 func (UnimplementedMetricsServiceHandler) WatchMetrics(context.Context, *connect.Request[v1.WatchMetricsRequest], *connect.ServerStream[v1.WatchMetricsResponse]) error {

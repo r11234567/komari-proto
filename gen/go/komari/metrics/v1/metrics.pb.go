@@ -312,6 +312,10 @@ type QueryMetricsRequest struct {
 	StartTime     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
 	EndTime       *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
 	MaxPoints     uint32                 `protobuf:"varint,5,opt,name=max_points,json=maxPoints,proto3" json:"max_points,omitempty"`
+	Tags          map[string]string      `protobuf:"bytes,6,rep,name=tags,proto3" json:"tags,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Downsample    *bool                  `protobuf:"varint,7,opt,name=downsample,proto3,oneof" json:"downsample,omitempty"`
+	Aggregation   string                 `protobuf:"bytes,8,opt,name=aggregation,proto3" json:"aggregation,omitempty"`
+	FillEmpty     bool                   `protobuf:"varint,9,opt,name=fill_empty,json=fillEmpty,proto3" json:"fill_empty,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -381,6 +385,34 @@ func (x *QueryMetricsRequest) GetMaxPoints() uint32 {
 	return 0
 }
 
+func (x *QueryMetricsRequest) GetTags() map[string]string {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
+func (x *QueryMetricsRequest) GetDownsample() bool {
+	if x != nil && x.Downsample != nil {
+		return *x.Downsample
+	}
+	return false
+}
+
+func (x *QueryMetricsRequest) GetAggregation() string {
+	if x != nil {
+		return x.Aggregation
+	}
+	return ""
+}
+
+func (x *QueryMetricsRequest) GetFillEmpty() bool {
+	if x != nil {
+		return x.FillEmpty
+	}
+	return false
+}
+
 // QueryMetricsResponse contains grouped metric series.
 type QueryMetricsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -433,6 +465,13 @@ type MetricsSeries struct {
 	Metric        string                 `protobuf:"bytes,2,opt,name=metric,proto3" json:"metric,omitempty"`
 	Labels        map[string]string      `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	Points        []*MetricsPoint        `protobuf:"bytes,4,rep,name=points,proto3" json:"points,omitempty"`
+	QueryPoints   []*QueryPoint          `protobuf:"bytes,5,rep,name=query_points,json=queryPoints,proto3" json:"query_points,omitempty"`
+	Type          string                 `protobuf:"bytes,6,opt,name=type,proto3" json:"type,omitempty"`
+	Unit          string                 `protobuf:"bytes,7,opt,name=unit,proto3" json:"unit,omitempty"`
+	RetentionDays uint32                 `protobuf:"varint,8,opt,name=retention_days,json=retentionDays,proto3" json:"retention_days,omitempty"`
+	Downsampled   bool                   `protobuf:"varint,9,opt,name=downsampled,proto3" json:"downsampled,omitempty"`
+	Aggregation   string                 `protobuf:"bytes,10,opt,name=aggregation,proto3" json:"aggregation,omitempty"`
+	Interval      *durationpb.Duration   `protobuf:"bytes,11,opt,name=interval,proto3" json:"interval,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -495,6 +534,778 @@ func (x *MetricsSeries) GetPoints() []*MetricsPoint {
 	return nil
 }
 
+func (x *MetricsSeries) GetQueryPoints() []*QueryPoint {
+	if x != nil {
+		return x.QueryPoints
+	}
+	return nil
+}
+
+func (x *MetricsSeries) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *MetricsSeries) GetUnit() string {
+	if x != nil {
+		return x.Unit
+	}
+	return ""
+}
+
+func (x *MetricsSeries) GetRetentionDays() uint32 {
+	if x != nil {
+		return x.RetentionDays
+	}
+	return 0
+}
+
+func (x *MetricsSeries) GetDownsampled() bool {
+	if x != nil {
+		return x.Downsampled
+	}
+	return false
+}
+
+func (x *MetricsSeries) GetAggregation() string {
+	if x != nil {
+		return x.Aggregation
+	}
+	return ""
+}
+
+func (x *MetricsSeries) GetInterval() *durationpb.Duration {
+	if x != nil {
+		return x.Interval
+	}
+	return nil
+}
+
+// QueryPoint is one historical bucket. Missing value distinguishes an empty bucket from zero.
+type QueryPoint struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ObservedAt    *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	Value         *float64               `protobuf:"fixed64,2,opt,name=value,proto3,oneof" json:"value,omitempty"`
+	SampleCount   uint32                 `protobuf:"varint,3,opt,name=sample_count,json=sampleCount,proto3" json:"sample_count,omitempty"`
+	Labels        map[string]string      `protobuf:"bytes,4,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryPoint) Reset() {
+	*x = QueryPoint{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryPoint) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryPoint) ProtoMessage() {}
+
+func (x *QueryPoint) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryPoint.ProtoReflect.Descriptor instead.
+func (*QueryPoint) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *QueryPoint) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *QueryPoint) GetValue() float64 {
+	if x != nil && x.Value != nil {
+		return *x.Value
+	}
+	return 0
+}
+
+func (x *QueryPoint) GetSampleCount() uint32 {
+	if x != nil {
+		return x.SampleCount
+	}
+	return 0
+}
+
+func (x *QueryPoint) GetLabels() map[string]string {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+// ListMetricDefinitionsRequest is intentionally empty.
+type ListMetricDefinitionsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListMetricDefinitionsRequest) Reset() {
+	*x = ListMetricDefinitionsRequest{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListMetricDefinitionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListMetricDefinitionsRequest) ProtoMessage() {}
+
+func (x *ListMetricDefinitionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListMetricDefinitionsRequest.ProtoReflect.Descriptor instead.
+func (*ListMetricDefinitionsRequest) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{9}
+}
+
+type ListMetricDefinitionsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Definitions   []*MetricDefinition    `protobuf:"bytes,1,rep,name=definitions,proto3" json:"definitions,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListMetricDefinitionsResponse) Reset() {
+	*x = ListMetricDefinitionsResponse{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListMetricDefinitionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListMetricDefinitionsResponse) ProtoMessage() {}
+
+func (x *ListMetricDefinitionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListMetricDefinitionsResponse.ProtoReflect.Descriptor instead.
+func (*ListMetricDefinitionsResponse) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ListMetricDefinitionsResponse) GetDefinitions() []*MetricDefinition {
+	if x != nil {
+		return x.Definitions
+	}
+	return nil
+}
+
+type MetricDefinition struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	Type          string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
+	Unit          string                 `protobuf:"bytes,4,opt,name=unit,proto3" json:"unit,omitempty"`
+	RetentionDays uint32                 `protobuf:"varint,5,opt,name=retention_days,json=retentionDays,proto3" json:"retention_days,omitempty"`
+	Metadata      map[string]string      `protobuf:"bytes,6,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MetricDefinition) Reset() {
+	*x = MetricDefinition{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MetricDefinition) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MetricDefinition) ProtoMessage() {}
+
+func (x *MetricDefinition) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MetricDefinition.ProtoReflect.Descriptor instead.
+func (*MetricDefinition) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *MetricDefinition) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *MetricDefinition) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *MetricDefinition) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *MetricDefinition) GetUnit() string {
+	if x != nil {
+		return x.Unit
+	}
+	return ""
+}
+
+func (x *MetricDefinition) GetRetentionDays() uint32 {
+	if x != nil {
+		return x.RetentionDays
+	}
+	return 0
+}
+
+func (x *MetricDefinition) GetMetadata() map[string]string {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *MetricDefinition) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *MetricDefinition) GetUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return nil
+}
+
+// ListPingTasksRequest is intentionally empty.
+type ListPingTasksRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPingTasksRequest) Reset() {
+	*x = ListPingTasksRequest{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPingTasksRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPingTasksRequest) ProtoMessage() {}
+
+func (x *ListPingTasksRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPingTasksRequest.ProtoReflect.Descriptor instead.
+func (*ListPingTasksRequest) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{12}
+}
+
+type ListPingTasksResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Tasks         []*PingTask            `protobuf:"bytes,1,rep,name=tasks,proto3" json:"tasks,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPingTasksResponse) Reset() {
+	*x = ListPingTasksResponse{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPingTasksResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPingTasksResponse) ProtoMessage() {}
+
+func (x *ListPingTasksResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPingTasksResponse.ProtoReflect.Descriptor instead.
+func (*ListPingTasksResponse) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ListPingTasksResponse) GetTasks() []*PingTask {
+	if x != nil {
+		return x.Tasks
+	}
+	return nil
+}
+
+type PingTask struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TaskId        uint64                 `protobuf:"varint,1,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Type          string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
+	Interval      *durationpb.Duration   `protobuf:"bytes,4,opt,name=interval,proto3" json:"interval,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PingTask) Reset() {
+	*x = PingTask{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PingTask) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PingTask) ProtoMessage() {}
+
+func (x *PingTask) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PingTask.ProtoReflect.Descriptor instead.
+func (*PingTask) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *PingTask) GetTaskId() uint64 {
+	if x != nil {
+		return x.TaskId
+	}
+	return 0
+}
+
+func (x *PingTask) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PingTask) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *PingTask) GetInterval() *durationpb.Duration {
+	if x != nil {
+		return x.Interval
+	}
+	return nil
+}
+
+type GetPingStatsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AgentIds      []string               `protobuf:"bytes,1,rep,name=agent_ids,json=agentIds,proto3" json:"agent_ids,omitempty"`
+	TaskIds       []uint64               `protobuf:"varint,2,rep,packed,name=task_ids,json=taskIds,proto3" json:"task_ids,omitempty"`
+	StartTime     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime       *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	MaxPoints     uint32                 `protobuf:"varint,5,opt,name=max_points,json=maxPoints,proto3" json:"max_points,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPingStatsRequest) Reset() {
+	*x = GetPingStatsRequest{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPingStatsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPingStatsRequest) ProtoMessage() {}
+
+func (x *GetPingStatsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPingStatsRequest.ProtoReflect.Descriptor instead.
+func (*GetPingStatsRequest) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GetPingStatsRequest) GetAgentIds() []string {
+	if x != nil {
+		return x.AgentIds
+	}
+	return nil
+}
+
+func (x *GetPingStatsRequest) GetTaskIds() []uint64 {
+	if x != nil {
+		return x.TaskIds
+	}
+	return nil
+}
+
+func (x *GetPingStatsRequest) GetStartTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartTime
+	}
+	return nil
+}
+
+func (x *GetPingStatsRequest) GetEndTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.EndTime
+	}
+	return nil
+}
+
+func (x *GetPingStatsRequest) GetMaxPoints() uint32 {
+	if x != nil {
+		return x.MaxPoints
+	}
+	return 0
+}
+
+type GetPingStatsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	StartTime     *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime       *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	Interval      *durationpb.Duration   `protobuf:"bytes,3,opt,name=interval,proto3" json:"interval,omitempty"`
+	Stats         []*PingStat            `protobuf:"bytes,4,rep,name=stats,proto3" json:"stats,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPingStatsResponse) Reset() {
+	*x = GetPingStatsResponse{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPingStatsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPingStatsResponse) ProtoMessage() {}
+
+func (x *GetPingStatsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPingStatsResponse.ProtoReflect.Descriptor instead.
+func (*GetPingStatsResponse) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetPingStatsResponse) GetStartTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartTime
+	}
+	return nil
+}
+
+func (x *GetPingStatsResponse) GetEndTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.EndTime
+	}
+	return nil
+}
+
+func (x *GetPingStatsResponse) GetInterval() *durationpb.Duration {
+	if x != nil {
+		return x.Interval
+	}
+	return nil
+}
+
+func (x *GetPingStatsResponse) GetStats() []*PingStat {
+	if x != nil {
+		return x.Stats
+	}
+	return nil
+}
+
+type PingStat struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	AgentId           string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	TaskId            uint64                 `protobuf:"varint,2,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	Name              string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Type              string                 `protobuf:"bytes,4,opt,name=type,proto3" json:"type,omitempty"`
+	ProbeInterval     *durationpb.Duration   `protobuf:"bytes,5,opt,name=probe_interval,json=probeInterval,proto3" json:"probe_interval,omitempty"`
+	Tags              map[string]string      `protobuf:"bytes,6,rep,name=tags,proto3" json:"tags,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Total             uint32                 `protobuf:"varint,7,opt,name=total,proto3" json:"total,omitempty"`
+	Valid             uint32                 `protobuf:"varint,8,opt,name=valid,proto3" json:"valid,omitempty"`
+	LossPercent       float64                `protobuf:"fixed64,9,opt,name=loss_percent,json=lossPercent,proto3" json:"loss_percent,omitempty"`
+	LossApproximate   bool                   `protobuf:"varint,10,opt,name=loss_approximate,json=lossApproximate,proto3" json:"loss_approximate,omitempty"`
+	Minimum           *float64               `protobuf:"fixed64,11,opt,name=minimum,proto3,oneof" json:"minimum,omitempty"`
+	Maximum           *float64               `protobuf:"fixed64,12,opt,name=maximum,proto3,oneof" json:"maximum,omitempty"`
+	Average           *float64               `protobuf:"fixed64,13,opt,name=average,proto3,oneof" json:"average,omitempty"`
+	Latest            *float64               `protobuf:"fixed64,14,opt,name=latest,proto3,oneof" json:"latest,omitempty"`
+	P50               *float64               `protobuf:"fixed64,15,opt,name=p50,proto3,oneof" json:"p50,omitempty"`
+	P99               *float64               `protobuf:"fixed64,16,opt,name=p99,proto3,oneof" json:"p99,omitempty"`
+	StandardDeviation *float64               `protobuf:"fixed64,17,opt,name=standard_deviation,json=standardDeviation,proto3,oneof" json:"standard_deviation,omitempty"`
+	P99P50Ratio       float64                `protobuf:"fixed64,18,opt,name=p99_p50_ratio,json=p99P50Ratio,proto3" json:"p99_p50_ratio,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *PingStat) Reset() {
+	*x = PingStat{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PingStat) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PingStat) ProtoMessage() {}
+
+func (x *PingStat) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PingStat.ProtoReflect.Descriptor instead.
+func (*PingStat) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *PingStat) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+func (x *PingStat) GetTaskId() uint64 {
+	if x != nil {
+		return x.TaskId
+	}
+	return 0
+}
+
+func (x *PingStat) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PingStat) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *PingStat) GetProbeInterval() *durationpb.Duration {
+	if x != nil {
+		return x.ProbeInterval
+	}
+	return nil
+}
+
+func (x *PingStat) GetTags() map[string]string {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
+func (x *PingStat) GetTotal() uint32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *PingStat) GetValid() uint32 {
+	if x != nil {
+		return x.Valid
+	}
+	return 0
+}
+
+func (x *PingStat) GetLossPercent() float64 {
+	if x != nil {
+		return x.LossPercent
+	}
+	return 0
+}
+
+func (x *PingStat) GetLossApproximate() bool {
+	if x != nil {
+		return x.LossApproximate
+	}
+	return false
+}
+
+func (x *PingStat) GetMinimum() float64 {
+	if x != nil && x.Minimum != nil {
+		return *x.Minimum
+	}
+	return 0
+}
+
+func (x *PingStat) GetMaximum() float64 {
+	if x != nil && x.Maximum != nil {
+		return *x.Maximum
+	}
+	return 0
+}
+
+func (x *PingStat) GetAverage() float64 {
+	if x != nil && x.Average != nil {
+		return *x.Average
+	}
+	return 0
+}
+
+func (x *PingStat) GetLatest() float64 {
+	if x != nil && x.Latest != nil {
+		return *x.Latest
+	}
+	return 0
+}
+
+func (x *PingStat) GetP50() float64 {
+	if x != nil && x.P50 != nil {
+		return *x.P50
+	}
+	return 0
+}
+
+func (x *PingStat) GetP99() float64 {
+	if x != nil && x.P99 != nil {
+		return *x.P99
+	}
+	return 0
+}
+
+func (x *PingStat) GetStandardDeviation() float64 {
+	if x != nil && x.StandardDeviation != nil {
+		return *x.StandardDeviation
+	}
+	return 0
+}
+
+func (x *PingStat) GetP99P50Ratio() float64 {
+	if x != nil {
+		return x.P99P50Ratio
+	}
+	return 0
+}
+
 // WatchMetricsRequest subscribes to current samples with a server-enforced interval.
 type WatchMetricsRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
@@ -507,7 +1318,7 @@ type WatchMetricsRequest struct {
 
 func (x *WatchMetricsRequest) Reset() {
 	*x = WatchMetricsRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[8]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -519,7 +1330,7 @@ func (x *WatchMetricsRequest) String() string {
 func (*WatchMetricsRequest) ProtoMessage() {}
 
 func (x *WatchMetricsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[8]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -532,7 +1343,7 @@ func (x *WatchMetricsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WatchMetricsRequest.ProtoReflect.Descriptor instead.
 func (*WatchMetricsRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{8}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *WatchMetricsRequest) GetAgentIds() []string {
@@ -566,7 +1377,7 @@ type WatchMetricsResponse struct {
 
 func (x *WatchMetricsResponse) Reset() {
 	*x = WatchMetricsResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[9]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -578,7 +1389,7 @@ func (x *WatchMetricsResponse) String() string {
 func (*WatchMetricsResponse) ProtoMessage() {}
 
 func (x *WatchMetricsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[9]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -591,7 +1402,7 @@ func (x *WatchMetricsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WatchMetricsResponse.ProtoReflect.Descriptor instead.
 func (*WatchMetricsResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{9}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *WatchMetricsResponse) GetPoint() *MetricsPoint {
@@ -626,7 +1437,7 @@ const file_komari_metrics_v1_metrics_proto_rawDesc = "" +
 	"\x05batch\x18\x01 \x01(\v2'.komari.metrics.v1.SubmitMetricsRequestR\x05batch\"m\n" +
 	"\x15UploadMetricsResponse\x12+\n" +
 	"\x11accepted_sequence\x18\x01 \x01(\x04R\x10acceptedSequence\x12'\n" +
-	"\x0faccepted_points\x18\x02 \x01(\x04R\x0eacceptedPoints\"\xdd\x01\n" +
+	"\x0faccepted_points\x18\x02 \x01(\x04R\x0eacceptedPoints\"\xd1\x03\n" +
 	"\x13QueryMetricsRequest\x12\x1b\n" +
 	"\tagent_ids\x18\x01 \x03(\tR\bagentIds\x12\x18\n" +
 	"\ametrics\x18\x02 \x03(\tR\ametrics\x129\n" +
@@ -634,27 +1445,132 @@ const file_komari_metrics_v1_metrics_proto_rawDesc = "" +
 	"start_time\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
 	"\bend_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x1d\n" +
 	"\n" +
-	"max_points\x18\x05 \x01(\rR\tmaxPoints\"P\n" +
+	"max_points\x18\x05 \x01(\rR\tmaxPoints\x12D\n" +
+	"\x04tags\x18\x06 \x03(\v20.komari.metrics.v1.QueryMetricsRequest.TagsEntryR\x04tags\x12#\n" +
+	"\n" +
+	"downsample\x18\a \x01(\bH\x00R\n" +
+	"downsample\x88\x01\x01\x12 \n" +
+	"\vaggregation\x18\b \x01(\tR\vaggregation\x12\x1d\n" +
+	"\n" +
+	"fill_empty\x18\t \x01(\bR\tfillEmpty\x1a7\n" +
+	"\tTagsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\r\n" +
+	"\v_downsample\"P\n" +
 	"\x14QueryMetricsResponse\x128\n" +
-	"\x06series\x18\x01 \x03(\v2 .komari.metrics.v1.MetricsSeriesR\x06series\"\xfc\x01\n" +
+	"\x06series\x18\x01 \x03(\v2 .komari.metrics.v1.MetricsSeriesR\x06series\"\x88\x04\n" +
 	"\rMetricsSeries\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x16\n" +
 	"\x06metric\x18\x02 \x01(\tR\x06metric\x12D\n" +
 	"\x06labels\x18\x03 \x03(\v2,.komari.metrics.v1.MetricsSeries.LabelsEntryR\x06labels\x127\n" +
-	"\x06points\x18\x04 \x03(\v2\x1f.komari.metrics.v1.MetricsPointR\x06points\x1a9\n" +
+	"\x06points\x18\x04 \x03(\v2\x1f.komari.metrics.v1.MetricsPointR\x06points\x12@\n" +
+	"\fquery_points\x18\x05 \x03(\v2\x1d.komari.metrics.v1.QueryPointR\vqueryPoints\x12\x12\n" +
+	"\x04type\x18\x06 \x01(\tR\x04type\x12\x12\n" +
+	"\x04unit\x18\a \x01(\tR\x04unit\x12%\n" +
+	"\x0eretention_days\x18\b \x01(\rR\rretentionDays\x12 \n" +
+	"\vdownsampled\x18\t \x01(\bR\vdownsampled\x12 \n" +
+	"\vaggregation\x18\n" +
+	" \x01(\tR\vaggregation\x125\n" +
+	"\binterval\x18\v \x01(\v2\x19.google.protobuf.DurationR\binterval\x1a9\n" +
 	"\vLabelsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x92\x01\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x8f\x02\n" +
+	"\n" +
+	"QueryPoint\x12;\n" +
+	"\vobserved_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12\x19\n" +
+	"\x05value\x18\x02 \x01(\x01H\x00R\x05value\x88\x01\x01\x12!\n" +
+	"\fsample_count\x18\x03 \x01(\rR\vsampleCount\x12A\n" +
+	"\x06labels\x18\x04 \x03(\v2).komari.metrics.v1.QueryPoint.LabelsEntryR\x06labels\x1a9\n" +
+	"\vLabelsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\b\n" +
+	"\x06_value\"\x1e\n" +
+	"\x1cListMetricDefinitionsRequest\"f\n" +
+	"\x1dListMetricDefinitionsResponse\x12E\n" +
+	"\vdefinitions\x18\x01 \x03(\v2#.komari.metrics.v1.MetricDefinitionR\vdefinitions\"\x99\x03\n" +
+	"\x10MetricDefinition\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\tR\x04type\x12\x12\n" +
+	"\x04unit\x18\x04 \x01(\tR\x04unit\x12%\n" +
+	"\x0eretention_days\x18\x05 \x01(\rR\rretentionDays\x12M\n" +
+	"\bmetadata\x18\x06 \x03(\v21.komari.metrics.v1.MetricDefinition.MetadataEntryR\bmetadata\x129\n" +
+	"\n" +
+	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x1a;\n" +
+	"\rMetadataEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x16\n" +
+	"\x14ListPingTasksRequest\"J\n" +
+	"\x15ListPingTasksResponse\x121\n" +
+	"\x05tasks\x18\x01 \x03(\v2\x1b.komari.metrics.v1.PingTaskR\x05tasks\"\x82\x01\n" +
+	"\bPingTask\x12\x17\n" +
+	"\atask_id\x18\x01 \x01(\x04R\x06taskId\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\tR\x04type\x125\n" +
+	"\binterval\x18\x04 \x01(\v2\x19.google.protobuf.DurationR\binterval\"\xde\x01\n" +
+	"\x13GetPingStatsRequest\x12\x1b\n" +
+	"\tagent_ids\x18\x01 \x03(\tR\bagentIds\x12\x19\n" +
+	"\btask_ids\x18\x02 \x03(\x04R\ataskIds\x129\n" +
+	"\n" +
+	"start_time\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
+	"\bend_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x1d\n" +
+	"\n" +
+	"max_points\x18\x05 \x01(\rR\tmaxPoints\"\xf2\x01\n" +
+	"\x14GetPingStatsResponse\x129\n" +
+	"\n" +
+	"start_time\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
+	"\bend_time\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x125\n" +
+	"\binterval\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\binterval\x121\n" +
+	"\x05stats\x18\x04 \x03(\v2\x1b.komari.metrics.v1.PingStatR\x05stats\"\xec\x05\n" +
+	"\bPingStat\x12\x19\n" +
+	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x17\n" +
+	"\atask_id\x18\x02 \x01(\x04R\x06taskId\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12\x12\n" +
+	"\x04type\x18\x04 \x01(\tR\x04type\x12@\n" +
+	"\x0eprobe_interval\x18\x05 \x01(\v2\x19.google.protobuf.DurationR\rprobeInterval\x129\n" +
+	"\x04tags\x18\x06 \x03(\v2%.komari.metrics.v1.PingStat.TagsEntryR\x04tags\x12\x14\n" +
+	"\x05total\x18\a \x01(\rR\x05total\x12\x14\n" +
+	"\x05valid\x18\b \x01(\rR\x05valid\x12!\n" +
+	"\floss_percent\x18\t \x01(\x01R\vlossPercent\x12)\n" +
+	"\x10loss_approximate\x18\n" +
+	" \x01(\bR\x0flossApproximate\x12\x1d\n" +
+	"\aminimum\x18\v \x01(\x01H\x00R\aminimum\x88\x01\x01\x12\x1d\n" +
+	"\amaximum\x18\f \x01(\x01H\x01R\amaximum\x88\x01\x01\x12\x1d\n" +
+	"\aaverage\x18\r \x01(\x01H\x02R\aaverage\x88\x01\x01\x12\x1b\n" +
+	"\x06latest\x18\x0e \x01(\x01H\x03R\x06latest\x88\x01\x01\x12\x15\n" +
+	"\x03p50\x18\x0f \x01(\x01H\x04R\x03p50\x88\x01\x01\x12\x15\n" +
+	"\x03p99\x18\x10 \x01(\x01H\x05R\x03p99\x88\x01\x01\x122\n" +
+	"\x12standard_deviation\x18\x11 \x01(\x01H\x06R\x11standardDeviation\x88\x01\x01\x12\"\n" +
+	"\rp99_p50_ratio\x18\x12 \x01(\x01R\vp99P50Ratio\x1a7\n" +
+	"\tTagsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\n" +
+	"\n" +
+	"\b_minimumB\n" +
+	"\n" +
+	"\b_maximumB\n" +
+	"\n" +
+	"\b_averageB\t\n" +
+	"\a_latestB\x06\n" +
+	"\x04_p50B\x06\n" +
+	"\x04_p99B\x15\n" +
+	"\x13_standard_deviation\"\x92\x01\n" +
 	"\x13WatchMetricsRequest\x12\x1b\n" +
 	"\tagent_ids\x18\x01 \x03(\tR\bagentIds\x12\x18\n" +
 	"\ametrics\x18\x02 \x03(\tR\ametrics\x12D\n" +
 	"\x10minimum_interval\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\x0fminimumInterval\"M\n" +
 	"\x14WatchMetricsResponse\x125\n" +
-	"\x05point\x18\x01 \x01(\v2\x1f.komari.metrics.v1.MetricsPointR\x05point2\x9e\x03\n" +
+	"\x05point\x18\x01 \x01(\v2\x1f.komari.metrics.v1.MetricsPointR\x05point2\xdf\x05\n" +
 	"\x0eMetricsService\x12b\n" +
 	"\rSubmitMetrics\x12'.komari.metrics.v1.SubmitMetricsRequest\x1a(.komari.metrics.v1.SubmitMetricsResponse\x12d\n" +
 	"\rUploadMetrics\x12'.komari.metrics.v1.UploadMetricsRequest\x1a(.komari.metrics.v1.UploadMetricsResponse(\x01\x12_\n" +
-	"\fQueryMetrics\x12&.komari.metrics.v1.QueryMetricsRequest\x1a'.komari.metrics.v1.QueryMetricsResponse\x12a\n" +
+	"\fQueryMetrics\x12&.komari.metrics.v1.QueryMetricsRequest\x1a'.komari.metrics.v1.QueryMetricsResponse\x12z\n" +
+	"\x15ListMetricDefinitions\x12/.komari.metrics.v1.ListMetricDefinitionsRequest\x1a0.komari.metrics.v1.ListMetricDefinitionsResponse\x12b\n" +
+	"\rListPingTasks\x12'.komari.metrics.v1.ListPingTasksRequest\x1a(.komari.metrics.v1.ListPingTasksResponse\x12_\n" +
+	"\fGetPingStats\x12&.komari.metrics.v1.GetPingStatsRequest\x1a'.komari.metrics.v1.GetPingStatsResponse\x12a\n" +
 	"\fWatchMetrics\x12&.komari.metrics.v1.WatchMetricsRequest\x1a'.komari.metrics.v1.WatchMetricsResponse0\x01B\xd1\x01\n" +
 	"\x15com.komari.metrics.v1B\fMetricsProtoP\x01ZDgithub.com/r11234567/komari-proto/gen/go/komari/metrics/v1;metricsv1\xa2\x02\x03KMX\xaa\x02\x11Komari.Metrics.V1\xca\x02\x11Komari\\Metrics\\V1\xe2\x02\x1dKomari\\Metrics\\V1\\GPBMetadata\xea\x02\x13Komari::Metrics::V1b\x06proto3"
 
@@ -670,48 +1586,87 @@ func file_komari_metrics_v1_metrics_proto_rawDescGZIP() []byte {
 	return file_komari_metrics_v1_metrics_proto_rawDescData
 }
 
-var file_komari_metrics_v1_metrics_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_komari_metrics_v1_metrics_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_komari_metrics_v1_metrics_proto_goTypes = []any{
-	(*MetricsPoint)(nil),          // 0: komari.metrics.v1.MetricsPoint
-	(*SubmitMetricsRequest)(nil),  // 1: komari.metrics.v1.SubmitMetricsRequest
-	(*SubmitMetricsResponse)(nil), // 2: komari.metrics.v1.SubmitMetricsResponse
-	(*UploadMetricsRequest)(nil),  // 3: komari.metrics.v1.UploadMetricsRequest
-	(*UploadMetricsResponse)(nil), // 4: komari.metrics.v1.UploadMetricsResponse
-	(*QueryMetricsRequest)(nil),   // 5: komari.metrics.v1.QueryMetricsRequest
-	(*QueryMetricsResponse)(nil),  // 6: komari.metrics.v1.QueryMetricsResponse
-	(*MetricsSeries)(nil),         // 7: komari.metrics.v1.MetricsSeries
-	(*WatchMetricsRequest)(nil),   // 8: komari.metrics.v1.WatchMetricsRequest
-	(*WatchMetricsResponse)(nil),  // 9: komari.metrics.v1.WatchMetricsResponse
-	nil,                           // 10: komari.metrics.v1.MetricsPoint.LabelsEntry
-	nil,                           // 11: komari.metrics.v1.MetricsSeries.LabelsEntry
-	(*timestamppb.Timestamp)(nil), // 12: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),   // 13: google.protobuf.Duration
+	(*MetricsPoint)(nil),                  // 0: komari.metrics.v1.MetricsPoint
+	(*SubmitMetricsRequest)(nil),          // 1: komari.metrics.v1.SubmitMetricsRequest
+	(*SubmitMetricsResponse)(nil),         // 2: komari.metrics.v1.SubmitMetricsResponse
+	(*UploadMetricsRequest)(nil),          // 3: komari.metrics.v1.UploadMetricsRequest
+	(*UploadMetricsResponse)(nil),         // 4: komari.metrics.v1.UploadMetricsResponse
+	(*QueryMetricsRequest)(nil),           // 5: komari.metrics.v1.QueryMetricsRequest
+	(*QueryMetricsResponse)(nil),          // 6: komari.metrics.v1.QueryMetricsResponse
+	(*MetricsSeries)(nil),                 // 7: komari.metrics.v1.MetricsSeries
+	(*QueryPoint)(nil),                    // 8: komari.metrics.v1.QueryPoint
+	(*ListMetricDefinitionsRequest)(nil),  // 9: komari.metrics.v1.ListMetricDefinitionsRequest
+	(*ListMetricDefinitionsResponse)(nil), // 10: komari.metrics.v1.ListMetricDefinitionsResponse
+	(*MetricDefinition)(nil),              // 11: komari.metrics.v1.MetricDefinition
+	(*ListPingTasksRequest)(nil),          // 12: komari.metrics.v1.ListPingTasksRequest
+	(*ListPingTasksResponse)(nil),         // 13: komari.metrics.v1.ListPingTasksResponse
+	(*PingTask)(nil),                      // 14: komari.metrics.v1.PingTask
+	(*GetPingStatsRequest)(nil),           // 15: komari.metrics.v1.GetPingStatsRequest
+	(*GetPingStatsResponse)(nil),          // 16: komari.metrics.v1.GetPingStatsResponse
+	(*PingStat)(nil),                      // 17: komari.metrics.v1.PingStat
+	(*WatchMetricsRequest)(nil),           // 18: komari.metrics.v1.WatchMetricsRequest
+	(*WatchMetricsResponse)(nil),          // 19: komari.metrics.v1.WatchMetricsResponse
+	nil,                                   // 20: komari.metrics.v1.MetricsPoint.LabelsEntry
+	nil,                                   // 21: komari.metrics.v1.QueryMetricsRequest.TagsEntry
+	nil,                                   // 22: komari.metrics.v1.MetricsSeries.LabelsEntry
+	nil,                                   // 23: komari.metrics.v1.QueryPoint.LabelsEntry
+	nil,                                   // 24: komari.metrics.v1.MetricDefinition.MetadataEntry
+	nil,                                   // 25: komari.metrics.v1.PingStat.TagsEntry
+	(*timestamppb.Timestamp)(nil),         // 26: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),           // 27: google.protobuf.Duration
 }
 var file_komari_metrics_v1_metrics_proto_depIdxs = []int32{
-	12, // 0: komari.metrics.v1.MetricsPoint.observed_at:type_name -> google.protobuf.Timestamp
-	10, // 1: komari.metrics.v1.MetricsPoint.labels:type_name -> komari.metrics.v1.MetricsPoint.LabelsEntry
+	26, // 0: komari.metrics.v1.MetricsPoint.observed_at:type_name -> google.protobuf.Timestamp
+	20, // 1: komari.metrics.v1.MetricsPoint.labels:type_name -> komari.metrics.v1.MetricsPoint.LabelsEntry
 	0,  // 2: komari.metrics.v1.SubmitMetricsRequest.points:type_name -> komari.metrics.v1.MetricsPoint
 	1,  // 3: komari.metrics.v1.UploadMetricsRequest.batch:type_name -> komari.metrics.v1.SubmitMetricsRequest
-	12, // 4: komari.metrics.v1.QueryMetricsRequest.start_time:type_name -> google.protobuf.Timestamp
-	12, // 5: komari.metrics.v1.QueryMetricsRequest.end_time:type_name -> google.protobuf.Timestamp
-	7,  // 6: komari.metrics.v1.QueryMetricsResponse.series:type_name -> komari.metrics.v1.MetricsSeries
-	11, // 7: komari.metrics.v1.MetricsSeries.labels:type_name -> komari.metrics.v1.MetricsSeries.LabelsEntry
-	0,  // 8: komari.metrics.v1.MetricsSeries.points:type_name -> komari.metrics.v1.MetricsPoint
-	13, // 9: komari.metrics.v1.WatchMetricsRequest.minimum_interval:type_name -> google.protobuf.Duration
-	0,  // 10: komari.metrics.v1.WatchMetricsResponse.point:type_name -> komari.metrics.v1.MetricsPoint
-	1,  // 11: komari.metrics.v1.MetricsService.SubmitMetrics:input_type -> komari.metrics.v1.SubmitMetricsRequest
-	3,  // 12: komari.metrics.v1.MetricsService.UploadMetrics:input_type -> komari.metrics.v1.UploadMetricsRequest
-	5,  // 13: komari.metrics.v1.MetricsService.QueryMetrics:input_type -> komari.metrics.v1.QueryMetricsRequest
-	8,  // 14: komari.metrics.v1.MetricsService.WatchMetrics:input_type -> komari.metrics.v1.WatchMetricsRequest
-	2,  // 15: komari.metrics.v1.MetricsService.SubmitMetrics:output_type -> komari.metrics.v1.SubmitMetricsResponse
-	4,  // 16: komari.metrics.v1.MetricsService.UploadMetrics:output_type -> komari.metrics.v1.UploadMetricsResponse
-	6,  // 17: komari.metrics.v1.MetricsService.QueryMetrics:output_type -> komari.metrics.v1.QueryMetricsResponse
-	9,  // 18: komari.metrics.v1.MetricsService.WatchMetrics:output_type -> komari.metrics.v1.WatchMetricsResponse
-	15, // [15:19] is the sub-list for method output_type
-	11, // [11:15] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	26, // 4: komari.metrics.v1.QueryMetricsRequest.start_time:type_name -> google.protobuf.Timestamp
+	26, // 5: komari.metrics.v1.QueryMetricsRequest.end_time:type_name -> google.protobuf.Timestamp
+	21, // 6: komari.metrics.v1.QueryMetricsRequest.tags:type_name -> komari.metrics.v1.QueryMetricsRequest.TagsEntry
+	7,  // 7: komari.metrics.v1.QueryMetricsResponse.series:type_name -> komari.metrics.v1.MetricsSeries
+	22, // 8: komari.metrics.v1.MetricsSeries.labels:type_name -> komari.metrics.v1.MetricsSeries.LabelsEntry
+	0,  // 9: komari.metrics.v1.MetricsSeries.points:type_name -> komari.metrics.v1.MetricsPoint
+	8,  // 10: komari.metrics.v1.MetricsSeries.query_points:type_name -> komari.metrics.v1.QueryPoint
+	27, // 11: komari.metrics.v1.MetricsSeries.interval:type_name -> google.protobuf.Duration
+	26, // 12: komari.metrics.v1.QueryPoint.observed_at:type_name -> google.protobuf.Timestamp
+	23, // 13: komari.metrics.v1.QueryPoint.labels:type_name -> komari.metrics.v1.QueryPoint.LabelsEntry
+	11, // 14: komari.metrics.v1.ListMetricDefinitionsResponse.definitions:type_name -> komari.metrics.v1.MetricDefinition
+	24, // 15: komari.metrics.v1.MetricDefinition.metadata:type_name -> komari.metrics.v1.MetricDefinition.MetadataEntry
+	26, // 16: komari.metrics.v1.MetricDefinition.created_at:type_name -> google.protobuf.Timestamp
+	26, // 17: komari.metrics.v1.MetricDefinition.updated_at:type_name -> google.protobuf.Timestamp
+	14, // 18: komari.metrics.v1.ListPingTasksResponse.tasks:type_name -> komari.metrics.v1.PingTask
+	27, // 19: komari.metrics.v1.PingTask.interval:type_name -> google.protobuf.Duration
+	26, // 20: komari.metrics.v1.GetPingStatsRequest.start_time:type_name -> google.protobuf.Timestamp
+	26, // 21: komari.metrics.v1.GetPingStatsRequest.end_time:type_name -> google.protobuf.Timestamp
+	26, // 22: komari.metrics.v1.GetPingStatsResponse.start_time:type_name -> google.protobuf.Timestamp
+	26, // 23: komari.metrics.v1.GetPingStatsResponse.end_time:type_name -> google.protobuf.Timestamp
+	27, // 24: komari.metrics.v1.GetPingStatsResponse.interval:type_name -> google.protobuf.Duration
+	17, // 25: komari.metrics.v1.GetPingStatsResponse.stats:type_name -> komari.metrics.v1.PingStat
+	27, // 26: komari.metrics.v1.PingStat.probe_interval:type_name -> google.protobuf.Duration
+	25, // 27: komari.metrics.v1.PingStat.tags:type_name -> komari.metrics.v1.PingStat.TagsEntry
+	27, // 28: komari.metrics.v1.WatchMetricsRequest.minimum_interval:type_name -> google.protobuf.Duration
+	0,  // 29: komari.metrics.v1.WatchMetricsResponse.point:type_name -> komari.metrics.v1.MetricsPoint
+	1,  // 30: komari.metrics.v1.MetricsService.SubmitMetrics:input_type -> komari.metrics.v1.SubmitMetricsRequest
+	3,  // 31: komari.metrics.v1.MetricsService.UploadMetrics:input_type -> komari.metrics.v1.UploadMetricsRequest
+	5,  // 32: komari.metrics.v1.MetricsService.QueryMetrics:input_type -> komari.metrics.v1.QueryMetricsRequest
+	9,  // 33: komari.metrics.v1.MetricsService.ListMetricDefinitions:input_type -> komari.metrics.v1.ListMetricDefinitionsRequest
+	12, // 34: komari.metrics.v1.MetricsService.ListPingTasks:input_type -> komari.metrics.v1.ListPingTasksRequest
+	15, // 35: komari.metrics.v1.MetricsService.GetPingStats:input_type -> komari.metrics.v1.GetPingStatsRequest
+	18, // 36: komari.metrics.v1.MetricsService.WatchMetrics:input_type -> komari.metrics.v1.WatchMetricsRequest
+	2,  // 37: komari.metrics.v1.MetricsService.SubmitMetrics:output_type -> komari.metrics.v1.SubmitMetricsResponse
+	4,  // 38: komari.metrics.v1.MetricsService.UploadMetrics:output_type -> komari.metrics.v1.UploadMetricsResponse
+	6,  // 39: komari.metrics.v1.MetricsService.QueryMetrics:output_type -> komari.metrics.v1.QueryMetricsResponse
+	10, // 40: komari.metrics.v1.MetricsService.ListMetricDefinitions:output_type -> komari.metrics.v1.ListMetricDefinitionsResponse
+	13, // 41: komari.metrics.v1.MetricsService.ListPingTasks:output_type -> komari.metrics.v1.ListPingTasksResponse
+	16, // 42: komari.metrics.v1.MetricsService.GetPingStats:output_type -> komari.metrics.v1.GetPingStatsResponse
+	19, // 43: komari.metrics.v1.MetricsService.WatchMetrics:output_type -> komari.metrics.v1.WatchMetricsResponse
+	37, // [37:44] is the sub-list for method output_type
+	30, // [30:37] is the sub-list for method input_type
+	30, // [30:30] is the sub-list for extension type_name
+	30, // [30:30] is the sub-list for extension extendee
+	0,  // [0:30] is the sub-list for field type_name
 }
 
 func init() { file_komari_metrics_v1_metrics_proto_init() }
@@ -719,13 +1674,16 @@ func file_komari_metrics_v1_metrics_proto_init() {
 	if File_komari_metrics_v1_metrics_proto != nil {
 		return
 	}
+	file_komari_metrics_v1_metrics_proto_msgTypes[5].OneofWrappers = []any{}
+	file_komari_metrics_v1_metrics_proto_msgTypes[8].OneofWrappers = []any{}
+	file_komari_metrics_v1_metrics_proto_msgTypes[17].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_metrics_v1_metrics_proto_rawDesc), len(file_komari_metrics_v1_metrics_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

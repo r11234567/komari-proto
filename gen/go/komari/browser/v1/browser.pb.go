@@ -530,6 +530,7 @@ func (x *WatchAgentStatusRequest) GetAfterEventId() string {
 type WatchAgentStatusResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Agent         *AgentSummary          `protobuf:"bytes,1,opt,name=agent,proto3" json:"agent,omitempty"`
+	LatestReport  *v11.AgentReport       `protobuf:"bytes,2,opt,name=latest_report,json=latestReport,proto3" json:"latest_report,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -567,6 +568,13 @@ func (*WatchAgentStatusResponse) Descriptor() ([]byte, []int) {
 func (x *WatchAgentStatusResponse) GetAgent() *AgentSummary {
 	if x != nil {
 		return x.Agent
+	}
+	return nil
+}
+
+func (x *WatchAgentStatusResponse) GetLatestReport() *v11.AgentReport {
+	if x != nil {
+		return x.LatestReport
 	}
 	return nil
 }
@@ -1061,9 +1069,10 @@ const file_komari_browser_v1_browser_proto_rawDesc = "" +
 	"\rlatest_report\x18\x02 \x01(\v2\x1d.komari.report.v1.AgentReportR\flatestReport\"\\\n" +
 	"\x17WatchAgentStatusRequest\x12\x1b\n" +
 	"\tagent_ids\x18\x01 \x03(\tR\bagentIds\x12$\n" +
-	"\x0eafter_event_id\x18\x02 \x01(\tR\fafterEventId\"Q\n" +
+	"\x0eafter_event_id\x18\x02 \x01(\tR\fafterEventId\"\x95\x01\n" +
 	"\x18WatchAgentStatusResponse\x125\n" +
-	"\x05agent\x18\x01 \x01(\v2\x1f.komari.browser.v1.AgentSummaryR\x05agent\"\x9c\x03\n" +
+	"\x05agent\x18\x01 \x01(\v2\x1f.komari.browser.v1.AgentSummaryR\x05agent\x12B\n" +
+	"\rlatest_report\x18\x02 \x01(\v2\x1d.komari.report.v1.AgentReportR\flatestReport\"\x9c\x03\n" +
 	"\fAgentSummary\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x126\n" +
@@ -1168,28 +1177,29 @@ var file_komari_browser_v1_browser_proto_depIdxs = []int32{
 	9,  // 4: komari.browser.v1.GetAgentResponse.agent:type_name -> komari.browser.v1.AgentSummary
 	16, // 5: komari.browser.v1.GetAgentResponse.latest_report:type_name -> komari.report.v1.AgentReport
 	9,  // 6: komari.browser.v1.WatchAgentStatusResponse.agent:type_name -> komari.browser.v1.AgentSummary
-	0,  // 7: komari.browser.v1.AgentSummary.status:type_name -> komari.browser.v1.AgentStatus
-	17, // 8: komari.browser.v1.AgentSummary.last_seen:type_name -> google.protobuf.Timestamp
-	18, // 9: komari.browser.v1.AgentSummary.capabilities:type_name -> komari.report.v1.AgentCapabilities
-	10, // 10: komari.browser.v1.AgentSummary.basic_info:type_name -> komari.browser.v1.AgentBasicInfo
-	17, // 11: komari.browser.v1.AgentBasicInfo.expires_at:type_name -> google.protobuf.Timestamp
-	17, // 12: komari.browser.v1.AgentBasicInfo.created_at:type_name -> google.protobuf.Timestamp
-	17, // 13: komari.browser.v1.AgentBasicInfo.updated_at:type_name -> google.protobuf.Timestamp
-	1,  // 14: komari.browser.v1.BrowserService.GetPublicInfo:input_type -> komari.browser.v1.GetPublicInfoRequest
-	3,  // 15: komari.browser.v1.BrowserService.ListAgents:input_type -> komari.browser.v1.ListAgentsRequest
-	5,  // 16: komari.browser.v1.BrowserService.GetAgent:input_type -> komari.browser.v1.GetAgentRequest
-	7,  // 17: komari.browser.v1.BrowserService.WatchAgentStatus:input_type -> komari.browser.v1.WatchAgentStatusRequest
-	11, // 18: komari.browser.v1.BrowserService.GetThemeContract:input_type -> komari.browser.v1.GetThemeContractRequest
-	2,  // 19: komari.browser.v1.BrowserService.GetPublicInfo:output_type -> komari.browser.v1.GetPublicInfoResponse
-	4,  // 20: komari.browser.v1.BrowserService.ListAgents:output_type -> komari.browser.v1.ListAgentsResponse
-	6,  // 21: komari.browser.v1.BrowserService.GetAgent:output_type -> komari.browser.v1.GetAgentResponse
-	8,  // 22: komari.browser.v1.BrowserService.WatchAgentStatus:output_type -> komari.browser.v1.WatchAgentStatusResponse
-	12, // 23: komari.browser.v1.BrowserService.GetThemeContract:output_type -> komari.browser.v1.GetThemeContractResponse
-	19, // [19:24] is the sub-list for method output_type
-	14, // [14:19] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	16, // 7: komari.browser.v1.WatchAgentStatusResponse.latest_report:type_name -> komari.report.v1.AgentReport
+	0,  // 8: komari.browser.v1.AgentSummary.status:type_name -> komari.browser.v1.AgentStatus
+	17, // 9: komari.browser.v1.AgentSummary.last_seen:type_name -> google.protobuf.Timestamp
+	18, // 10: komari.browser.v1.AgentSummary.capabilities:type_name -> komari.report.v1.AgentCapabilities
+	10, // 11: komari.browser.v1.AgentSummary.basic_info:type_name -> komari.browser.v1.AgentBasicInfo
+	17, // 12: komari.browser.v1.AgentBasicInfo.expires_at:type_name -> google.protobuf.Timestamp
+	17, // 13: komari.browser.v1.AgentBasicInfo.created_at:type_name -> google.protobuf.Timestamp
+	17, // 14: komari.browser.v1.AgentBasicInfo.updated_at:type_name -> google.protobuf.Timestamp
+	1,  // 15: komari.browser.v1.BrowserService.GetPublicInfo:input_type -> komari.browser.v1.GetPublicInfoRequest
+	3,  // 16: komari.browser.v1.BrowserService.ListAgents:input_type -> komari.browser.v1.ListAgentsRequest
+	5,  // 17: komari.browser.v1.BrowserService.GetAgent:input_type -> komari.browser.v1.GetAgentRequest
+	7,  // 18: komari.browser.v1.BrowserService.WatchAgentStatus:input_type -> komari.browser.v1.WatchAgentStatusRequest
+	11, // 19: komari.browser.v1.BrowserService.GetThemeContract:input_type -> komari.browser.v1.GetThemeContractRequest
+	2,  // 20: komari.browser.v1.BrowserService.GetPublicInfo:output_type -> komari.browser.v1.GetPublicInfoResponse
+	4,  // 21: komari.browser.v1.BrowserService.ListAgents:output_type -> komari.browser.v1.ListAgentsResponse
+	6,  // 22: komari.browser.v1.BrowserService.GetAgent:output_type -> komari.browser.v1.GetAgentResponse
+	8,  // 23: komari.browser.v1.BrowserService.WatchAgentStatus:output_type -> komari.browser.v1.WatchAgentStatusResponse
+	12, // 24: komari.browser.v1.BrowserService.GetThemeContract:output_type -> komari.browser.v1.GetThemeContractResponse
+	20, // [20:25] is the sub-list for method output_type
+	15, // [15:20] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_komari_browser_v1_browser_proto_init() }
