@@ -36,6 +36,8 @@ message AgentReport {
   repeated NetworkInterface network_interfaces = 6;
   repeated DiskInfo disks = 7;
   AgentMetadata metadata = 8;
+  // Diagnostic message is best-effort collection context and never replaces typed metrics.
+  string diagnostic_message = 9;
 }
 
 // SystemInfo describes the operating system and hardware baseline.

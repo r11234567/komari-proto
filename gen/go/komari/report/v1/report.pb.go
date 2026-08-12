@@ -207,6 +207,8 @@ type AgentReport struct {
 	NetworkInterfaces []*NetworkInterface    `protobuf:"bytes,6,rep,name=network_interfaces,json=networkInterfaces,proto3" json:"network_interfaces,omitempty"`
 	Disks             []*DiskInfo            `protobuf:"bytes,7,rep,name=disks,proto3" json:"disks,omitempty"`
 	Metadata          *AgentMetadata         `protobuf:"bytes,8,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	// Diagnostic message is best-effort collection context and never replaces typed metrics.
+	DiagnosticMessage string `protobuf:"bytes,9,opt,name=diagnostic_message,json=diagnosticMessage,proto3" json:"diagnostic_message,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -295,6 +297,13 @@ func (x *AgentReport) GetMetadata() *AgentMetadata {
 		return x.Metadata
 	}
 	return nil
+}
+
+func (x *AgentReport) GetDiagnosticMessage() string {
+	if x != nil {
+		return x.DiagnosticMessage
+	}
+	return ""
 }
 
 // SystemInfo describes the operating system and hardware baseline.
@@ -1005,7 +1014,7 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\x11accepted_sequence\x18\x02 \x01(\x04R\x10acceptedSequence\x12K\n" +
 	"\x14next_report_interval\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\x12nextReportInterval\x12;\n" +
 	"\vserver_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"serverTime\"\xb8\x03\n" +
+	"serverTime\"\xe7\x03\n" +
 	"\vAgentReport\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x1a\n" +
 	"\bsequence\x18\x02 \x01(\x04R\bsequence\x12;\n" +
@@ -1015,7 +1024,8 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\tresources\x18\x05 \x01(\v2\x1f.komari.report.v1.ResourceUsageR\tresources\x12Q\n" +
 	"\x12network_interfaces\x18\x06 \x03(\v2\".komari.report.v1.NetworkInterfaceR\x11networkInterfaces\x120\n" +
 	"\x05disks\x18\a \x03(\v2\x1a.komari.report.v1.DiskInfoR\x05disks\x12;\n" +
-	"\bmetadata\x18\b \x01(\v2\x1f.komari.report.v1.AgentMetadataR\bmetadata\"\xc8\x02\n" +
+	"\bmetadata\x18\b \x01(\v2\x1f.komari.report.v1.AgentMetadataR\bmetadata\x12-\n" +
+	"\x12diagnostic_message\x18\t \x01(\tR\x11diagnosticMessage\"\xc8\x02\n" +
 	"\n" +
 	"SystemInfo\x12\x1a\n" +
 	"\bhostname\x18\x01 \x01(\tR\bhostname\x12\x0e\n" +
