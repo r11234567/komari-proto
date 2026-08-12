@@ -604,8 +604,10 @@ type UpdateDesiredConfigRequest struct {
 	Runtime          *RuntimeConfig         `protobuf:"bytes,2,opt,name=runtime,proto3" json:"runtime,omitempty"`
 	ExpectedRevision uint64                 `protobuf:"varint,3,opt,name=expected_revision,json=expectedRevision,proto3" json:"expected_revision,omitempty"`
 	Reason           string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// force_dispatch creates a new revision even if runtime is byte-for-byte unchanged.
+	ForceDispatch bool `protobuf:"varint,5,opt,name=force_dispatch,json=forceDispatch,proto3" json:"force_dispatch,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateDesiredConfigRequest) Reset() {
@@ -664,6 +666,13 @@ func (x *UpdateDesiredConfigRequest) GetReason() string {
 		return x.Reason
 	}
 	return ""
+}
+
+func (x *UpdateDesiredConfigRequest) GetForceDispatch() bool {
+	if x != nil {
+		return x.ForceDispatch
+	}
+	return false
 }
 
 // UpdateDesiredConfigResponse contains the stored immutable snapshot.
@@ -769,12 +778,13 @@ const file_komari_config_v1_config_proto_rawDesc = "" +
 	"finishedAt\"\x7f\n" +
 	"\x19AcknowledgeConfigResponse\x12\x1a\n" +
 	"\baccepted\x18\x01 \x01(\bR\baccepted\x12F\n" +
-	"\x0edelivery_state\x18\x02 \x01(\x0e2\x1f.komari.common.v1.DeliveryStateR\rdeliveryState\"\xb7\x01\n" +
+	"\x0edelivery_state\x18\x02 \x01(\x0e2\x1f.komari.common.v1.DeliveryStateR\rdeliveryState\"\xde\x01\n" +
 	"\x1aUpdateDesiredConfigRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x129\n" +
 	"\aruntime\x18\x02 \x01(\v2\x1f.komari.config.v1.RuntimeConfigR\aruntime\x12+\n" +
 	"\x11expected_revision\x18\x03 \x01(\x04R\x10expectedRevision\x12\x16\n" +
-	"\x06reason\x18\x04 \x01(\tR\x06reason\"\xa0\x01\n" +
+	"\x06reason\x18\x04 \x01(\tR\x06reason\x12%\n" +
+	"\x0eforce_dispatch\x18\x05 \x01(\bR\rforceDispatch\"\xa0\x01\n" +
 	"\x1bUpdateDesiredConfigResponse\x129\n" +
 	"\adesired\x18\x01 \x01(\v2\x1f.komari.config.v1.DesiredConfigR\adesired\x12F\n" +
 	"\x0edelivery_state\x18\x02 \x01(\x0e2\x1f.komari.common.v1.DeliveryStateR\rdeliveryState*\xa5\x01\n" +

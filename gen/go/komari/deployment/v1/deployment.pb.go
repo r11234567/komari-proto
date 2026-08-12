@@ -7,9 +7,10 @@
 package deploymentv1
 
 import (
-	v12 "github.com/r11234567/komari-proto/gen/go/komari/common/v1"
-	v11 "github.com/r11234567/komari-proto/gen/go/komari/config/v1"
+	v13 "github.com/r11234567/komari-proto/gen/go/komari/common/v1"
+	v12 "github.com/r11234567/komari-proto/gen/go/komari/config/v1"
 	v1 "github.com/r11234567/komari-proto/gen/go/komari/report/v1"
+	v11 "github.com/r11234567/komari-proto/gen/go/komari/rescue/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -96,6 +97,56 @@ func (Platform) EnumDescriptor() ([]byte, []int) {
 	return file_komari_deployment_v1_deployment_proto_rawDescGZIP(), []int{0}
 }
 
+// AgentRuntimeIdentity describes how the ordinary Agent service runs after installation.
+type AgentRuntimeIdentity int32
+
+const (
+	AgentRuntimeIdentity_AGENT_RUNTIME_IDENTITY_UNSPECIFIED           AgentRuntimeIdentity = 0
+	AgentRuntimeIdentity_AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR AgentRuntimeIdentity = 1
+	AgentRuntimeIdentity_AGENT_RUNTIME_IDENTITY_CURRENT_USER          AgentRuntimeIdentity = 2
+)
+
+// Enum value maps for AgentRuntimeIdentity.
+var (
+	AgentRuntimeIdentity_name = map[int32]string{
+		0: "AGENT_RUNTIME_IDENTITY_UNSPECIFIED",
+		1: "AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR",
+		2: "AGENT_RUNTIME_IDENTITY_CURRENT_USER",
+	}
+	AgentRuntimeIdentity_value = map[string]int32{
+		"AGENT_RUNTIME_IDENTITY_UNSPECIFIED":           0,
+		"AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR": 1,
+		"AGENT_RUNTIME_IDENTITY_CURRENT_USER":          2,
+	}
+)
+
+func (x AgentRuntimeIdentity) Enum() *AgentRuntimeIdentity {
+	p := new(AgentRuntimeIdentity)
+	*p = x
+	return p
+}
+
+func (x AgentRuntimeIdentity) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (AgentRuntimeIdentity) Descriptor() protoreflect.EnumDescriptor {
+	return file_komari_deployment_v1_deployment_proto_enumTypes[1].Descriptor()
+}
+
+func (AgentRuntimeIdentity) Type() protoreflect.EnumType {
+	return &file_komari_deployment_v1_deployment_proto_enumTypes[1]
+}
+
+func (x AgentRuntimeIdentity) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use AgentRuntimeIdentity.Descriptor instead.
+func (AgentRuntimeIdentity) EnumDescriptor() ([]byte, []int) {
+	return file_komari_deployment_v1_deployment_proto_rawDescGZIP(), []int{1}
+}
+
 // GetDeploymentRequest identifies one agent.
 type GetDeploymentRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -143,10 +194,11 @@ func (x *GetDeploymentRequest) GetAgentId() string {
 
 // GetDeploymentResponse contains install profile, runtime revisions, and capabilities.
 type GetDeploymentResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Profile       *DeploymentProfile     `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
-	Delivery      *ConfigDelivery        `protobuf:"bytes,2,opt,name=delivery,proto3" json:"delivery,omitempty"`
-	Capabilities  *v1.AgentCapabilities  `protobuf:"bytes,3,opt,name=capabilities,proto3" json:"capabilities,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Profile       *DeploymentProfile      `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
+	Delivery      *ConfigDelivery         `protobuf:"bytes,2,opt,name=delivery,proto3" json:"delivery,omitempty"`
+	Capabilities  *v1.AgentCapabilities   `protobuf:"bytes,3,opt,name=capabilities,proto3" json:"capabilities,omitempty"`
+	RescueHelper  *v11.RescueHelperStatus `protobuf:"bytes,4,opt,name=rescue_helper,json=rescueHelper,proto3" json:"rescue_helper,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -202,14 +254,23 @@ func (x *GetDeploymentResponse) GetCapabilities() *v1.AgentCapabilities {
 	return nil
 }
 
+func (x *GetDeploymentResponse) GetRescueHelper() *v11.RescueHelperStatus {
+	if x != nil {
+		return x.RescueHelper
+	}
+	return nil
+}
+
 // SaveDeploymentProfileRequest uses optimistic concurrency for runtime settings.
 type SaveDeploymentProfileRequest struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	AgentId          string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
 	Profile          *DeploymentProfile     `protobuf:"bytes,2,opt,name=profile,proto3" json:"profile,omitempty"`
 	ExpectedRevision uint64                 `protobuf:"varint,3,opt,name=expected_revision,json=expectedRevision,proto3" json:"expected_revision,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// force_dispatch creates a new immutable desired revision even when values are unchanged.
+	ForceDispatch bool `protobuf:"varint,4,opt,name=force_dispatch,json=forceDispatch,proto3" json:"force_dispatch,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SaveDeploymentProfileRequest) Reset() {
@@ -261,6 +322,13 @@ func (x *SaveDeploymentProfileRequest) GetExpectedRevision() uint64 {
 		return x.ExpectedRevision
 	}
 	return 0
+}
+
+func (x *SaveDeploymentProfileRequest) GetForceDispatch() bool {
+	if x != nil {
+		return x.ForceDispatch
+	}
+	return false
 }
 
 // SaveDeploymentProfileResponse returns the normalized stored state.
@@ -321,7 +389,7 @@ type DeploymentProfile struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
 	Install       *InstallConfig         `protobuf:"bytes,2,opt,name=install,proto3" json:"install,omitempty"`
-	Runtime       *v11.RuntimeConfig     `protobuf:"bytes,3,opt,name=runtime,proto3" json:"runtime,omitempty"`
+	Runtime       *v12.RuntimeConfig     `protobuf:"bytes,3,opt,name=runtime,proto3" json:"runtime,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -370,7 +438,7 @@ func (x *DeploymentProfile) GetInstall() *InstallConfig {
 	return nil
 }
 
-func (x *DeploymentProfile) GetRuntime() *v11.RuntimeConfig {
+func (x *DeploymentProfile) GetRuntime() *v12.RuntimeConfig {
 	if x != nil {
 		return x.Runtime
 	}
@@ -387,6 +455,8 @@ type InstallConfig struct {
 	IgnoreUnsafeCertificate bool                   `protobuf:"varint,5,opt,name=ignore_unsafe_certificate,json=ignoreUnsafeCertificate,proto3" json:"ignore_unsafe_certificate,omitempty"`
 	EnableGithubProxy       bool                   `protobuf:"varint,6,opt,name=enable_github_proxy,json=enableGithubProxy,proto3" json:"enable_github_proxy,omitempty"`
 	GithubProxy             string                 `protobuf:"bytes,7,opt,name=github_proxy,json=githubProxy,proto3" json:"github_proxy,omitempty"`
+	RuntimeIdentity         AgentRuntimeIdentity   `protobuf:"varint,8,opt,name=runtime_identity,json=runtimeIdentity,proto3,enum=komari.deployment.v1.AgentRuntimeIdentity" json:"runtime_identity,omitempty"`
+	Rescue                  *RescueInstallConfig   `protobuf:"bytes,9,opt,name=rescue,proto3" json:"rescue,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -470,13 +540,81 @@ func (x *InstallConfig) GetGithubProxy() string {
 	return ""
 }
 
+func (x *InstallConfig) GetRuntimeIdentity() AgentRuntimeIdentity {
+	if x != nil {
+		return x.RuntimeIdentity
+	}
+	return AgentRuntimeIdentity_AGENT_RUNTIME_IDENTITY_UNSPECIFIED
+}
+
+func (x *InstallConfig) GetRescue() *RescueInstallConfig {
+	if x != nil {
+		return x.Rescue
+	}
+	return nil
+}
+
+// RescueInstallConfig controls the separately privileged rescue helper.
+// The helper is valid only when normal remote control is disabled.
+type RescueInstallConfig struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Enabled           bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	ConfigureFirewall bool                   `protobuf:"varint,2,opt,name=configure_firewall,json=configureFirewall,proto3" json:"configure_firewall,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *RescueInstallConfig) Reset() {
+	*x = RescueInstallConfig{}
+	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RescueInstallConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RescueInstallConfig) ProtoMessage() {}
+
+func (x *RescueInstallConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RescueInstallConfig.ProtoReflect.Descriptor instead.
+func (*RescueInstallConfig) Descriptor() ([]byte, []int) {
+	return file_komari_deployment_v1_deployment_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *RescueInstallConfig) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *RescueInstallConfig) GetConfigureFirewall() bool {
+	if x != nil {
+		return x.ConfigureFirewall
+	}
+	return false
+}
+
 // ConfigDelivery exposes desired/applied revisions and terminal delivery state.
 type ConfigDelivery struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	DesiredRevision uint64                 `protobuf:"varint,1,opt,name=desired_revision,json=desiredRevision,proto3" json:"desired_revision,omitempty"`
 	AppliedRevision uint64                 `protobuf:"varint,2,opt,name=applied_revision,json=appliedRevision,proto3" json:"applied_revision,omitempty"`
-	State           v12.DeliveryState      `protobuf:"varint,3,opt,name=state,proto3,enum=komari.common.v1.DeliveryState" json:"state,omitempty"`
-	Error           *v12.ErrorDetail       `protobuf:"bytes,4,opt,name=error,proto3,oneof" json:"error,omitempty"`
+	State           v13.DeliveryState      `protobuf:"varint,3,opt,name=state,proto3,enum=komari.common.v1.DeliveryState" json:"state,omitempty"`
+	Error           *v13.ErrorDetail       `protobuf:"bytes,4,opt,name=error,proto3,oneof" json:"error,omitempty"`
 	SavedAt         *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=saved_at,json=savedAt,proto3" json:"saved_at,omitempty"`
 	SentAt          *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=sent_at,json=sentAt,proto3,oneof" json:"sent_at,omitempty"`
 	FinishedAt      *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=finished_at,json=finishedAt,proto3,oneof" json:"finished_at,omitempty"`
@@ -486,7 +624,7 @@ type ConfigDelivery struct {
 
 func (x *ConfigDelivery) Reset() {
 	*x = ConfigDelivery{}
-	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[6]
+	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -498,7 +636,7 @@ func (x *ConfigDelivery) String() string {
 func (*ConfigDelivery) ProtoMessage() {}
 
 func (x *ConfigDelivery) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[6]
+	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -511,7 +649,7 @@ func (x *ConfigDelivery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfigDelivery.ProtoReflect.Descriptor instead.
 func (*ConfigDelivery) Descriptor() ([]byte, []int) {
-	return file_komari_deployment_v1_deployment_proto_rawDescGZIP(), []int{6}
+	return file_komari_deployment_v1_deployment_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ConfigDelivery) GetDesiredRevision() uint64 {
@@ -528,14 +666,14 @@ func (x *ConfigDelivery) GetAppliedRevision() uint64 {
 	return 0
 }
 
-func (x *ConfigDelivery) GetState() v12.DeliveryState {
+func (x *ConfigDelivery) GetState() v13.DeliveryState {
 	if x != nil {
 		return x.State
 	}
-	return v12.DeliveryState(0)
+	return v13.DeliveryState(0)
 }
 
-func (x *ConfigDelivery) GetError() *v12.ErrorDetail {
+func (x *ConfigDelivery) GetError() *v13.ErrorDetail {
 	if x != nil {
 		return x.Error
 	}
@@ -574,7 +712,7 @@ type GenerateInstallCommandRequest struct {
 
 func (x *GenerateInstallCommandRequest) Reset() {
 	*x = GenerateInstallCommandRequest{}
-	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[7]
+	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -586,7 +724,7 @@ func (x *GenerateInstallCommandRequest) String() string {
 func (*GenerateInstallCommandRequest) ProtoMessage() {}
 
 func (x *GenerateInstallCommandRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[7]
+	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -599,7 +737,7 @@ func (x *GenerateInstallCommandRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GenerateInstallCommandRequest.ProtoReflect.Descriptor instead.
 func (*GenerateInstallCommandRequest) Descriptor() ([]byte, []int) {
-	return file_komari_deployment_v1_deployment_proto_rawDescGZIP(), []int{7}
+	return file_komari_deployment_v1_deployment_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GenerateInstallCommandRequest) GetAgentId() string {
@@ -627,7 +765,7 @@ type GenerateInstallCommandResponse struct {
 
 func (x *GenerateInstallCommandResponse) Reset() {
 	*x = GenerateInstallCommandResponse{}
-	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[8]
+	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -639,7 +777,7 @@ func (x *GenerateInstallCommandResponse) String() string {
 func (*GenerateInstallCommandResponse) ProtoMessage() {}
 
 func (x *GenerateInstallCommandResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[8]
+	mi := &file_komari_deployment_v1_deployment_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -652,7 +790,7 @@ func (x *GenerateInstallCommandResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GenerateInstallCommandResponse.ProtoReflect.Descriptor instead.
 func (*GenerateInstallCommandResponse) Descriptor() ([]byte, []int) {
-	return file_komari_deployment_v1_deployment_proto_rawDescGZIP(), []int{8}
+	return file_komari_deployment_v1_deployment_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GenerateInstallCommandResponse) GetCommand() string {
@@ -673,24 +811,26 @@ var File_komari_deployment_v1_deployment_proto protoreflect.FileDescriptor
 
 const file_komari_deployment_v1_deployment_proto_rawDesc = "" +
 	"\n" +
-	"%komari/deployment/v1/deployment.proto\x12\x14komari.deployment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/config/v1/config.proto\x1a\x1dkomari/report/v1/report.proto\"1\n" +
+	"%komari/deployment/v1/deployment.proto\x12\x14komari.deployment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/config/v1/config.proto\x1a\x1dkomari/report/v1/report.proto\x1a\x1dkomari/rescue/v1/rescue.proto\"1\n" +
 	"\x14GetDeploymentRequest\x12\x19\n" +
-	"\bagent_id\x18\x01 \x01(\tR\aagentId\"\xe5\x01\n" +
+	"\bagent_id\x18\x01 \x01(\tR\aagentId\"\xb0\x02\n" +
 	"\x15GetDeploymentResponse\x12A\n" +
 	"\aprofile\x18\x01 \x01(\v2'.komari.deployment.v1.DeploymentProfileR\aprofile\x12@\n" +
 	"\bdelivery\x18\x02 \x01(\v2$.komari.deployment.v1.ConfigDeliveryR\bdelivery\x12G\n" +
-	"\fcapabilities\x18\x03 \x01(\v2#.komari.report.v1.AgentCapabilitiesR\fcapabilities\"\xa9\x01\n" +
+	"\fcapabilities\x18\x03 \x01(\v2#.komari.report.v1.AgentCapabilitiesR\fcapabilities\x12I\n" +
+	"\rrescue_helper\x18\x04 \x01(\v2$.komari.rescue.v1.RescueHelperStatusR\frescueHelper\"\xd0\x01\n" +
 	"\x1cSaveDeploymentProfileRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12A\n" +
 	"\aprofile\x18\x02 \x01(\v2'.komari.deployment.v1.DeploymentProfileR\aprofile\x12+\n" +
-	"\x11expected_revision\x18\x03 \x01(\x04R\x10expectedRevision\"\xa4\x01\n" +
+	"\x11expected_revision\x18\x03 \x01(\x04R\x10expectedRevision\x12%\n" +
+	"\x0eforce_dispatch\x18\x04 \x01(\bR\rforceDispatch\"\xa4\x01\n" +
 	"\x1dSaveDeploymentProfileResponse\x12A\n" +
 	"\aprofile\x18\x01 \x01(\v2'.komari.deployment.v1.DeploymentProfileR\aprofile\x12@\n" +
 	"\bdelivery\x18\x02 \x01(\v2$.komari.deployment.v1.ConfigDeliveryR\bdelivery\"\xa8\x01\n" +
 	"\x11DeploymentProfile\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12=\n" +
 	"\ainstall\x18\x02 \x01(\v2#.komari.deployment.v1.InstallConfigR\ainstall\x129\n" +
-	"\aruntime\x18\x03 \x01(\v2\x1f.komari.config.v1.RuntimeConfigR\aruntime\"\xda\x02\n" +
+	"\aruntime\x18\x03 \x01(\v2\x1f.komari.config.v1.RuntimeConfigR\aruntime\"\xf4\x03\n" +
 	"\rInstallConfig\x12:\n" +
 	"\bplatform\x18\x01 \x01(\x0e2\x1e.komari.deployment.v1.PlatformR\bplatform\x12+\n" +
 	"\x11install_directory\x18\x02 \x01(\tR\x10installDirectory\x12!\n" +
@@ -698,7 +838,12 @@ const file_komari_deployment_v1_deployment_proto_rawDesc = "" +
 	"\x13disable_auto_update\x18\x04 \x01(\bR\x11disableAutoUpdate\x12:\n" +
 	"\x19ignore_unsafe_certificate\x18\x05 \x01(\bR\x17ignoreUnsafeCertificate\x12.\n" +
 	"\x13enable_github_proxy\x18\x06 \x01(\bR\x11enableGithubProxy\x12!\n" +
-	"\fgithub_proxy\x18\a \x01(\tR\vgithubProxy\"\xb0\x03\n" +
+	"\fgithub_proxy\x18\a \x01(\tR\vgithubProxy\x12U\n" +
+	"\x10runtime_identity\x18\b \x01(\x0e2*.komari.deployment.v1.AgentRuntimeIdentityR\x0fruntimeIdentity\x12A\n" +
+	"\x06rescue\x18\t \x01(\v2).komari.deployment.v1.RescueInstallConfigR\x06rescue\"^\n" +
+	"\x13RescueInstallConfig\x12\x18\n" +
+	"\aenabled\x18\x01 \x01(\bR\aenabled\x12-\n" +
+	"\x12configure_firewall\x18\x02 \x01(\bR\x11configureFirewall\"\xb0\x03\n" +
 	"\x0eConfigDelivery\x12)\n" +
 	"\x10desired_revision\x18\x01 \x01(\x04R\x0fdesiredRevision\x12)\n" +
 	"\x10applied_revision\x18\x02 \x01(\x04R\x0fappliedRevision\x125\n" +
@@ -728,7 +873,11 @@ const file_komari_deployment_v1_deployment_proto_rawDesc = "" +
 	"\x15PLATFORM_DARWIN_AMD64\x10\x06\x12\x19\n" +
 	"\x15PLATFORM_DARWIN_ARM64\x10\a\x12\x1a\n" +
 	"\x16PLATFORM_FREEBSD_AMD64\x10\b\x12\x1a\n" +
-	"\x16PLATFORM_FREEBSD_ARM64\x10\t2\x86\x03\n" +
+	"\x16PLATFORM_FREEBSD_ARM64\x10\t*\x99\x01\n" +
+	"\x14AgentRuntimeIdentity\x12&\n" +
+	"\"AGENT_RUNTIME_IDENTITY_UNSPECIFIED\x10\x00\x120\n" +
+	",AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR\x10\x01\x12'\n" +
+	"#AGENT_RUNTIME_IDENTITY_CURRENT_USER\x10\x022\x86\x03\n" +
 	"\x11DeploymentService\x12h\n" +
 	"\rGetDeployment\x12*.komari.deployment.v1.GetDeploymentRequest\x1a+.komari.deployment.v1.GetDeploymentResponse\x12\x80\x01\n" +
 	"\x15SaveDeploymentProfile\x122.komari.deployment.v1.SaveDeploymentProfileRequest\x1a3.komari.deployment.v1.SaveDeploymentProfileResponse\x12\x83\x01\n" +
@@ -747,52 +896,58 @@ func file_komari_deployment_v1_deployment_proto_rawDescGZIP() []byte {
 	return file_komari_deployment_v1_deployment_proto_rawDescData
 }
 
-var file_komari_deployment_v1_deployment_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_komari_deployment_v1_deployment_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_komari_deployment_v1_deployment_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_komari_deployment_v1_deployment_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_komari_deployment_v1_deployment_proto_goTypes = []any{
 	(Platform)(0),                          // 0: komari.deployment.v1.Platform
-	(*GetDeploymentRequest)(nil),           // 1: komari.deployment.v1.GetDeploymentRequest
-	(*GetDeploymentResponse)(nil),          // 2: komari.deployment.v1.GetDeploymentResponse
-	(*SaveDeploymentProfileRequest)(nil),   // 3: komari.deployment.v1.SaveDeploymentProfileRequest
-	(*SaveDeploymentProfileResponse)(nil),  // 4: komari.deployment.v1.SaveDeploymentProfileResponse
-	(*DeploymentProfile)(nil),              // 5: komari.deployment.v1.DeploymentProfile
-	(*InstallConfig)(nil),                  // 6: komari.deployment.v1.InstallConfig
-	(*ConfigDelivery)(nil),                 // 7: komari.deployment.v1.ConfigDelivery
-	(*GenerateInstallCommandRequest)(nil),  // 8: komari.deployment.v1.GenerateInstallCommandRequest
-	(*GenerateInstallCommandResponse)(nil), // 9: komari.deployment.v1.GenerateInstallCommandResponse
-	(*v1.AgentCapabilities)(nil),           // 10: komari.report.v1.AgentCapabilities
-	(*v11.RuntimeConfig)(nil),              // 11: komari.config.v1.RuntimeConfig
-	(v12.DeliveryState)(0),                 // 12: komari.common.v1.DeliveryState
-	(*v12.ErrorDetail)(nil),                // 13: komari.common.v1.ErrorDetail
-	(*timestamppb.Timestamp)(nil),          // 14: google.protobuf.Timestamp
+	(AgentRuntimeIdentity)(0),              // 1: komari.deployment.v1.AgentRuntimeIdentity
+	(*GetDeploymentRequest)(nil),           // 2: komari.deployment.v1.GetDeploymentRequest
+	(*GetDeploymentResponse)(nil),          // 3: komari.deployment.v1.GetDeploymentResponse
+	(*SaveDeploymentProfileRequest)(nil),   // 4: komari.deployment.v1.SaveDeploymentProfileRequest
+	(*SaveDeploymentProfileResponse)(nil),  // 5: komari.deployment.v1.SaveDeploymentProfileResponse
+	(*DeploymentProfile)(nil),              // 6: komari.deployment.v1.DeploymentProfile
+	(*InstallConfig)(nil),                  // 7: komari.deployment.v1.InstallConfig
+	(*RescueInstallConfig)(nil),            // 8: komari.deployment.v1.RescueInstallConfig
+	(*ConfigDelivery)(nil),                 // 9: komari.deployment.v1.ConfigDelivery
+	(*GenerateInstallCommandRequest)(nil),  // 10: komari.deployment.v1.GenerateInstallCommandRequest
+	(*GenerateInstallCommandResponse)(nil), // 11: komari.deployment.v1.GenerateInstallCommandResponse
+	(*v1.AgentCapabilities)(nil),           // 12: komari.report.v1.AgentCapabilities
+	(*v11.RescueHelperStatus)(nil),         // 13: komari.rescue.v1.RescueHelperStatus
+	(*v12.RuntimeConfig)(nil),              // 14: komari.config.v1.RuntimeConfig
+	(v13.DeliveryState)(0),                 // 15: komari.common.v1.DeliveryState
+	(*v13.ErrorDetail)(nil),                // 16: komari.common.v1.ErrorDetail
+	(*timestamppb.Timestamp)(nil),          // 17: google.protobuf.Timestamp
 }
 var file_komari_deployment_v1_deployment_proto_depIdxs = []int32{
-	5,  // 0: komari.deployment.v1.GetDeploymentResponse.profile:type_name -> komari.deployment.v1.DeploymentProfile
-	7,  // 1: komari.deployment.v1.GetDeploymentResponse.delivery:type_name -> komari.deployment.v1.ConfigDelivery
-	10, // 2: komari.deployment.v1.GetDeploymentResponse.capabilities:type_name -> komari.report.v1.AgentCapabilities
-	5,  // 3: komari.deployment.v1.SaveDeploymentProfileRequest.profile:type_name -> komari.deployment.v1.DeploymentProfile
-	5,  // 4: komari.deployment.v1.SaveDeploymentProfileResponse.profile:type_name -> komari.deployment.v1.DeploymentProfile
-	7,  // 5: komari.deployment.v1.SaveDeploymentProfileResponse.delivery:type_name -> komari.deployment.v1.ConfigDelivery
-	6,  // 6: komari.deployment.v1.DeploymentProfile.install:type_name -> komari.deployment.v1.InstallConfig
-	11, // 7: komari.deployment.v1.DeploymentProfile.runtime:type_name -> komari.config.v1.RuntimeConfig
-	0,  // 8: komari.deployment.v1.InstallConfig.platform:type_name -> komari.deployment.v1.Platform
-	12, // 9: komari.deployment.v1.ConfigDelivery.state:type_name -> komari.common.v1.DeliveryState
-	13, // 10: komari.deployment.v1.ConfigDelivery.error:type_name -> komari.common.v1.ErrorDetail
-	14, // 11: komari.deployment.v1.ConfigDelivery.saved_at:type_name -> google.protobuf.Timestamp
-	14, // 12: komari.deployment.v1.ConfigDelivery.sent_at:type_name -> google.protobuf.Timestamp
-	14, // 13: komari.deployment.v1.ConfigDelivery.finished_at:type_name -> google.protobuf.Timestamp
-	0,  // 14: komari.deployment.v1.GenerateInstallCommandRequest.platform:type_name -> komari.deployment.v1.Platform
-	1,  // 15: komari.deployment.v1.DeploymentService.GetDeployment:input_type -> komari.deployment.v1.GetDeploymentRequest
-	3,  // 16: komari.deployment.v1.DeploymentService.SaveDeploymentProfile:input_type -> komari.deployment.v1.SaveDeploymentProfileRequest
-	8,  // 17: komari.deployment.v1.DeploymentService.GenerateInstallCommand:input_type -> komari.deployment.v1.GenerateInstallCommandRequest
-	2,  // 18: komari.deployment.v1.DeploymentService.GetDeployment:output_type -> komari.deployment.v1.GetDeploymentResponse
-	4,  // 19: komari.deployment.v1.DeploymentService.SaveDeploymentProfile:output_type -> komari.deployment.v1.SaveDeploymentProfileResponse
-	9,  // 20: komari.deployment.v1.DeploymentService.GenerateInstallCommand:output_type -> komari.deployment.v1.GenerateInstallCommandResponse
-	18, // [18:21] is the sub-list for method output_type
-	15, // [15:18] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	6,  // 0: komari.deployment.v1.GetDeploymentResponse.profile:type_name -> komari.deployment.v1.DeploymentProfile
+	9,  // 1: komari.deployment.v1.GetDeploymentResponse.delivery:type_name -> komari.deployment.v1.ConfigDelivery
+	12, // 2: komari.deployment.v1.GetDeploymentResponse.capabilities:type_name -> komari.report.v1.AgentCapabilities
+	13, // 3: komari.deployment.v1.GetDeploymentResponse.rescue_helper:type_name -> komari.rescue.v1.RescueHelperStatus
+	6,  // 4: komari.deployment.v1.SaveDeploymentProfileRequest.profile:type_name -> komari.deployment.v1.DeploymentProfile
+	6,  // 5: komari.deployment.v1.SaveDeploymentProfileResponse.profile:type_name -> komari.deployment.v1.DeploymentProfile
+	9,  // 6: komari.deployment.v1.SaveDeploymentProfileResponse.delivery:type_name -> komari.deployment.v1.ConfigDelivery
+	7,  // 7: komari.deployment.v1.DeploymentProfile.install:type_name -> komari.deployment.v1.InstallConfig
+	14, // 8: komari.deployment.v1.DeploymentProfile.runtime:type_name -> komari.config.v1.RuntimeConfig
+	0,  // 9: komari.deployment.v1.InstallConfig.platform:type_name -> komari.deployment.v1.Platform
+	1,  // 10: komari.deployment.v1.InstallConfig.runtime_identity:type_name -> komari.deployment.v1.AgentRuntimeIdentity
+	8,  // 11: komari.deployment.v1.InstallConfig.rescue:type_name -> komari.deployment.v1.RescueInstallConfig
+	15, // 12: komari.deployment.v1.ConfigDelivery.state:type_name -> komari.common.v1.DeliveryState
+	16, // 13: komari.deployment.v1.ConfigDelivery.error:type_name -> komari.common.v1.ErrorDetail
+	17, // 14: komari.deployment.v1.ConfigDelivery.saved_at:type_name -> google.protobuf.Timestamp
+	17, // 15: komari.deployment.v1.ConfigDelivery.sent_at:type_name -> google.protobuf.Timestamp
+	17, // 16: komari.deployment.v1.ConfigDelivery.finished_at:type_name -> google.protobuf.Timestamp
+	0,  // 17: komari.deployment.v1.GenerateInstallCommandRequest.platform:type_name -> komari.deployment.v1.Platform
+	2,  // 18: komari.deployment.v1.DeploymentService.GetDeployment:input_type -> komari.deployment.v1.GetDeploymentRequest
+	4,  // 19: komari.deployment.v1.DeploymentService.SaveDeploymentProfile:input_type -> komari.deployment.v1.SaveDeploymentProfileRequest
+	10, // 20: komari.deployment.v1.DeploymentService.GenerateInstallCommand:input_type -> komari.deployment.v1.GenerateInstallCommandRequest
+	3,  // 21: komari.deployment.v1.DeploymentService.GetDeployment:output_type -> komari.deployment.v1.GetDeploymentResponse
+	5,  // 22: komari.deployment.v1.DeploymentService.SaveDeploymentProfile:output_type -> komari.deployment.v1.SaveDeploymentProfileResponse
+	11, // 23: komari.deployment.v1.DeploymentService.GenerateInstallCommand:output_type -> komari.deployment.v1.GenerateInstallCommandResponse
+	21, // [21:24] is the sub-list for method output_type
+	18, // [18:21] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_komari_deployment_v1_deployment_proto_init() }
@@ -800,14 +955,14 @@ func file_komari_deployment_v1_deployment_proto_init() {
 	if File_komari_deployment_v1_deployment_proto != nil {
 		return
 	}
-	file_komari_deployment_v1_deployment_proto_msgTypes[6].OneofWrappers = []any{}
+	file_komari_deployment_v1_deployment_proto_msgTypes[7].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_deployment_v1_deployment_proto_rawDesc), len(file_komari_deployment_v1_deployment_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   9,
+			NumEnums:      2,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

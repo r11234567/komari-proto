@@ -4,6 +4,7 @@ package komari.report.v1;
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+import "komari/rescue/v1/rescue.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/report/v1;reportv1";
 
@@ -101,6 +102,7 @@ message AgentMetadata {
   google.protobuf.Timestamp build_time = 3;
   AgentCapabilities capabilities = 4;
   uint64 applied_config_revision = 5;
+  komari.rescue.v1.RescueHelperStatus rescue_helper = 6;
 }
 
 // AgentCapabilities declares independently degradable runtime features.
@@ -114,6 +116,7 @@ message AgentCapabilities {
   CapabilityState service_control = 7;
   CapabilityState execution = 8;
   CapabilityState webssh = 9;
+  CapabilityState rescue_helper = 10;
 }
 
 // CapabilityState describes whether a feature is available and why it is limited.

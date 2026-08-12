@@ -12,13 +12,15 @@ import type { RuntimeConfig } from "../../config/v1/config_pb";
 import { file_komari_config_v1_config } from "../../config/v1/config_pb";
 import type { AgentCapabilities } from "../../report/v1/report_pb";
 import { file_komari_report_v1_report } from "../../report/v1/report_pb";
+import type { RescueHelperStatus } from "../../rescue/v1/rescue_pb";
+import { file_komari_rescue_v1_rescue } from "../../rescue/v1/rescue_pb";
 import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file komari/deployment/v1/deployment.proto.
  */
 export const file_komari_deployment_v1_deployment: GenFile = /*@__PURE__*/
-  fileDesc("CiVrb21hcmkvZGVwbG95bWVudC92MS9kZXBsb3ltZW50LnByb3RvEhRrb21hcmkuZGVwbG95bWVudC52MSIoChRHZXREZXBsb3ltZW50UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCSLEAQoVR2V0RGVwbG95bWVudFJlc3BvbnNlEjgKB3Byb2ZpbGUYASABKAsyJy5rb21hcmkuZGVwbG95bWVudC52MS5EZXBsb3ltZW50UHJvZmlsZRI2CghkZWxpdmVyeRgCIAEoCzIkLmtvbWFyaS5kZXBsb3ltZW50LnYxLkNvbmZpZ0RlbGl2ZXJ5EjkKDGNhcGFiaWxpdGllcxgDIAEoCzIjLmtvbWFyaS5yZXBvcnQudjEuQWdlbnRDYXBhYmlsaXRpZXMihQEKHFNhdmVEZXBsb3ltZW50UHJvZmlsZVJlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSOAoHcHJvZmlsZRgCIAEoCzInLmtvbWFyaS5kZXBsb3ltZW50LnYxLkRlcGxveW1lbnRQcm9maWxlEhkKEWV4cGVjdGVkX3JldmlzaW9uGAMgASgEIpEBCh1TYXZlRGVwbG95bWVudFByb2ZpbGVSZXNwb25zZRI4Cgdwcm9maWxlGAEgASgLMicua29tYXJpLmRlcGxveW1lbnQudjEuRGVwbG95bWVudFByb2ZpbGUSNgoIZGVsaXZlcnkYAiABKAsyJC5rb21hcmkuZGVwbG95bWVudC52MS5Db25maWdEZWxpdmVyeSKNAQoRRGVwbG95bWVudFByb2ZpbGUSEAoIYWdlbnRfaWQYASABKAkSNAoHaW5zdGFsbBgCIAEoCzIjLmtvbWFyaS5kZXBsb3ltZW50LnYxLkluc3RhbGxDb25maWcSMAoHcnVudGltZRgDIAEoCzIfLmtvbWFyaS5jb25maWcudjEuUnVudGltZUNvbmZpZyLlAQoNSW5zdGFsbENvbmZpZxIwCghwbGF0Zm9ybRgBIAEoDjIeLmtvbWFyaS5kZXBsb3ltZW50LnYxLlBsYXRmb3JtEhkKEWluc3RhbGxfZGlyZWN0b3J5GAIgASgJEhQKDHNlcnZpY2VfbmFtZRgDIAEoCRIbChNkaXNhYmxlX2F1dG9fdXBkYXRlGAQgASgIEiEKGWlnbm9yZV91bnNhZmVfY2VydGlmaWNhdGUYBSABKAgSGwoTZW5hYmxlX2dpdGh1Yl9wcm94eRgGIAEoCBIUCgxnaXRodWJfcHJveHkYByABKAki4wIKDkNvbmZpZ0RlbGl2ZXJ5EhgKEGRlc2lyZWRfcmV2aXNpb24YASABKAQSGAoQYXBwbGllZF9yZXZpc2lvbhgCIAEoBBIuCgVzdGF0ZRgDIAEoDjIfLmtvbWFyaS5jb21tb24udjEuRGVsaXZlcnlTdGF0ZRIxCgVlcnJvchgEIAEoCzIdLmtvbWFyaS5jb21tb24udjEuRXJyb3JEZXRhaWxIAIgBARIsCghzYXZlZF9hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASMAoHc2VudF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAYgBARI0CgtmaW5pc2hlZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAogBAUIICgZfZXJyb3JCCgoIX3NlbnRfYXRCDgoMX2ZpbmlzaGVkX2F0ImMKHUdlbmVyYXRlSW5zdGFsbENvbW1hbmRSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEjAKCHBsYXRmb3JtGAIgASgOMh4ua29tYXJpLmRlcGxveW1lbnQudjEuUGxhdGZvcm0iQQoeR2VuZXJhdGVJbnN0YWxsQ29tbWFuZFJlc3BvbnNlEg8KB2NvbW1hbmQYASABKAkSDgoGc2hhMjU2GAIgASgJKpQCCghQbGF0Zm9ybRIYChRQTEFURk9STV9VTlNQRUNJRklFRBAAEhgKFFBMQVRGT1JNX0xJTlVYX0FNRDY0EAESGAoUUExBVEZPUk1fTElOVVhfQVJNNjQQAhIWChJQTEFURk9STV9MSU5VWF8zODYQAxIaChZQTEFURk9STV9XSU5ET1dTX0FNRDY0EAQSGAoUUExBVEZPUk1fV0lORE9XU18zODYQBRIZChVQTEFURk9STV9EQVJXSU5fQU1ENjQQBhIZChVQTEFURk9STV9EQVJXSU5fQVJNNjQQBxIaChZQTEFURk9STV9GUkVFQlNEX0FNRDY0EAgSGgoWUExBVEZPUk1fRlJFRUJTRF9BUk02NBAJMoYDChFEZXBsb3ltZW50U2VydmljZRJoCg1HZXREZXBsb3ltZW50Eioua29tYXJpLmRlcGxveW1lbnQudjEuR2V0RGVwbG95bWVudFJlcXVlc3QaKy5rb21hcmkuZGVwbG95bWVudC52MS5HZXREZXBsb3ltZW50UmVzcG9uc2USgAEKFVNhdmVEZXBsb3ltZW50UHJvZmlsZRIyLmtvbWFyaS5kZXBsb3ltZW50LnYxLlNhdmVEZXBsb3ltZW50UHJvZmlsZVJlcXVlc3QaMy5rb21hcmkuZGVwbG95bWVudC52MS5TYXZlRGVwbG95bWVudFByb2ZpbGVSZXNwb25zZRKDAQoWR2VuZXJhdGVJbnN0YWxsQ29tbWFuZBIzLmtvbWFyaS5kZXBsb3ltZW50LnYxLkdlbmVyYXRlSW5zdGFsbENvbW1hbmRSZXF1ZXN0GjQua29tYXJpLmRlcGxveW1lbnQudjEuR2VuZXJhdGVJbnN0YWxsQ29tbWFuZFJlc3BvbnNlQukBChhjb20ua29tYXJpLmRlcGxveW1lbnQudjFCD0RlcGxveW1lbnRQcm90b1ABWkpnaXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9kZXBsb3ltZW50L3YxO2RlcGxveW1lbnR2MaICA0tEWKoCFEtvbWFyaS5EZXBsb3ltZW50LlYxygIUS29tYXJpXERlcGxveW1lbnRcVjHiAiBLb21hcmlcRGVwbG95bWVudFxWMVxHUEJNZXRhZGF0YeoCFktvbWFyaTo6RGVwbG95bWVudDo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp, file_komari_common_v1_common, file_komari_config_v1_config, file_komari_report_v1_report]);
+  fileDesc("CiVrb21hcmkvZGVwbG95bWVudC92MS9kZXBsb3ltZW50LnByb3RvEhRrb21hcmkuZGVwbG95bWVudC52MSIoChRHZXREZXBsb3ltZW50UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCSKBAgoVR2V0RGVwbG95bWVudFJlc3BvbnNlEjgKB3Byb2ZpbGUYASABKAsyJy5rb21hcmkuZGVwbG95bWVudC52MS5EZXBsb3ltZW50UHJvZmlsZRI2CghkZWxpdmVyeRgCIAEoCzIkLmtvbWFyaS5kZXBsb3ltZW50LnYxLkNvbmZpZ0RlbGl2ZXJ5EjkKDGNhcGFiaWxpdGllcxgDIAEoCzIjLmtvbWFyaS5yZXBvcnQudjEuQWdlbnRDYXBhYmlsaXRpZXMSOwoNcmVzY3VlX2hlbHBlchgEIAEoCzIkLmtvbWFyaS5yZXNjdWUudjEuUmVzY3VlSGVscGVyU3RhdHVzIp0BChxTYXZlRGVwbG95bWVudFByb2ZpbGVSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEjgKB3Byb2ZpbGUYAiABKAsyJy5rb21hcmkuZGVwbG95bWVudC52MS5EZXBsb3ltZW50UHJvZmlsZRIZChFleHBlY3RlZF9yZXZpc2lvbhgDIAEoBBIWCg5mb3JjZV9kaXNwYXRjaBgEIAEoCCKRAQodU2F2ZURlcGxveW1lbnRQcm9maWxlUmVzcG9uc2USOAoHcHJvZmlsZRgBIAEoCzInLmtvbWFyaS5kZXBsb3ltZW50LnYxLkRlcGxveW1lbnRQcm9maWxlEjYKCGRlbGl2ZXJ5GAIgASgLMiQua29tYXJpLmRlcGxveW1lbnQudjEuQ29uZmlnRGVsaXZlcnkijQEKEURlcGxveW1lbnRQcm9maWxlEhAKCGFnZW50X2lkGAEgASgJEjQKB2luc3RhbGwYAiABKAsyIy5rb21hcmkuZGVwbG95bWVudC52MS5JbnN0YWxsQ29uZmlnEjAKB3J1bnRpbWUYAyABKAsyHy5rb21hcmkuY29uZmlnLnYxLlJ1bnRpbWVDb25maWci5gIKDUluc3RhbGxDb25maWcSMAoIcGxhdGZvcm0YASABKA4yHi5rb21hcmkuZGVwbG95bWVudC52MS5QbGF0Zm9ybRIZChFpbnN0YWxsX2RpcmVjdG9yeRgCIAEoCRIUCgxzZXJ2aWNlX25hbWUYAyABKAkSGwoTZGlzYWJsZV9hdXRvX3VwZGF0ZRgEIAEoCBIhChlpZ25vcmVfdW5zYWZlX2NlcnRpZmljYXRlGAUgASgIEhsKE2VuYWJsZV9naXRodWJfcHJveHkYBiABKAgSFAoMZ2l0aHViX3Byb3h5GAcgASgJEkQKEHJ1bnRpbWVfaWRlbnRpdHkYCCABKA4yKi5rb21hcmkuZGVwbG95bWVudC52MS5BZ2VudFJ1bnRpbWVJZGVudGl0eRI5CgZyZXNjdWUYCSABKAsyKS5rb21hcmkuZGVwbG95bWVudC52MS5SZXNjdWVJbnN0YWxsQ29uZmlnIkIKE1Jlc2N1ZUluc3RhbGxDb25maWcSDwoHZW5hYmxlZBgBIAEoCBIaChJjb25maWd1cmVfZmlyZXdhbGwYAiABKAgi4wIKDkNvbmZpZ0RlbGl2ZXJ5EhgKEGRlc2lyZWRfcmV2aXNpb24YASABKAQSGAoQYXBwbGllZF9yZXZpc2lvbhgCIAEoBBIuCgVzdGF0ZRgDIAEoDjIfLmtvbWFyaS5jb21tb24udjEuRGVsaXZlcnlTdGF0ZRIxCgVlcnJvchgEIAEoCzIdLmtvbWFyaS5jb21tb24udjEuRXJyb3JEZXRhaWxIAIgBARIsCghzYXZlZF9hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASMAoHc2VudF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAYgBARI0CgtmaW5pc2hlZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAogBAUIICgZfZXJyb3JCCgoIX3NlbnRfYXRCDgoMX2ZpbmlzaGVkX2F0ImMKHUdlbmVyYXRlSW5zdGFsbENvbW1hbmRSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEjAKCHBsYXRmb3JtGAIgASgOMh4ua29tYXJpLmRlcGxveW1lbnQudjEuUGxhdGZvcm0iQQoeR2VuZXJhdGVJbnN0YWxsQ29tbWFuZFJlc3BvbnNlEg8KB2NvbW1hbmQYASABKAkSDgoGc2hhMjU2GAIgASgJKpQCCghQbGF0Zm9ybRIYChRQTEFURk9STV9VTlNQRUNJRklFRBAAEhgKFFBMQVRGT1JNX0xJTlVYX0FNRDY0EAESGAoUUExBVEZPUk1fTElOVVhfQVJNNjQQAhIWChJQTEFURk9STV9MSU5VWF8zODYQAxIaChZQTEFURk9STV9XSU5ET1dTX0FNRDY0EAQSGAoUUExBVEZPUk1fV0lORE9XU18zODYQBRIZChVQTEFURk9STV9EQVJXSU5fQU1ENjQQBhIZChVQTEFURk9STV9EQVJXSU5fQVJNNjQQBxIaChZQTEFURk9STV9GUkVFQlNEX0FNRDY0EAgSGgoWUExBVEZPUk1fRlJFRUJTRF9BUk02NBAJKpkBChRBZ2VudFJ1bnRpbWVJZGVudGl0eRImCiJBR0VOVF9SVU5USU1FX0lERU5USVRZX1VOU1BFQ0lGSUVEEAASMAosQUdFTlRfUlVOVElNRV9JREVOVElUWV9ST09UX09SX0FETUlOSVNUUkFUT1IQARInCiNBR0VOVF9SVU5USU1FX0lERU5USVRZX0NVUlJFTlRfVVNFUhACMoYDChFEZXBsb3ltZW50U2VydmljZRJoCg1HZXREZXBsb3ltZW50Eioua29tYXJpLmRlcGxveW1lbnQudjEuR2V0RGVwbG95bWVudFJlcXVlc3QaKy5rb21hcmkuZGVwbG95bWVudC52MS5HZXREZXBsb3ltZW50UmVzcG9uc2USgAEKFVNhdmVEZXBsb3ltZW50UHJvZmlsZRIyLmtvbWFyaS5kZXBsb3ltZW50LnYxLlNhdmVEZXBsb3ltZW50UHJvZmlsZVJlcXVlc3QaMy5rb21hcmkuZGVwbG95bWVudC52MS5TYXZlRGVwbG95bWVudFByb2ZpbGVSZXNwb25zZRKDAQoWR2VuZXJhdGVJbnN0YWxsQ29tbWFuZBIzLmtvbWFyaS5kZXBsb3ltZW50LnYxLkdlbmVyYXRlSW5zdGFsbENvbW1hbmRSZXF1ZXN0GjQua29tYXJpLmRlcGxveW1lbnQudjEuR2VuZXJhdGVJbnN0YWxsQ29tbWFuZFJlc3BvbnNlQukBChhjb20ua29tYXJpLmRlcGxveW1lbnQudjFCD0RlcGxveW1lbnRQcm90b1ABWkpnaXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9kZXBsb3ltZW50L3YxO2RlcGxveW1lbnR2MaICA0tEWKoCFEtvbWFyaS5EZXBsb3ltZW50LlYxygIUS29tYXJpXERlcGxveW1lbnRcVjHiAiBLb21hcmlcRGVwbG95bWVudFxWMVxHUEJNZXRhZGF0YeoCFktvbWFyaTo6RGVwbG95bWVudDo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp, file_komari_common_v1_common, file_komari_config_v1_config, file_komari_report_v1_report, file_komari_rescue_v1_rescue]);
 
 /**
  * GetDeploymentRequest identifies one agent.
@@ -59,6 +61,11 @@ export type GetDeploymentResponse = Message<"komari.deployment.v1.GetDeploymentR
    * @generated from field: komari.report.v1.AgentCapabilities capabilities = 3;
    */
   capabilities?: AgentCapabilities | undefined;
+
+  /**
+   * @generated from field: komari.rescue.v1.RescueHelperStatus rescue_helper = 4;
+   */
+  rescueHelper?: RescueHelperStatus | undefined;
 };
 
 /**
@@ -88,6 +95,13 @@ export type SaveDeploymentProfileRequest = Message<"komari.deployment.v1.SaveDep
    * @generated from field: uint64 expected_revision = 3;
    */
   expectedRevision: bigint;
+
+  /**
+   * force_dispatch creates a new immutable desired revision even when values are unchanged.
+   *
+   * @generated from field: bool force_dispatch = 4;
+   */
+  forceDispatch: boolean;
 };
 
 /**
@@ -190,6 +204,16 @@ export type InstallConfig = Message<"komari.deployment.v1.InstallConfig"> & {
    * @generated from field: string github_proxy = 7;
    */
   githubProxy: string;
+
+  /**
+   * @generated from field: komari.deployment.v1.AgentRuntimeIdentity runtime_identity = 8;
+   */
+  runtimeIdentity: AgentRuntimeIdentity;
+
+  /**
+   * @generated from field: komari.deployment.v1.RescueInstallConfig rescue = 9;
+   */
+  rescue?: RescueInstallConfig | undefined;
 };
 
 /**
@@ -198,6 +222,31 @@ export type InstallConfig = Message<"komari.deployment.v1.InstallConfig"> & {
  */
 export const InstallConfigSchema: GenMessage<InstallConfig> = /*@__PURE__*/
   messageDesc(file_komari_deployment_v1_deployment, 5);
+
+/**
+ * RescueInstallConfig controls the separately privileged rescue helper.
+ * The helper is valid only when normal remote control is disabled.
+ *
+ * @generated from message komari.deployment.v1.RescueInstallConfig
+ */
+export type RescueInstallConfig = Message<"komari.deployment.v1.RescueInstallConfig"> & {
+  /**
+   * @generated from field: bool enabled = 1;
+   */
+  enabled: boolean;
+
+  /**
+   * @generated from field: bool configure_firewall = 2;
+   */
+  configureFirewall: boolean;
+};
+
+/**
+ * Describes the message komari.deployment.v1.RescueInstallConfig.
+ * Use `create(RescueInstallConfigSchema)` to create a new message.
+ */
+export const RescueInstallConfigSchema: GenMessage<RescueInstallConfig> = /*@__PURE__*/
+  messageDesc(file_komari_deployment_v1_deployment, 6);
 
 /**
  * ConfigDelivery exposes desired/applied revisions and terminal delivery state.
@@ -246,7 +295,7 @@ export type ConfigDelivery = Message<"komari.deployment.v1.ConfigDelivery"> & {
  * Use `create(ConfigDeliverySchema)` to create a new message.
  */
 export const ConfigDeliverySchema: GenMessage<ConfigDelivery> = /*@__PURE__*/
-  messageDesc(file_komari_deployment_v1_deployment, 6);
+  messageDesc(file_komari_deployment_v1_deployment, 7);
 
 /**
  * GenerateInstallCommandRequest identifies one platform and profile.
@@ -270,7 +319,7 @@ export type GenerateInstallCommandRequest = Message<"komari.deployment.v1.Genera
  * Use `create(GenerateInstallCommandRequestSchema)` to create a new message.
  */
 export const GenerateInstallCommandRequestSchema: GenMessage<GenerateInstallCommandRequest> = /*@__PURE__*/
-  messageDesc(file_komari_deployment_v1_deployment, 7);
+  messageDesc(file_komari_deployment_v1_deployment, 8);
 
 /**
  * GenerateInstallCommandResponse contains a shell-specific command and checksum.
@@ -294,7 +343,7 @@ export type GenerateInstallCommandResponse = Message<"komari.deployment.v1.Gener
  * Use `create(GenerateInstallCommandResponseSchema)` to create a new message.
  */
 export const GenerateInstallCommandResponseSchema: GenMessage<GenerateInstallCommandResponse> = /*@__PURE__*/
-  messageDesc(file_komari_deployment_v1_deployment, 8);
+  messageDesc(file_komari_deployment_v1_deployment, 9);
 
 /**
  * Platform identifies supported installation targets.
@@ -358,6 +407,34 @@ export enum Platform {
  */
 export const PlatformSchema: GenEnum<Platform> = /*@__PURE__*/
   enumDesc(file_komari_deployment_v1_deployment, 0);
+
+/**
+ * AgentRuntimeIdentity describes how the ordinary Agent service runs after installation.
+ *
+ * @generated from enum komari.deployment.v1.AgentRuntimeIdentity
+ */
+export enum AgentRuntimeIdentity {
+  /**
+   * @generated from enum value: AGENT_RUNTIME_IDENTITY_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR = 1;
+   */
+  ROOT_OR_ADMINISTRATOR = 1,
+
+  /**
+   * @generated from enum value: AGENT_RUNTIME_IDENTITY_CURRENT_USER = 2;
+   */
+  CURRENT_USER = 2,
+}
+
+/**
+ * Describes the enum komari.deployment.v1.AgentRuntimeIdentity.
+ */
+export const AgentRuntimeIdentitySchema: GenEnum<AgentRuntimeIdentity> = /*@__PURE__*/
+  enumDesc(file_komari_deployment_v1_deployment, 1);
 
 /**
  * DeploymentService owns install-only settings and runtime delivery status.

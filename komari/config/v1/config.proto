@@ -86,6 +86,8 @@ message UpdateDesiredConfigRequest {
   RuntimeConfig runtime = 2;
   uint64 expected_revision = 3;
   string reason = 4;
+  // force_dispatch creates a new revision even if runtime is byte-for-byte unchanged.
+  bool force_dispatch = 5;
 }
 
 // UpdateDesiredConfigResponse contains the stored immutable snapshot.

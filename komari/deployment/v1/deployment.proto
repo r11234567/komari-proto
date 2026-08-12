@@ -6,6 +6,7 @@ import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
 import "komari/config/v1/config.proto";
 import "komari/report/v1/report.proto";
+import "komari/rescue/v1/rescue.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/deployment/v1;deploymentv1";
 
@@ -29,6 +30,7 @@ message GetDeploymentResponse {
   DeploymentProfile profile = 1;
   ConfigDelivery delivery = 2;
   komari.report.v1.AgentCapabilities capabilities = 3;
+  komari.rescue.v1.RescueHelperStatus rescue_helper = 4;
 }
 
 // SaveDeploymentProfileRequest uses optimistic concurrency for runtime settings.
@@ -36,6 +38,8 @@ message SaveDeploymentProfileRequest {
   string agent_id = 1;
   DeploymentProfile profile = 2;
   uint64 expected_revision = 3;
+  // force_dispatch creates a new immutable desired revision even when values are unchanged.
+  bool force_dispatch = 4;
 }
 
 // SaveDeploymentProfileResponse returns the normalized stored state.
@@ -60,6 +64,15 @@ message InstallConfig {
   bool ignore_unsafe_certificate = 5;
   bool enable_github_proxy = 6;
   string github_proxy = 7;
+  AgentRuntimeIdentity runtime_identity = 8;
+  RescueInstallConfig rescue = 9;
+}
+
+// RescueInstallConfig controls the separately privileged rescue helper.
+// The helper is valid only when normal remote control is disabled.
+message RescueInstallConfig {
+  bool enabled = 1;
+  bool configure_firewall = 2;
 }
 
 // ConfigDelivery exposes desired/applied revisions and terminal delivery state.
@@ -97,4 +110,11 @@ enum Platform {
   PLATFORM_DARWIN_ARM64 = 7;
   PLATFORM_FREEBSD_AMD64 = 8;
   PLATFORM_FREEBSD_ARM64 = 9;
+}
+
+// AgentRuntimeIdentity describes how the ordinary Agent service runs after installation.
+enum AgentRuntimeIdentity {
+  AGENT_RUNTIME_IDENTITY_UNSPECIFIED = 0;
+  AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR = 1;
+  AGENT_RUNTIME_IDENTITY_CURRENT_USER = 2;
 }

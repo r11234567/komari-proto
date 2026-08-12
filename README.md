@@ -15,6 +15,7 @@ compatibility adapters and must not receive new product features.
 | `WebSSHService` | bidi, unary cleanup | Interactive terminal sessions only |
 | `AgentEventService` | unary, server stream | Lifecycle notifications and replay ACK |
 | `DeploymentService` | unary | Install profiles and config delivery state |
+| `RescueService` | unary, server stream | Privileged helper status and bounded recovery operations |
 | `BrowserService` | unary, server stream | Typed browser read models and theme contract |
 
 Only WebSSH uses a bidirectional stream. Metrics, configuration, execution,

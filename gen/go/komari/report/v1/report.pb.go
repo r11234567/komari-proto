@@ -7,6 +7,7 @@
 package reportv1
 
 import (
+	v1 "github.com/r11234567/komari-proto/gen/go/komari/rescue/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
@@ -771,6 +772,7 @@ type AgentMetadata struct {
 	BuildTime             *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=build_time,json=buildTime,proto3" json:"build_time,omitempty"`
 	Capabilities          *AgentCapabilities     `protobuf:"bytes,4,opt,name=capabilities,proto3" json:"capabilities,omitempty"`
 	AppliedConfigRevision uint64                 `protobuf:"varint,5,opt,name=applied_config_revision,json=appliedConfigRevision,proto3" json:"applied_config_revision,omitempty"`
+	RescueHelper          *v1.RescueHelperStatus `protobuf:"bytes,6,opt,name=rescue_helper,json=rescueHelper,proto3" json:"rescue_helper,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -840,6 +842,13 @@ func (x *AgentMetadata) GetAppliedConfigRevision() uint64 {
 	return 0
 }
 
+func (x *AgentMetadata) GetRescueHelper() *v1.RescueHelperStatus {
+	if x != nil {
+		return x.RescueHelper
+	}
+	return nil
+}
+
 // AgentCapabilities declares independently degradable runtime features.
 type AgentCapabilities struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
@@ -852,6 +861,7 @@ type AgentCapabilities struct {
 	ServiceControl    *CapabilityState       `protobuf:"bytes,7,opt,name=service_control,json=serviceControl,proto3" json:"service_control,omitempty"`
 	Execution         *CapabilityState       `protobuf:"bytes,8,opt,name=execution,proto3" json:"execution,omitempty"`
 	Webssh            *CapabilityState       `protobuf:"bytes,9,opt,name=webssh,proto3" json:"webssh,omitempty"`
+	RescueHelper      *CapabilityState       `protobuf:"bytes,10,opt,name=rescue_helper,json=rescueHelper,proto3" json:"rescue_helper,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -949,6 +959,13 @@ func (x *AgentCapabilities) GetWebssh() *CapabilityState {
 	return nil
 }
 
+func (x *AgentCapabilities) GetRescueHelper() *CapabilityState {
+	if x != nil {
+		return x.RescueHelper
+	}
+	return nil
+}
+
 // CapabilityState describes whether a feature is available and why it is limited.
 type CapabilityState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -1006,7 +1023,7 @@ var File_komari_report_v1_report_proto protoreflect.FileDescriptor
 
 const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\n" +
-	"\x1dkomari/report/v1/report.proto\x12\x10komari.report.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"L\n" +
+	"\x1dkomari/report/v1/report.proto\x12\x10komari.report.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/rescue/v1/rescue.proto\"L\n" +
 	"\x13SubmitReportRequest\x125\n" +
 	"\x06report\x18\x01 \x01(\v2\x1d.komari.report.v1.AgentReportR\x06report\"\xe9\x01\n" +
 	"\x14SubmitReportResponse\x12\x1a\n" +
@@ -1077,7 +1094,7 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"totalBytes\x12\x1d\n" +
 	"\n" +
 	"used_bytes\x18\x05 \x01(\x04R\tusedBytes\x12#\n" +
-	"\rusage_percent\x18\x06 \x01(\x01R\fusagePercent\"\x84\x02\n" +
+	"\rusage_percent\x18\x06 \x01(\x01R\fusagePercent\"\xcf\x02\n" +
 	"\rAgentMetadata\x12\x18\n" +
 	"\aversion\x18\x01 \x01(\tR\aversion\x12\x1d\n" +
 	"\n" +
@@ -1085,7 +1102,8 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\n" +
 	"build_time\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tbuildTime\x12G\n" +
 	"\fcapabilities\x18\x04 \x01(\v2#.komari.report.v1.AgentCapabilitiesR\fcapabilities\x126\n" +
-	"\x17applied_config_revision\x18\x05 \x01(\x04R\x15appliedConfigRevision\"\x80\x05\n" +
+	"\x17applied_config_revision\x18\x05 \x01(\x04R\x15appliedConfigRevision\x12I\n" +
+	"\rrescue_helper\x18\x06 \x01(\v2$.komari.rescue.v1.RescueHelperStatusR\frescueHelper\"\xc8\x05\n" +
 	"\x11AgentCapabilities\x12F\n" +
 	"\x0eprivilege_mode\x18\x01 \x01(\x0e2\x1f.komari.report.v1.PrivilegeModeR\rprivilegeMode\x123\n" +
 	"\x03gpu\x18\x02 \x01(\v2!.komari.report.v1.CapabilityStateR\x03gpu\x12D\n" +
@@ -1095,7 +1113,9 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\x0eremote_control\x18\x06 \x01(\v2!.komari.report.v1.CapabilityStateR\rremoteControl\x12J\n" +
 	"\x0fservice_control\x18\a \x01(\v2!.komari.report.v1.CapabilityStateR\x0eserviceControl\x12?\n" +
 	"\texecution\x18\b \x01(\v2!.komari.report.v1.CapabilityStateR\texecution\x129\n" +
-	"\x06webssh\x18\t \x01(\v2!.komari.report.v1.CapabilityStateR\x06webssh\"O\n" +
+	"\x06webssh\x18\t \x01(\v2!.komari.report.v1.CapabilityStateR\x06webssh\x12F\n" +
+	"\rrescue_helper\x18\n" +
+	" \x01(\v2!.komari.report.v1.CapabilityStateR\frescueHelper\"O\n" +
 	"\x0fCapabilityState\x12\x1c\n" +
 	"\tavailable\x18\x01 \x01(\bR\tavailable\x12\x1e\n" +
 	"\n" +
@@ -1141,6 +1161,7 @@ var file_komari_report_v1_report_proto_goTypes = []any{
 	(*CapabilityState)(nil),       // 11: komari.report.v1.CapabilityState
 	(*durationpb.Duration)(nil),   // 12: google.protobuf.Duration
 	(*timestamppb.Timestamp)(nil), // 13: google.protobuf.Timestamp
+	(*v1.RescueHelperStatus)(nil), // 14: komari.rescue.v1.RescueHelperStatus
 }
 var file_komari_report_v1_report_proto_depIdxs = []int32{
 	3,  // 0: komari.report.v1.SubmitReportRequest.report:type_name -> komari.report.v1.AgentReport
@@ -1156,22 +1177,24 @@ var file_komari_report_v1_report_proto_depIdxs = []int32{
 	6,  // 10: komari.report.v1.ResourceUsage.gpus:type_name -> komari.report.v1.GpuUsage
 	13, // 11: komari.report.v1.AgentMetadata.build_time:type_name -> google.protobuf.Timestamp
 	10, // 12: komari.report.v1.AgentMetadata.capabilities:type_name -> komari.report.v1.AgentCapabilities
-	0,  // 13: komari.report.v1.AgentCapabilities.privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	11, // 14: komari.report.v1.AgentCapabilities.gpu:type_name -> komari.report.v1.CapabilityState
-	11, // 15: komari.report.v1.AgentCapabilities.detailed_gpu:type_name -> komari.report.v1.CapabilityState
-	11, // 16: komari.report.v1.AgentCapabilities.network_interfaces:type_name -> komari.report.v1.CapabilityState
-	11, // 17: komari.report.v1.AgentCapabilities.mount_points:type_name -> komari.report.v1.CapabilityState
-	11, // 18: komari.report.v1.AgentCapabilities.remote_control:type_name -> komari.report.v1.CapabilityState
-	11, // 19: komari.report.v1.AgentCapabilities.service_control:type_name -> komari.report.v1.CapabilityState
-	11, // 20: komari.report.v1.AgentCapabilities.execution:type_name -> komari.report.v1.CapabilityState
-	11, // 21: komari.report.v1.AgentCapabilities.webssh:type_name -> komari.report.v1.CapabilityState
-	1,  // 22: komari.report.v1.AgentReportService.SubmitReport:input_type -> komari.report.v1.SubmitReportRequest
-	2,  // 23: komari.report.v1.AgentReportService.SubmitReport:output_type -> komari.report.v1.SubmitReportResponse
-	23, // [23:24] is the sub-list for method output_type
-	22, // [22:23] is the sub-list for method input_type
-	22, // [22:22] is the sub-list for extension type_name
-	22, // [22:22] is the sub-list for extension extendee
-	0,  // [0:22] is the sub-list for field type_name
+	14, // 13: komari.report.v1.AgentMetadata.rescue_helper:type_name -> komari.rescue.v1.RescueHelperStatus
+	0,  // 14: komari.report.v1.AgentCapabilities.privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	11, // 15: komari.report.v1.AgentCapabilities.gpu:type_name -> komari.report.v1.CapabilityState
+	11, // 16: komari.report.v1.AgentCapabilities.detailed_gpu:type_name -> komari.report.v1.CapabilityState
+	11, // 17: komari.report.v1.AgentCapabilities.network_interfaces:type_name -> komari.report.v1.CapabilityState
+	11, // 18: komari.report.v1.AgentCapabilities.mount_points:type_name -> komari.report.v1.CapabilityState
+	11, // 19: komari.report.v1.AgentCapabilities.remote_control:type_name -> komari.report.v1.CapabilityState
+	11, // 20: komari.report.v1.AgentCapabilities.service_control:type_name -> komari.report.v1.CapabilityState
+	11, // 21: komari.report.v1.AgentCapabilities.execution:type_name -> komari.report.v1.CapabilityState
+	11, // 22: komari.report.v1.AgentCapabilities.webssh:type_name -> komari.report.v1.CapabilityState
+	11, // 23: komari.report.v1.AgentCapabilities.rescue_helper:type_name -> komari.report.v1.CapabilityState
+	1,  // 24: komari.report.v1.AgentReportService.SubmitReport:input_type -> komari.report.v1.SubmitReportRequest
+	2,  // 25: komari.report.v1.AgentReportService.SubmitReport:output_type -> komari.report.v1.SubmitReportResponse
+	25, // [25:26] is the sub-list for method output_type
+	24, // [24:25] is the sub-list for method input_type
+	24, // [24:24] is the sub-list for extension type_name
+	24, // [24:24] is the sub-list for extension extendee
+	0,  // [0:24] is the sub-list for field type_name
 }
 
 func init() { file_komari_report_v1_report_proto_init() }

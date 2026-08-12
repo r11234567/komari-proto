@@ -1,0 +1,156 @@
+syntax = "proto3";
+
+package komari.rescue.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "komari/common/v1/common.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/rescue/v1;rescuev1";
+
+// RescueService owns the separately privileged, bounded rescue helper.
+// It is independent from normal execution and WebSSH transports.
+service RescueService {
+  // GetRescueStatus returns the last helper state reported by one agent.
+  rpc GetRescueStatus(GetRescueStatusRequest) returns (GetRescueStatusResponse);
+  // CreateRescueSession authorizes one bounded rescue operation with fresh 2FA.
+  rpc CreateRescueSession(CreateRescueSessionRequest) returns (CreateRescueSessionResponse);
+  // WatchRescueSession streams state and bounded output until a terminal state.
+  rpc WatchRescueSession(WatchRescueSessionRequest) returns (stream WatchRescueSessionResponse);
+  // CancelRescueSession requests cancellation of an active rescue operation.
+  rpc CancelRescueSession(CancelRescueSessionRequest) returns (CancelRescueSessionResponse);
+  // LeaseRescueSessions lets the privileged helper receive assignments independently.
+  rpc LeaseRescueSessions(LeaseRescueSessionsRequest) returns (stream LeaseRescueSessionsResponse);
+  // ReportRescueEvent records sequenced helper output and terminal state.
+  rpc ReportRescueEvent(ReportRescueEventRequest) returns (ReportRescueEventResponse);
+  // ReportRescueStatus updates install, guardian and firewall state.
+  rpc ReportRescueStatus(ReportRescueStatusRequest) returns (ReportRescueStatusResponse);
+}
+
+message GetRescueStatusRequest {
+  string agent_id = 1;
+}
+
+message GetRescueStatusResponse {
+  RescueHelperStatus status = 1;
+}
+
+message CreateRescueSessionRequest {
+  string agent_id = 1;
+  RescueAction action = 2;
+  repeated string arguments = 3;
+  google.protobuf.Duration timeout = 4;
+  uint64 max_output_bytes = 5;
+  string idempotency_key = 6;
+  komari.common.v1.TwoFactorProof two_factor = 7;
+}
+
+message CreateRescueSessionResponse {
+  RescueSession session = 1;
+}
+
+message WatchRescueSessionRequest {
+  string session_id = 1;
+  uint64 after_sequence = 2;
+}
+
+message WatchRescueSessionResponse {
+  RescueEvent event = 1;
+}
+
+message CancelRescueSessionRequest {
+  string session_id = 1;
+  string reason = 2;
+  komari.common.v1.TwoFactorProof two_factor = 3;
+}
+
+message CancelRescueSessionResponse {
+  RescueSession session = 1;
+}
+
+message LeaseRescueSessionsRequest {
+  string agent_id = 1;
+  string helper_instance_id = 2;
+  string after_assignment_id = 3;
+}
+
+message LeaseRescueSessionsResponse {
+  RescueAssignment assignment = 1;
+}
+
+message RescueAssignment {
+  string assignment_id = 1;
+  RescueSession session = 2;
+  google.protobuf.Timestamp lease_expires_at = 3;
+}
+
+message ReportRescueEventRequest {
+  string agent_id = 1;
+  string helper_instance_id = 2;
+  RescueEvent event = 3;
+}
+
+message ReportRescueEventResponse {
+  uint64 accepted_sequence = 1;
+}
+
+message ReportRescueStatusRequest {
+  string agent_id = 1;
+  RescueHelperStatus status = 2;
+}
+
+message ReportRescueStatusResponse {
+  bool accepted = 1;
+}
+
+message RescueHelperStatus {
+  bool requested = 1;
+  bool installed = 2;
+  bool guardian_running = 3;
+  bool helper_running = 4;
+  bool firewall_configured = 5;
+  string version = 6;
+  string helper_instance_id = 7;
+  optional komari.common.v1.ErrorDetail error = 8;
+  google.protobuf.Timestamp observed_at = 9;
+}
+
+message RescueSession {
+  string session_id = 1;
+  string agent_id = 2;
+  RescueAction action = 3;
+  repeated string arguments = 4;
+  komari.common.v1.OperationState state = 5;
+  google.protobuf.Timestamp created_at = 6;
+  optional google.protobuf.Timestamp started_at = 7;
+  optional google.protobuf.Timestamp finished_at = 8;
+  uint64 output_bytes = 9;
+  optional komari.common.v1.ErrorDetail error = 10;
+}
+
+message RescueEvent {
+  string session_id = 1;
+  uint64 sequence = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  komari.common.v1.OperationState state = 4;
+  RescueOutputStream stream = 5;
+  bytes output = 6;
+  optional komari.common.v1.ErrorDetail error = 7;
+}
+
+// RescueAction is deliberately bounded; the helper never exposes an arbitrary shell.
+enum RescueAction {
+  RESCUE_ACTION_UNSPECIFIED = 0;
+  RESCUE_ACTION_DIAGNOSTICS = 1;
+  RESCUE_ACTION_VERIFY_INSTALLATION = 2;
+  RESCUE_ACTION_RESTORE_LAST_CONFIG = 3;
+  RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT = 4;
+  RESCUE_ACTION_REPAIR_FIREWALL = 5;
+  RESCUE_ACTION_RESTART_AGENT = 6;
+}
+
+enum RescueOutputStream {
+  RESCUE_OUTPUT_STREAM_UNSPECIFIED = 0;
+  RESCUE_OUTPUT_STREAM_STDOUT = 1;
+  RESCUE_OUTPUT_STREAM_STDERR = 2;
+}
