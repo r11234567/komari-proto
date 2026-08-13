@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package komari.network.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/network/v1;networkv1";
+
+// NetworkProbeService owns independently leased network diagnostics.
+service NetworkProbeService {
+  // LeaseReturnRouteProbe long-polls for one return-route assignment.
+  rpc LeaseReturnRouteProbe(LeaseReturnRouteProbeRequest) returns (LeaseReturnRouteProbeResponse);
+  // SubmitReturnRouteProbeResult records one idempotent probe result.
+  rpc SubmitReturnRouteProbeResult(SubmitReturnRouteProbeResultRequest) returns (SubmitReturnRouteProbeResultResponse);
+}
+
+message LeaseReturnRouteProbeRequest {
+  string agent_id = 1;
+}
+
+message LeaseReturnRouteProbeResponse {
+  optional ReturnRouteProbeAssignment assignment = 1;
+}
+
+message ReturnRouteProbeAssignment {
+  string assignment_id = 1;
+  uint64 task_id = 2;
+  string protocol = 3;
+  string target = 4;
+  uint32 ip_version = 5;
+  uint32 max_hops = 6;
+  google.protobuf.Duration hop_timeout = 7;
+  google.protobuf.Timestamp lease_expires_at = 8;
+}
+
+message SubmitReturnRouteProbeResultRequest {
+  string agent_id = 1;
+  string assignment_id = 2;
+  uint64 task_id = 3;
+  repeated ReturnRouteHop hops = 4;
+  string error = 5;
+  google.protobuf.Timestamp finished_at = 6;
+}
+
+message SubmitReturnRouteProbeResultResponse {
+  bool accepted = 1;
+}
+
+message ReturnRouteHop {
+  uint32 ttl = 1;
+  string ip = 2;
+  double latency_ms = 3;
+  bool timeout = 4;
+}
