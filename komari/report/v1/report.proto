@@ -122,6 +122,7 @@ message AgentCapabilities {
   CapabilityState execution = 8;
   CapabilityState webssh = 9;
   CapabilityState rescue_helper = 10;
+  CapabilityState return_route_probe = 11;
 }
 
 // CapabilityState describes whether a feature is available and why it is limited.

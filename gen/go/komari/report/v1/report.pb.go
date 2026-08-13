@@ -902,6 +902,7 @@ type AgentCapabilities struct {
 	Execution         *CapabilityState       `protobuf:"bytes,8,opt,name=execution,proto3" json:"execution,omitempty"`
 	Webssh            *CapabilityState       `protobuf:"bytes,9,opt,name=webssh,proto3" json:"webssh,omitempty"`
 	RescueHelper      *CapabilityState       `protobuf:"bytes,10,opt,name=rescue_helper,json=rescueHelper,proto3" json:"rescue_helper,omitempty"`
+	ReturnRouteProbe  *CapabilityState       `protobuf:"bytes,11,opt,name=return_route_probe,json=returnRouteProbe,proto3" json:"return_route_probe,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -1002,6 +1003,13 @@ func (x *AgentCapabilities) GetWebssh() *CapabilityState {
 func (x *AgentCapabilities) GetRescueHelper() *CapabilityState {
 	if x != nil {
 		return x.RescueHelper
+	}
+	return nil
+}
+
+func (x *AgentCapabilities) GetReturnRouteProbe() *CapabilityState {
+	if x != nil {
+		return x.ReturnRouteProbe
 	}
 	return nil
 }
@@ -1149,7 +1157,7 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"build_time\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tbuildTime\x12G\n" +
 	"\fcapabilities\x18\x04 \x01(\v2#.komari.report.v1.AgentCapabilitiesR\fcapabilities\x126\n" +
 	"\x17applied_config_revision\x18\x05 \x01(\x04R\x15appliedConfigRevision\x12I\n" +
-	"\rrescue_helper\x18\x06 \x01(\v2$.komari.rescue.v1.RescueHelperStatusR\frescueHelper\"\xc8\x05\n" +
+	"\rrescue_helper\x18\x06 \x01(\v2$.komari.rescue.v1.RescueHelperStatusR\frescueHelper\"\x99\x06\n" +
 	"\x11AgentCapabilities\x12F\n" +
 	"\x0eprivilege_mode\x18\x01 \x01(\x0e2\x1f.komari.report.v1.PrivilegeModeR\rprivilegeMode\x123\n" +
 	"\x03gpu\x18\x02 \x01(\v2!.komari.report.v1.CapabilityStateR\x03gpu\x12D\n" +
@@ -1161,7 +1169,8 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\texecution\x18\b \x01(\v2!.komari.report.v1.CapabilityStateR\texecution\x129\n" +
 	"\x06webssh\x18\t \x01(\v2!.komari.report.v1.CapabilityStateR\x06webssh\x12F\n" +
 	"\rrescue_helper\x18\n" +
-	" \x01(\v2!.komari.report.v1.CapabilityStateR\frescueHelper\"O\n" +
+	" \x01(\v2!.komari.report.v1.CapabilityStateR\frescueHelper\x12O\n" +
+	"\x12return_route_probe\x18\v \x01(\v2!.komari.report.v1.CapabilityStateR\x10returnRouteProbe\"O\n" +
 	"\x0fCapabilityState\x12\x1c\n" +
 	"\tavailable\x18\x01 \x01(\bR\tavailable\x12\x1e\n" +
 	"\n" +
@@ -1234,13 +1243,14 @@ var file_komari_report_v1_report_proto_depIdxs = []int32{
 	11, // 21: komari.report.v1.AgentCapabilities.execution:type_name -> komari.report.v1.CapabilityState
 	11, // 22: komari.report.v1.AgentCapabilities.webssh:type_name -> komari.report.v1.CapabilityState
 	11, // 23: komari.report.v1.AgentCapabilities.rescue_helper:type_name -> komari.report.v1.CapabilityState
-	1,  // 24: komari.report.v1.AgentReportService.SubmitReport:input_type -> komari.report.v1.SubmitReportRequest
-	2,  // 25: komari.report.v1.AgentReportService.SubmitReport:output_type -> komari.report.v1.SubmitReportResponse
-	25, // [25:26] is the sub-list for method output_type
-	24, // [24:25] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	11, // 24: komari.report.v1.AgentCapabilities.return_route_probe:type_name -> komari.report.v1.CapabilityState
+	1,  // 25: komari.report.v1.AgentReportService.SubmitReport:input_type -> komari.report.v1.SubmitReportRequest
+	2,  // 26: komari.report.v1.AgentReportService.SubmitReport:output_type -> komari.report.v1.SubmitReportResponse
+	26, // [26:27] is the sub-list for method output_type
+	25, // [25:26] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_komari_report_v1_report_proto_init() }
