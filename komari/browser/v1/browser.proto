@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package komari.browser.v1;
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
@@ -21,6 +22,8 @@ service BrowserService {
   rpc WatchAgentStatus(WatchAgentStatusRequest) returns (stream WatchAgentStatusResponse);
   // GetThemeContract returns the stable third-party theme integration contract.
   rpc GetThemeContract(GetThemeContractRequest) returns (GetThemeContractResponse);
+  // GetTrafficTrend returns an administrator-only rolling traffic trend.
+  rpc GetTrafficTrend(GetTrafficTrendRequest) returns (GetTrafficTrendResponse);
 }
 
 // GetPublicInfoRequest is intentionally empty.
@@ -131,6 +134,27 @@ message GetThemeContractResponse {
   string manifest_name = 2;
   string connect_base_path = 3;
   bool legacy_json_rpc_available = 4;
+}
+
+// GetTrafficTrendRequest selects a rolling window and bucket interval. Empty
+// values default to 24 hours and 15 minutes respectively.
+message GetTrafficTrendRequest {
+  google.protobuf.Duration window = 1;
+  google.protobuf.Duration interval = 2;
+}
+
+// GetTrafficTrendResponse contains non-cumulative upload and download buckets.
+message GetTrafficTrendResponse {
+  repeated TrafficTrendBucket buckets = 1;
+  google.protobuf.Duration interval = 2;
+  google.protobuf.Timestamp generated_at = 3;
+}
+
+// TrafficTrendBucket covers [start_time, start_time + interval).
+message TrafficTrendBucket {
+  google.protobuf.Timestamp start_time = 1;
+  uint64 upload_bytes = 2;
+  uint64 download_bytes = 3;
 }
 
 // AgentStatus is the coarse online state for browser lists.

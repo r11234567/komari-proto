@@ -11,6 +11,7 @@ import (
 	v11 "github.com/r11234567/komari-proto/gen/go/komari/report/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	structpb "google.golang.org/protobuf/types/known/structpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
@@ -1031,11 +1032,187 @@ func (x *GetThemeContractResponse) GetLegacyJsonRpcAvailable() bool {
 	return false
 }
 
+// GetTrafficTrendRequest selects a rolling window and bucket interval. Empty
+// values default to 24 hours and 15 minutes respectively.
+type GetTrafficTrendRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Window        *durationpb.Duration   `protobuf:"bytes,1,opt,name=window,proto3" json:"window,omitempty"`
+	Interval      *durationpb.Duration   `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTrafficTrendRequest) Reset() {
+	*x = GetTrafficTrendRequest{}
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTrafficTrendRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTrafficTrendRequest) ProtoMessage() {}
+
+func (x *GetTrafficTrendRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTrafficTrendRequest.ProtoReflect.Descriptor instead.
+func (*GetTrafficTrendRequest) Descriptor() ([]byte, []int) {
+	return file_komari_browser_v1_browser_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetTrafficTrendRequest) GetWindow() *durationpb.Duration {
+	if x != nil {
+		return x.Window
+	}
+	return nil
+}
+
+func (x *GetTrafficTrendRequest) GetInterval() *durationpb.Duration {
+	if x != nil {
+		return x.Interval
+	}
+	return nil
+}
+
+// GetTrafficTrendResponse contains non-cumulative upload and download buckets.
+type GetTrafficTrendResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Buckets       []*TrafficTrendBucket  `protobuf:"bytes,1,rep,name=buckets,proto3" json:"buckets,omitempty"`
+	Interval      *durationpb.Duration   `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"`
+	GeneratedAt   *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=generated_at,json=generatedAt,proto3" json:"generated_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTrafficTrendResponse) Reset() {
+	*x = GetTrafficTrendResponse{}
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTrafficTrendResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTrafficTrendResponse) ProtoMessage() {}
+
+func (x *GetTrafficTrendResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTrafficTrendResponse.ProtoReflect.Descriptor instead.
+func (*GetTrafficTrendResponse) Descriptor() ([]byte, []int) {
+	return file_komari_browser_v1_browser_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *GetTrafficTrendResponse) GetBuckets() []*TrafficTrendBucket {
+	if x != nil {
+		return x.Buckets
+	}
+	return nil
+}
+
+func (x *GetTrafficTrendResponse) GetInterval() *durationpb.Duration {
+	if x != nil {
+		return x.Interval
+	}
+	return nil
+}
+
+func (x *GetTrafficTrendResponse) GetGeneratedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.GeneratedAt
+	}
+	return nil
+}
+
+// TrafficTrendBucket covers [start_time, start_time + interval).
+type TrafficTrendBucket struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	StartTime     *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	UploadBytes   uint64                 `protobuf:"varint,2,opt,name=upload_bytes,json=uploadBytes,proto3" json:"upload_bytes,omitempty"`
+	DownloadBytes uint64                 `protobuf:"varint,3,opt,name=download_bytes,json=downloadBytes,proto3" json:"download_bytes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrafficTrendBucket) Reset() {
+	*x = TrafficTrendBucket{}
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrafficTrendBucket) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrafficTrendBucket) ProtoMessage() {}
+
+func (x *TrafficTrendBucket) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_browser_v1_browser_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrafficTrendBucket.ProtoReflect.Descriptor instead.
+func (*TrafficTrendBucket) Descriptor() ([]byte, []int) {
+	return file_komari_browser_v1_browser_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *TrafficTrendBucket) GetStartTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartTime
+	}
+	return nil
+}
+
+func (x *TrafficTrendBucket) GetUploadBytes() uint64 {
+	if x != nil {
+		return x.UploadBytes
+	}
+	return 0
+}
+
+func (x *TrafficTrendBucket) GetDownloadBytes() uint64 {
+	if x != nil {
+		return x.DownloadBytes
+	}
+	return 0
+}
+
 var File_komari_browser_v1_browser_proto protoreflect.FileDescriptor
 
 const file_komari_browser_v1_browser_proto_rawDesc = "" +
 	"\n" +
-	"\x1fkomari/browser/v1/browser.proto\x12\x11komari.browser.v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/report/v1/report.proto\"\x16\n" +
+	"\x1fkomari/browser/v1/browser.proto\x12\x11komari.browser.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/report/v1/report.proto\"\x16\n" +
 	"\x14GetPublicInfoRequest\"\xe8\x04\n" +
 	"\x15GetPublicInfoResponse\x12\x1b\n" +
 	"\tsite_name\x18\x01 \x01(\tR\bsiteName\x12)\n" +
@@ -1120,18 +1297,31 @@ const file_komari_browser_v1_browser_proto_rawDesc = "" +
 	"\x0eschema_version\x18\x01 \x01(\rR\rschemaVersion\x12#\n" +
 	"\rmanifest_name\x18\x02 \x01(\tR\fmanifestName\x12*\n" +
 	"\x11connect_base_path\x18\x03 \x01(\tR\x0fconnectBasePath\x129\n" +
-	"\x19legacy_json_rpc_available\x18\x04 \x01(\bR\x16legacyJsonRpcAvailable*^\n" +
+	"\x19legacy_json_rpc_available\x18\x04 \x01(\bR\x16legacyJsonRpcAvailable\"\x82\x01\n" +
+	"\x16GetTrafficTrendRequest\x121\n" +
+	"\x06window\x18\x01 \x01(\v2\x19.google.protobuf.DurationR\x06window\x125\n" +
+	"\binterval\x18\x02 \x01(\v2\x19.google.protobuf.DurationR\binterval\"\xd0\x01\n" +
+	"\x17GetTrafficTrendResponse\x12?\n" +
+	"\abuckets\x18\x01 \x03(\v2%.komari.browser.v1.TrafficTrendBucketR\abuckets\x125\n" +
+	"\binterval\x18\x02 \x01(\v2\x19.google.protobuf.DurationR\binterval\x12=\n" +
+	"\fgenerated_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\vgeneratedAt\"\x99\x01\n" +
+	"\x12TrafficTrendBucket\x129\n" +
+	"\n" +
+	"start_time\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x12!\n" +
+	"\fupload_bytes\x18\x02 \x01(\x04R\vuploadBytes\x12%\n" +
+	"\x0edownload_bytes\x18\x03 \x01(\x04R\rdownloadBytes*^\n" +
 	"\vAgentStatus\x12\x1c\n" +
 	"\x18AGENT_STATUS_UNSPECIFIED\x10\x00\x12\x17\n" +
 	"\x13AGENT_STATUS_ONLINE\x10\x01\x12\x18\n" +
-	"\x14AGENT_STATUS_OFFLINE\x10\x022\x80\x04\n" +
+	"\x14AGENT_STATUS_OFFLINE\x10\x022\xea\x04\n" +
 	"\x0eBrowserService\x12b\n" +
 	"\rGetPublicInfo\x12'.komari.browser.v1.GetPublicInfoRequest\x1a(.komari.browser.v1.GetPublicInfoResponse\x12Y\n" +
 	"\n" +
 	"ListAgents\x12$.komari.browser.v1.ListAgentsRequest\x1a%.komari.browser.v1.ListAgentsResponse\x12S\n" +
 	"\bGetAgent\x12\".komari.browser.v1.GetAgentRequest\x1a#.komari.browser.v1.GetAgentResponse\x12m\n" +
 	"\x10WatchAgentStatus\x12*.komari.browser.v1.WatchAgentStatusRequest\x1a+.komari.browser.v1.WatchAgentStatusResponse0\x01\x12k\n" +
-	"\x10GetThemeContract\x12*.komari.browser.v1.GetThemeContractRequest\x1a+.komari.browser.v1.GetThemeContractResponseB\xd1\x01\n" +
+	"\x10GetThemeContract\x12*.komari.browser.v1.GetThemeContractRequest\x1a+.komari.browser.v1.GetThemeContractResponse\x12h\n" +
+	"\x0fGetTrafficTrend\x12).komari.browser.v1.GetTrafficTrendRequest\x1a*.komari.browser.v1.GetTrafficTrendResponseB\xd1\x01\n" +
 	"\x15com.komari.browser.v1B\fBrowserProtoP\x01ZDgithub.com/r11234567/komari-proto/gen/go/komari/browser/v1;browserv1\xa2\x02\x03KBX\xaa\x02\x11Komari.Browser.V1\xca\x02\x11Komari\\Browser\\V1\xe2\x02\x1dKomari\\Browser\\V1\\GPBMetadata\xea\x02\x13Komari::Browser::V1b\x06proto3"
 
 var (
@@ -1147,7 +1337,7 @@ func file_komari_browser_v1_browser_proto_rawDescGZIP() []byte {
 }
 
 var file_komari_browser_v1_browser_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_komari_browser_v1_browser_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_komari_browser_v1_browser_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_komari_browser_v1_browser_proto_goTypes = []any{
 	(AgentStatus)(0),                 // 0: komari.browser.v1.AgentStatus
 	(*GetPublicInfoRequest)(nil),     // 1: komari.browser.v1.GetPublicInfoRequest
@@ -1162,44 +1352,56 @@ var file_komari_browser_v1_browser_proto_goTypes = []any{
 	(*AgentBasicInfo)(nil),           // 10: komari.browser.v1.AgentBasicInfo
 	(*GetThemeContractRequest)(nil),  // 11: komari.browser.v1.GetThemeContractRequest
 	(*GetThemeContractResponse)(nil), // 12: komari.browser.v1.GetThemeContractResponse
-	(*structpb.Struct)(nil),          // 13: google.protobuf.Struct
-	(*v1.PageRequest)(nil),           // 14: komari.common.v1.PageRequest
-	(*v1.PageResponse)(nil),          // 15: komari.common.v1.PageResponse
-	(*v11.AgentReport)(nil),          // 16: komari.report.v1.AgentReport
-	(*timestamppb.Timestamp)(nil),    // 17: google.protobuf.Timestamp
-	(*v11.AgentCapabilities)(nil),    // 18: komari.report.v1.AgentCapabilities
+	(*GetTrafficTrendRequest)(nil),   // 13: komari.browser.v1.GetTrafficTrendRequest
+	(*GetTrafficTrendResponse)(nil),  // 14: komari.browser.v1.GetTrafficTrendResponse
+	(*TrafficTrendBucket)(nil),       // 15: komari.browser.v1.TrafficTrendBucket
+	(*structpb.Struct)(nil),          // 16: google.protobuf.Struct
+	(*v1.PageRequest)(nil),           // 17: komari.common.v1.PageRequest
+	(*v1.PageResponse)(nil),          // 18: komari.common.v1.PageResponse
+	(*v11.AgentReport)(nil),          // 19: komari.report.v1.AgentReport
+	(*timestamppb.Timestamp)(nil),    // 20: google.protobuf.Timestamp
+	(*v11.AgentCapabilities)(nil),    // 21: komari.report.v1.AgentCapabilities
+	(*durationpb.Duration)(nil),      // 22: google.protobuf.Duration
 }
 var file_komari_browser_v1_browser_proto_depIdxs = []int32{
-	13, // 0: komari.browser.v1.GetPublicInfoResponse.theme_settings:type_name -> google.protobuf.Struct
-	14, // 1: komari.browser.v1.ListAgentsRequest.page:type_name -> komari.common.v1.PageRequest
+	16, // 0: komari.browser.v1.GetPublicInfoResponse.theme_settings:type_name -> google.protobuf.Struct
+	17, // 1: komari.browser.v1.ListAgentsRequest.page:type_name -> komari.common.v1.PageRequest
 	9,  // 2: komari.browser.v1.ListAgentsResponse.agents:type_name -> komari.browser.v1.AgentSummary
-	15, // 3: komari.browser.v1.ListAgentsResponse.page:type_name -> komari.common.v1.PageResponse
+	18, // 3: komari.browser.v1.ListAgentsResponse.page:type_name -> komari.common.v1.PageResponse
 	9,  // 4: komari.browser.v1.GetAgentResponse.agent:type_name -> komari.browser.v1.AgentSummary
-	16, // 5: komari.browser.v1.GetAgentResponse.latest_report:type_name -> komari.report.v1.AgentReport
+	19, // 5: komari.browser.v1.GetAgentResponse.latest_report:type_name -> komari.report.v1.AgentReport
 	9,  // 6: komari.browser.v1.WatchAgentStatusResponse.agent:type_name -> komari.browser.v1.AgentSummary
-	16, // 7: komari.browser.v1.WatchAgentStatusResponse.latest_report:type_name -> komari.report.v1.AgentReport
+	19, // 7: komari.browser.v1.WatchAgentStatusResponse.latest_report:type_name -> komari.report.v1.AgentReport
 	0,  // 8: komari.browser.v1.AgentSummary.status:type_name -> komari.browser.v1.AgentStatus
-	17, // 9: komari.browser.v1.AgentSummary.last_seen:type_name -> google.protobuf.Timestamp
-	18, // 10: komari.browser.v1.AgentSummary.capabilities:type_name -> komari.report.v1.AgentCapabilities
+	20, // 9: komari.browser.v1.AgentSummary.last_seen:type_name -> google.protobuf.Timestamp
+	21, // 10: komari.browser.v1.AgentSummary.capabilities:type_name -> komari.report.v1.AgentCapabilities
 	10, // 11: komari.browser.v1.AgentSummary.basic_info:type_name -> komari.browser.v1.AgentBasicInfo
-	17, // 12: komari.browser.v1.AgentBasicInfo.expires_at:type_name -> google.protobuf.Timestamp
-	17, // 13: komari.browser.v1.AgentBasicInfo.created_at:type_name -> google.protobuf.Timestamp
-	17, // 14: komari.browser.v1.AgentBasicInfo.updated_at:type_name -> google.protobuf.Timestamp
-	1,  // 15: komari.browser.v1.BrowserService.GetPublicInfo:input_type -> komari.browser.v1.GetPublicInfoRequest
-	3,  // 16: komari.browser.v1.BrowserService.ListAgents:input_type -> komari.browser.v1.ListAgentsRequest
-	5,  // 17: komari.browser.v1.BrowserService.GetAgent:input_type -> komari.browser.v1.GetAgentRequest
-	7,  // 18: komari.browser.v1.BrowserService.WatchAgentStatus:input_type -> komari.browser.v1.WatchAgentStatusRequest
-	11, // 19: komari.browser.v1.BrowserService.GetThemeContract:input_type -> komari.browser.v1.GetThemeContractRequest
-	2,  // 20: komari.browser.v1.BrowserService.GetPublicInfo:output_type -> komari.browser.v1.GetPublicInfoResponse
-	4,  // 21: komari.browser.v1.BrowserService.ListAgents:output_type -> komari.browser.v1.ListAgentsResponse
-	6,  // 22: komari.browser.v1.BrowserService.GetAgent:output_type -> komari.browser.v1.GetAgentResponse
-	8,  // 23: komari.browser.v1.BrowserService.WatchAgentStatus:output_type -> komari.browser.v1.WatchAgentStatusResponse
-	12, // 24: komari.browser.v1.BrowserService.GetThemeContract:output_type -> komari.browser.v1.GetThemeContractResponse
-	20, // [20:25] is the sub-list for method output_type
-	15, // [15:20] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	20, // 12: komari.browser.v1.AgentBasicInfo.expires_at:type_name -> google.protobuf.Timestamp
+	20, // 13: komari.browser.v1.AgentBasicInfo.created_at:type_name -> google.protobuf.Timestamp
+	20, // 14: komari.browser.v1.AgentBasicInfo.updated_at:type_name -> google.protobuf.Timestamp
+	22, // 15: komari.browser.v1.GetTrafficTrendRequest.window:type_name -> google.protobuf.Duration
+	22, // 16: komari.browser.v1.GetTrafficTrendRequest.interval:type_name -> google.protobuf.Duration
+	15, // 17: komari.browser.v1.GetTrafficTrendResponse.buckets:type_name -> komari.browser.v1.TrafficTrendBucket
+	22, // 18: komari.browser.v1.GetTrafficTrendResponse.interval:type_name -> google.protobuf.Duration
+	20, // 19: komari.browser.v1.GetTrafficTrendResponse.generated_at:type_name -> google.protobuf.Timestamp
+	20, // 20: komari.browser.v1.TrafficTrendBucket.start_time:type_name -> google.protobuf.Timestamp
+	1,  // 21: komari.browser.v1.BrowserService.GetPublicInfo:input_type -> komari.browser.v1.GetPublicInfoRequest
+	3,  // 22: komari.browser.v1.BrowserService.ListAgents:input_type -> komari.browser.v1.ListAgentsRequest
+	5,  // 23: komari.browser.v1.BrowserService.GetAgent:input_type -> komari.browser.v1.GetAgentRequest
+	7,  // 24: komari.browser.v1.BrowserService.WatchAgentStatus:input_type -> komari.browser.v1.WatchAgentStatusRequest
+	11, // 25: komari.browser.v1.BrowserService.GetThemeContract:input_type -> komari.browser.v1.GetThemeContractRequest
+	13, // 26: komari.browser.v1.BrowserService.GetTrafficTrend:input_type -> komari.browser.v1.GetTrafficTrendRequest
+	2,  // 27: komari.browser.v1.BrowserService.GetPublicInfo:output_type -> komari.browser.v1.GetPublicInfoResponse
+	4,  // 28: komari.browser.v1.BrowserService.ListAgents:output_type -> komari.browser.v1.ListAgentsResponse
+	6,  // 29: komari.browser.v1.BrowserService.GetAgent:output_type -> komari.browser.v1.GetAgentResponse
+	8,  // 30: komari.browser.v1.BrowserService.WatchAgentStatus:output_type -> komari.browser.v1.WatchAgentStatusResponse
+	12, // 31: komari.browser.v1.BrowserService.GetThemeContract:output_type -> komari.browser.v1.GetThemeContractResponse
+	14, // 32: komari.browser.v1.BrowserService.GetTrafficTrend:output_type -> komari.browser.v1.GetTrafficTrendResponse
+	27, // [27:33] is the sub-list for method output_type
+	21, // [21:27] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_komari_browser_v1_browser_proto_init() }
@@ -1213,7 +1415,7 @@ func file_komari_browser_v1_browser_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_browser_v1_browser_proto_rawDesc), len(file_komari_browser_v1_browser_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   12,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -47,6 +47,9 @@ const (
 	// BrowserServiceGetThemeContractProcedure is the fully-qualified name of the BrowserService's
 	// GetThemeContract RPC.
 	BrowserServiceGetThemeContractProcedure = "/komari.browser.v1.BrowserService/GetThemeContract"
+	// BrowserServiceGetTrafficTrendProcedure is the fully-qualified name of the BrowserService's
+	// GetTrafficTrend RPC.
+	BrowserServiceGetTrafficTrendProcedure = "/komari.browser.v1.BrowserService/GetTrafficTrend"
 )
 
 // BrowserServiceClient is a client for the komari.browser.v1.BrowserService service.
@@ -61,6 +64,8 @@ type BrowserServiceClient interface {
 	WatchAgentStatus(context.Context, *connect.Request[v1.WatchAgentStatusRequest]) (*connect.ServerStreamForClient[v1.WatchAgentStatusResponse], error)
 	// GetThemeContract returns the stable third-party theme integration contract.
 	GetThemeContract(context.Context, *connect.Request[v1.GetThemeContractRequest]) (*connect.Response[v1.GetThemeContractResponse], error)
+	// GetTrafficTrend returns an administrator-only rolling traffic trend.
+	GetTrafficTrend(context.Context, *connect.Request[v1.GetTrafficTrendRequest]) (*connect.Response[v1.GetTrafficTrendResponse], error)
 }
 
 // NewBrowserServiceClient constructs a client for the komari.browser.v1.BrowserService service. By
@@ -104,6 +109,12 @@ func NewBrowserServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			connect.WithSchema(browserServiceMethods.ByName("GetThemeContract")),
 			connect.WithClientOptions(opts...),
 		),
+		getTrafficTrend: connect.NewClient[v1.GetTrafficTrendRequest, v1.GetTrafficTrendResponse](
+			httpClient,
+			baseURL+BrowserServiceGetTrafficTrendProcedure,
+			connect.WithSchema(browserServiceMethods.ByName("GetTrafficTrend")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -114,6 +125,7 @@ type browserServiceClient struct {
 	getAgent         *connect.Client[v1.GetAgentRequest, v1.GetAgentResponse]
 	watchAgentStatus *connect.Client[v1.WatchAgentStatusRequest, v1.WatchAgentStatusResponse]
 	getThemeContract *connect.Client[v1.GetThemeContractRequest, v1.GetThemeContractResponse]
+	getTrafficTrend  *connect.Client[v1.GetTrafficTrendRequest, v1.GetTrafficTrendResponse]
 }
 
 // GetPublicInfo calls komari.browser.v1.BrowserService.GetPublicInfo.
@@ -141,6 +153,11 @@ func (c *browserServiceClient) GetThemeContract(ctx context.Context, req *connec
 	return c.getThemeContract.CallUnary(ctx, req)
 }
 
+// GetTrafficTrend calls komari.browser.v1.BrowserService.GetTrafficTrend.
+func (c *browserServiceClient) GetTrafficTrend(ctx context.Context, req *connect.Request[v1.GetTrafficTrendRequest]) (*connect.Response[v1.GetTrafficTrendResponse], error) {
+	return c.getTrafficTrend.CallUnary(ctx, req)
+}
+
 // BrowserServiceHandler is an implementation of the komari.browser.v1.BrowserService service.
 type BrowserServiceHandler interface {
 	// GetPublicInfo returns public site metadata.
@@ -153,6 +170,8 @@ type BrowserServiceHandler interface {
 	WatchAgentStatus(context.Context, *connect.Request[v1.WatchAgentStatusRequest], *connect.ServerStream[v1.WatchAgentStatusResponse]) error
 	// GetThemeContract returns the stable third-party theme integration contract.
 	GetThemeContract(context.Context, *connect.Request[v1.GetThemeContractRequest]) (*connect.Response[v1.GetThemeContractResponse], error)
+	// GetTrafficTrend returns an administrator-only rolling traffic trend.
+	GetTrafficTrend(context.Context, *connect.Request[v1.GetTrafficTrendRequest]) (*connect.Response[v1.GetTrafficTrendResponse], error)
 }
 
 // NewBrowserServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -192,6 +211,12 @@ func NewBrowserServiceHandler(svc BrowserServiceHandler, opts ...connect.Handler
 		connect.WithSchema(browserServiceMethods.ByName("GetThemeContract")),
 		connect.WithHandlerOptions(opts...),
 	)
+	browserServiceGetTrafficTrendHandler := connect.NewUnaryHandler(
+		BrowserServiceGetTrafficTrendProcedure,
+		svc.GetTrafficTrend,
+		connect.WithSchema(browserServiceMethods.ByName("GetTrafficTrend")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/komari.browser.v1.BrowserService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case BrowserServiceGetPublicInfoProcedure:
@@ -204,6 +229,8 @@ func NewBrowserServiceHandler(svc BrowserServiceHandler, opts ...connect.Handler
 			browserServiceWatchAgentStatusHandler.ServeHTTP(w, r)
 		case BrowserServiceGetThemeContractProcedure:
 			browserServiceGetThemeContractHandler.ServeHTTP(w, r)
+		case BrowserServiceGetTrafficTrendProcedure:
+			browserServiceGetTrafficTrendHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -231,4 +258,8 @@ func (UnimplementedBrowserServiceHandler) WatchAgentStatus(context.Context, *con
 
 func (UnimplementedBrowserServiceHandler) GetThemeContract(context.Context, *connect.Request[v1.GetThemeContractRequest]) (*connect.Response[v1.GetThemeContractResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.browser.v1.BrowserService.GetThemeContract is not implemented"))
+}
+
+func (UnimplementedBrowserServiceHandler) GetTrafficTrend(context.Context, *connect.Request[v1.GetTrafficTrendRequest]) (*connect.Response[v1.GetTrafficTrendResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.browser.v1.BrowserService.GetTrafficTrend is not implemented"))
 }
