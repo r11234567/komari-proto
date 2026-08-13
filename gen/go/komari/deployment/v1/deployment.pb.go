@@ -589,9 +589,10 @@ func (x *InstallConfig) GetGetIpAddressFromNic() bool {
 // RescueInstallConfig controls the separately privileged rescue helper.
 // The helper is valid only when normal remote control is disabled.
 type RescueInstallConfig struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	Enabled           bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	ConfigureFirewall bool                   `protobuf:"varint,2,opt,name=configure_firewall,json=configureFirewall,proto3" json:"configure_firewall,omitempty"`
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	Enabled bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	// Deprecated: Marked as deprecated in komari/deployment/v1/deployment.proto.
+	ConfigureFirewall bool `protobuf:"varint,2,opt,name=configure_firewall,json=configureFirewall,proto3" json:"configure_firewall,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -633,6 +634,7 @@ func (x *RescueInstallConfig) GetEnabled() bool {
 	return false
 }
 
+// Deprecated: Marked as deprecated in komari/deployment/v1/deployment.proto.
 func (x *RescueInstallConfig) GetConfigureFirewall() bool {
 	if x != nil {
 		return x.ConfigureFirewall
@@ -878,10 +880,10 @@ const file_komari_deployment_v1_deployment_proto_rawDesc = "" +
 	" \x01(\bR\tenableGpu\x124\n" +
 	"\x16remote_control_enabled\x18\v \x01(\bR\x14remoteControlEnabled\x12&\n" +
 	"\x0fdisable_web_ssh\x18\f \x01(\bR\rdisableWebSsh\x124\n" +
-	"\x17get_ip_address_from_nic\x18\r \x01(\bR\x13getIpAddressFromNic\"^\n" +
+	"\x17get_ip_address_from_nic\x18\r \x01(\bR\x13getIpAddressFromNic\"b\n" +
 	"\x13RescueInstallConfig\x12\x18\n" +
-	"\aenabled\x18\x01 \x01(\bR\aenabled\x12-\n" +
-	"\x12configure_firewall\x18\x02 \x01(\bR\x11configureFirewall\"\xb0\x03\n" +
+	"\aenabled\x18\x01 \x01(\bR\aenabled\x121\n" +
+	"\x12configure_firewall\x18\x02 \x01(\bB\x02\x18\x01R\x11configureFirewall\"\xb0\x03\n" +
 	"\x0eConfigDelivery\x12)\n" +
 	"\x10desired_revision\x18\x01 \x01(\x04R\x0fdesiredRevision\x12)\n" +
 	"\x10applied_revision\x18\x02 \x01(\x04R\x0fappliedRevision\x125\n" +

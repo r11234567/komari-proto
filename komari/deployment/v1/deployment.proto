@@ -76,7 +76,7 @@ message InstallConfig {
 // The helper is valid only when normal remote control is disabled.
 message RescueInstallConfig {
   bool enabled = 1;
-  bool configure_firewall = 2;
+  bool configure_firewall = 2 [deprecated = true];
 }
 
 // ConfigDelivery exposes desired/applied revisions and terminal delivery state.

@@ -28,34 +28,60 @@ const (
 type RescueAction int32
 
 const (
-	RescueAction_RESCUE_ACTION_UNSPECIFIED               RescueAction = 0
-	RescueAction_RESCUE_ACTION_DIAGNOSTICS               RescueAction = 1
-	RescueAction_RESCUE_ACTION_VERIFY_INSTALLATION       RescueAction = 2
-	RescueAction_RESCUE_ACTION_RESTORE_LAST_CONFIG       RescueAction = 3
+	RescueAction_RESCUE_ACTION_UNSPECIFIED RescueAction = 0
+	RescueAction_RESCUE_ACTION_DIAGNOSTICS RescueAction = 1
+	// Deprecated: Marked as deprecated in komari/rescue/v1/rescue.proto.
+	RescueAction_RESCUE_ACTION_VERIFY_INSTALLATION RescueAction = 2
+	// Deprecated: Marked as deprecated in komari/rescue/v1/rescue.proto.
+	RescueAction_RESCUE_ACTION_RESTORE_LAST_CONFIG RescueAction = 3
+	// Deprecated: Marked as deprecated in komari/rescue/v1/rescue.proto.
 	RescueAction_RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT RescueAction = 4
-	RescueAction_RESCUE_ACTION_REPAIR_FIREWALL           RescueAction = 5
-	RescueAction_RESCUE_ACTION_RESTART_AGENT             RescueAction = 6
+	// Deprecated: Marked as deprecated in komari/rescue/v1/rescue.proto.
+	RescueAction_RESCUE_ACTION_REPAIR_FIREWALL RescueAction = 5
+	// Deprecated: Marked as deprecated in komari/rescue/v1/rescue.proto.
+	RescueAction_RESCUE_ACTION_RESTART_AGENT              RescueAction = 6
+	RescueAction_RESCUE_ACTION_SHUTDOWN                   RescueAction = 7
+	RescueAction_RESCUE_ACTION_REBOOT                     RescueAction = 8
+	RescueAction_RESCUE_ACTION_BLOCK_PUBLIC_INTERFACES    RescueAction = 9
+	RescueAction_RESCUE_ACTION_BLOCK_TAILSCALE_INTERFACES RescueAction = 10
+	RescueAction_RESCUE_ACTION_ISOLATE_CONTROL_PLANE      RescueAction = 11
+	RescueAction_RESCUE_ACTION_RESTORE_NETWORK            RescueAction = 12
+	RescueAction_RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG     RescueAction = 13
 )
 
 // Enum value maps for RescueAction.
 var (
 	RescueAction_name = map[int32]string{
-		0: "RESCUE_ACTION_UNSPECIFIED",
-		1: "RESCUE_ACTION_DIAGNOSTICS",
-		2: "RESCUE_ACTION_VERIFY_INSTALLATION",
-		3: "RESCUE_ACTION_RESTORE_LAST_CONFIG",
-		4: "RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT",
-		5: "RESCUE_ACTION_REPAIR_FIREWALL",
-		6: "RESCUE_ACTION_RESTART_AGENT",
+		0:  "RESCUE_ACTION_UNSPECIFIED",
+		1:  "RESCUE_ACTION_DIAGNOSTICS",
+		2:  "RESCUE_ACTION_VERIFY_INSTALLATION",
+		3:  "RESCUE_ACTION_RESTORE_LAST_CONFIG",
+		4:  "RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT",
+		5:  "RESCUE_ACTION_REPAIR_FIREWALL",
+		6:  "RESCUE_ACTION_RESTART_AGENT",
+		7:  "RESCUE_ACTION_SHUTDOWN",
+		8:  "RESCUE_ACTION_REBOOT",
+		9:  "RESCUE_ACTION_BLOCK_PUBLIC_INTERFACES",
+		10: "RESCUE_ACTION_BLOCK_TAILSCALE_INTERFACES",
+		11: "RESCUE_ACTION_ISOLATE_CONTROL_PLANE",
+		12: "RESCUE_ACTION_RESTORE_NETWORK",
+		13: "RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG",
 	}
 	RescueAction_value = map[string]int32{
-		"RESCUE_ACTION_UNSPECIFIED":               0,
-		"RESCUE_ACTION_DIAGNOSTICS":               1,
-		"RESCUE_ACTION_VERIFY_INSTALLATION":       2,
-		"RESCUE_ACTION_RESTORE_LAST_CONFIG":       3,
-		"RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT": 4,
-		"RESCUE_ACTION_REPAIR_FIREWALL":           5,
-		"RESCUE_ACTION_RESTART_AGENT":             6,
+		"RESCUE_ACTION_UNSPECIFIED":                0,
+		"RESCUE_ACTION_DIAGNOSTICS":                1,
+		"RESCUE_ACTION_VERIFY_INSTALLATION":        2,
+		"RESCUE_ACTION_RESTORE_LAST_CONFIG":        3,
+		"RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT":  4,
+		"RESCUE_ACTION_REPAIR_FIREWALL":            5,
+		"RESCUE_ACTION_RESTART_AGENT":              6,
+		"RESCUE_ACTION_SHUTDOWN":                   7,
+		"RESCUE_ACTION_REBOOT":                     8,
+		"RESCUE_ACTION_BLOCK_PUBLIC_INTERFACES":    9,
+		"RESCUE_ACTION_BLOCK_TAILSCALE_INTERFACES": 10,
+		"RESCUE_ACTION_ISOLATE_CONTROL_PLANE":      11,
+		"RESCUE_ACTION_RESTORE_NETWORK":            12,
+		"RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG":     13,
 	}
 )
 
@@ -84,6 +110,61 @@ func (x RescueAction) Number() protoreflect.EnumNumber {
 // Deprecated: Use RescueAction.Descriptor instead.
 func (RescueAction) EnumDescriptor() ([]byte, []int) {
 	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{0}
+}
+
+type NetworkIsolationMode int32
+
+const (
+	NetworkIsolationMode_NETWORK_ISOLATION_MODE_UNSPECIFIED          NetworkIsolationMode = 0
+	NetworkIsolationMode_NETWORK_ISOLATION_MODE_NONE                 NetworkIsolationMode = 1
+	NetworkIsolationMode_NETWORK_ISOLATION_MODE_PUBLIC_INTERFACES    NetworkIsolationMode = 2
+	NetworkIsolationMode_NETWORK_ISOLATION_MODE_TAILSCALE_INTERFACES NetworkIsolationMode = 3
+	NetworkIsolationMode_NETWORK_ISOLATION_MODE_CONTROL_PLANE_ONLY   NetworkIsolationMode = 4
+)
+
+// Enum value maps for NetworkIsolationMode.
+var (
+	NetworkIsolationMode_name = map[int32]string{
+		0: "NETWORK_ISOLATION_MODE_UNSPECIFIED",
+		1: "NETWORK_ISOLATION_MODE_NONE",
+		2: "NETWORK_ISOLATION_MODE_PUBLIC_INTERFACES",
+		3: "NETWORK_ISOLATION_MODE_TAILSCALE_INTERFACES",
+		4: "NETWORK_ISOLATION_MODE_CONTROL_PLANE_ONLY",
+	}
+	NetworkIsolationMode_value = map[string]int32{
+		"NETWORK_ISOLATION_MODE_UNSPECIFIED":          0,
+		"NETWORK_ISOLATION_MODE_NONE":                 1,
+		"NETWORK_ISOLATION_MODE_PUBLIC_INTERFACES":    2,
+		"NETWORK_ISOLATION_MODE_TAILSCALE_INTERFACES": 3,
+		"NETWORK_ISOLATION_MODE_CONTROL_PLANE_ONLY":   4,
+	}
+)
+
+func (x NetworkIsolationMode) Enum() *NetworkIsolationMode {
+	p := new(NetworkIsolationMode)
+	*p = x
+	return p
+}
+
+func (x NetworkIsolationMode) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (NetworkIsolationMode) Descriptor() protoreflect.EnumDescriptor {
+	return file_komari_rescue_v1_rescue_proto_enumTypes[1].Descriptor()
+}
+
+func (NetworkIsolationMode) Type() protoreflect.EnumType {
+	return &file_komari_rescue_v1_rescue_proto_enumTypes[1]
+}
+
+func (x NetworkIsolationMode) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use NetworkIsolationMode.Descriptor instead.
+func (NetworkIsolationMode) EnumDescriptor() ([]byte, []int) {
+	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{1}
 }
 
 type RescueOutputStream int32
@@ -119,11 +200,11 @@ func (x RescueOutputStream) String() string {
 }
 
 func (RescueOutputStream) Descriptor() protoreflect.EnumDescriptor {
-	return file_komari_rescue_v1_rescue_proto_enumTypes[1].Descriptor()
+	return file_komari_rescue_v1_rescue_proto_enumTypes[2].Descriptor()
 }
 
 func (RescueOutputStream) Type() protoreflect.EnumType {
-	return &file_komari_rescue_v1_rescue_proto_enumTypes[1]
+	return &file_komari_rescue_v1_rescue_proto_enumTypes[2]
 }
 
 func (x RescueOutputStream) Number() protoreflect.EnumNumber {
@@ -132,7 +213,7 @@ func (x RescueOutputStream) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RescueOutputStream.Descriptor instead.
 func (RescueOutputStream) EnumDescriptor() ([]byte, []int) {
-	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{1}
+	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{2}
 }
 
 type GetRescueStatusRequest struct {
@@ -933,16 +1014,19 @@ func (x *ReportRescueStatusResponse) GetAccepted() bool {
 }
 
 type RescueHelperStatus struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Requested          bool                   `protobuf:"varint,1,opt,name=requested,proto3" json:"requested,omitempty"`
-	Installed          bool                   `protobuf:"varint,2,opt,name=installed,proto3" json:"installed,omitempty"`
-	GuardianRunning    bool                   `protobuf:"varint,3,opt,name=guardian_running,json=guardianRunning,proto3" json:"guardian_running,omitempty"`
-	HelperRunning      bool                   `protobuf:"varint,4,opt,name=helper_running,json=helperRunning,proto3" json:"helper_running,omitempty"`
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Requested       bool                   `protobuf:"varint,1,opt,name=requested,proto3" json:"requested,omitempty"`
+	Installed       bool                   `protobuf:"varint,2,opt,name=installed,proto3" json:"installed,omitempty"`
+	GuardianRunning bool                   `protobuf:"varint,3,opt,name=guardian_running,json=guardianRunning,proto3" json:"guardian_running,omitempty"`
+	HelperRunning   bool                   `protobuf:"varint,4,opt,name=helper_running,json=helperRunning,proto3" json:"helper_running,omitempty"`
+	// Deprecated: Marked as deprecated in komari/rescue/v1/rescue.proto.
 	FirewallConfigured bool                   `protobuf:"varint,5,opt,name=firewall_configured,json=firewallConfigured,proto3" json:"firewall_configured,omitempty"`
 	Version            string                 `protobuf:"bytes,6,opt,name=version,proto3" json:"version,omitempty"`
 	HelperInstanceId   string                 `protobuf:"bytes,7,opt,name=helper_instance_id,json=helperInstanceId,proto3" json:"helper_instance_id,omitempty"`
 	Error              *v1.ErrorDetail        `protobuf:"bytes,8,opt,name=error,proto3,oneof" json:"error,omitempty"`
 	ObservedAt         *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	NetworkIsolation   NetworkIsolationMode   `protobuf:"varint,10,opt,name=network_isolation,json=networkIsolation,proto3,enum=komari.rescue.v1.NetworkIsolationMode" json:"network_isolation,omitempty"`
+	BlockedInterfaces  []string               `protobuf:"bytes,11,rep,name=blocked_interfaces,json=blockedInterfaces,proto3" json:"blocked_interfaces,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1005,6 +1089,7 @@ func (x *RescueHelperStatus) GetHelperRunning() bool {
 	return false
 }
 
+// Deprecated: Marked as deprecated in komari/rescue/v1/rescue.proto.
 func (x *RescueHelperStatus) GetFirewallConfigured() bool {
 	if x != nil {
 		return x.FirewallConfigured
@@ -1036,6 +1121,20 @@ func (x *RescueHelperStatus) GetError() *v1.ErrorDetail {
 func (x *RescueHelperStatus) GetObservedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *RescueHelperStatus) GetNetworkIsolation() NetworkIsolationMode {
+	if x != nil {
+		return x.NetworkIsolation
+	}
+	return NetworkIsolationMode_NETWORK_ISOLATION_MODE_UNSPECIFIED
+}
+
+func (x *RescueHelperStatus) GetBlockedInterfaces() []string {
+	if x != nil {
+		return x.BlockedInterfaces
 	}
 	return nil
 }
@@ -1313,18 +1412,21 @@ const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12<\n" +
 	"\x06status\x18\x02 \x01(\v2$.komari.rescue.v1.RescueHelperStatusR\x06status\"8\n" +
 	"\x1aReportRescueStatusResponse\x12\x1a\n" +
-	"\baccepted\x18\x01 \x01(\bR\baccepted\"\x9c\x03\n" +
+	"\baccepted\x18\x01 \x01(\bR\baccepted\"\xa4\x04\n" +
 	"\x12RescueHelperStatus\x12\x1c\n" +
 	"\trequested\x18\x01 \x01(\bR\trequested\x12\x1c\n" +
 	"\tinstalled\x18\x02 \x01(\bR\tinstalled\x12)\n" +
 	"\x10guardian_running\x18\x03 \x01(\bR\x0fguardianRunning\x12%\n" +
-	"\x0ehelper_running\x18\x04 \x01(\bR\rhelperRunning\x12/\n" +
-	"\x13firewall_configured\x18\x05 \x01(\bR\x12firewallConfigured\x12\x18\n" +
+	"\x0ehelper_running\x18\x04 \x01(\bR\rhelperRunning\x123\n" +
+	"\x13firewall_configured\x18\x05 \x01(\bB\x02\x18\x01R\x12firewallConfigured\x12\x18\n" +
 	"\aversion\x18\x06 \x01(\tR\aversion\x12,\n" +
 	"\x12helper_instance_id\x18\a \x01(\tR\x10helperInstanceId\x128\n" +
 	"\x05error\x18\b \x01(\v2\x1d.komari.common.v1.ErrorDetailH\x00R\x05error\x88\x01\x01\x12;\n" +
 	"\vobserved_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"observedAtB\b\n" +
+	"observedAt\x12S\n" +
+	"\x11network_isolation\x18\n" +
+	" \x01(\x0e2&.komari.rescue.v1.NetworkIsolationModeR\x10networkIsolation\x12-\n" +
+	"\x12blocked_interfaces\x18\v \x03(\tR\x11blockedInterfacesB\b\n" +
 	"\x06_error\"\xec\x04\n" +
 	"\rRescueSession\x12\x1d\n" +
 	"\n" +
@@ -1358,15 +1460,29 @@ const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\x06stream\x18\x05 \x01(\x0e2$.komari.rescue.v1.RescueOutputStreamR\x06stream\x12\x16\n" +
 	"\x06output\x18\x06 \x01(\fR\x06output\x128\n" +
 	"\x05error\x18\a \x01(\v2\x1d.komari.common.v1.ErrorDetailH\x00R\x05error\x88\x01\x01B\b\n" +
-	"\x06_error*\x8b\x02\n" +
+	"\x06_error*\xa4\x04\n" +
 	"\fRescueAction\x12\x1d\n" +
 	"\x19RESCUE_ACTION_UNSPECIFIED\x10\x00\x12\x1d\n" +
-	"\x19RESCUE_ACTION_DIAGNOSTICS\x10\x01\x12%\n" +
-	"!RESCUE_ACTION_VERIFY_INSTALLATION\x10\x02\x12%\n" +
-	"!RESCUE_ACTION_RESTORE_LAST_CONFIG\x10\x03\x12+\n" +
-	"'RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT\x10\x04\x12!\n" +
-	"\x1dRESCUE_ACTION_REPAIR_FIREWALL\x10\x05\x12\x1f\n" +
-	"\x1bRESCUE_ACTION_RESTART_AGENT\x10\x06*|\n" +
+	"\x19RESCUE_ACTION_DIAGNOSTICS\x10\x01\x12)\n" +
+	"!RESCUE_ACTION_VERIFY_INSTALLATION\x10\x02\x1a\x02\b\x01\x12)\n" +
+	"!RESCUE_ACTION_RESTORE_LAST_CONFIG\x10\x03\x1a\x02\b\x01\x12/\n" +
+	"'RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT\x10\x04\x1a\x02\b\x01\x12%\n" +
+	"\x1dRESCUE_ACTION_REPAIR_FIREWALL\x10\x05\x1a\x02\b\x01\x12#\n" +
+	"\x1bRESCUE_ACTION_RESTART_AGENT\x10\x06\x1a\x02\b\x01\x12\x1a\n" +
+	"\x16RESCUE_ACTION_SHUTDOWN\x10\a\x12\x18\n" +
+	"\x14RESCUE_ACTION_REBOOT\x10\b\x12)\n" +
+	"%RESCUE_ACTION_BLOCK_PUBLIC_INTERFACES\x10\t\x12,\n" +
+	"(RESCUE_ACTION_BLOCK_TAILSCALE_INTERFACES\x10\n" +
+	"\x12'\n" +
+	"#RESCUE_ACTION_ISOLATE_CONTROL_PLANE\x10\v\x12!\n" +
+	"\x1dRESCUE_ACTION_RESTORE_NETWORK\x10\f\x12(\n" +
+	"$RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG\x10\r*\xed\x01\n" +
+	"\x14NetworkIsolationMode\x12&\n" +
+	"\"NETWORK_ISOLATION_MODE_UNSPECIFIED\x10\x00\x12\x1f\n" +
+	"\x1bNETWORK_ISOLATION_MODE_NONE\x10\x01\x12,\n" +
+	"(NETWORK_ISOLATION_MODE_PUBLIC_INTERFACES\x10\x02\x12/\n" +
+	"+NETWORK_ISOLATION_MODE_TAILSCALE_INTERFACES\x10\x03\x12-\n" +
+	")NETWORK_ISOLATION_MODE_CONTROL_PLANE_ONLY\x10\x04*|\n" +
 	"\x12RescueOutputStream\x12$\n" +
 	" RESCUE_OUTPUT_STREAM_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bRESCUE_OUTPUT_STREAM_STDOUT\x10\x01\x12\x1f\n" +
@@ -1393,82 +1509,84 @@ func file_komari_rescue_v1_rescue_proto_rawDescGZIP() []byte {
 	return file_komari_rescue_v1_rescue_proto_rawDescData
 }
 
-var file_komari_rescue_v1_rescue_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_komari_rescue_v1_rescue_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_komari_rescue_v1_rescue_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_komari_rescue_v1_rescue_proto_goTypes = []any{
 	(RescueAction)(0),                   // 0: komari.rescue.v1.RescueAction
-	(RescueOutputStream)(0),             // 1: komari.rescue.v1.RescueOutputStream
-	(*GetRescueStatusRequest)(nil),      // 2: komari.rescue.v1.GetRescueStatusRequest
-	(*GetRescueStatusResponse)(nil),     // 3: komari.rescue.v1.GetRescueStatusResponse
-	(*CreateRescueSessionRequest)(nil),  // 4: komari.rescue.v1.CreateRescueSessionRequest
-	(*CreateRescueSessionResponse)(nil), // 5: komari.rescue.v1.CreateRescueSessionResponse
-	(*WatchRescueSessionRequest)(nil),   // 6: komari.rescue.v1.WatchRescueSessionRequest
-	(*WatchRescueSessionResponse)(nil),  // 7: komari.rescue.v1.WatchRescueSessionResponse
-	(*CancelRescueSessionRequest)(nil),  // 8: komari.rescue.v1.CancelRescueSessionRequest
-	(*CancelRescueSessionResponse)(nil), // 9: komari.rescue.v1.CancelRescueSessionResponse
-	(*LeaseRescueSessionsRequest)(nil),  // 10: komari.rescue.v1.LeaseRescueSessionsRequest
-	(*LeaseRescueSessionsResponse)(nil), // 11: komari.rescue.v1.LeaseRescueSessionsResponse
-	(*RescueAssignment)(nil),            // 12: komari.rescue.v1.RescueAssignment
-	(*ReportRescueEventRequest)(nil),    // 13: komari.rescue.v1.ReportRescueEventRequest
-	(*ReportRescueEventResponse)(nil),   // 14: komari.rescue.v1.ReportRescueEventResponse
-	(*ReportRescueStatusRequest)(nil),   // 15: komari.rescue.v1.ReportRescueStatusRequest
-	(*ReportRescueStatusResponse)(nil),  // 16: komari.rescue.v1.ReportRescueStatusResponse
-	(*RescueHelperStatus)(nil),          // 17: komari.rescue.v1.RescueHelperStatus
-	(*RescueSession)(nil),               // 18: komari.rescue.v1.RescueSession
-	(*RescueEvent)(nil),                 // 19: komari.rescue.v1.RescueEvent
-	(*durationpb.Duration)(nil),         // 20: google.protobuf.Duration
-	(*v1.TwoFactorProof)(nil),           // 21: komari.common.v1.TwoFactorProof
-	(*timestamppb.Timestamp)(nil),       // 22: google.protobuf.Timestamp
-	(*v1.ErrorDetail)(nil),              // 23: komari.common.v1.ErrorDetail
-	(v1.OperationState)(0),              // 24: komari.common.v1.OperationState
+	(NetworkIsolationMode)(0),           // 1: komari.rescue.v1.NetworkIsolationMode
+	(RescueOutputStream)(0),             // 2: komari.rescue.v1.RescueOutputStream
+	(*GetRescueStatusRequest)(nil),      // 3: komari.rescue.v1.GetRescueStatusRequest
+	(*GetRescueStatusResponse)(nil),     // 4: komari.rescue.v1.GetRescueStatusResponse
+	(*CreateRescueSessionRequest)(nil),  // 5: komari.rescue.v1.CreateRescueSessionRequest
+	(*CreateRescueSessionResponse)(nil), // 6: komari.rescue.v1.CreateRescueSessionResponse
+	(*WatchRescueSessionRequest)(nil),   // 7: komari.rescue.v1.WatchRescueSessionRequest
+	(*WatchRescueSessionResponse)(nil),  // 8: komari.rescue.v1.WatchRescueSessionResponse
+	(*CancelRescueSessionRequest)(nil),  // 9: komari.rescue.v1.CancelRescueSessionRequest
+	(*CancelRescueSessionResponse)(nil), // 10: komari.rescue.v1.CancelRescueSessionResponse
+	(*LeaseRescueSessionsRequest)(nil),  // 11: komari.rescue.v1.LeaseRescueSessionsRequest
+	(*LeaseRescueSessionsResponse)(nil), // 12: komari.rescue.v1.LeaseRescueSessionsResponse
+	(*RescueAssignment)(nil),            // 13: komari.rescue.v1.RescueAssignment
+	(*ReportRescueEventRequest)(nil),    // 14: komari.rescue.v1.ReportRescueEventRequest
+	(*ReportRescueEventResponse)(nil),   // 15: komari.rescue.v1.ReportRescueEventResponse
+	(*ReportRescueStatusRequest)(nil),   // 16: komari.rescue.v1.ReportRescueStatusRequest
+	(*ReportRescueStatusResponse)(nil),  // 17: komari.rescue.v1.ReportRescueStatusResponse
+	(*RescueHelperStatus)(nil),          // 18: komari.rescue.v1.RescueHelperStatus
+	(*RescueSession)(nil),               // 19: komari.rescue.v1.RescueSession
+	(*RescueEvent)(nil),                 // 20: komari.rescue.v1.RescueEvent
+	(*durationpb.Duration)(nil),         // 21: google.protobuf.Duration
+	(*v1.TwoFactorProof)(nil),           // 22: komari.common.v1.TwoFactorProof
+	(*timestamppb.Timestamp)(nil),       // 23: google.protobuf.Timestamp
+	(*v1.ErrorDetail)(nil),              // 24: komari.common.v1.ErrorDetail
+	(v1.OperationState)(0),              // 25: komari.common.v1.OperationState
 }
 var file_komari_rescue_v1_rescue_proto_depIdxs = []int32{
-	17, // 0: komari.rescue.v1.GetRescueStatusResponse.status:type_name -> komari.rescue.v1.RescueHelperStatus
+	18, // 0: komari.rescue.v1.GetRescueStatusResponse.status:type_name -> komari.rescue.v1.RescueHelperStatus
 	0,  // 1: komari.rescue.v1.CreateRescueSessionRequest.action:type_name -> komari.rescue.v1.RescueAction
-	20, // 2: komari.rescue.v1.CreateRescueSessionRequest.timeout:type_name -> google.protobuf.Duration
-	21, // 3: komari.rescue.v1.CreateRescueSessionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	18, // 4: komari.rescue.v1.CreateRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
-	19, // 5: komari.rescue.v1.WatchRescueSessionResponse.event:type_name -> komari.rescue.v1.RescueEvent
-	18, // 6: komari.rescue.v1.WatchRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
-	21, // 7: komari.rescue.v1.CancelRescueSessionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	18, // 8: komari.rescue.v1.CancelRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
-	12, // 9: komari.rescue.v1.LeaseRescueSessionsResponse.assignment:type_name -> komari.rescue.v1.RescueAssignment
-	18, // 10: komari.rescue.v1.RescueAssignment.session:type_name -> komari.rescue.v1.RescueSession
-	22, // 11: komari.rescue.v1.RescueAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
-	19, // 12: komari.rescue.v1.ReportRescueEventRequest.event:type_name -> komari.rescue.v1.RescueEvent
-	17, // 13: komari.rescue.v1.ReportRescueStatusRequest.status:type_name -> komari.rescue.v1.RescueHelperStatus
-	23, // 14: komari.rescue.v1.RescueHelperStatus.error:type_name -> komari.common.v1.ErrorDetail
-	22, // 15: komari.rescue.v1.RescueHelperStatus.observed_at:type_name -> google.protobuf.Timestamp
-	0,  // 16: komari.rescue.v1.RescueSession.action:type_name -> komari.rescue.v1.RescueAction
-	24, // 17: komari.rescue.v1.RescueSession.state:type_name -> komari.common.v1.OperationState
-	22, // 18: komari.rescue.v1.RescueSession.created_at:type_name -> google.protobuf.Timestamp
-	22, // 19: komari.rescue.v1.RescueSession.started_at:type_name -> google.protobuf.Timestamp
-	22, // 20: komari.rescue.v1.RescueSession.finished_at:type_name -> google.protobuf.Timestamp
-	23, // 21: komari.rescue.v1.RescueSession.error:type_name -> komari.common.v1.ErrorDetail
-	22, // 22: komari.rescue.v1.RescueSession.deadline_at:type_name -> google.protobuf.Timestamp
-	22, // 23: komari.rescue.v1.RescueEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	24, // 24: komari.rescue.v1.RescueEvent.state:type_name -> komari.common.v1.OperationState
-	1,  // 25: komari.rescue.v1.RescueEvent.stream:type_name -> komari.rescue.v1.RescueOutputStream
-	23, // 26: komari.rescue.v1.RescueEvent.error:type_name -> komari.common.v1.ErrorDetail
-	2,  // 27: komari.rescue.v1.RescueService.GetRescueStatus:input_type -> komari.rescue.v1.GetRescueStatusRequest
-	4,  // 28: komari.rescue.v1.RescueService.CreateRescueSession:input_type -> komari.rescue.v1.CreateRescueSessionRequest
-	6,  // 29: komari.rescue.v1.RescueService.WatchRescueSession:input_type -> komari.rescue.v1.WatchRescueSessionRequest
-	8,  // 30: komari.rescue.v1.RescueService.CancelRescueSession:input_type -> komari.rescue.v1.CancelRescueSessionRequest
-	10, // 31: komari.rescue.v1.RescueService.LeaseRescueSessions:input_type -> komari.rescue.v1.LeaseRescueSessionsRequest
-	13, // 32: komari.rescue.v1.RescueService.ReportRescueEvent:input_type -> komari.rescue.v1.ReportRescueEventRequest
-	15, // 33: komari.rescue.v1.RescueService.ReportRescueStatus:input_type -> komari.rescue.v1.ReportRescueStatusRequest
-	3,  // 34: komari.rescue.v1.RescueService.GetRescueStatus:output_type -> komari.rescue.v1.GetRescueStatusResponse
-	5,  // 35: komari.rescue.v1.RescueService.CreateRescueSession:output_type -> komari.rescue.v1.CreateRescueSessionResponse
-	7,  // 36: komari.rescue.v1.RescueService.WatchRescueSession:output_type -> komari.rescue.v1.WatchRescueSessionResponse
-	9,  // 37: komari.rescue.v1.RescueService.CancelRescueSession:output_type -> komari.rescue.v1.CancelRescueSessionResponse
-	11, // 38: komari.rescue.v1.RescueService.LeaseRescueSessions:output_type -> komari.rescue.v1.LeaseRescueSessionsResponse
-	14, // 39: komari.rescue.v1.RescueService.ReportRescueEvent:output_type -> komari.rescue.v1.ReportRescueEventResponse
-	16, // 40: komari.rescue.v1.RescueService.ReportRescueStatus:output_type -> komari.rescue.v1.ReportRescueStatusResponse
-	34, // [34:41] is the sub-list for method output_type
-	27, // [27:34] is the sub-list for method input_type
-	27, // [27:27] is the sub-list for extension type_name
-	27, // [27:27] is the sub-list for extension extendee
-	0,  // [0:27] is the sub-list for field type_name
+	21, // 2: komari.rescue.v1.CreateRescueSessionRequest.timeout:type_name -> google.protobuf.Duration
+	22, // 3: komari.rescue.v1.CreateRescueSessionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	19, // 4: komari.rescue.v1.CreateRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
+	20, // 5: komari.rescue.v1.WatchRescueSessionResponse.event:type_name -> komari.rescue.v1.RescueEvent
+	19, // 6: komari.rescue.v1.WatchRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
+	22, // 7: komari.rescue.v1.CancelRescueSessionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	19, // 8: komari.rescue.v1.CancelRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
+	13, // 9: komari.rescue.v1.LeaseRescueSessionsResponse.assignment:type_name -> komari.rescue.v1.RescueAssignment
+	19, // 10: komari.rescue.v1.RescueAssignment.session:type_name -> komari.rescue.v1.RescueSession
+	23, // 11: komari.rescue.v1.RescueAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
+	20, // 12: komari.rescue.v1.ReportRescueEventRequest.event:type_name -> komari.rescue.v1.RescueEvent
+	18, // 13: komari.rescue.v1.ReportRescueStatusRequest.status:type_name -> komari.rescue.v1.RescueHelperStatus
+	24, // 14: komari.rescue.v1.RescueHelperStatus.error:type_name -> komari.common.v1.ErrorDetail
+	23, // 15: komari.rescue.v1.RescueHelperStatus.observed_at:type_name -> google.protobuf.Timestamp
+	1,  // 16: komari.rescue.v1.RescueHelperStatus.network_isolation:type_name -> komari.rescue.v1.NetworkIsolationMode
+	0,  // 17: komari.rescue.v1.RescueSession.action:type_name -> komari.rescue.v1.RescueAction
+	25, // 18: komari.rescue.v1.RescueSession.state:type_name -> komari.common.v1.OperationState
+	23, // 19: komari.rescue.v1.RescueSession.created_at:type_name -> google.protobuf.Timestamp
+	23, // 20: komari.rescue.v1.RescueSession.started_at:type_name -> google.protobuf.Timestamp
+	23, // 21: komari.rescue.v1.RescueSession.finished_at:type_name -> google.protobuf.Timestamp
+	24, // 22: komari.rescue.v1.RescueSession.error:type_name -> komari.common.v1.ErrorDetail
+	23, // 23: komari.rescue.v1.RescueSession.deadline_at:type_name -> google.protobuf.Timestamp
+	23, // 24: komari.rescue.v1.RescueEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	25, // 25: komari.rescue.v1.RescueEvent.state:type_name -> komari.common.v1.OperationState
+	2,  // 26: komari.rescue.v1.RescueEvent.stream:type_name -> komari.rescue.v1.RescueOutputStream
+	24, // 27: komari.rescue.v1.RescueEvent.error:type_name -> komari.common.v1.ErrorDetail
+	3,  // 28: komari.rescue.v1.RescueService.GetRescueStatus:input_type -> komari.rescue.v1.GetRescueStatusRequest
+	5,  // 29: komari.rescue.v1.RescueService.CreateRescueSession:input_type -> komari.rescue.v1.CreateRescueSessionRequest
+	7,  // 30: komari.rescue.v1.RescueService.WatchRescueSession:input_type -> komari.rescue.v1.WatchRescueSessionRequest
+	9,  // 31: komari.rescue.v1.RescueService.CancelRescueSession:input_type -> komari.rescue.v1.CancelRescueSessionRequest
+	11, // 32: komari.rescue.v1.RescueService.LeaseRescueSessions:input_type -> komari.rescue.v1.LeaseRescueSessionsRequest
+	14, // 33: komari.rescue.v1.RescueService.ReportRescueEvent:input_type -> komari.rescue.v1.ReportRescueEventRequest
+	16, // 34: komari.rescue.v1.RescueService.ReportRescueStatus:input_type -> komari.rescue.v1.ReportRescueStatusRequest
+	4,  // 35: komari.rescue.v1.RescueService.GetRescueStatus:output_type -> komari.rescue.v1.GetRescueStatusResponse
+	6,  // 36: komari.rescue.v1.RescueService.CreateRescueSession:output_type -> komari.rescue.v1.CreateRescueSessionResponse
+	8,  // 37: komari.rescue.v1.RescueService.WatchRescueSession:output_type -> komari.rescue.v1.WatchRescueSessionResponse
+	10, // 38: komari.rescue.v1.RescueService.CancelRescueSession:output_type -> komari.rescue.v1.CancelRescueSessionResponse
+	12, // 39: komari.rescue.v1.RescueService.LeaseRescueSessions:output_type -> komari.rescue.v1.LeaseRescueSessionsResponse
+	15, // 40: komari.rescue.v1.RescueService.ReportRescueEvent:output_type -> komari.rescue.v1.ReportRescueEventResponse
+	17, // 41: komari.rescue.v1.RescueService.ReportRescueStatus:output_type -> komari.rescue.v1.ReportRescueStatusResponse
+	35, // [35:42] is the sub-list for method output_type
+	28, // [28:35] is the sub-list for method input_type
+	28, // [28:28] is the sub-list for extension type_name
+	28, // [28:28] is the sub-list for extension extendee
+	0,  // [0:28] is the sub-list for field type_name
 }
 
 func init() { file_komari_rescue_v1_rescue_proto_init() }
@@ -1484,7 +1602,7 @@ func file_komari_rescue_v1_rescue_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_rescue_v1_rescue_proto_rawDesc), len(file_komari_rescue_v1_rescue_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      3,
 			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,

@@ -110,11 +110,13 @@ message RescueHelperStatus {
   bool installed = 2;
   bool guardian_running = 3;
   bool helper_running = 4;
-  bool firewall_configured = 5;
+  bool firewall_configured = 5 [deprecated = true];
   string version = 6;
   string helper_instance_id = 7;
   optional komari.common.v1.ErrorDetail error = 8;
   google.protobuf.Timestamp observed_at = 9;
+  NetworkIsolationMode network_isolation = 10;
+  repeated string blocked_interfaces = 11;
 }
 
 message RescueSession {
@@ -145,11 +147,26 @@ message RescueEvent {
 enum RescueAction {
   RESCUE_ACTION_UNSPECIFIED = 0;
   RESCUE_ACTION_DIAGNOSTICS = 1;
-  RESCUE_ACTION_VERIFY_INSTALLATION = 2;
-  RESCUE_ACTION_RESTORE_LAST_CONFIG = 3;
-  RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT = 4;
-  RESCUE_ACTION_REPAIR_FIREWALL = 5;
-  RESCUE_ACTION_RESTART_AGENT = 6;
+  RESCUE_ACTION_VERIFY_INSTALLATION = 2 [deprecated = true];
+  RESCUE_ACTION_RESTORE_LAST_CONFIG = 3 [deprecated = true];
+  RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT = 4 [deprecated = true];
+  RESCUE_ACTION_REPAIR_FIREWALL = 5 [deprecated = true];
+  RESCUE_ACTION_RESTART_AGENT = 6 [deprecated = true];
+  RESCUE_ACTION_SHUTDOWN = 7;
+  RESCUE_ACTION_REBOOT = 8;
+  RESCUE_ACTION_BLOCK_PUBLIC_INTERFACES = 9;
+  RESCUE_ACTION_BLOCK_TAILSCALE_INTERFACES = 10;
+  RESCUE_ACTION_ISOLATE_CONTROL_PLANE = 11;
+  RESCUE_ACTION_RESTORE_NETWORK = 12;
+  RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG = 13;
+}
+
+enum NetworkIsolationMode {
+  NETWORK_ISOLATION_MODE_UNSPECIFIED = 0;
+  NETWORK_ISOLATION_MODE_NONE = 1;
+  NETWORK_ISOLATION_MODE_PUBLIC_INTERFACES = 2;
+  NETWORK_ISOLATION_MODE_TAILSCALE_INTERFACES = 3;
+  NETWORK_ISOLATION_MODE_CONTROL_PLANE_ONLY = 4;
 }
 
 enum RescueOutputStream {
