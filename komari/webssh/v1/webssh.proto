@@ -176,12 +176,14 @@ message AgentSessionAttach {
   string agent_id = 1;
   string assignment_id = 2;
   string session_id = 3;
+  uint64 after_command_sequence = 4;
 }
 
 // AgentSessionEvent carries terminal/file output or a terminal state.
 message AgentSessionEvent {
   uint64 sequence = 1;
   google.protobuf.Timestamp occurred_at = 2;
+  uint64 accepted_command_sequence = 6;
   oneof event {
     bytes output = 3;
     FileEvent file = 4;

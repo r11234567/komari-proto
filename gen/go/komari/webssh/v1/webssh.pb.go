@@ -1531,12 +1531,13 @@ func (*AttachSessionRequest_Event) isAttachSessionRequest_Message() {}
 
 // AgentSessionAttach binds an authenticated Agent to a leased session.
 type AgentSessionAttach struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	AssignmentId  string                 `protobuf:"bytes,2,opt,name=assignment_id,json=assignmentId,proto3" json:"assignment_id,omitempty"`
-	SessionId     string                 `protobuf:"bytes,3,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	AgentId              string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	AssignmentId         string                 `protobuf:"bytes,2,opt,name=assignment_id,json=assignmentId,proto3" json:"assignment_id,omitempty"`
+	SessionId            string                 `protobuf:"bytes,3,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	AfterCommandSequence uint64                 `protobuf:"varint,4,opt,name=after_command_sequence,json=afterCommandSequence,proto3" json:"after_command_sequence,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *AgentSessionAttach) Reset() {
@@ -1590,11 +1591,19 @@ func (x *AgentSessionAttach) GetSessionId() string {
 	return ""
 }
 
+func (x *AgentSessionAttach) GetAfterCommandSequence() uint64 {
+	if x != nil {
+		return x.AfterCommandSequence
+	}
+	return 0
+}
+
 // AgentSessionEvent carries terminal/file output or a terminal state.
 type AgentSessionEvent struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Sequence   uint64                 `protobuf:"varint,1,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	OccurredAt *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	Sequence                uint64                 `protobuf:"varint,1,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	OccurredAt              *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	AcceptedCommandSequence uint64                 `protobuf:"varint,6,opt,name=accepted_command_sequence,json=acceptedCommandSequence,proto3" json:"accepted_command_sequence,omitempty"`
 	// Types that are valid to be assigned to Event:
 	//
 	//	*AgentSessionEvent_Output
@@ -1647,6 +1656,13 @@ func (x *AgentSessionEvent) GetOccurredAt() *timestamppb.Timestamp {
 		return x.OccurredAt
 	}
 	return nil
+}
+
+func (x *AgentSessionEvent) GetAcceptedCommandSequence() uint64 {
+	if x != nil {
+		return x.AcceptedCommandSequence
+	}
+	return 0
 }
 
 func (x *AgentSessionEvent) GetEvent() isAgentSessionEvent_Event {
@@ -2354,16 +2370,18 @@ const file_komari_webssh_v1_webssh_proto_rawDesc = "" +
 	"\x14AttachSessionRequest\x12>\n" +
 	"\x06attach\x18\x01 \x01(\v2$.komari.webssh.v1.AgentSessionAttachH\x00R\x06attach\x12;\n" +
 	"\x05event\x18\x02 \x01(\v2#.komari.webssh.v1.AgentSessionEventH\x00R\x05eventB\t\n" +
-	"\amessage\"s\n" +
+	"\amessage\"\xa9\x01\n" +
 	"\x12AgentSessionAttach\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12#\n" +
 	"\rassignment_id\x18\x02 \x01(\tR\fassignmentId\x12\x1d\n" +
 	"\n" +
-	"session_id\x18\x03 \x01(\tR\tsessionId\"\xfd\x01\n" +
+	"session_id\x18\x03 \x01(\tR\tsessionId\x124\n" +
+	"\x16after_command_sequence\x18\x04 \x01(\x04R\x14afterCommandSequence\"\xb9\x02\n" +
 	"\x11AgentSessionEvent\x12\x1a\n" +
 	"\bsequence\x18\x01 \x01(\x04R\bsequence\x12;\n" +
 	"\voccurred_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x18\n" +
+	"occurredAt\x12:\n" +
+	"\x19accepted_command_sequence\x18\x06 \x01(\x04R\x17acceptedCommandSequence\x12\x18\n" +
 	"\x06output\x18\x03 \x01(\fH\x00R\x06output\x121\n" +
 	"\x04file\x18\x04 \x01(\v2\x1b.komari.webssh.v1.FileEventH\x00R\x04file\x129\n" +
 	"\x06closed\x18\x05 \x01(\v2\x1f.komari.webssh.v1.SessionClosedH\x00R\x06closedB\a\n" +
