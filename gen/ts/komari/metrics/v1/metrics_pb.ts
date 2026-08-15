@@ -2,8 +2,8 @@
 // @generated from file komari/metrics/v1/metrics.proto (package komari.metrics.v1, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
-import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
+import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
+import { enumDesc, fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Duration, Timestamp } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_duration, file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
 import type { Message } from "@bufbuild/protobuf";
@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file komari/metrics/v1/metrics.proto.
  */
 export const file_komari_metrics_v1_metrics: GenFile = /*@__PURE__*/
-  fileDesc("Ch9rb21hcmkvbWV0cmljcy92MS9tZXRyaWNzLnByb3RvEhFrb21hcmkubWV0cmljcy52MSLKAQoMTWV0cmljc1BvaW50Eg4KBm1ldHJpYxgBIAEoCRINCgV2YWx1ZRgCIAEoARIvCgtvYnNlcnZlZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASOwoGbGFiZWxzGAQgAygLMisua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50LkxhYmVsc0VudHJ5Gi0KC0xhYmVsc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiawoUU3VibWl0TWV0cmljc1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSEAoIc2VxdWVuY2UYAiABKAQSLwoGcG9pbnRzGAMgAygLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50IksKFVN1Ym1pdE1ldHJpY3NSZXNwb25zZRIZChFhY2NlcHRlZF9zZXF1ZW5jZRgBIAEoBBIXCg9hY2NlcHRlZF9wb2ludHMYAiABKA0iTgoUVXBsb2FkTWV0cmljc1JlcXVlc3QSNgoFYmF0Y2gYASABKAsyJy5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVxdWVzdCJLChVVcGxvYWRNZXRyaWNzUmVzcG9uc2USGQoRYWNjZXB0ZWRfc2VxdWVuY2UYASABKAQSFwoPYWNjZXB0ZWRfcG9pbnRzGAIgASgEIk4KFFN0cmVhbU1ldHJpY3NSZXF1ZXN0EjYKBWJhdGNoGAEgASgLMicua29tYXJpLm1ldHJpY3MudjEuU3VibWl0TWV0cmljc1JlcXVlc3QiSwoVU3RyZWFtTWV0cmljc1Jlc3BvbnNlEhkKEWFjY2VwdGVkX3NlcXVlbmNlGAEgASgEEhcKD2FjY2VwdGVkX3BvaW50cxgCIAEoDSLpAgoTUXVlcnlNZXRyaWNzUmVxdWVzdBIRCglhZ2VudF9pZHMYASADKAkSDwoHbWV0cmljcxgCIAMoCRIuCgpzdGFydF90aW1lGAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIsCghlbmRfdGltZRgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEgoKbWF4X3BvaW50cxgFIAEoDRI+CgR0YWdzGAYgAygLMjAua29tYXJpLm1ldHJpY3MudjEuUXVlcnlNZXRyaWNzUmVxdWVzdC5UYWdzRW50cnkSFwoKZG93bnNhbXBsZRgHIAEoCEgAiAEBEhMKC2FnZ3JlZ2F0aW9uGAggASgJEhIKCmZpbGxfZW1wdHkYCSABKAgaKwoJVGFnc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAFCDQoLX2Rvd25zYW1wbGUiSAoUUXVlcnlNZXRyaWNzUmVzcG9uc2USMAoGc2VyaWVzGAEgAygLMiAua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1NlcmllcyKPAwoNTWV0cmljc1NlcmllcxIQCghhZ2VudF9pZBgBIAEoCRIOCgZtZXRyaWMYAiABKAkSPAoGbGFiZWxzGAMgAygLMiwua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1Nlcmllcy5MYWJlbHNFbnRyeRIvCgZwb2ludHMYBCADKAsyHy5rb21hcmkubWV0cmljcy52MS5NZXRyaWNzUG9pbnQSMwoMcXVlcnlfcG9pbnRzGAUgAygLMh0ua29tYXJpLm1ldHJpY3MudjEuUXVlcnlQb2ludBIMCgR0eXBlGAYgASgJEgwKBHVuaXQYByABKAkSFgoOcmV0ZW50aW9uX2RheXMYCCABKA0SEwoLZG93bnNhbXBsZWQYCSABKAgSEwoLYWdncmVnYXRpb24YCiABKAkSKwoIaW50ZXJ2YWwYCyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24aLQoLTGFiZWxzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ASLbAQoKUXVlcnlQb2ludBIvCgtvYnNlcnZlZF9hdBgBIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEgoFdmFsdWUYAiABKAFIAIgBARIUCgxzYW1wbGVfY291bnQYAyABKA0SOQoGbGFiZWxzGAQgAygLMikua29tYXJpLm1ldHJpY3MudjEuUXVlcnlQb2ludC5MYWJlbHNFbnRyeRotCgtMYWJlbHNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBQggKBl92YWx1ZSIeChxMaXN0TWV0cmljRGVmaW5pdGlvbnNSZXF1ZXN0IlkKHUxpc3RNZXRyaWNEZWZpbml0aW9uc1Jlc3BvbnNlEjgKC2RlZmluaXRpb25zGAEgAygLMiMua29tYXJpLm1ldHJpY3MudjEuTWV0cmljRGVmaW5pdGlvbiK/AgoQTWV0cmljRGVmaW5pdGlvbhIMCgRuYW1lGAEgASgJEhMKC2Rlc2NyaXB0aW9uGAIgASgJEgwKBHR5cGUYAyABKAkSDAoEdW5pdBgEIAEoCRIWCg5yZXRlbnRpb25fZGF5cxgFIAEoDRJDCghtZXRhZGF0YRgGIAMoCzIxLmtvbWFyaS5tZXRyaWNzLnYxLk1ldHJpY0RlZmluaXRpb24uTWV0YWRhdGFFbnRyeRIuCgpjcmVhdGVkX2F0GAcgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAggASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBovCg1NZXRhZGF0YUVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiFgoUTGlzdFBpbmdUYXNrc1JlcXVlc3QiQwoVTGlzdFBpbmdUYXNrc1Jlc3BvbnNlEioKBXRhc2tzGAEgAygLMhsua29tYXJpLm1ldHJpY3MudjEuUGluZ1Rhc2siZAoIUGluZ1Rhc2sSDwoHdGFza19pZBgBIAEoBBIMCgRuYW1lGAIgASgJEgwKBHR5cGUYAyABKAkSKwoIaW50ZXJ2YWwYBCABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24irAEKE0dldFBpbmdTdGF0c1JlcXVlc3QSEQoJYWdlbnRfaWRzGAEgAygJEhAKCHRhc2tfaWRzGAIgAygEEi4KCnN0YXJ0X3RpbWUYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiwKCGVuZF90aW1lGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBISCgptYXhfcG9pbnRzGAUgASgNIs0BChRHZXRQaW5nU3RhdHNSZXNwb25zZRIuCgpzdGFydF90aW1lGAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIsCghlbmRfdGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASKwoIaW50ZXJ2YWwYAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24SKgoFc3RhdHMYBCADKAsyGy5rb21hcmkubWV0cmljcy52MS5QaW5nU3RhdCK1BAoIUGluZ1N0YXQSEAoIYWdlbnRfaWQYASABKAkSDwoHdGFza19pZBgCIAEoBBIMCgRuYW1lGAMgASgJEgwKBHR5cGUYBCABKAkSMQoOcHJvYmVfaW50ZXJ2YWwYBSABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24SMwoEdGFncxgGIAMoCzIlLmtvbWFyaS5tZXRyaWNzLnYxLlBpbmdTdGF0LlRhZ3NFbnRyeRINCgV0b3RhbBgHIAEoDRINCgV2YWxpZBgIIAEoDRIUCgxsb3NzX3BlcmNlbnQYCSABKAESGAoQbG9zc19hcHByb3hpbWF0ZRgKIAEoCBIUCgdtaW5pbXVtGAsgASgBSACIAQESFAoHbWF4aW11bRgMIAEoAUgBiAEBEhQKB2F2ZXJhZ2UYDSABKAFIAogBARITCgZsYXRlc3QYDiABKAFIA4gBARIQCgNwNTAYDyABKAFIBIgBARIQCgNwOTkYECABKAFIBYgBARIfChJzdGFuZGFyZF9kZXZpYXRpb24YESABKAFIBogBARIVCg1wOTlfcDUwX3JhdGlvGBIgASgBGisKCVRhZ3NFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBQgoKCF9taW5pbXVtQgoKCF9tYXhpbXVtQgoKCF9hdmVyYWdlQgkKB19sYXRlc3RCBgoEX3A1MEIGCgRfcDk5QhUKE19zdGFuZGFyZF9kZXZpYXRpb24ibgoTV2F0Y2hNZXRyaWNzUmVxdWVzdBIRCglhZ2VudF9pZHMYASADKAkSDwoHbWV0cmljcxgCIAMoCRIzChBtaW5pbXVtX2ludGVydmFsGAMgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uIlgKFFdhdGNoTWV0cmljc1Jlc3BvbnNlEi4KBXBvaW50GAEgASgLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50EhAKCGFnZW50X2lkGAIgASgJMscGCg5NZXRyaWNzU2VydmljZRJiCg1TdWJtaXRNZXRyaWNzEicua29tYXJpLm1ldHJpY3MudjEuU3VibWl0TWV0cmljc1JlcXVlc3QaKC5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVzcG9uc2USZAoNVXBsb2FkTWV0cmljcxInLmtvbWFyaS5tZXRyaWNzLnYxLlVwbG9hZE1ldHJpY3NSZXF1ZXN0Gigua29tYXJpLm1ldHJpY3MudjEuVXBsb2FkTWV0cmljc1Jlc3BvbnNlKAESZgoNU3RyZWFtTWV0cmljcxInLmtvbWFyaS5tZXRyaWNzLnYxLlN0cmVhbU1ldHJpY3NSZXF1ZXN0Gigua29tYXJpLm1ldHJpY3MudjEuU3RyZWFtTWV0cmljc1Jlc3BvbnNlKAEwARJfCgxRdWVyeU1ldHJpY3MSJi5rb21hcmkubWV0cmljcy52MS5RdWVyeU1ldHJpY3NSZXF1ZXN0Gicua29tYXJpLm1ldHJpY3MudjEuUXVlcnlNZXRyaWNzUmVzcG9uc2USegoVTGlzdE1ldHJpY0RlZmluaXRpb25zEi8ua29tYXJpLm1ldHJpY3MudjEuTGlzdE1ldHJpY0RlZmluaXRpb25zUmVxdWVzdBowLmtvbWFyaS5tZXRyaWNzLnYxLkxpc3RNZXRyaWNEZWZpbml0aW9uc1Jlc3BvbnNlEmIKDUxpc3RQaW5nVGFza3MSJy5rb21hcmkubWV0cmljcy52MS5MaXN0UGluZ1Rhc2tzUmVxdWVzdBooLmtvbWFyaS5tZXRyaWNzLnYxLkxpc3RQaW5nVGFza3NSZXNwb25zZRJfCgxHZXRQaW5nU3RhdHMSJi5rb21hcmkubWV0cmljcy52MS5HZXRQaW5nU3RhdHNSZXF1ZXN0Gicua29tYXJpLm1ldHJpY3MudjEuR2V0UGluZ1N0YXRzUmVzcG9uc2USYQoMV2F0Y2hNZXRyaWNzEiYua29tYXJpLm1ldHJpY3MudjEuV2F0Y2hNZXRyaWNzUmVxdWVzdBonLmtvbWFyaS5tZXRyaWNzLnYxLldhdGNoTWV0cmljc1Jlc3BvbnNlMAFC0QEKFWNvbS5rb21hcmkubWV0cmljcy52MUIMTWV0cmljc1Byb3RvUAFaRGdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL21ldHJpY3MvdjE7bWV0cmljc3YxogIDS01YqgIRS29tYXJpLk1ldHJpY3MuVjHKAhFLb21hcmlcTWV0cmljc1xWMeICHUtvbWFyaVxNZXRyaWNzXFYxXEdQQk1ldGFkYXRh6gITS29tYXJpOjpNZXRyaWNzOjpWMWIGcHJvdG8z", [file_google_protobuf_duration, file_google_protobuf_timestamp]);
+  fileDesc("Ch9rb21hcmkvbWV0cmljcy92MS9tZXRyaWNzLnByb3RvEhFrb21hcmkubWV0cmljcy52MSLKAQoMTWV0cmljc1BvaW50Eg4KBm1ldHJpYxgBIAEoCRINCgV2YWx1ZRgCIAEoARIvCgtvYnNlcnZlZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASOwoGbGFiZWxzGAQgAygLMisua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50LkxhYmVsc0VudHJ5Gi0KC0xhYmVsc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiawoUU3VibWl0TWV0cmljc1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSEAoIc2VxdWVuY2UYAiABKAQSLwoGcG9pbnRzGAMgAygLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50IksKFVN1Ym1pdE1ldHJpY3NSZXNwb25zZRIZChFhY2NlcHRlZF9zZXF1ZW5jZRgBIAEoBBIXCg9hY2NlcHRlZF9wb2ludHMYAiABKA0iTgoUVXBsb2FkTWV0cmljc1JlcXVlc3QSNgoFYmF0Y2gYASABKAsyJy5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVxdWVzdCJLChVVcGxvYWRNZXRyaWNzUmVzcG9uc2USGQoRYWNjZXB0ZWRfc2VxdWVuY2UYASABKAQSFwoPYWNjZXB0ZWRfcG9pbnRzGAIgASgEIk4KFFN0cmVhbU1ldHJpY3NSZXF1ZXN0EjYKBWJhdGNoGAEgASgLMicua29tYXJpLm1ldHJpY3MudjEuU3VibWl0TWV0cmljc1JlcXVlc3QiSwoVU3RyZWFtTWV0cmljc1Jlc3BvbnNlEhkKEWFjY2VwdGVkX3NlcXVlbmNlGAEgASgEEhcKD2FjY2VwdGVkX3BvaW50cxgCIAEoDSLpAgoTUXVlcnlNZXRyaWNzUmVxdWVzdBIRCglhZ2VudF9pZHMYASADKAkSDwoHbWV0cmljcxgCIAMoCRIuCgpzdGFydF90aW1lGAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIsCghlbmRfdGltZRgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEgoKbWF4X3BvaW50cxgFIAEoDRI+CgR0YWdzGAYgAygLMjAua29tYXJpLm1ldHJpY3MudjEuUXVlcnlNZXRyaWNzUmVxdWVzdC5UYWdzRW50cnkSFwoKZG93bnNhbXBsZRgHIAEoCEgAiAEBEhMKC2FnZ3JlZ2F0aW9uGAggASgJEhIKCmZpbGxfZW1wdHkYCSABKAgaKwoJVGFnc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAFCDQoLX2Rvd25zYW1wbGUiSAoUUXVlcnlNZXRyaWNzUmVzcG9uc2USMAoGc2VyaWVzGAEgAygLMiAua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1NlcmllcyKPAwoNTWV0cmljc1NlcmllcxIQCghhZ2VudF9pZBgBIAEoCRIOCgZtZXRyaWMYAiABKAkSPAoGbGFiZWxzGAMgAygLMiwua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1Nlcmllcy5MYWJlbHNFbnRyeRIvCgZwb2ludHMYBCADKAsyHy5rb21hcmkubWV0cmljcy52MS5NZXRyaWNzUG9pbnQSMwoMcXVlcnlfcG9pbnRzGAUgAygLMh0ua29tYXJpLm1ldHJpY3MudjEuUXVlcnlQb2ludBIMCgR0eXBlGAYgASgJEgwKBHVuaXQYByABKAkSFgoOcmV0ZW50aW9uX2RheXMYCCABKA0SEwoLZG93bnNhbXBsZWQYCSABKAgSEwoLYWdncmVnYXRpb24YCiABKAkSKwoIaW50ZXJ2YWwYCyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24aLQoLTGFiZWxzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ASLbAQoKUXVlcnlQb2ludBIvCgtvYnNlcnZlZF9hdBgBIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEgoFdmFsdWUYAiABKAFIAIgBARIUCgxzYW1wbGVfY291bnQYAyABKA0SOQoGbGFiZWxzGAQgAygLMikua29tYXJpLm1ldHJpY3MudjEuUXVlcnlQb2ludC5MYWJlbHNFbnRyeRotCgtMYWJlbHNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBQggKBl92YWx1ZSIeChxMaXN0TWV0cmljRGVmaW5pdGlvbnNSZXF1ZXN0IlkKHUxpc3RNZXRyaWNEZWZpbml0aW9uc1Jlc3BvbnNlEjgKC2RlZmluaXRpb25zGAEgAygLMiMua29tYXJpLm1ldHJpY3MudjEuTWV0cmljRGVmaW5pdGlvbiK/AgoQTWV0cmljRGVmaW5pdGlvbhIMCgRuYW1lGAEgASgJEhMKC2Rlc2NyaXB0aW9uGAIgASgJEgwKBHR5cGUYAyABKAkSDAoEdW5pdBgEIAEoCRIWCg5yZXRlbnRpb25fZGF5cxgFIAEoDRJDCghtZXRhZGF0YRgGIAMoCzIxLmtvbWFyaS5tZXRyaWNzLnYxLk1ldHJpY0RlZmluaXRpb24uTWV0YWRhdGFFbnRyeRIuCgpjcmVhdGVkX2F0GAcgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAggASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBovCg1NZXRhZGF0YUVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiFgoUTGlzdFBpbmdUYXNrc1JlcXVlc3QiQwoVTGlzdFBpbmdUYXNrc1Jlc3BvbnNlEioKBXRhc2tzGAEgAygLMhsua29tYXJpLm1ldHJpY3MudjEuUGluZ1Rhc2siZAoIUGluZ1Rhc2sSDwoHdGFza19pZBgBIAEoBBIMCgRuYW1lGAIgASgJEgwKBHR5cGUYAyABKAkSKwoIaW50ZXJ2YWwYBCABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24irAEKE0dldFBpbmdTdGF0c1JlcXVlc3QSEQoJYWdlbnRfaWRzGAEgAygJEhAKCHRhc2tfaWRzGAIgAygEEi4KCnN0YXJ0X3RpbWUYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiwKCGVuZF90aW1lGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBISCgptYXhfcG9pbnRzGAUgASgNIs0BChRHZXRQaW5nU3RhdHNSZXNwb25zZRIuCgpzdGFydF90aW1lGAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIsCghlbmRfdGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASKwoIaW50ZXJ2YWwYAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24SKgoFc3RhdHMYBCADKAsyGy5rb21hcmkubWV0cmljcy52MS5QaW5nU3RhdCK1BAoIUGluZ1N0YXQSEAoIYWdlbnRfaWQYASABKAkSDwoHdGFza19pZBgCIAEoBBIMCgRuYW1lGAMgASgJEgwKBHR5cGUYBCABKAkSMQoOcHJvYmVfaW50ZXJ2YWwYBSABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24SMwoEdGFncxgGIAMoCzIlLmtvbWFyaS5tZXRyaWNzLnYxLlBpbmdTdGF0LlRhZ3NFbnRyeRINCgV0b3RhbBgHIAEoDRINCgV2YWxpZBgIIAEoDRIUCgxsb3NzX3BlcmNlbnQYCSABKAESGAoQbG9zc19hcHByb3hpbWF0ZRgKIAEoCBIUCgdtaW5pbXVtGAsgASgBSACIAQESFAoHbWF4aW11bRgMIAEoAUgBiAEBEhQKB2F2ZXJhZ2UYDSABKAFIAogBARITCgZsYXRlc3QYDiABKAFIA4gBARIQCgNwNTAYDyABKAFIBIgBARIQCgNwOTkYECABKAFIBYgBARIfChJzdGFuZGFyZF9kZXZpYXRpb24YESABKAFIBogBARIVCg1wOTlfcDUwX3JhdGlvGBIgASgBGisKCVRhZ3NFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBQgoKCF9taW5pbXVtQgoKCF9tYXhpbXVtQgoKCF9hdmVyYWdlQgkKB19sYXRlc3RCBgoEX3A1MEIGCgRfcDk5QhUKE19zdGFuZGFyZF9kZXZpYXRpb24ibgoTV2F0Y2hNZXRyaWNzUmVxdWVzdBIRCglhZ2VudF9pZHMYASADKAkSDwoHbWV0cmljcxgCIAMoCRIzChBtaW5pbXVtX2ludGVydmFsGAMgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uIlgKFFdhdGNoTWV0cmljc1Jlc3BvbnNlEi4KBXBvaW50GAEgASgLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50EhAKCGFnZW50X2lkGAIgASgJIkUKHVVwZGF0ZU1ldHJpY0RlZmluaXRpb25SZXF1ZXN0EgwKBG5hbWUYASABKAkSFgoOcmV0ZW50aW9uX2RheXMYAiABKA0iWQoeVXBkYXRlTWV0cmljRGVmaW5pdGlvblJlc3BvbnNlEjcKCmRlZmluaXRpb24YASABKAsyIy5rb21hcmkubWV0cmljcy52MS5NZXRyaWNEZWZpbml0aW9uIh4KHEdldERvd25zYW1wbGluZ1BvbGljeVJlcXVlc3QiVgodR2V0RG93bnNhbXBsaW5nUG9saWN5UmVzcG9uc2USNQoGcG9saWN5GAEgASgLMiUua29tYXJpLm1ldHJpY3MudjEuRG93bnNhbXBsaW5nUG9saWN5IpYBChxTZXREb3duc2FtcGxpbmdQb2xpY3lSZXF1ZXN0Eg8KB2VuYWJsZWQYASABKAgSIAoYbWludXRlX3JldGVudGlvbl9taW51dGVzGAIgASgNEiUKHWZpdmVfbWludXRlX3JldGVudGlvbl9taW51dGVzGAMgASgNEhwKFGhvdXJfcmV0ZW50aW9uX2hvdXJzGAQgASgNIlYKHVNldERvd25zYW1wbGluZ1BvbGljeVJlc3BvbnNlEjUKBnBvbGljeRgBIAEoCzIlLmtvbWFyaS5tZXRyaWNzLnYxLkRvd25zYW1wbGluZ1BvbGljeSLtAQoSRG93bnNhbXBsaW5nUG9saWN5Eg8KB2VuYWJsZWQYASABKAgSFAoMcHJlc2VydmVfcmF3GAIgASgIEhUKDXJhd19yZXRlbnRpb24YAyABKAkSIAoYbWludXRlX3JldGVudGlvbl9taW51dGVzGAQgASgNEiUKHWZpdmVfbWludXRlX3JldGVudGlvbl9taW51dGVzGAUgASgNEhwKFGhvdXJfcmV0ZW50aW9uX2hvdXJzGAYgASgNEjIKBXRpZXJzGAcgAygLMiMua29tYXJpLm1ldHJpY3MudjEuRG93bnNhbXBsaW5nVGllciI3ChBEb3duc2FtcGxpbmdUaWVyEhAKCGludGVydmFsGAEgASgJEhEKCXJldGVudGlvbhgCIAEoCSIhCh9HZXRNZXRyaWNNaWdyYXRpb25TdGF0dXNSZXF1ZXN0IlkKIEdldE1ldHJpY01pZ3JhdGlvblN0YXR1c1Jlc3BvbnNlEjUKCW1pZ3JhdGlvbhgBIAEoCzIiLmtvbWFyaS5tZXRyaWNzLnYxLk1ldHJpY01pZ3JhdGlvbiJIChtTdGFydE1ldHJpY01pZ3JhdGlvblJlcXVlc3QSFQoNc291cmNlX2RyaXZlchgBIAEoCRISCgpzb3VyY2VfZHNuGAIgASgJIlUKHFN0YXJ0TWV0cmljTWlncmF0aW9uUmVzcG9uc2USNQoJbWlncmF0aW9uGAEgASgLMiIua29tYXJpLm1ldHJpY3MudjEuTWV0cmljTWlncmF0aW9uIh4KHENhbmNlbE1ldHJpY01pZ3JhdGlvblJlcXVlc3QiVgodQ2FuY2VsTWV0cmljTWlncmF0aW9uUmVzcG9uc2USNQoJbWlncmF0aW9uGAEgASgLMiIua29tYXJpLm1ldHJpY3MudjEuTWV0cmljTWlncmF0aW9uIqoDCg9NZXRyaWNNaWdyYXRpb24SNgoFc3RhdGUYASABKA4yJy5rb21hcmkubWV0cmljcy52MS5NZXRyaWNNaWdyYXRpb25TdGF0ZRISCgppc19ydW5uaW5nGAIgASgIEhUKDXNvdXJjZV9kcml2ZXIYAyABKAkSEgoKc291cmNlX2RzbhgEIAEoCRIVCg10YXJnZXRfZHJpdmVyGAUgASgJEhIKCnRhcmdldF9kc24YBiABKAkSFQoNdG90YWxfbWV0cmljcxgHIAEoDRIUCgxtZXRyaWNzX2RvbmUYCCABKA0SFgoOY3VycmVudF9tZXRyaWMYCSABKAkSFwoPbWlncmF0ZWRfcG9pbnRzGAogASgEEjMKCnN0YXJ0ZWRfYXQYCyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSACIAQESNAoLZmluaXNoZWRfYXQYDCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSAGIAQESDQoFZXJyb3IYDSABKAlCDQoLX3N0YXJ0ZWRfYXRCDgoMX2ZpbmlzaGVkX2F0KvEBChRNZXRyaWNNaWdyYXRpb25TdGF0ZRImCiJNRVRSSUNfTUlHUkFUSU9OX1NUQVRFX1VOU1BFQ0lGSUVEEAASHwobTUVUUklDX01JR1JBVElPTl9TVEFURV9JRExFEAESIgoeTUVUUklDX01JR1JBVElPTl9TVEFURV9SVU5OSU5HEAISJAogTUVUUklDX01JR1JBVElPTl9TVEFURV9DT01QTEVURUQQAxIhCh1NRVRSSUNfTUlHUkFUSU9OX1NUQVRFX0ZBSUxFRBAEEiMKH01FVFJJQ19NSUdSQVRJT05fU1RBVEVfQ0FOQ0VMRUQQBTK5DAoOTWV0cmljc1NlcnZpY2USYgoNU3VibWl0TWV0cmljcxInLmtvbWFyaS5tZXRyaWNzLnYxLlN1Ym1pdE1ldHJpY3NSZXF1ZXN0Gigua29tYXJpLm1ldHJpY3MudjEuU3VibWl0TWV0cmljc1Jlc3BvbnNlEmQKDVVwbG9hZE1ldHJpY3MSJy5rb21hcmkubWV0cmljcy52MS5VcGxvYWRNZXRyaWNzUmVxdWVzdBooLmtvbWFyaS5tZXRyaWNzLnYxLlVwbG9hZE1ldHJpY3NSZXNwb25zZSgBEmYKDVN0cmVhbU1ldHJpY3MSJy5rb21hcmkubWV0cmljcy52MS5TdHJlYW1NZXRyaWNzUmVxdWVzdBooLmtvbWFyaS5tZXRyaWNzLnYxLlN0cmVhbU1ldHJpY3NSZXNwb25zZSgBMAESXwoMUXVlcnlNZXRyaWNzEiYua29tYXJpLm1ldHJpY3MudjEuUXVlcnlNZXRyaWNzUmVxdWVzdBonLmtvbWFyaS5tZXRyaWNzLnYxLlF1ZXJ5TWV0cmljc1Jlc3BvbnNlEnoKFUxpc3RNZXRyaWNEZWZpbml0aW9ucxIvLmtvbWFyaS5tZXRyaWNzLnYxLkxpc3RNZXRyaWNEZWZpbml0aW9uc1JlcXVlc3QaMC5rb21hcmkubWV0cmljcy52MS5MaXN0TWV0cmljRGVmaW5pdGlvbnNSZXNwb25zZRJiCg1MaXN0UGluZ1Rhc2tzEicua29tYXJpLm1ldHJpY3MudjEuTGlzdFBpbmdUYXNrc1JlcXVlc3QaKC5rb21hcmkubWV0cmljcy52MS5MaXN0UGluZ1Rhc2tzUmVzcG9uc2USXwoMR2V0UGluZ1N0YXRzEiYua29tYXJpLm1ldHJpY3MudjEuR2V0UGluZ1N0YXRzUmVxdWVzdBonLmtvbWFyaS5tZXRyaWNzLnYxLkdldFBpbmdTdGF0c1Jlc3BvbnNlEmEKDFdhdGNoTWV0cmljcxImLmtvbWFyaS5tZXRyaWNzLnYxLldhdGNoTWV0cmljc1JlcXVlc3QaJy5rb21hcmkubWV0cmljcy52MS5XYXRjaE1ldHJpY3NSZXNwb25zZTABEn0KFlVwZGF0ZU1ldHJpY0RlZmluaXRpb24SMC5rb21hcmkubWV0cmljcy52MS5VcGRhdGVNZXRyaWNEZWZpbml0aW9uUmVxdWVzdBoxLmtvbWFyaS5tZXRyaWNzLnYxLlVwZGF0ZU1ldHJpY0RlZmluaXRpb25SZXNwb25zZRJ6ChVHZXREb3duc2FtcGxpbmdQb2xpY3kSLy5rb21hcmkubWV0cmljcy52MS5HZXREb3duc2FtcGxpbmdQb2xpY3lSZXF1ZXN0GjAua29tYXJpLm1ldHJpY3MudjEuR2V0RG93bnNhbXBsaW5nUG9saWN5UmVzcG9uc2USegoVU2V0RG93bnNhbXBsaW5nUG9saWN5Ei8ua29tYXJpLm1ldHJpY3MudjEuU2V0RG93bnNhbXBsaW5nUG9saWN5UmVxdWVzdBowLmtvbWFyaS5tZXRyaWNzLnYxLlNldERvd25zYW1wbGluZ1BvbGljeVJlc3BvbnNlEoMBChhHZXRNZXRyaWNNaWdyYXRpb25TdGF0dXMSMi5rb21hcmkubWV0cmljcy52MS5HZXRNZXRyaWNNaWdyYXRpb25TdGF0dXNSZXF1ZXN0GjMua29tYXJpLm1ldHJpY3MudjEuR2V0TWV0cmljTWlncmF0aW9uU3RhdHVzUmVzcG9uc2USdwoUU3RhcnRNZXRyaWNNaWdyYXRpb24SLi5rb21hcmkubWV0cmljcy52MS5TdGFydE1ldHJpY01pZ3JhdGlvblJlcXVlc3QaLy5rb21hcmkubWV0cmljcy52MS5TdGFydE1ldHJpY01pZ3JhdGlvblJlc3BvbnNlEnoKFUNhbmNlbE1ldHJpY01pZ3JhdGlvbhIvLmtvbWFyaS5tZXRyaWNzLnYxLkNhbmNlbE1ldHJpY01pZ3JhdGlvblJlcXVlc3QaMC5rb21hcmkubWV0cmljcy52MS5DYW5jZWxNZXRyaWNNaWdyYXRpb25SZXNwb25zZULRAQoVY29tLmtvbWFyaS5tZXRyaWNzLnYxQgxNZXRyaWNzUHJvdG9QAVpEZ2l0aHViLmNvbS9yMTEyMzQ1Njcva29tYXJpLXByb3RvL2dlbi9nby9rb21hcmkvbWV0cmljcy92MTttZXRyaWNzdjGiAgNLTViqAhFLb21hcmkuTWV0cmljcy5WMcoCEUtvbWFyaVxNZXRyaWNzXFYx4gIdS29tYXJpXE1ldHJpY3NcVjFcR1BCTWV0YWRhdGHqAhNLb21hcmk6Ok1ldHJpY3M6OlYxYgZwcm90bzM", [file_google_protobuf_duration, file_google_protobuf_timestamp]);
 
 /**
  * MetricsPoint is one typed metric sample.
@@ -741,6 +741,410 @@ export const WatchMetricsResponseSchema: GenMessage<WatchMetricsResponse> = /*@_
   messageDesc(file_komari_metrics_v1_metrics, 21);
 
 /**
+ * @generated from message komari.metrics.v1.UpdateMetricDefinitionRequest
+ */
+export type UpdateMetricDefinitionRequest = Message<"komari.metrics.v1.UpdateMetricDefinitionRequest"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: uint32 retention_days = 2;
+   */
+  retentionDays: number;
+};
+
+/**
+ * Describes the message komari.metrics.v1.UpdateMetricDefinitionRequest.
+ * Use `create(UpdateMetricDefinitionRequestSchema)` to create a new message.
+ */
+export const UpdateMetricDefinitionRequestSchema: GenMessage<UpdateMetricDefinitionRequest> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 22);
+
+/**
+ * @generated from message komari.metrics.v1.UpdateMetricDefinitionResponse
+ */
+export type UpdateMetricDefinitionResponse = Message<"komari.metrics.v1.UpdateMetricDefinitionResponse"> & {
+  /**
+   * @generated from field: komari.metrics.v1.MetricDefinition definition = 1;
+   */
+  definition?: MetricDefinition | undefined;
+};
+
+/**
+ * Describes the message komari.metrics.v1.UpdateMetricDefinitionResponse.
+ * Use `create(UpdateMetricDefinitionResponseSchema)` to create a new message.
+ */
+export const UpdateMetricDefinitionResponseSchema: GenMessage<UpdateMetricDefinitionResponse> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 23);
+
+/**
+ * @generated from message komari.metrics.v1.GetDownsamplingPolicyRequest
+ */
+export type GetDownsamplingPolicyRequest = Message<"komari.metrics.v1.GetDownsamplingPolicyRequest"> & {
+};
+
+/**
+ * Describes the message komari.metrics.v1.GetDownsamplingPolicyRequest.
+ * Use `create(GetDownsamplingPolicyRequestSchema)` to create a new message.
+ */
+export const GetDownsamplingPolicyRequestSchema: GenMessage<GetDownsamplingPolicyRequest> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 24);
+
+/**
+ * @generated from message komari.metrics.v1.GetDownsamplingPolicyResponse
+ */
+export type GetDownsamplingPolicyResponse = Message<"komari.metrics.v1.GetDownsamplingPolicyResponse"> & {
+  /**
+   * @generated from field: komari.metrics.v1.DownsamplingPolicy policy = 1;
+   */
+  policy?: DownsamplingPolicy | undefined;
+};
+
+/**
+ * Describes the message komari.metrics.v1.GetDownsamplingPolicyResponse.
+ * Use `create(GetDownsamplingPolicyResponseSchema)` to create a new message.
+ */
+export const GetDownsamplingPolicyResponseSchema: GenMessage<GetDownsamplingPolicyResponse> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 25);
+
+/**
+ * @generated from message komari.metrics.v1.SetDownsamplingPolicyRequest
+ */
+export type SetDownsamplingPolicyRequest = Message<"komari.metrics.v1.SetDownsamplingPolicyRequest"> & {
+  /**
+   * @generated from field: bool enabled = 1;
+   */
+  enabled: boolean;
+
+  /**
+   * @generated from field: uint32 minute_retention_minutes = 2;
+   */
+  minuteRetentionMinutes: number;
+
+  /**
+   * @generated from field: uint32 five_minute_retention_minutes = 3;
+   */
+  fiveMinuteRetentionMinutes: number;
+
+  /**
+   * @generated from field: uint32 hour_retention_hours = 4;
+   */
+  hourRetentionHours: number;
+};
+
+/**
+ * Describes the message komari.metrics.v1.SetDownsamplingPolicyRequest.
+ * Use `create(SetDownsamplingPolicyRequestSchema)` to create a new message.
+ */
+export const SetDownsamplingPolicyRequestSchema: GenMessage<SetDownsamplingPolicyRequest> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 26);
+
+/**
+ * @generated from message komari.metrics.v1.SetDownsamplingPolicyResponse
+ */
+export type SetDownsamplingPolicyResponse = Message<"komari.metrics.v1.SetDownsamplingPolicyResponse"> & {
+  /**
+   * @generated from field: komari.metrics.v1.DownsamplingPolicy policy = 1;
+   */
+  policy?: DownsamplingPolicy | undefined;
+};
+
+/**
+ * Describes the message komari.metrics.v1.SetDownsamplingPolicyResponse.
+ * Use `create(SetDownsamplingPolicyResponseSchema)` to create a new message.
+ */
+export const SetDownsamplingPolicyResponseSchema: GenMessage<SetDownsamplingPolicyResponse> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 27);
+
+/**
+ * @generated from message komari.metrics.v1.DownsamplingPolicy
+ */
+export type DownsamplingPolicy = Message<"komari.metrics.v1.DownsamplingPolicy"> & {
+  /**
+   * @generated from field: bool enabled = 1;
+   */
+  enabled: boolean;
+
+  /**
+   * @generated from field: bool preserve_raw = 2;
+   */
+  preserveRaw: boolean;
+
+  /**
+   * @generated from field: string raw_retention = 3;
+   */
+  rawRetention: string;
+
+  /**
+   * @generated from field: uint32 minute_retention_minutes = 4;
+   */
+  minuteRetentionMinutes: number;
+
+  /**
+   * @generated from field: uint32 five_minute_retention_minutes = 5;
+   */
+  fiveMinuteRetentionMinutes: number;
+
+  /**
+   * @generated from field: uint32 hour_retention_hours = 6;
+   */
+  hourRetentionHours: number;
+
+  /**
+   * @generated from field: repeated komari.metrics.v1.DownsamplingTier tiers = 7;
+   */
+  tiers: DownsamplingTier[];
+};
+
+/**
+ * Describes the message komari.metrics.v1.DownsamplingPolicy.
+ * Use `create(DownsamplingPolicySchema)` to create a new message.
+ */
+export const DownsamplingPolicySchema: GenMessage<DownsamplingPolicy> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 28);
+
+/**
+ * @generated from message komari.metrics.v1.DownsamplingTier
+ */
+export type DownsamplingTier = Message<"komari.metrics.v1.DownsamplingTier"> & {
+  /**
+   * @generated from field: string interval = 1;
+   */
+  interval: string;
+
+  /**
+   * @generated from field: string retention = 2;
+   */
+  retention: string;
+};
+
+/**
+ * Describes the message komari.metrics.v1.DownsamplingTier.
+ * Use `create(DownsamplingTierSchema)` to create a new message.
+ */
+export const DownsamplingTierSchema: GenMessage<DownsamplingTier> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 29);
+
+/**
+ * @generated from message komari.metrics.v1.GetMetricMigrationStatusRequest
+ */
+export type GetMetricMigrationStatusRequest = Message<"komari.metrics.v1.GetMetricMigrationStatusRequest"> & {
+};
+
+/**
+ * Describes the message komari.metrics.v1.GetMetricMigrationStatusRequest.
+ * Use `create(GetMetricMigrationStatusRequestSchema)` to create a new message.
+ */
+export const GetMetricMigrationStatusRequestSchema: GenMessage<GetMetricMigrationStatusRequest> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 30);
+
+/**
+ * @generated from message komari.metrics.v1.GetMetricMigrationStatusResponse
+ */
+export type GetMetricMigrationStatusResponse = Message<"komari.metrics.v1.GetMetricMigrationStatusResponse"> & {
+  /**
+   * @generated from field: komari.metrics.v1.MetricMigration migration = 1;
+   */
+  migration?: MetricMigration | undefined;
+};
+
+/**
+ * Describes the message komari.metrics.v1.GetMetricMigrationStatusResponse.
+ * Use `create(GetMetricMigrationStatusResponseSchema)` to create a new message.
+ */
+export const GetMetricMigrationStatusResponseSchema: GenMessage<GetMetricMigrationStatusResponse> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 31);
+
+/**
+ * @generated from message komari.metrics.v1.StartMetricMigrationRequest
+ */
+export type StartMetricMigrationRequest = Message<"komari.metrics.v1.StartMetricMigrationRequest"> & {
+  /**
+   * @generated from field: string source_driver = 1;
+   */
+  sourceDriver: string;
+
+  /**
+   * @generated from field: string source_dsn = 2;
+   */
+  sourceDsn: string;
+};
+
+/**
+ * Describes the message komari.metrics.v1.StartMetricMigrationRequest.
+ * Use `create(StartMetricMigrationRequestSchema)` to create a new message.
+ */
+export const StartMetricMigrationRequestSchema: GenMessage<StartMetricMigrationRequest> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 32);
+
+/**
+ * @generated from message komari.metrics.v1.StartMetricMigrationResponse
+ */
+export type StartMetricMigrationResponse = Message<"komari.metrics.v1.StartMetricMigrationResponse"> & {
+  /**
+   * @generated from field: komari.metrics.v1.MetricMigration migration = 1;
+   */
+  migration?: MetricMigration | undefined;
+};
+
+/**
+ * Describes the message komari.metrics.v1.StartMetricMigrationResponse.
+ * Use `create(StartMetricMigrationResponseSchema)` to create a new message.
+ */
+export const StartMetricMigrationResponseSchema: GenMessage<StartMetricMigrationResponse> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 33);
+
+/**
+ * @generated from message komari.metrics.v1.CancelMetricMigrationRequest
+ */
+export type CancelMetricMigrationRequest = Message<"komari.metrics.v1.CancelMetricMigrationRequest"> & {
+};
+
+/**
+ * Describes the message komari.metrics.v1.CancelMetricMigrationRequest.
+ * Use `create(CancelMetricMigrationRequestSchema)` to create a new message.
+ */
+export const CancelMetricMigrationRequestSchema: GenMessage<CancelMetricMigrationRequest> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 34);
+
+/**
+ * @generated from message komari.metrics.v1.CancelMetricMigrationResponse
+ */
+export type CancelMetricMigrationResponse = Message<"komari.metrics.v1.CancelMetricMigrationResponse"> & {
+  /**
+   * @generated from field: komari.metrics.v1.MetricMigration migration = 1;
+   */
+  migration?: MetricMigration | undefined;
+};
+
+/**
+ * Describes the message komari.metrics.v1.CancelMetricMigrationResponse.
+ * Use `create(CancelMetricMigrationResponseSchema)` to create a new message.
+ */
+export const CancelMetricMigrationResponseSchema: GenMessage<CancelMetricMigrationResponse> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 35);
+
+/**
+ * @generated from message komari.metrics.v1.MetricMigration
+ */
+export type MetricMigration = Message<"komari.metrics.v1.MetricMigration"> & {
+  /**
+   * @generated from field: komari.metrics.v1.MetricMigrationState state = 1;
+   */
+  state: MetricMigrationState;
+
+  /**
+   * @generated from field: bool is_running = 2;
+   */
+  isRunning: boolean;
+
+  /**
+   * @generated from field: string source_driver = 3;
+   */
+  sourceDriver: string;
+
+  /**
+   * @generated from field: string source_dsn = 4;
+   */
+  sourceDsn: string;
+
+  /**
+   * @generated from field: string target_driver = 5;
+   */
+  targetDriver: string;
+
+  /**
+   * @generated from field: string target_dsn = 6;
+   */
+  targetDsn: string;
+
+  /**
+   * @generated from field: uint32 total_metrics = 7;
+   */
+  totalMetrics: number;
+
+  /**
+   * @generated from field: uint32 metrics_done = 8;
+   */
+  metricsDone: number;
+
+  /**
+   * @generated from field: string current_metric = 9;
+   */
+  currentMetric: string;
+
+  /**
+   * @generated from field: uint64 migrated_points = 10;
+   */
+  migratedPoints: bigint;
+
+  /**
+   * @generated from field: optional google.protobuf.Timestamp started_at = 11;
+   */
+  startedAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: optional google.protobuf.Timestamp finished_at = 12;
+   */
+  finishedAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: string error = 13;
+   */
+  error: string;
+};
+
+/**
+ * Describes the message komari.metrics.v1.MetricMigration.
+ * Use `create(MetricMigrationSchema)` to create a new message.
+ */
+export const MetricMigrationSchema: GenMessage<MetricMigration> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 36);
+
+/**
+ * @generated from enum komari.metrics.v1.MetricMigrationState
+ */
+export enum MetricMigrationState {
+  /**
+   * @generated from enum value: METRIC_MIGRATION_STATE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: METRIC_MIGRATION_STATE_IDLE = 1;
+   */
+  IDLE = 1,
+
+  /**
+   * @generated from enum value: METRIC_MIGRATION_STATE_RUNNING = 2;
+   */
+  RUNNING = 2,
+
+  /**
+   * @generated from enum value: METRIC_MIGRATION_STATE_COMPLETED = 3;
+   */
+  COMPLETED = 3,
+
+  /**
+   * @generated from enum value: METRIC_MIGRATION_STATE_FAILED = 4;
+   */
+  FAILED = 4,
+
+  /**
+   * @generated from enum value: METRIC_MIGRATION_STATE_CANCELED = 5;
+   */
+  CANCELED = 5,
+}
+
+/**
+ * Describes the enum komari.metrics.v1.MetricMigrationState.
+ */
+export const MetricMigrationStateSchema: GenEnum<MetricMigrationState> = /*@__PURE__*/
+  enumDesc(file_komari_metrics_v1_metrics, 0);
+
+/**
  * MetricsService owns metric ingest, bounded queries, and live subscriptions.
  *
  * @generated from service komari.metrics.v1.MetricsService
@@ -825,6 +1229,56 @@ export const MetricsService: GenService<{
     methodKind: "server_streaming";
     input: typeof WatchMetricsRequestSchema;
     output: typeof WatchMetricsResponseSchema;
+  },
+  /**
+   * UpdateMetricDefinition changes administrator-controlled retention.
+   *
+   * @generated from rpc komari.metrics.v1.MetricsService.UpdateMetricDefinition
+   */
+  updateMetricDefinition: {
+    methodKind: "unary";
+    input: typeof UpdateMetricDefinitionRequestSchema;
+    output: typeof UpdateMetricDefinitionResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.metrics.v1.MetricsService.GetDownsamplingPolicy
+   */
+  getDownsamplingPolicy: {
+    methodKind: "unary";
+    input: typeof GetDownsamplingPolicyRequestSchema;
+    output: typeof GetDownsamplingPolicyResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.metrics.v1.MetricsService.SetDownsamplingPolicy
+   */
+  setDownsamplingPolicy: {
+    methodKind: "unary";
+    input: typeof SetDownsamplingPolicyRequestSchema;
+    output: typeof SetDownsamplingPolicyResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.metrics.v1.MetricsService.GetMetricMigrationStatus
+   */
+  getMetricMigrationStatus: {
+    methodKind: "unary";
+    input: typeof GetMetricMigrationStatusRequestSchema;
+    output: typeof GetMetricMigrationStatusResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.metrics.v1.MetricsService.StartMetricMigration
+   */
+  startMetricMigration: {
+    methodKind: "unary";
+    input: typeof StartMetricMigrationRequestSchema;
+    output: typeof StartMetricMigrationResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.metrics.v1.MetricsService.CancelMetricMigration
+   */
+  cancelMetricMigration: {
+    methodKind: "unary";
+    input: typeof CancelMetricMigrationRequestSchema;
+    output: typeof CancelMetricMigrationResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_komari_metrics_v1_metrics, 0);

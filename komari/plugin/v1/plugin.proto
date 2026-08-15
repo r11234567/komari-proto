@@ -1,0 +1,127 @@
+syntax = "proto3";
+
+package komari.plugin.v1;
+
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/plugin/v1;pluginv1";
+
+// PluginService owns typed administration of installed plugins.
+service PluginService {
+  rpc ListPlugins(ListPluginsRequest) returns (ListPluginsResponse);
+  rpc SetPluginEnabled(SetPluginEnabledRequest) returns (SetPluginEnabledResponse);
+  rpc GetPluginLogs(GetPluginLogsRequest) returns (GetPluginLogsResponse);
+  rpc DeletePlugin(DeletePluginRequest) returns (DeletePluginResponse);
+  rpc GetPluginConfiguration(GetPluginConfigurationRequest) returns (GetPluginConfigurationResponse);
+  rpc SetPluginConfiguration(SetPluginConfigurationRequest) returns (SetPluginConfigurationResponse);
+}
+
+message ListPluginsRequest {}
+
+message ListPluginsResponse {
+  repeated Plugin plugins = 1;
+}
+
+message SetPluginEnabledRequest {
+  string short_name = 1;
+  bool enabled = 2;
+  bool permissions_approved = 3;
+}
+
+message SetPluginEnabledResponse {
+  bool requires_permission_approval = 1;
+}
+
+message GetPluginLogsRequest {
+  string short_name = 1;
+}
+
+message GetPluginLogsResponse {
+  string logs = 1;
+}
+
+message DeletePluginRequest {
+  string short_name = 1;
+}
+
+message DeletePluginResponse {}
+
+message GetPluginConfigurationRequest {
+  string short_name = 1;
+}
+
+message GetPluginConfigurationResponse {
+  PluginConfiguration configuration = 1;
+  google.protobuf.Struct values = 2;
+}
+
+message SetPluginConfigurationRequest {
+  string short_name = 1;
+  google.protobuf.Struct values = 2;
+}
+
+message SetPluginConfigurationResponse {}
+
+message Plugin {
+  string short_name = 1;
+  LocalizedText name = 2;
+  LocalizedText description = 3;
+  LocalizedText author = 4;
+  string version = 5;
+  string url = 6;
+  string icon = 7;
+  string komari_version_constraint = 8;
+  string entry = 9;
+  PluginPermissions permissions = 10;
+  PluginConfiguration configuration = 11;
+  repeated PluginPage pages = 12;
+  bool enabled = 13;
+  bool running = 14;
+  string last_error = 15;
+}
+
+// LocalizedText preserves either a manifest fallback string or translations.
+message LocalizedText {
+  string fallback = 1;
+  map<string, string> translations = 2;
+}
+
+message PluginPermissions {
+  bool node = 1;
+  bool allow_system_rpc = 2;
+  bool allow_routes = 3;
+  bool allow_hooks = 4;
+  bool allow_html_inject = 5;
+  bool allow_exec = 6;
+  bool allow_listen = 7;
+  bool allow_all_file_access = 8;
+  int64 max_http_body_bytes = 9;
+  int64 max_child_output_bytes = 10;
+  uint32 timeout_seconds = 11;
+}
+
+message PluginConfiguration {
+  string type = 1;
+  string icon = 2;
+  LocalizedText name = 3;
+  repeated PluginConfigurationItem items = 4;
+}
+
+message PluginConfigurationItem {
+  string key = 1;
+  LocalizedText name = 2;
+  bool required = 3;
+  string type = 4;
+  string options = 5;
+  google.protobuf.Value default_value = 6;
+  LocalizedText help = 7;
+}
+
+message PluginPage {
+  string file = 1;
+  LocalizedText title = 2;
+  string icon = 3;
+  string type = 4;
+  string url = 5;
+  string visibility = 6;
+}

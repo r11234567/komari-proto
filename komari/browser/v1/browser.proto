@@ -45,6 +45,7 @@ message GetPublicInfoResponse {
   bool private_site = 12;
   google.protobuf.Struct theme_settings = 13;
   bool visitor_audit_enabled = 14;
+  string build_hash = 15;
 }
 
 // ListAgentsRequest contains bounded filters and pagination.

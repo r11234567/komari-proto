@@ -57,6 +57,24 @@ const (
 	// MetricsServiceWatchMetricsProcedure is the fully-qualified name of the MetricsService's
 	// WatchMetrics RPC.
 	MetricsServiceWatchMetricsProcedure = "/komari.metrics.v1.MetricsService/WatchMetrics"
+	// MetricsServiceUpdateMetricDefinitionProcedure is the fully-qualified name of the MetricsService's
+	// UpdateMetricDefinition RPC.
+	MetricsServiceUpdateMetricDefinitionProcedure = "/komari.metrics.v1.MetricsService/UpdateMetricDefinition"
+	// MetricsServiceGetDownsamplingPolicyProcedure is the fully-qualified name of the MetricsService's
+	// GetDownsamplingPolicy RPC.
+	MetricsServiceGetDownsamplingPolicyProcedure = "/komari.metrics.v1.MetricsService/GetDownsamplingPolicy"
+	// MetricsServiceSetDownsamplingPolicyProcedure is the fully-qualified name of the MetricsService's
+	// SetDownsamplingPolicy RPC.
+	MetricsServiceSetDownsamplingPolicyProcedure = "/komari.metrics.v1.MetricsService/SetDownsamplingPolicy"
+	// MetricsServiceGetMetricMigrationStatusProcedure is the fully-qualified name of the
+	// MetricsService's GetMetricMigrationStatus RPC.
+	MetricsServiceGetMetricMigrationStatusProcedure = "/komari.metrics.v1.MetricsService/GetMetricMigrationStatus"
+	// MetricsServiceStartMetricMigrationProcedure is the fully-qualified name of the MetricsService's
+	// StartMetricMigration RPC.
+	MetricsServiceStartMetricMigrationProcedure = "/komari.metrics.v1.MetricsService/StartMetricMigration"
+	// MetricsServiceCancelMetricMigrationProcedure is the fully-qualified name of the MetricsService's
+	// CancelMetricMigration RPC.
+	MetricsServiceCancelMetricMigrationProcedure = "/komari.metrics.v1.MetricsService/CancelMetricMigration"
 )
 
 // MetricsServiceClient is a client for the komari.metrics.v1.MetricsService service.
@@ -77,6 +95,13 @@ type MetricsServiceClient interface {
 	GetPingStats(context.Context, *connect.Request[v1.GetPingStatsRequest]) (*connect.Response[v1.GetPingStatsResponse], error)
 	// WatchMetrics streams live samples until cancellation or deadline.
 	WatchMetrics(context.Context, *connect.Request[v1.WatchMetricsRequest]) (*connect.ServerStreamForClient[v1.WatchMetricsResponse], error)
+	// UpdateMetricDefinition changes administrator-controlled retention.
+	UpdateMetricDefinition(context.Context, *connect.Request[v1.UpdateMetricDefinitionRequest]) (*connect.Response[v1.UpdateMetricDefinitionResponse], error)
+	GetDownsamplingPolicy(context.Context, *connect.Request[v1.GetDownsamplingPolicyRequest]) (*connect.Response[v1.GetDownsamplingPolicyResponse], error)
+	SetDownsamplingPolicy(context.Context, *connect.Request[v1.SetDownsamplingPolicyRequest]) (*connect.Response[v1.SetDownsamplingPolicyResponse], error)
+	GetMetricMigrationStatus(context.Context, *connect.Request[v1.GetMetricMigrationStatusRequest]) (*connect.Response[v1.GetMetricMigrationStatusResponse], error)
+	StartMetricMigration(context.Context, *connect.Request[v1.StartMetricMigrationRequest]) (*connect.Response[v1.StartMetricMigrationResponse], error)
+	CancelMetricMigration(context.Context, *connect.Request[v1.CancelMetricMigrationRequest]) (*connect.Response[v1.CancelMetricMigrationResponse], error)
 }
 
 // NewMetricsServiceClient constructs a client for the komari.metrics.v1.MetricsService service. By
@@ -138,19 +163,61 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			connect.WithSchema(metricsServiceMethods.ByName("WatchMetrics")),
 			connect.WithClientOptions(opts...),
 		),
+		updateMetricDefinition: connect.NewClient[v1.UpdateMetricDefinitionRequest, v1.UpdateMetricDefinitionResponse](
+			httpClient,
+			baseURL+MetricsServiceUpdateMetricDefinitionProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("UpdateMetricDefinition")),
+			connect.WithClientOptions(opts...),
+		),
+		getDownsamplingPolicy: connect.NewClient[v1.GetDownsamplingPolicyRequest, v1.GetDownsamplingPolicyResponse](
+			httpClient,
+			baseURL+MetricsServiceGetDownsamplingPolicyProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("GetDownsamplingPolicy")),
+			connect.WithClientOptions(opts...),
+		),
+		setDownsamplingPolicy: connect.NewClient[v1.SetDownsamplingPolicyRequest, v1.SetDownsamplingPolicyResponse](
+			httpClient,
+			baseURL+MetricsServiceSetDownsamplingPolicyProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("SetDownsamplingPolicy")),
+			connect.WithClientOptions(opts...),
+		),
+		getMetricMigrationStatus: connect.NewClient[v1.GetMetricMigrationStatusRequest, v1.GetMetricMigrationStatusResponse](
+			httpClient,
+			baseURL+MetricsServiceGetMetricMigrationStatusProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("GetMetricMigrationStatus")),
+			connect.WithClientOptions(opts...),
+		),
+		startMetricMigration: connect.NewClient[v1.StartMetricMigrationRequest, v1.StartMetricMigrationResponse](
+			httpClient,
+			baseURL+MetricsServiceStartMetricMigrationProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("StartMetricMigration")),
+			connect.WithClientOptions(opts...),
+		),
+		cancelMetricMigration: connect.NewClient[v1.CancelMetricMigrationRequest, v1.CancelMetricMigrationResponse](
+			httpClient,
+			baseURL+MetricsServiceCancelMetricMigrationProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("CancelMetricMigration")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // metricsServiceClient implements MetricsServiceClient.
 type metricsServiceClient struct {
-	submitMetrics         *connect.Client[v1.SubmitMetricsRequest, v1.SubmitMetricsResponse]
-	uploadMetrics         *connect.Client[v1.UploadMetricsRequest, v1.UploadMetricsResponse]
-	streamMetrics         *connect.Client[v1.StreamMetricsRequest, v1.StreamMetricsResponse]
-	queryMetrics          *connect.Client[v1.QueryMetricsRequest, v1.QueryMetricsResponse]
-	listMetricDefinitions *connect.Client[v1.ListMetricDefinitionsRequest, v1.ListMetricDefinitionsResponse]
-	listPingTasks         *connect.Client[v1.ListPingTasksRequest, v1.ListPingTasksResponse]
-	getPingStats          *connect.Client[v1.GetPingStatsRequest, v1.GetPingStatsResponse]
-	watchMetrics          *connect.Client[v1.WatchMetricsRequest, v1.WatchMetricsResponse]
+	submitMetrics            *connect.Client[v1.SubmitMetricsRequest, v1.SubmitMetricsResponse]
+	uploadMetrics            *connect.Client[v1.UploadMetricsRequest, v1.UploadMetricsResponse]
+	streamMetrics            *connect.Client[v1.StreamMetricsRequest, v1.StreamMetricsResponse]
+	queryMetrics             *connect.Client[v1.QueryMetricsRequest, v1.QueryMetricsResponse]
+	listMetricDefinitions    *connect.Client[v1.ListMetricDefinitionsRequest, v1.ListMetricDefinitionsResponse]
+	listPingTasks            *connect.Client[v1.ListPingTasksRequest, v1.ListPingTasksResponse]
+	getPingStats             *connect.Client[v1.GetPingStatsRequest, v1.GetPingStatsResponse]
+	watchMetrics             *connect.Client[v1.WatchMetricsRequest, v1.WatchMetricsResponse]
+	updateMetricDefinition   *connect.Client[v1.UpdateMetricDefinitionRequest, v1.UpdateMetricDefinitionResponse]
+	getDownsamplingPolicy    *connect.Client[v1.GetDownsamplingPolicyRequest, v1.GetDownsamplingPolicyResponse]
+	setDownsamplingPolicy    *connect.Client[v1.SetDownsamplingPolicyRequest, v1.SetDownsamplingPolicyResponse]
+	getMetricMigrationStatus *connect.Client[v1.GetMetricMigrationStatusRequest, v1.GetMetricMigrationStatusResponse]
+	startMetricMigration     *connect.Client[v1.StartMetricMigrationRequest, v1.StartMetricMigrationResponse]
+	cancelMetricMigration    *connect.Client[v1.CancelMetricMigrationRequest, v1.CancelMetricMigrationResponse]
 }
 
 // SubmitMetrics calls komari.metrics.v1.MetricsService.SubmitMetrics.
@@ -193,6 +260,36 @@ func (c *metricsServiceClient) WatchMetrics(ctx context.Context, req *connect.Re
 	return c.watchMetrics.CallServerStream(ctx, req)
 }
 
+// UpdateMetricDefinition calls komari.metrics.v1.MetricsService.UpdateMetricDefinition.
+func (c *metricsServiceClient) UpdateMetricDefinition(ctx context.Context, req *connect.Request[v1.UpdateMetricDefinitionRequest]) (*connect.Response[v1.UpdateMetricDefinitionResponse], error) {
+	return c.updateMetricDefinition.CallUnary(ctx, req)
+}
+
+// GetDownsamplingPolicy calls komari.metrics.v1.MetricsService.GetDownsamplingPolicy.
+func (c *metricsServiceClient) GetDownsamplingPolicy(ctx context.Context, req *connect.Request[v1.GetDownsamplingPolicyRequest]) (*connect.Response[v1.GetDownsamplingPolicyResponse], error) {
+	return c.getDownsamplingPolicy.CallUnary(ctx, req)
+}
+
+// SetDownsamplingPolicy calls komari.metrics.v1.MetricsService.SetDownsamplingPolicy.
+func (c *metricsServiceClient) SetDownsamplingPolicy(ctx context.Context, req *connect.Request[v1.SetDownsamplingPolicyRequest]) (*connect.Response[v1.SetDownsamplingPolicyResponse], error) {
+	return c.setDownsamplingPolicy.CallUnary(ctx, req)
+}
+
+// GetMetricMigrationStatus calls komari.metrics.v1.MetricsService.GetMetricMigrationStatus.
+func (c *metricsServiceClient) GetMetricMigrationStatus(ctx context.Context, req *connect.Request[v1.GetMetricMigrationStatusRequest]) (*connect.Response[v1.GetMetricMigrationStatusResponse], error) {
+	return c.getMetricMigrationStatus.CallUnary(ctx, req)
+}
+
+// StartMetricMigration calls komari.metrics.v1.MetricsService.StartMetricMigration.
+func (c *metricsServiceClient) StartMetricMigration(ctx context.Context, req *connect.Request[v1.StartMetricMigrationRequest]) (*connect.Response[v1.StartMetricMigrationResponse], error) {
+	return c.startMetricMigration.CallUnary(ctx, req)
+}
+
+// CancelMetricMigration calls komari.metrics.v1.MetricsService.CancelMetricMigration.
+func (c *metricsServiceClient) CancelMetricMigration(ctx context.Context, req *connect.Request[v1.CancelMetricMigrationRequest]) (*connect.Response[v1.CancelMetricMigrationResponse], error) {
+	return c.cancelMetricMigration.CallUnary(ctx, req)
+}
+
 // MetricsServiceHandler is an implementation of the komari.metrics.v1.MetricsService service.
 type MetricsServiceHandler interface {
 	// SubmitMetrics stores one idempotent batch.
@@ -211,6 +308,13 @@ type MetricsServiceHandler interface {
 	GetPingStats(context.Context, *connect.Request[v1.GetPingStatsRequest]) (*connect.Response[v1.GetPingStatsResponse], error)
 	// WatchMetrics streams live samples until cancellation or deadline.
 	WatchMetrics(context.Context, *connect.Request[v1.WatchMetricsRequest], *connect.ServerStream[v1.WatchMetricsResponse]) error
+	// UpdateMetricDefinition changes administrator-controlled retention.
+	UpdateMetricDefinition(context.Context, *connect.Request[v1.UpdateMetricDefinitionRequest]) (*connect.Response[v1.UpdateMetricDefinitionResponse], error)
+	GetDownsamplingPolicy(context.Context, *connect.Request[v1.GetDownsamplingPolicyRequest]) (*connect.Response[v1.GetDownsamplingPolicyResponse], error)
+	SetDownsamplingPolicy(context.Context, *connect.Request[v1.SetDownsamplingPolicyRequest]) (*connect.Response[v1.SetDownsamplingPolicyResponse], error)
+	GetMetricMigrationStatus(context.Context, *connect.Request[v1.GetMetricMigrationStatusRequest]) (*connect.Response[v1.GetMetricMigrationStatusResponse], error)
+	StartMetricMigration(context.Context, *connect.Request[v1.StartMetricMigrationRequest]) (*connect.Response[v1.StartMetricMigrationResponse], error)
+	CancelMetricMigration(context.Context, *connect.Request[v1.CancelMetricMigrationRequest]) (*connect.Response[v1.CancelMetricMigrationResponse], error)
 }
 
 // NewMetricsServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -268,6 +372,42 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 		connect.WithSchema(metricsServiceMethods.ByName("WatchMetrics")),
 		connect.WithHandlerOptions(opts...),
 	)
+	metricsServiceUpdateMetricDefinitionHandler := connect.NewUnaryHandler(
+		MetricsServiceUpdateMetricDefinitionProcedure,
+		svc.UpdateMetricDefinition,
+		connect.WithSchema(metricsServiceMethods.ByName("UpdateMetricDefinition")),
+		connect.WithHandlerOptions(opts...),
+	)
+	metricsServiceGetDownsamplingPolicyHandler := connect.NewUnaryHandler(
+		MetricsServiceGetDownsamplingPolicyProcedure,
+		svc.GetDownsamplingPolicy,
+		connect.WithSchema(metricsServiceMethods.ByName("GetDownsamplingPolicy")),
+		connect.WithHandlerOptions(opts...),
+	)
+	metricsServiceSetDownsamplingPolicyHandler := connect.NewUnaryHandler(
+		MetricsServiceSetDownsamplingPolicyProcedure,
+		svc.SetDownsamplingPolicy,
+		connect.WithSchema(metricsServiceMethods.ByName("SetDownsamplingPolicy")),
+		connect.WithHandlerOptions(opts...),
+	)
+	metricsServiceGetMetricMigrationStatusHandler := connect.NewUnaryHandler(
+		MetricsServiceGetMetricMigrationStatusProcedure,
+		svc.GetMetricMigrationStatus,
+		connect.WithSchema(metricsServiceMethods.ByName("GetMetricMigrationStatus")),
+		connect.WithHandlerOptions(opts...),
+	)
+	metricsServiceStartMetricMigrationHandler := connect.NewUnaryHandler(
+		MetricsServiceStartMetricMigrationProcedure,
+		svc.StartMetricMigration,
+		connect.WithSchema(metricsServiceMethods.ByName("StartMetricMigration")),
+		connect.WithHandlerOptions(opts...),
+	)
+	metricsServiceCancelMetricMigrationHandler := connect.NewUnaryHandler(
+		MetricsServiceCancelMetricMigrationProcedure,
+		svc.CancelMetricMigration,
+		connect.WithSchema(metricsServiceMethods.ByName("CancelMetricMigration")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/komari.metrics.v1.MetricsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case MetricsServiceSubmitMetricsProcedure:
@@ -286,6 +426,18 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 			metricsServiceGetPingStatsHandler.ServeHTTP(w, r)
 		case MetricsServiceWatchMetricsProcedure:
 			metricsServiceWatchMetricsHandler.ServeHTTP(w, r)
+		case MetricsServiceUpdateMetricDefinitionProcedure:
+			metricsServiceUpdateMetricDefinitionHandler.ServeHTTP(w, r)
+		case MetricsServiceGetDownsamplingPolicyProcedure:
+			metricsServiceGetDownsamplingPolicyHandler.ServeHTTP(w, r)
+		case MetricsServiceSetDownsamplingPolicyProcedure:
+			metricsServiceSetDownsamplingPolicyHandler.ServeHTTP(w, r)
+		case MetricsServiceGetMetricMigrationStatusProcedure:
+			metricsServiceGetMetricMigrationStatusHandler.ServeHTTP(w, r)
+		case MetricsServiceStartMetricMigrationProcedure:
+			metricsServiceStartMetricMigrationHandler.ServeHTTP(w, r)
+		case MetricsServiceCancelMetricMigrationProcedure:
+			metricsServiceCancelMetricMigrationHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -325,4 +477,28 @@ func (UnimplementedMetricsServiceHandler) GetPingStats(context.Context, *connect
 
 func (UnimplementedMetricsServiceHandler) WatchMetrics(context.Context, *connect.Request[v1.WatchMetricsRequest], *connect.ServerStream[v1.WatchMetricsResponse]) error {
 	return connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.WatchMetrics is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) UpdateMetricDefinition(context.Context, *connect.Request[v1.UpdateMetricDefinitionRequest]) (*connect.Response[v1.UpdateMetricDefinitionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.UpdateMetricDefinition is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) GetDownsamplingPolicy(context.Context, *connect.Request[v1.GetDownsamplingPolicyRequest]) (*connect.Response[v1.GetDownsamplingPolicyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.GetDownsamplingPolicy is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) SetDownsamplingPolicy(context.Context, *connect.Request[v1.SetDownsamplingPolicyRequest]) (*connect.Response[v1.SetDownsamplingPolicyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.SetDownsamplingPolicy is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) GetMetricMigrationStatus(context.Context, *connect.Request[v1.GetMetricMigrationStatusRequest]) (*connect.Response[v1.GetMetricMigrationStatusResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.GetMetricMigrationStatus is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) StartMetricMigration(context.Context, *connect.Request[v1.StartMetricMigrationRequest]) (*connect.Response[v1.StartMetricMigrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.StartMetricMigration is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) CancelMetricMigration(context.Context, *connect.Request[v1.CancelMetricMigrationRequest]) (*connect.Response[v1.CancelMetricMigrationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.CancelMetricMigration is not implemented"))
 }

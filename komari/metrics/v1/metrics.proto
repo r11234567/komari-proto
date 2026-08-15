@@ -25,6 +25,13 @@ service MetricsService {
   rpc GetPingStats(GetPingStatsRequest) returns (GetPingStatsResponse);
   // WatchMetrics streams live samples until cancellation or deadline.
   rpc WatchMetrics(WatchMetricsRequest) returns (stream WatchMetricsResponse);
+  // UpdateMetricDefinition changes administrator-controlled retention.
+  rpc UpdateMetricDefinition(UpdateMetricDefinitionRequest) returns (UpdateMetricDefinitionResponse);
+  rpc GetDownsamplingPolicy(GetDownsamplingPolicyRequest) returns (GetDownsamplingPolicyResponse);
+  rpc SetDownsamplingPolicy(SetDownsamplingPolicyRequest) returns (SetDownsamplingPolicyResponse);
+  rpc GetMetricMigrationStatus(GetMetricMigrationStatusRequest) returns (GetMetricMigrationStatusResponse);
+  rpc StartMetricMigration(StartMetricMigrationRequest) returns (StartMetricMigrationResponse);
+  rpc CancelMetricMigration(CancelMetricMigrationRequest) returns (CancelMetricMigrationResponse);
 }
 
 // MetricsPoint is one typed metric sample.
@@ -190,4 +197,91 @@ message WatchMetricsRequest {
 message WatchMetricsResponse {
   MetricsPoint point = 1;
   string agent_id = 2;
+}
+
+message UpdateMetricDefinitionRequest {
+  string name = 1;
+  uint32 retention_days = 2;
+}
+
+message UpdateMetricDefinitionResponse {
+  MetricDefinition definition = 1;
+}
+
+message GetDownsamplingPolicyRequest {}
+
+message GetDownsamplingPolicyResponse {
+  DownsamplingPolicy policy = 1;
+}
+
+message SetDownsamplingPolicyRequest {
+  bool enabled = 1;
+  uint32 minute_retention_minutes = 2;
+  uint32 five_minute_retention_minutes = 3;
+  uint32 hour_retention_hours = 4;
+}
+
+message SetDownsamplingPolicyResponse {
+  DownsamplingPolicy policy = 1;
+}
+
+message DownsamplingPolicy {
+  bool enabled = 1;
+  bool preserve_raw = 2;
+  string raw_retention = 3;
+  uint32 minute_retention_minutes = 4;
+  uint32 five_minute_retention_minutes = 5;
+  uint32 hour_retention_hours = 6;
+  repeated DownsamplingTier tiers = 7;
+}
+
+message DownsamplingTier {
+  string interval = 1;
+  string retention = 2;
+}
+
+message GetMetricMigrationStatusRequest {}
+
+message GetMetricMigrationStatusResponse {
+  MetricMigration migration = 1;
+}
+
+message StartMetricMigrationRequest {
+  string source_driver = 1;
+  string source_dsn = 2;
+}
+
+message StartMetricMigrationResponse {
+  MetricMigration migration = 1;
+}
+
+message CancelMetricMigrationRequest {}
+
+message CancelMetricMigrationResponse {
+  MetricMigration migration = 1;
+}
+
+message MetricMigration {
+  MetricMigrationState state = 1;
+  bool is_running = 2;
+  string source_driver = 3;
+  string source_dsn = 4;
+  string target_driver = 5;
+  string target_dsn = 6;
+  uint32 total_metrics = 7;
+  uint32 metrics_done = 8;
+  string current_metric = 9;
+  uint64 migrated_points = 10;
+  optional google.protobuf.Timestamp started_at = 11;
+  optional google.protobuf.Timestamp finished_at = 12;
+  string error = 13;
+}
+
+enum MetricMigrationState {
+  METRIC_MIGRATION_STATE_UNSPECIFIED = 0;
+  METRIC_MIGRATION_STATE_IDLE = 1;
+  METRIC_MIGRATION_STATE_RUNNING = 2;
+  METRIC_MIGRATION_STATE_COMPLETED = 3;
+  METRIC_MIGRATION_STATE_FAILED = 4;
+  METRIC_MIGRATION_STATE_CANCELED = 5;
 }

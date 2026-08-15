@@ -130,6 +130,7 @@ type GetPublicInfoResponse struct {
 	PrivateSite            bool                   `protobuf:"varint,12,opt,name=private_site,json=privateSite,proto3" json:"private_site,omitempty"`
 	ThemeSettings          *structpb.Struct       `protobuf:"bytes,13,opt,name=theme_settings,json=themeSettings,proto3" json:"theme_settings,omitempty"`
 	VisitorAuditEnabled    bool                   `protobuf:"varint,14,opt,name=visitor_audit_enabled,json=visitorAuditEnabled,proto3" json:"visitor_audit_enabled,omitempty"`
+	BuildHash              string                 `protobuf:"bytes,15,opt,name=build_hash,json=buildHash,proto3" json:"build_hash,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
@@ -260,6 +261,13 @@ func (x *GetPublicInfoResponse) GetVisitorAuditEnabled() bool {
 		return x.VisitorAuditEnabled
 	}
 	return false
+}
+
+func (x *GetPublicInfoResponse) GetBuildHash() string {
+	if x != nil {
+		return x.BuildHash
+	}
+	return ""
 }
 
 // ListAgentsRequest contains bounded filters and pagination.
@@ -1213,7 +1221,7 @@ var File_komari_browser_v1_browser_proto protoreflect.FileDescriptor
 const file_komari_browser_v1_browser_proto_rawDesc = "" +
 	"\n" +
 	"\x1fkomari/browser/v1/browser.proto\x12\x11komari.browser.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/report/v1/report.proto\"\x16\n" +
-	"\x14GetPublicInfoRequest\"\xe8\x04\n" +
+	"\x14GetPublicInfoRequest\"\x87\x05\n" +
 	"\x15GetPublicInfoResponse\x12\x1b\n" +
 	"\tsite_name\x18\x01 \x01(\tR\bsiteName\x12)\n" +
 	"\x10site_description\x18\x02 \x01(\tR\x0fsiteDescription\x12\x18\n" +
@@ -1231,7 +1239,9 @@ const file_komari_browser_v1_browser_proto_rawDesc = "" +
 	"\x15metric_retention_days\x18\v \x01(\rR\x13metricRetentionDays\x12!\n" +
 	"\fprivate_site\x18\f \x01(\bR\vprivateSite\x12>\n" +
 	"\x0etheme_settings\x18\r \x01(\v2\x17.google.protobuf.StructR\rthemeSettings\x122\n" +
-	"\x15visitor_audit_enabled\x18\x0e \x01(\bR\x13visitorAuditEnabled\"{\n" +
+	"\x15visitor_audit_enabled\x18\x0e \x01(\bR\x13visitorAuditEnabled\x12\x1d\n" +
+	"\n" +
+	"build_hash\x18\x0f \x01(\tR\tbuildHash\"{\n" +
 	"\x11ListAgentsRequest\x121\n" +
 	"\x04page\x18\x01 \x01(\v2\x1d.komari.common.v1.PageRequestR\x04page\x12\x1b\n" +
 	"\tagent_ids\x18\x02 \x03(\tR\bagentIds\x12\x16\n" +
