@@ -84,6 +84,7 @@ message LeaseExecutionRequest {
 // LeaseExecutionResponse wraps one immutable task assignment.
 message LeaseExecutionResponse {
   ExecutionAssignment assignment = 1;
+  ExecutionCancellation cancellation = 2;
 }
 
 // ExecutionAssignment is an immutable task assignment.
@@ -91,6 +92,24 @@ message ExecutionAssignment {
   string assignment_id = 1;
   Execution execution = 2;
   google.protobuf.Timestamp lease_expires_at = 3;
+  ExecutionSpec spec = 4;
+}
+
+// ExecutionSpec is the bounded immutable command accepted by the controller.
+message ExecutionSpec {
+  string command = 1;
+  repeated string arguments = 2;
+  map<string, string> environment = 3;
+  string working_directory = 4;
+  google.protobuf.Duration timeout = 5;
+  uint64 max_output_bytes = 6;
+}
+
+// ExecutionCancellation asks an Agent to stop an assigned running process.
+message ExecutionCancellation {
+  string execution_id = 1;
+  string reason = 2;
+  google.protobuf.Timestamp requested_at = 3;
 }
 
 // ReportExecutionEventRequest records one idempotent execution event.

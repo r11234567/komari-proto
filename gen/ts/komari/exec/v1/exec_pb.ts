@@ -14,7 +14,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file komari/exec/v1/exec.proto.
  */
 export const file_komari_exec_v1_exec: GenFile = /*@__PURE__*/
-  fileDesc("Chlrb21hcmkvZXhlYy92MS9leGVjLnByb3RvEg5rb21hcmkuZXhlYy52MSKAAwoWQ3JlYXRlRXhlY3V0aW9uUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIPCgdjb21tYW5kGAIgASgJEhEKCWFyZ3VtZW50cxgDIAMoCRJMCgtlbnZpcm9ubWVudBgEIAMoCzI3LmtvbWFyaS5leGVjLnYxLkNyZWF0ZUV4ZWN1dGlvblJlcXVlc3QuRW52aXJvbm1lbnRFbnRyeRIZChF3b3JraW5nX2RpcmVjdG9yeRgFIAEoCRIqCgd0aW1lb3V0GAYgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uEhgKEG1heF9vdXRwdXRfYnl0ZXMYByABKAQSFwoPaWRlbXBvdGVuY3lfa2V5GAggASgJEjQKCnR3b19mYWN0b3IYCSABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mGjIKEEVudmlyb25tZW50RW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ASJHChdDcmVhdGVFeGVjdXRpb25SZXNwb25zZRIsCglleGVjdXRpb24YASABKAsyGS5rb21hcmkuZXhlYy52MS5FeGVjdXRpb24iRQoVV2F0Y2hFeGVjdXRpb25SZXF1ZXN0EhQKDGV4ZWN1dGlvbl9pZBgBIAEoCRIWCg5hZnRlcl9zZXF1ZW5jZRgCIAEoBCJHChZXYXRjaEV4ZWN1dGlvblJlc3BvbnNlEi0KBWV2ZW50GAEgASgLMh4ua29tYXJpLmV4ZWMudjEuRXhlY3V0aW9uRXZlbnQidAoWQ2FuY2VsRXhlY3V0aW9uUmVxdWVzdBIUCgxleGVjdXRpb25faWQYASABKAkSDgoGcmVhc29uGAIgASgJEjQKCnR3b19mYWN0b3IYAyABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mIkcKF0NhbmNlbEV4ZWN1dGlvblJlc3BvbnNlEiwKCWV4ZWN1dGlvbhgBIAEoCzIZLmtvbWFyaS5leGVjLnYxLkV4ZWN1dGlvbiIrChNHZXRFeGVjdXRpb25SZXF1ZXN0EhQKDGV4ZWN1dGlvbl9pZBgBIAEoCSJEChRHZXRFeGVjdXRpb25SZXNwb25zZRIsCglleGVjdXRpb24YASABKAsyGS5rb21hcmkuZXhlYy52MS5FeGVjdXRpb24iRgoVTGVhc2VFeGVjdXRpb25SZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEhsKE2FmdGVyX2Fzc2lnbm1lbnRfaWQYAiABKAkiUQoWTGVhc2VFeGVjdXRpb25SZXNwb25zZRI3Cgphc3NpZ25tZW50GAEgASgLMiMua29tYXJpLmV4ZWMudjEuRXhlY3V0aW9uQXNzaWdubWVudCKQAQoTRXhlY3V0aW9uQXNzaWdubWVudBIVCg1hc3NpZ25tZW50X2lkGAEgASgJEiwKCWV4ZWN1dGlvbhgCIAEoCzIZLmtvbWFyaS5leGVjLnYxLkV4ZWN1dGlvbhI0ChBsZWFzZV9leHBpcmVzX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCJeChtSZXBvcnRFeGVjdXRpb25FdmVudFJlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSLQoFZXZlbnQYAiABKAsyHi5rb21hcmkuZXhlYy52MS5FeGVjdXRpb25FdmVudCI5ChxSZXBvcnRFeGVjdXRpb25FdmVudFJlc3BvbnNlEhkKEWFjY2VwdGVkX3NlcXVlbmNlGAEgASgEItoCCglFeGVjdXRpb24SFAoMZXhlY3V0aW9uX2lkGAEgASgJEhAKCGFnZW50X2lkGAIgASgJEi8KBXN0YXRlGAMgASgOMiAua29tYXJpLmNvbW1vbi52MS5PcGVyYXRpb25TdGF0ZRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIzCgpzdGFydGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgAiAEBEjQKC2ZpbmlzaGVkX2F0GAYgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgBiAEBEhYKCWV4aXRfY29kZRgHIAEoBUgCiAEBEhQKDG91dHB1dF9ieXRlcxgIIAEoBEINCgtfc3RhcnRlZF9hdEIOCgxfZmluaXNoZWRfYXRCDAoKX2V4aXRfY29kZSK7AgoORXhlY3V0aW9uRXZlbnQSFAoMZXhlY3V0aW9uX2lkGAEgASgJEhAKCHNlcXVlbmNlGAIgASgEEi8KC29jY3VycmVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIvCgVzdGF0ZRgEIAEoDjIgLmtvbWFyaS5jb21tb24udjEuT3BlcmF0aW9uU3RhdGUSLAoGc3RyZWFtGAUgASgOMhwua29tYXJpLmV4ZWMudjEuT3V0cHV0U3RyZWFtEg4KBm91dHB1dBgGIAEoDBIWCglleGl0X2NvZGUYByABKAVIAIgBARIxCgVlcnJvchgIIAEoCzIdLmtvbWFyaS5jb21tb24udjEuRXJyb3JEZXRhaWxIAYgBAUIMCgpfZXhpdF9jb2RlQggKBl9lcnJvciphCgxPdXRwdXRTdHJlYW0SHQoZT1VUUFVUX1NUUkVBTV9VTlNQRUNJRklFRBAAEhgKFE9VVFBVVF9TVFJFQU1fU1RET1VUEAESGAoUT1VUUFVUX1NUUkVBTV9TVERFUlIQAjLuBAoQRXhlY3V0aW9uU2VydmljZRJiCg9DcmVhdGVFeGVjdXRpb24SJi5rb21hcmkuZXhlYy52MS5DcmVhdGVFeGVjdXRpb25SZXF1ZXN0Gicua29tYXJpLmV4ZWMudjEuQ3JlYXRlRXhlY3V0aW9uUmVzcG9uc2USYQoOV2F0Y2hFeGVjdXRpb24SJS5rb21hcmkuZXhlYy52MS5XYXRjaEV4ZWN1dGlvblJlcXVlc3QaJi5rb21hcmkuZXhlYy52MS5XYXRjaEV4ZWN1dGlvblJlc3BvbnNlMAESYgoPQ2FuY2VsRXhlY3V0aW9uEiYua29tYXJpLmV4ZWMudjEuQ2FuY2VsRXhlY3V0aW9uUmVxdWVzdBonLmtvbWFyaS5leGVjLnYxLkNhbmNlbEV4ZWN1dGlvblJlc3BvbnNlElkKDEdldEV4ZWN1dGlvbhIjLmtvbWFyaS5leGVjLnYxLkdldEV4ZWN1dGlvblJlcXVlc3QaJC5rb21hcmkuZXhlYy52MS5HZXRFeGVjdXRpb25SZXNwb25zZRJhCg5MZWFzZUV4ZWN1dGlvbhIlLmtvbWFyaS5leGVjLnYxLkxlYXNlRXhlY3V0aW9uUmVxdWVzdBomLmtvbWFyaS5leGVjLnYxLkxlYXNlRXhlY3V0aW9uUmVzcG9uc2UwARJxChRSZXBvcnRFeGVjdXRpb25FdmVudBIrLmtvbWFyaS5leGVjLnYxLlJlcG9ydEV4ZWN1dGlvbkV2ZW50UmVxdWVzdBosLmtvbWFyaS5leGVjLnYxLlJlcG9ydEV4ZWN1dGlvbkV2ZW50UmVzcG9uc2VCuQEKEmNvbS5rb21hcmkuZXhlYy52MUIJRXhlY1Byb3RvUAFaPmdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL2V4ZWMvdjE7ZXhlY3YxogIDS0VYqgIOS29tYXJpLkV4ZWMuVjHKAg5Lb21hcmlcRXhlY1xWMeICGktvbWFyaVxFeGVjXFYxXEdQQk1ldGFkYXRh6gIQS29tYXJpOjpFeGVjOjpWMWIGcHJvdG8z", [file_google_protobuf_duration, file_google_protobuf_timestamp, file_komari_common_v1_common]);
+  fileDesc("Chlrb21hcmkvZXhlYy92MS9leGVjLnByb3RvEg5rb21hcmkuZXhlYy52MSKAAwoWQ3JlYXRlRXhlY3V0aW9uUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIPCgdjb21tYW5kGAIgASgJEhEKCWFyZ3VtZW50cxgDIAMoCRJMCgtlbnZpcm9ubWVudBgEIAMoCzI3LmtvbWFyaS5leGVjLnYxLkNyZWF0ZUV4ZWN1dGlvblJlcXVlc3QuRW52aXJvbm1lbnRFbnRyeRIZChF3b3JraW5nX2RpcmVjdG9yeRgFIAEoCRIqCgd0aW1lb3V0GAYgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uEhgKEG1heF9vdXRwdXRfYnl0ZXMYByABKAQSFwoPaWRlbXBvdGVuY3lfa2V5GAggASgJEjQKCnR3b19mYWN0b3IYCSABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mGjIKEEVudmlyb25tZW50RW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ASJHChdDcmVhdGVFeGVjdXRpb25SZXNwb25zZRIsCglleGVjdXRpb24YASABKAsyGS5rb21hcmkuZXhlYy52MS5FeGVjdXRpb24iRQoVV2F0Y2hFeGVjdXRpb25SZXF1ZXN0EhQKDGV4ZWN1dGlvbl9pZBgBIAEoCRIWCg5hZnRlcl9zZXF1ZW5jZRgCIAEoBCJHChZXYXRjaEV4ZWN1dGlvblJlc3BvbnNlEi0KBWV2ZW50GAEgASgLMh4ua29tYXJpLmV4ZWMudjEuRXhlY3V0aW9uRXZlbnQidAoWQ2FuY2VsRXhlY3V0aW9uUmVxdWVzdBIUCgxleGVjdXRpb25faWQYASABKAkSDgoGcmVhc29uGAIgASgJEjQKCnR3b19mYWN0b3IYAyABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mIkcKF0NhbmNlbEV4ZWN1dGlvblJlc3BvbnNlEiwKCWV4ZWN1dGlvbhgBIAEoCzIZLmtvbWFyaS5leGVjLnYxLkV4ZWN1dGlvbiIrChNHZXRFeGVjdXRpb25SZXF1ZXN0EhQKDGV4ZWN1dGlvbl9pZBgBIAEoCSJEChRHZXRFeGVjdXRpb25SZXNwb25zZRIsCglleGVjdXRpb24YASABKAsyGS5rb21hcmkuZXhlYy52MS5FeGVjdXRpb24iRgoVTGVhc2VFeGVjdXRpb25SZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEhsKE2FmdGVyX2Fzc2lnbm1lbnRfaWQYAiABKAkijgEKFkxlYXNlRXhlY3V0aW9uUmVzcG9uc2USNwoKYXNzaWdubWVudBgBIAEoCzIjLmtvbWFyaS5leGVjLnYxLkV4ZWN1dGlvbkFzc2lnbm1lbnQSOwoMY2FuY2VsbGF0aW9uGAIgASgLMiUua29tYXJpLmV4ZWMudjEuRXhlY3V0aW9uQ2FuY2VsbGF0aW9uIr0BChNFeGVjdXRpb25Bc3NpZ25tZW50EhUKDWFzc2lnbm1lbnRfaWQYASABKAkSLAoJZXhlY3V0aW9uGAIgASgLMhkua29tYXJpLmV4ZWMudjEuRXhlY3V0aW9uEjQKEGxlYXNlX2V4cGlyZXNfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEisKBHNwZWMYBCABKAsyHS5rb21hcmkuZXhlYy52MS5FeGVjdXRpb25TcGVjIo0CCg1FeGVjdXRpb25TcGVjEg8KB2NvbW1hbmQYASABKAkSEQoJYXJndW1lbnRzGAIgAygJEkMKC2Vudmlyb25tZW50GAMgAygLMi4ua29tYXJpLmV4ZWMudjEuRXhlY3V0aW9uU3BlYy5FbnZpcm9ubWVudEVudHJ5EhkKEXdvcmtpbmdfZGlyZWN0b3J5GAQgASgJEioKB3RpbWVvdXQYBSABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24SGAoQbWF4X291dHB1dF9ieXRlcxgGIAEoBBoyChBFbnZpcm9ubWVudEVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEibwoVRXhlY3V0aW9uQ2FuY2VsbGF0aW9uEhQKDGV4ZWN1dGlvbl9pZBgBIAEoCRIOCgZyZWFzb24YAiABKAkSMAoMcmVxdWVzdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCJeChtSZXBvcnRFeGVjdXRpb25FdmVudFJlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSLQoFZXZlbnQYAiABKAsyHi5rb21hcmkuZXhlYy52MS5FeGVjdXRpb25FdmVudCI5ChxSZXBvcnRFeGVjdXRpb25FdmVudFJlc3BvbnNlEhkKEWFjY2VwdGVkX3NlcXVlbmNlGAEgASgEItoCCglFeGVjdXRpb24SFAoMZXhlY3V0aW9uX2lkGAEgASgJEhAKCGFnZW50X2lkGAIgASgJEi8KBXN0YXRlGAMgASgOMiAua29tYXJpLmNvbW1vbi52MS5PcGVyYXRpb25TdGF0ZRIuCgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIzCgpzdGFydGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgAiAEBEjQKC2ZpbmlzaGVkX2F0GAYgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgBiAEBEhYKCWV4aXRfY29kZRgHIAEoBUgCiAEBEhQKDG91dHB1dF9ieXRlcxgIIAEoBEINCgtfc3RhcnRlZF9hdEIOCgxfZmluaXNoZWRfYXRCDAoKX2V4aXRfY29kZSK7AgoORXhlY3V0aW9uRXZlbnQSFAoMZXhlY3V0aW9uX2lkGAEgASgJEhAKCHNlcXVlbmNlGAIgASgEEi8KC29jY3VycmVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIvCgVzdGF0ZRgEIAEoDjIgLmtvbWFyaS5jb21tb24udjEuT3BlcmF0aW9uU3RhdGUSLAoGc3RyZWFtGAUgASgOMhwua29tYXJpLmV4ZWMudjEuT3V0cHV0U3RyZWFtEg4KBm91dHB1dBgGIAEoDBIWCglleGl0X2NvZGUYByABKAVIAIgBARIxCgVlcnJvchgIIAEoCzIdLmtvbWFyaS5jb21tb24udjEuRXJyb3JEZXRhaWxIAYgBAUIMCgpfZXhpdF9jb2RlQggKBl9lcnJvciphCgxPdXRwdXRTdHJlYW0SHQoZT1VUUFVUX1NUUkVBTV9VTlNQRUNJRklFRBAAEhgKFE9VVFBVVF9TVFJFQU1fU1RET1VUEAESGAoUT1VUUFVUX1NUUkVBTV9TVERFUlIQAjLuBAoQRXhlY3V0aW9uU2VydmljZRJiCg9DcmVhdGVFeGVjdXRpb24SJi5rb21hcmkuZXhlYy52MS5DcmVhdGVFeGVjdXRpb25SZXF1ZXN0Gicua29tYXJpLmV4ZWMudjEuQ3JlYXRlRXhlY3V0aW9uUmVzcG9uc2USYQoOV2F0Y2hFeGVjdXRpb24SJS5rb21hcmkuZXhlYy52MS5XYXRjaEV4ZWN1dGlvblJlcXVlc3QaJi5rb21hcmkuZXhlYy52MS5XYXRjaEV4ZWN1dGlvblJlc3BvbnNlMAESYgoPQ2FuY2VsRXhlY3V0aW9uEiYua29tYXJpLmV4ZWMudjEuQ2FuY2VsRXhlY3V0aW9uUmVxdWVzdBonLmtvbWFyaS5leGVjLnYxLkNhbmNlbEV4ZWN1dGlvblJlc3BvbnNlElkKDEdldEV4ZWN1dGlvbhIjLmtvbWFyaS5leGVjLnYxLkdldEV4ZWN1dGlvblJlcXVlc3QaJC5rb21hcmkuZXhlYy52MS5HZXRFeGVjdXRpb25SZXNwb25zZRJhCg5MZWFzZUV4ZWN1dGlvbhIlLmtvbWFyaS5leGVjLnYxLkxlYXNlRXhlY3V0aW9uUmVxdWVzdBomLmtvbWFyaS5leGVjLnYxLkxlYXNlRXhlY3V0aW9uUmVzcG9uc2UwARJxChRSZXBvcnRFeGVjdXRpb25FdmVudBIrLmtvbWFyaS5leGVjLnYxLlJlcG9ydEV4ZWN1dGlvbkV2ZW50UmVxdWVzdBosLmtvbWFyaS5leGVjLnYxLlJlcG9ydEV4ZWN1dGlvbkV2ZW50UmVzcG9uc2VCuQEKEmNvbS5rb21hcmkuZXhlYy52MUIJRXhlY1Byb3RvUAFaPmdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL2V4ZWMvdjE7ZXhlY3YxogIDS0VYqgIOS29tYXJpLkV4ZWMuVjHKAg5Lb21hcmlcRXhlY1xWMeICGktvbWFyaVxFeGVjXFYxXEdQQk1ldGFkYXRh6gIQS29tYXJpOjpFeGVjOjpWMWIGcHJvdG8z", [file_google_protobuf_duration, file_google_protobuf_timestamp, file_komari_common_v1_common]);
 
 /**
  * CreateExecutionRequest describes one bounded command execution.
@@ -257,6 +257,11 @@ export type LeaseExecutionResponse = Message<"komari.exec.v1.LeaseExecutionRespo
    * @generated from field: komari.exec.v1.ExecutionAssignment assignment = 1;
    */
   assignment?: ExecutionAssignment | undefined;
+
+  /**
+   * @generated from field: komari.exec.v1.ExecutionCancellation cancellation = 2;
+   */
+  cancellation?: ExecutionCancellation | undefined;
 };
 
 /**
@@ -286,6 +291,11 @@ export type ExecutionAssignment = Message<"komari.exec.v1.ExecutionAssignment"> 
    * @generated from field: google.protobuf.Timestamp lease_expires_at = 3;
    */
   leaseExpiresAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: komari.exec.v1.ExecutionSpec spec = 4;
+   */
+  spec?: ExecutionSpec | undefined;
 };
 
 /**
@@ -294,6 +304,79 @@ export type ExecutionAssignment = Message<"komari.exec.v1.ExecutionAssignment"> 
  */
 export const ExecutionAssignmentSchema: GenMessage<ExecutionAssignment> = /*@__PURE__*/
   messageDesc(file_komari_exec_v1_exec, 10);
+
+/**
+ * ExecutionSpec is the bounded immutable command accepted by the controller.
+ *
+ * @generated from message komari.exec.v1.ExecutionSpec
+ */
+export type ExecutionSpec = Message<"komari.exec.v1.ExecutionSpec"> & {
+  /**
+   * @generated from field: string command = 1;
+   */
+  command: string;
+
+  /**
+   * @generated from field: repeated string arguments = 2;
+   */
+  arguments: string[];
+
+  /**
+   * @generated from field: map<string, string> environment = 3;
+   */
+  environment: { [key: string]: string };
+
+  /**
+   * @generated from field: string working_directory = 4;
+   */
+  workingDirectory: string;
+
+  /**
+   * @generated from field: google.protobuf.Duration timeout = 5;
+   */
+  timeout?: Duration | undefined;
+
+  /**
+   * @generated from field: uint64 max_output_bytes = 6;
+   */
+  maxOutputBytes: bigint;
+};
+
+/**
+ * Describes the message komari.exec.v1.ExecutionSpec.
+ * Use `create(ExecutionSpecSchema)` to create a new message.
+ */
+export const ExecutionSpecSchema: GenMessage<ExecutionSpec> = /*@__PURE__*/
+  messageDesc(file_komari_exec_v1_exec, 11);
+
+/**
+ * ExecutionCancellation asks an Agent to stop an assigned running process.
+ *
+ * @generated from message komari.exec.v1.ExecutionCancellation
+ */
+export type ExecutionCancellation = Message<"komari.exec.v1.ExecutionCancellation"> & {
+  /**
+   * @generated from field: string execution_id = 1;
+   */
+  executionId: string;
+
+  /**
+   * @generated from field: string reason = 2;
+   */
+  reason: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp requested_at = 3;
+   */
+  requestedAt?: Timestamp | undefined;
+};
+
+/**
+ * Describes the message komari.exec.v1.ExecutionCancellation.
+ * Use `create(ExecutionCancellationSchema)` to create a new message.
+ */
+export const ExecutionCancellationSchema: GenMessage<ExecutionCancellation> = /*@__PURE__*/
+  messageDesc(file_komari_exec_v1_exec, 12);
 
 /**
  * ReportExecutionEventRequest records one idempotent execution event.
@@ -317,7 +400,7 @@ export type ReportExecutionEventRequest = Message<"komari.exec.v1.ReportExecutio
  * Use `create(ReportExecutionEventRequestSchema)` to create a new message.
  */
 export const ReportExecutionEventRequestSchema: GenMessage<ReportExecutionEventRequest> = /*@__PURE__*/
-  messageDesc(file_komari_exec_v1_exec, 11);
+  messageDesc(file_komari_exec_v1_exec, 13);
 
 /**
  * ReportExecutionEventResponse acknowledges a sequence number.
@@ -336,7 +419,7 @@ export type ReportExecutionEventResponse = Message<"komari.exec.v1.ReportExecuti
  * Use `create(ReportExecutionEventResponseSchema)` to create a new message.
  */
 export const ReportExecutionEventResponseSchema: GenMessage<ReportExecutionEventResponse> = /*@__PURE__*/
-  messageDesc(file_komari_exec_v1_exec, 12);
+  messageDesc(file_komari_exec_v1_exec, 14);
 
 /**
  * Execution is the canonical task state.
@@ -390,7 +473,7 @@ export type Execution = Message<"komari.exec.v1.Execution"> & {
  * Use `create(ExecutionSchema)` to create a new message.
  */
 export const ExecutionSchema: GenMessage<Execution> = /*@__PURE__*/
-  messageDesc(file_komari_exec_v1_exec, 13);
+  messageDesc(file_komari_exec_v1_exec, 15);
 
 /**
  * ExecutionEvent is a sequenced state or output update.
@@ -444,7 +527,7 @@ export type ExecutionEvent = Message<"komari.exec.v1.ExecutionEvent"> & {
  * Use `create(ExecutionEventSchema)` to create a new message.
  */
 export const ExecutionEventSchema: GenMessage<ExecutionEvent> = /*@__PURE__*/
-  messageDesc(file_komari_exec_v1_exec, 14);
+  messageDesc(file_komari_exec_v1_exec, 16);
 
 /**
  * OutputStream identifies an execution output stream.

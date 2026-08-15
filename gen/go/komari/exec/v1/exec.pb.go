@@ -579,6 +579,7 @@ func (x *LeaseExecutionRequest) GetAfterAssignmentId() string {
 type LeaseExecutionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Assignment    *ExecutionAssignment   `protobuf:"bytes,1,opt,name=assignment,proto3" json:"assignment,omitempty"`
+	Cancellation  *ExecutionCancellation `protobuf:"bytes,2,opt,name=cancellation,proto3" json:"cancellation,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -620,12 +621,20 @@ func (x *LeaseExecutionResponse) GetAssignment() *ExecutionAssignment {
 	return nil
 }
 
+func (x *LeaseExecutionResponse) GetCancellation() *ExecutionCancellation {
+	if x != nil {
+		return x.Cancellation
+	}
+	return nil
+}
+
 // ExecutionAssignment is an immutable task assignment.
 type ExecutionAssignment struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	AssignmentId   string                 `protobuf:"bytes,1,opt,name=assignment_id,json=assignmentId,proto3" json:"assignment_id,omitempty"`
 	Execution      *Execution             `protobuf:"bytes,2,opt,name=execution,proto3" json:"execution,omitempty"`
 	LeaseExpiresAt *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=lease_expires_at,json=leaseExpiresAt,proto3" json:"lease_expires_at,omitempty"`
+	Spec           *ExecutionSpec         `protobuf:"bytes,4,opt,name=spec,proto3" json:"spec,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -681,6 +690,159 @@ func (x *ExecutionAssignment) GetLeaseExpiresAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *ExecutionAssignment) GetSpec() *ExecutionSpec {
+	if x != nil {
+		return x.Spec
+	}
+	return nil
+}
+
+// ExecutionSpec is the bounded immutable command accepted by the controller.
+type ExecutionSpec struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Command          string                 `protobuf:"bytes,1,opt,name=command,proto3" json:"command,omitempty"`
+	Arguments        []string               `protobuf:"bytes,2,rep,name=arguments,proto3" json:"arguments,omitempty"`
+	Environment      map[string]string      `protobuf:"bytes,3,rep,name=environment,proto3" json:"environment,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	WorkingDirectory string                 `protobuf:"bytes,4,opt,name=working_directory,json=workingDirectory,proto3" json:"working_directory,omitempty"`
+	Timeout          *durationpb.Duration   `protobuf:"bytes,5,opt,name=timeout,proto3" json:"timeout,omitempty"`
+	MaxOutputBytes   uint64                 `protobuf:"varint,6,opt,name=max_output_bytes,json=maxOutputBytes,proto3" json:"max_output_bytes,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *ExecutionSpec) Reset() {
+	*x = ExecutionSpec{}
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExecutionSpec) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExecutionSpec) ProtoMessage() {}
+
+func (x *ExecutionSpec) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExecutionSpec.ProtoReflect.Descriptor instead.
+func (*ExecutionSpec) Descriptor() ([]byte, []int) {
+	return file_komari_exec_v1_exec_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ExecutionSpec) GetCommand() string {
+	if x != nil {
+		return x.Command
+	}
+	return ""
+}
+
+func (x *ExecutionSpec) GetArguments() []string {
+	if x != nil {
+		return x.Arguments
+	}
+	return nil
+}
+
+func (x *ExecutionSpec) GetEnvironment() map[string]string {
+	if x != nil {
+		return x.Environment
+	}
+	return nil
+}
+
+func (x *ExecutionSpec) GetWorkingDirectory() string {
+	if x != nil {
+		return x.WorkingDirectory
+	}
+	return ""
+}
+
+func (x *ExecutionSpec) GetTimeout() *durationpb.Duration {
+	if x != nil {
+		return x.Timeout
+	}
+	return nil
+}
+
+func (x *ExecutionSpec) GetMaxOutputBytes() uint64 {
+	if x != nil {
+		return x.MaxOutputBytes
+	}
+	return 0
+}
+
+// ExecutionCancellation asks an Agent to stop an assigned running process.
+type ExecutionCancellation struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ExecutionId   string                 `protobuf:"bytes,1,opt,name=execution_id,json=executionId,proto3" json:"execution_id,omitempty"`
+	Reason        string                 `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
+	RequestedAt   *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=requested_at,json=requestedAt,proto3" json:"requested_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExecutionCancellation) Reset() {
+	*x = ExecutionCancellation{}
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExecutionCancellation) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExecutionCancellation) ProtoMessage() {}
+
+func (x *ExecutionCancellation) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExecutionCancellation.ProtoReflect.Descriptor instead.
+func (*ExecutionCancellation) Descriptor() ([]byte, []int) {
+	return file_komari_exec_v1_exec_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ExecutionCancellation) GetExecutionId() string {
+	if x != nil {
+		return x.ExecutionId
+	}
+	return ""
+}
+
+func (x *ExecutionCancellation) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *ExecutionCancellation) GetRequestedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RequestedAt
+	}
+	return nil
+}
+
 // ReportExecutionEventRequest records one idempotent execution event.
 type ReportExecutionEventRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -692,7 +854,7 @@ type ReportExecutionEventRequest struct {
 
 func (x *ReportExecutionEventRequest) Reset() {
 	*x = ReportExecutionEventRequest{}
-	mi := &file_komari_exec_v1_exec_proto_msgTypes[11]
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -704,7 +866,7 @@ func (x *ReportExecutionEventRequest) String() string {
 func (*ReportExecutionEventRequest) ProtoMessage() {}
 
 func (x *ReportExecutionEventRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_exec_v1_exec_proto_msgTypes[11]
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -717,7 +879,7 @@ func (x *ReportExecutionEventRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReportExecutionEventRequest.ProtoReflect.Descriptor instead.
 func (*ReportExecutionEventRequest) Descriptor() ([]byte, []int) {
-	return file_komari_exec_v1_exec_proto_rawDescGZIP(), []int{11}
+	return file_komari_exec_v1_exec_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ReportExecutionEventRequest) GetAgentId() string {
@@ -744,7 +906,7 @@ type ReportExecutionEventResponse struct {
 
 func (x *ReportExecutionEventResponse) Reset() {
 	*x = ReportExecutionEventResponse{}
-	mi := &file_komari_exec_v1_exec_proto_msgTypes[12]
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -756,7 +918,7 @@ func (x *ReportExecutionEventResponse) String() string {
 func (*ReportExecutionEventResponse) ProtoMessage() {}
 
 func (x *ReportExecutionEventResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_exec_v1_exec_proto_msgTypes[12]
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -769,7 +931,7 @@ func (x *ReportExecutionEventResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReportExecutionEventResponse.ProtoReflect.Descriptor instead.
 func (*ReportExecutionEventResponse) Descriptor() ([]byte, []int) {
-	return file_komari_exec_v1_exec_proto_rawDescGZIP(), []int{12}
+	return file_komari_exec_v1_exec_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ReportExecutionEventResponse) GetAcceptedSequence() uint64 {
@@ -796,7 +958,7 @@ type Execution struct {
 
 func (x *Execution) Reset() {
 	*x = Execution{}
-	mi := &file_komari_exec_v1_exec_proto_msgTypes[13]
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -808,7 +970,7 @@ func (x *Execution) String() string {
 func (*Execution) ProtoMessage() {}
 
 func (x *Execution) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_exec_v1_exec_proto_msgTypes[13]
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -821,7 +983,7 @@ func (x *Execution) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Execution.ProtoReflect.Descriptor instead.
 func (*Execution) Descriptor() ([]byte, []int) {
-	return file_komari_exec_v1_exec_proto_rawDescGZIP(), []int{13}
+	return file_komari_exec_v1_exec_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *Execution) GetExecutionId() string {
@@ -897,7 +1059,7 @@ type ExecutionEvent struct {
 
 func (x *ExecutionEvent) Reset() {
 	*x = ExecutionEvent{}
-	mi := &file_komari_exec_v1_exec_proto_msgTypes[14]
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -909,7 +1071,7 @@ func (x *ExecutionEvent) String() string {
 func (*ExecutionEvent) ProtoMessage() {}
 
 func (x *ExecutionEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_exec_v1_exec_proto_msgTypes[14]
+	mi := &file_komari_exec_v1_exec_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -922,7 +1084,7 @@ func (x *ExecutionEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecutionEvent.ProtoReflect.Descriptor instead.
 func (*ExecutionEvent) Descriptor() ([]byte, []int) {
-	return file_komari_exec_v1_exec_proto_rawDescGZIP(), []int{14}
+	return file_komari_exec_v1_exec_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ExecutionEvent) GetExecutionId() string {
@@ -1020,15 +1182,31 @@ const file_komari_exec_v1_exec_proto_rawDesc = "" +
 	"\texecution\x18\x01 \x01(\v2\x19.komari.exec.v1.ExecutionR\texecution\"b\n" +
 	"\x15LeaseExecutionRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12.\n" +
-	"\x13after_assignment_id\x18\x02 \x01(\tR\x11afterAssignmentId\"]\n" +
+	"\x13after_assignment_id\x18\x02 \x01(\tR\x11afterAssignmentId\"\xa8\x01\n" +
 	"\x16LeaseExecutionResponse\x12C\n" +
 	"\n" +
 	"assignment\x18\x01 \x01(\v2#.komari.exec.v1.ExecutionAssignmentR\n" +
-	"assignment\"\xb9\x01\n" +
+	"assignment\x12I\n" +
+	"\fcancellation\x18\x02 \x01(\v2%.komari.exec.v1.ExecutionCancellationR\fcancellation\"\xec\x01\n" +
 	"\x13ExecutionAssignment\x12#\n" +
 	"\rassignment_id\x18\x01 \x01(\tR\fassignmentId\x127\n" +
 	"\texecution\x18\x02 \x01(\v2\x19.komari.exec.v1.ExecutionR\texecution\x12D\n" +
-	"\x10lease_expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x0eleaseExpiresAt\"n\n" +
+	"\x10lease_expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x0eleaseExpiresAt\x121\n" +
+	"\x04spec\x18\x04 \x01(\v2\x1d.komari.exec.v1.ExecutionSpecR\x04spec\"\xe5\x02\n" +
+	"\rExecutionSpec\x12\x18\n" +
+	"\acommand\x18\x01 \x01(\tR\acommand\x12\x1c\n" +
+	"\targuments\x18\x02 \x03(\tR\targuments\x12P\n" +
+	"\venvironment\x18\x03 \x03(\v2..komari.exec.v1.ExecutionSpec.EnvironmentEntryR\venvironment\x12+\n" +
+	"\x11working_directory\x18\x04 \x01(\tR\x10workingDirectory\x123\n" +
+	"\atimeout\x18\x05 \x01(\v2\x19.google.protobuf.DurationR\atimeout\x12(\n" +
+	"\x10max_output_bytes\x18\x06 \x01(\x04R\x0emaxOutputBytes\x1a>\n" +
+	"\x10EnvironmentEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x91\x01\n" +
+	"\x15ExecutionCancellation\x12!\n" +
+	"\fexecution_id\x18\x01 \x01(\tR\vexecutionId\x12\x16\n" +
+	"\x06reason\x18\x02 \x01(\tR\x06reason\x12=\n" +
+	"\frequested_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\vrequestedAt\"n\n" +
 	"\x1bReportExecutionEventRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x124\n" +
 	"\x05event\x18\x02 \x01(\v2\x1e.komari.exec.v1.ExecutionEventR\x05event\"K\n" +
@@ -1089,7 +1267,7 @@ func file_komari_exec_v1_exec_proto_rawDescGZIP() []byte {
 }
 
 var file_komari_exec_v1_exec_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_komari_exec_v1_exec_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_komari_exec_v1_exec_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_komari_exec_v1_exec_proto_goTypes = []any{
 	(OutputStream)(0),                    // 0: komari.exec.v1.OutputStream
 	(*CreateExecutionRequest)(nil),       // 1: komari.exec.v1.CreateExecutionRequest
@@ -1103,55 +1281,63 @@ var file_komari_exec_v1_exec_proto_goTypes = []any{
 	(*LeaseExecutionRequest)(nil),        // 9: komari.exec.v1.LeaseExecutionRequest
 	(*LeaseExecutionResponse)(nil),       // 10: komari.exec.v1.LeaseExecutionResponse
 	(*ExecutionAssignment)(nil),          // 11: komari.exec.v1.ExecutionAssignment
-	(*ReportExecutionEventRequest)(nil),  // 12: komari.exec.v1.ReportExecutionEventRequest
-	(*ReportExecutionEventResponse)(nil), // 13: komari.exec.v1.ReportExecutionEventResponse
-	(*Execution)(nil),                    // 14: komari.exec.v1.Execution
-	(*ExecutionEvent)(nil),               // 15: komari.exec.v1.ExecutionEvent
-	nil,                                  // 16: komari.exec.v1.CreateExecutionRequest.EnvironmentEntry
-	(*durationpb.Duration)(nil),          // 17: google.protobuf.Duration
-	(*v1.TwoFactorProof)(nil),            // 18: komari.common.v1.TwoFactorProof
-	(*timestamppb.Timestamp)(nil),        // 19: google.protobuf.Timestamp
-	(v1.OperationState)(0),               // 20: komari.common.v1.OperationState
-	(*v1.ErrorDetail)(nil),               // 21: komari.common.v1.ErrorDetail
+	(*ExecutionSpec)(nil),                // 12: komari.exec.v1.ExecutionSpec
+	(*ExecutionCancellation)(nil),        // 13: komari.exec.v1.ExecutionCancellation
+	(*ReportExecutionEventRequest)(nil),  // 14: komari.exec.v1.ReportExecutionEventRequest
+	(*ReportExecutionEventResponse)(nil), // 15: komari.exec.v1.ReportExecutionEventResponse
+	(*Execution)(nil),                    // 16: komari.exec.v1.Execution
+	(*ExecutionEvent)(nil),               // 17: komari.exec.v1.ExecutionEvent
+	nil,                                  // 18: komari.exec.v1.CreateExecutionRequest.EnvironmentEntry
+	nil,                                  // 19: komari.exec.v1.ExecutionSpec.EnvironmentEntry
+	(*durationpb.Duration)(nil),          // 20: google.protobuf.Duration
+	(*v1.TwoFactorProof)(nil),            // 21: komari.common.v1.TwoFactorProof
+	(*timestamppb.Timestamp)(nil),        // 22: google.protobuf.Timestamp
+	(v1.OperationState)(0),               // 23: komari.common.v1.OperationState
+	(*v1.ErrorDetail)(nil),               // 24: komari.common.v1.ErrorDetail
 }
 var file_komari_exec_v1_exec_proto_depIdxs = []int32{
-	16, // 0: komari.exec.v1.CreateExecutionRequest.environment:type_name -> komari.exec.v1.CreateExecutionRequest.EnvironmentEntry
-	17, // 1: komari.exec.v1.CreateExecutionRequest.timeout:type_name -> google.protobuf.Duration
-	18, // 2: komari.exec.v1.CreateExecutionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	14, // 3: komari.exec.v1.CreateExecutionResponse.execution:type_name -> komari.exec.v1.Execution
-	15, // 4: komari.exec.v1.WatchExecutionResponse.event:type_name -> komari.exec.v1.ExecutionEvent
-	18, // 5: komari.exec.v1.CancelExecutionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	14, // 6: komari.exec.v1.CancelExecutionResponse.execution:type_name -> komari.exec.v1.Execution
-	14, // 7: komari.exec.v1.GetExecutionResponse.execution:type_name -> komari.exec.v1.Execution
+	18, // 0: komari.exec.v1.CreateExecutionRequest.environment:type_name -> komari.exec.v1.CreateExecutionRequest.EnvironmentEntry
+	20, // 1: komari.exec.v1.CreateExecutionRequest.timeout:type_name -> google.protobuf.Duration
+	21, // 2: komari.exec.v1.CreateExecutionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	16, // 3: komari.exec.v1.CreateExecutionResponse.execution:type_name -> komari.exec.v1.Execution
+	17, // 4: komari.exec.v1.WatchExecutionResponse.event:type_name -> komari.exec.v1.ExecutionEvent
+	21, // 5: komari.exec.v1.CancelExecutionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	16, // 6: komari.exec.v1.CancelExecutionResponse.execution:type_name -> komari.exec.v1.Execution
+	16, // 7: komari.exec.v1.GetExecutionResponse.execution:type_name -> komari.exec.v1.Execution
 	11, // 8: komari.exec.v1.LeaseExecutionResponse.assignment:type_name -> komari.exec.v1.ExecutionAssignment
-	14, // 9: komari.exec.v1.ExecutionAssignment.execution:type_name -> komari.exec.v1.Execution
-	19, // 10: komari.exec.v1.ExecutionAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
-	15, // 11: komari.exec.v1.ReportExecutionEventRequest.event:type_name -> komari.exec.v1.ExecutionEvent
-	20, // 12: komari.exec.v1.Execution.state:type_name -> komari.common.v1.OperationState
-	19, // 13: komari.exec.v1.Execution.created_at:type_name -> google.protobuf.Timestamp
-	19, // 14: komari.exec.v1.Execution.started_at:type_name -> google.protobuf.Timestamp
-	19, // 15: komari.exec.v1.Execution.finished_at:type_name -> google.protobuf.Timestamp
-	19, // 16: komari.exec.v1.ExecutionEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	20, // 17: komari.exec.v1.ExecutionEvent.state:type_name -> komari.common.v1.OperationState
-	0,  // 18: komari.exec.v1.ExecutionEvent.stream:type_name -> komari.exec.v1.OutputStream
-	21, // 19: komari.exec.v1.ExecutionEvent.error:type_name -> komari.common.v1.ErrorDetail
-	1,  // 20: komari.exec.v1.ExecutionService.CreateExecution:input_type -> komari.exec.v1.CreateExecutionRequest
-	3,  // 21: komari.exec.v1.ExecutionService.WatchExecution:input_type -> komari.exec.v1.WatchExecutionRequest
-	5,  // 22: komari.exec.v1.ExecutionService.CancelExecution:input_type -> komari.exec.v1.CancelExecutionRequest
-	7,  // 23: komari.exec.v1.ExecutionService.GetExecution:input_type -> komari.exec.v1.GetExecutionRequest
-	9,  // 24: komari.exec.v1.ExecutionService.LeaseExecution:input_type -> komari.exec.v1.LeaseExecutionRequest
-	12, // 25: komari.exec.v1.ExecutionService.ReportExecutionEvent:input_type -> komari.exec.v1.ReportExecutionEventRequest
-	2,  // 26: komari.exec.v1.ExecutionService.CreateExecution:output_type -> komari.exec.v1.CreateExecutionResponse
-	4,  // 27: komari.exec.v1.ExecutionService.WatchExecution:output_type -> komari.exec.v1.WatchExecutionResponse
-	6,  // 28: komari.exec.v1.ExecutionService.CancelExecution:output_type -> komari.exec.v1.CancelExecutionResponse
-	8,  // 29: komari.exec.v1.ExecutionService.GetExecution:output_type -> komari.exec.v1.GetExecutionResponse
-	10, // 30: komari.exec.v1.ExecutionService.LeaseExecution:output_type -> komari.exec.v1.LeaseExecutionResponse
-	13, // 31: komari.exec.v1.ExecutionService.ReportExecutionEvent:output_type -> komari.exec.v1.ReportExecutionEventResponse
-	26, // [26:32] is the sub-list for method output_type
-	20, // [20:26] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	13, // 9: komari.exec.v1.LeaseExecutionResponse.cancellation:type_name -> komari.exec.v1.ExecutionCancellation
+	16, // 10: komari.exec.v1.ExecutionAssignment.execution:type_name -> komari.exec.v1.Execution
+	22, // 11: komari.exec.v1.ExecutionAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
+	12, // 12: komari.exec.v1.ExecutionAssignment.spec:type_name -> komari.exec.v1.ExecutionSpec
+	19, // 13: komari.exec.v1.ExecutionSpec.environment:type_name -> komari.exec.v1.ExecutionSpec.EnvironmentEntry
+	20, // 14: komari.exec.v1.ExecutionSpec.timeout:type_name -> google.protobuf.Duration
+	22, // 15: komari.exec.v1.ExecutionCancellation.requested_at:type_name -> google.protobuf.Timestamp
+	17, // 16: komari.exec.v1.ReportExecutionEventRequest.event:type_name -> komari.exec.v1.ExecutionEvent
+	23, // 17: komari.exec.v1.Execution.state:type_name -> komari.common.v1.OperationState
+	22, // 18: komari.exec.v1.Execution.created_at:type_name -> google.protobuf.Timestamp
+	22, // 19: komari.exec.v1.Execution.started_at:type_name -> google.protobuf.Timestamp
+	22, // 20: komari.exec.v1.Execution.finished_at:type_name -> google.protobuf.Timestamp
+	22, // 21: komari.exec.v1.ExecutionEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 22: komari.exec.v1.ExecutionEvent.state:type_name -> komari.common.v1.OperationState
+	0,  // 23: komari.exec.v1.ExecutionEvent.stream:type_name -> komari.exec.v1.OutputStream
+	24, // 24: komari.exec.v1.ExecutionEvent.error:type_name -> komari.common.v1.ErrorDetail
+	1,  // 25: komari.exec.v1.ExecutionService.CreateExecution:input_type -> komari.exec.v1.CreateExecutionRequest
+	3,  // 26: komari.exec.v1.ExecutionService.WatchExecution:input_type -> komari.exec.v1.WatchExecutionRequest
+	5,  // 27: komari.exec.v1.ExecutionService.CancelExecution:input_type -> komari.exec.v1.CancelExecutionRequest
+	7,  // 28: komari.exec.v1.ExecutionService.GetExecution:input_type -> komari.exec.v1.GetExecutionRequest
+	9,  // 29: komari.exec.v1.ExecutionService.LeaseExecution:input_type -> komari.exec.v1.LeaseExecutionRequest
+	14, // 30: komari.exec.v1.ExecutionService.ReportExecutionEvent:input_type -> komari.exec.v1.ReportExecutionEventRequest
+	2,  // 31: komari.exec.v1.ExecutionService.CreateExecution:output_type -> komari.exec.v1.CreateExecutionResponse
+	4,  // 32: komari.exec.v1.ExecutionService.WatchExecution:output_type -> komari.exec.v1.WatchExecutionResponse
+	6,  // 33: komari.exec.v1.ExecutionService.CancelExecution:output_type -> komari.exec.v1.CancelExecutionResponse
+	8,  // 34: komari.exec.v1.ExecutionService.GetExecution:output_type -> komari.exec.v1.GetExecutionResponse
+	10, // 35: komari.exec.v1.ExecutionService.LeaseExecution:output_type -> komari.exec.v1.LeaseExecutionResponse
+	15, // 36: komari.exec.v1.ExecutionService.ReportExecutionEvent:output_type -> komari.exec.v1.ReportExecutionEventResponse
+	31, // [31:37] is the sub-list for method output_type
+	25, // [25:31] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_komari_exec_v1_exec_proto_init() }
@@ -1159,15 +1345,15 @@ func file_komari_exec_v1_exec_proto_init() {
 	if File_komari_exec_v1_exec_proto != nil {
 		return
 	}
-	file_komari_exec_v1_exec_proto_msgTypes[13].OneofWrappers = []any{}
-	file_komari_exec_v1_exec_proto_msgTypes[14].OneofWrappers = []any{}
+	file_komari_exec_v1_exec_proto_msgTypes[15].OneofWrappers = []any{}
+	file_komari_exec_v1_exec_proto_msgTypes[16].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_exec_v1_exec_proto_rawDesc), len(file_komari_exec_v1_exec_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   16,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
