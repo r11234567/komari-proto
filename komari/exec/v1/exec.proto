@@ -35,11 +35,15 @@ message CreateExecutionRequest {
   uint64 max_output_bytes = 7;
   string idempotency_key = 8;
   komari.common.v1.TwoFactorProof two_factor = 9;
+  // agent_ids authorizes a batch in one fresh-2FA request. agent_id remains
+  // for source compatibility and must not be combined with this field.
+  repeated string agent_ids = 10;
 }
 
 // CreateExecutionResponse returns the queued task.
 message CreateExecutionResponse {
   Execution execution = 1;
+  repeated Execution executions = 2;
 }
 
 // WatchExecutionRequest resumes after a sequence number.

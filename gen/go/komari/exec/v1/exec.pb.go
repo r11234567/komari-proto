@@ -86,8 +86,11 @@ type CreateExecutionRequest struct {
 	MaxOutputBytes   uint64                 `protobuf:"varint,7,opt,name=max_output_bytes,json=maxOutputBytes,proto3" json:"max_output_bytes,omitempty"`
 	IdempotencyKey   string                 `protobuf:"bytes,8,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
 	TwoFactor        *v1.TwoFactorProof     `protobuf:"bytes,9,opt,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// agent_ids authorizes a batch in one fresh-2FA request. agent_id remains
+	// for source compatibility and must not be combined with this field.
+	AgentIds      []string `protobuf:"bytes,10,rep,name=agent_ids,json=agentIds,proto3" json:"agent_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateExecutionRequest) Reset() {
@@ -183,10 +186,18 @@ func (x *CreateExecutionRequest) GetTwoFactor() *v1.TwoFactorProof {
 	return nil
 }
 
+func (x *CreateExecutionRequest) GetAgentIds() []string {
+	if x != nil {
+		return x.AgentIds
+	}
+	return nil
+}
+
 // CreateExecutionResponse returns the queued task.
 type CreateExecutionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Execution     *Execution             `protobuf:"bytes,1,opt,name=execution,proto3" json:"execution,omitempty"`
+	Executions    []*Execution           `protobuf:"bytes,2,rep,name=executions,proto3" json:"executions,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -224,6 +235,13 @@ func (*CreateExecutionResponse) Descriptor() ([]byte, []int) {
 func (x *CreateExecutionResponse) GetExecution() *Execution {
 	if x != nil {
 		return x.Execution
+	}
+	return nil
+}
+
+func (x *CreateExecutionResponse) GetExecutions() []*Execution {
+	if x != nil {
+		return x.Executions
 	}
 	return nil
 }
@@ -1147,7 +1165,7 @@ var File_komari_exec_v1_exec_proto protoreflect.FileDescriptor
 
 const file_komari_exec_v1_exec_proto_rawDesc = "" +
 	"\n" +
-	"\x19komari/exec/v1/exec.proto\x12\x0ekomari.exec.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\"\xfc\x03\n" +
+	"\x19komari/exec/v1/exec.proto\x12\x0ekomari.exec.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\"\x99\x04\n" +
 	"\x16CreateExecutionRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x18\n" +
 	"\acommand\x18\x02 \x01(\tR\acommand\x12\x1c\n" +
@@ -1158,12 +1176,17 @@ const file_komari_exec_v1_exec_proto_rawDesc = "" +
 	"\x10max_output_bytes\x18\a \x01(\x04R\x0emaxOutputBytes\x12'\n" +
 	"\x0fidempotency_key\x18\b \x01(\tR\x0eidempotencyKey\x12?\n" +
 	"\n" +
-	"two_factor\x18\t \x01(\v2 .komari.common.v1.TwoFactorProofR\ttwoFactor\x1a>\n" +
+	"two_factor\x18\t \x01(\v2 .komari.common.v1.TwoFactorProofR\ttwoFactor\x12\x1b\n" +
+	"\tagent_ids\x18\n" +
+	" \x03(\tR\bagentIds\x1a>\n" +
 	"\x10EnvironmentEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"R\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x8d\x01\n" +
 	"\x17CreateExecutionResponse\x127\n" +
-	"\texecution\x18\x01 \x01(\v2\x19.komari.exec.v1.ExecutionR\texecution\"a\n" +
+	"\texecution\x18\x01 \x01(\v2\x19.komari.exec.v1.ExecutionR\texecution\x129\n" +
+	"\n" +
+	"executions\x18\x02 \x03(\v2\x19.komari.exec.v1.ExecutionR\n" +
+	"executions\"a\n" +
 	"\x15WatchExecutionRequest\x12!\n" +
 	"\fexecution_id\x18\x01 \x01(\tR\vexecutionId\x12%\n" +
 	"\x0eafter_sequence\x18\x02 \x01(\x04R\rafterSequence\"N\n" +
@@ -1300,44 +1323,45 @@ var file_komari_exec_v1_exec_proto_depIdxs = []int32{
 	20, // 1: komari.exec.v1.CreateExecutionRequest.timeout:type_name -> google.protobuf.Duration
 	21, // 2: komari.exec.v1.CreateExecutionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
 	16, // 3: komari.exec.v1.CreateExecutionResponse.execution:type_name -> komari.exec.v1.Execution
-	17, // 4: komari.exec.v1.WatchExecutionResponse.event:type_name -> komari.exec.v1.ExecutionEvent
-	21, // 5: komari.exec.v1.CancelExecutionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	16, // 6: komari.exec.v1.CancelExecutionResponse.execution:type_name -> komari.exec.v1.Execution
-	16, // 7: komari.exec.v1.GetExecutionResponse.execution:type_name -> komari.exec.v1.Execution
-	11, // 8: komari.exec.v1.LeaseExecutionResponse.assignment:type_name -> komari.exec.v1.ExecutionAssignment
-	13, // 9: komari.exec.v1.LeaseExecutionResponse.cancellation:type_name -> komari.exec.v1.ExecutionCancellation
-	16, // 10: komari.exec.v1.ExecutionAssignment.execution:type_name -> komari.exec.v1.Execution
-	22, // 11: komari.exec.v1.ExecutionAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
-	12, // 12: komari.exec.v1.ExecutionAssignment.spec:type_name -> komari.exec.v1.ExecutionSpec
-	19, // 13: komari.exec.v1.ExecutionSpec.environment:type_name -> komari.exec.v1.ExecutionSpec.EnvironmentEntry
-	20, // 14: komari.exec.v1.ExecutionSpec.timeout:type_name -> google.protobuf.Duration
-	22, // 15: komari.exec.v1.ExecutionCancellation.requested_at:type_name -> google.protobuf.Timestamp
-	17, // 16: komari.exec.v1.ReportExecutionEventRequest.event:type_name -> komari.exec.v1.ExecutionEvent
-	23, // 17: komari.exec.v1.Execution.state:type_name -> komari.common.v1.OperationState
-	22, // 18: komari.exec.v1.Execution.created_at:type_name -> google.protobuf.Timestamp
-	22, // 19: komari.exec.v1.Execution.started_at:type_name -> google.protobuf.Timestamp
-	22, // 20: komari.exec.v1.Execution.finished_at:type_name -> google.protobuf.Timestamp
-	22, // 21: komari.exec.v1.ExecutionEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 22: komari.exec.v1.ExecutionEvent.state:type_name -> komari.common.v1.OperationState
-	0,  // 23: komari.exec.v1.ExecutionEvent.stream:type_name -> komari.exec.v1.OutputStream
-	24, // 24: komari.exec.v1.ExecutionEvent.error:type_name -> komari.common.v1.ErrorDetail
-	1,  // 25: komari.exec.v1.ExecutionService.CreateExecution:input_type -> komari.exec.v1.CreateExecutionRequest
-	3,  // 26: komari.exec.v1.ExecutionService.WatchExecution:input_type -> komari.exec.v1.WatchExecutionRequest
-	5,  // 27: komari.exec.v1.ExecutionService.CancelExecution:input_type -> komari.exec.v1.CancelExecutionRequest
-	7,  // 28: komari.exec.v1.ExecutionService.GetExecution:input_type -> komari.exec.v1.GetExecutionRequest
-	9,  // 29: komari.exec.v1.ExecutionService.LeaseExecution:input_type -> komari.exec.v1.LeaseExecutionRequest
-	14, // 30: komari.exec.v1.ExecutionService.ReportExecutionEvent:input_type -> komari.exec.v1.ReportExecutionEventRequest
-	2,  // 31: komari.exec.v1.ExecutionService.CreateExecution:output_type -> komari.exec.v1.CreateExecutionResponse
-	4,  // 32: komari.exec.v1.ExecutionService.WatchExecution:output_type -> komari.exec.v1.WatchExecutionResponse
-	6,  // 33: komari.exec.v1.ExecutionService.CancelExecution:output_type -> komari.exec.v1.CancelExecutionResponse
-	8,  // 34: komari.exec.v1.ExecutionService.GetExecution:output_type -> komari.exec.v1.GetExecutionResponse
-	10, // 35: komari.exec.v1.ExecutionService.LeaseExecution:output_type -> komari.exec.v1.LeaseExecutionResponse
-	15, // 36: komari.exec.v1.ExecutionService.ReportExecutionEvent:output_type -> komari.exec.v1.ReportExecutionEventResponse
-	31, // [31:37] is the sub-list for method output_type
-	25, // [25:31] is the sub-list for method input_type
-	25, // [25:25] is the sub-list for extension type_name
-	25, // [25:25] is the sub-list for extension extendee
-	0,  // [0:25] is the sub-list for field type_name
+	16, // 4: komari.exec.v1.CreateExecutionResponse.executions:type_name -> komari.exec.v1.Execution
+	17, // 5: komari.exec.v1.WatchExecutionResponse.event:type_name -> komari.exec.v1.ExecutionEvent
+	21, // 6: komari.exec.v1.CancelExecutionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	16, // 7: komari.exec.v1.CancelExecutionResponse.execution:type_name -> komari.exec.v1.Execution
+	16, // 8: komari.exec.v1.GetExecutionResponse.execution:type_name -> komari.exec.v1.Execution
+	11, // 9: komari.exec.v1.LeaseExecutionResponse.assignment:type_name -> komari.exec.v1.ExecutionAssignment
+	13, // 10: komari.exec.v1.LeaseExecutionResponse.cancellation:type_name -> komari.exec.v1.ExecutionCancellation
+	16, // 11: komari.exec.v1.ExecutionAssignment.execution:type_name -> komari.exec.v1.Execution
+	22, // 12: komari.exec.v1.ExecutionAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
+	12, // 13: komari.exec.v1.ExecutionAssignment.spec:type_name -> komari.exec.v1.ExecutionSpec
+	19, // 14: komari.exec.v1.ExecutionSpec.environment:type_name -> komari.exec.v1.ExecutionSpec.EnvironmentEntry
+	20, // 15: komari.exec.v1.ExecutionSpec.timeout:type_name -> google.protobuf.Duration
+	22, // 16: komari.exec.v1.ExecutionCancellation.requested_at:type_name -> google.protobuf.Timestamp
+	17, // 17: komari.exec.v1.ReportExecutionEventRequest.event:type_name -> komari.exec.v1.ExecutionEvent
+	23, // 18: komari.exec.v1.Execution.state:type_name -> komari.common.v1.OperationState
+	22, // 19: komari.exec.v1.Execution.created_at:type_name -> google.protobuf.Timestamp
+	22, // 20: komari.exec.v1.Execution.started_at:type_name -> google.protobuf.Timestamp
+	22, // 21: komari.exec.v1.Execution.finished_at:type_name -> google.protobuf.Timestamp
+	22, // 22: komari.exec.v1.ExecutionEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 23: komari.exec.v1.ExecutionEvent.state:type_name -> komari.common.v1.OperationState
+	0,  // 24: komari.exec.v1.ExecutionEvent.stream:type_name -> komari.exec.v1.OutputStream
+	24, // 25: komari.exec.v1.ExecutionEvent.error:type_name -> komari.common.v1.ErrorDetail
+	1,  // 26: komari.exec.v1.ExecutionService.CreateExecution:input_type -> komari.exec.v1.CreateExecutionRequest
+	3,  // 27: komari.exec.v1.ExecutionService.WatchExecution:input_type -> komari.exec.v1.WatchExecutionRequest
+	5,  // 28: komari.exec.v1.ExecutionService.CancelExecution:input_type -> komari.exec.v1.CancelExecutionRequest
+	7,  // 29: komari.exec.v1.ExecutionService.GetExecution:input_type -> komari.exec.v1.GetExecutionRequest
+	9,  // 30: komari.exec.v1.ExecutionService.LeaseExecution:input_type -> komari.exec.v1.LeaseExecutionRequest
+	14, // 31: komari.exec.v1.ExecutionService.ReportExecutionEvent:input_type -> komari.exec.v1.ReportExecutionEventRequest
+	2,  // 32: komari.exec.v1.ExecutionService.CreateExecution:output_type -> komari.exec.v1.CreateExecutionResponse
+	4,  // 33: komari.exec.v1.ExecutionService.WatchExecution:output_type -> komari.exec.v1.WatchExecutionResponse
+	6,  // 34: komari.exec.v1.ExecutionService.CancelExecution:output_type -> komari.exec.v1.CancelExecutionResponse
+	8,  // 35: komari.exec.v1.ExecutionService.GetExecution:output_type -> komari.exec.v1.GetExecutionResponse
+	10, // 36: komari.exec.v1.ExecutionService.LeaseExecution:output_type -> komari.exec.v1.LeaseExecutionResponse
+	15, // 37: komari.exec.v1.ExecutionService.ReportExecutionEvent:output_type -> komari.exec.v1.ReportExecutionEventResponse
+	32, // [32:38] is the sub-list for method output_type
+	26, // [26:32] is the sub-list for method input_type
+	26, // [26:26] is the sub-list for extension type_name
+	26, // [26:26] is the sub-list for extension extendee
+	0,  // [0:26] is the sub-list for field type_name
 }
 
 func init() { file_komari_exec_v1_exec_proto_init() }
