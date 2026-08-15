@@ -23,6 +23,80 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// FileOperation enumerates bounded remote file-manager actions.
+type FileOperation int32
+
+const (
+	FileOperation_FILE_OPERATION_UNSPECIFIED   FileOperation = 0
+	FileOperation_FILE_OPERATION_LIST          FileOperation = 1
+	FileOperation_FILE_OPERATION_MKDIR         FileOperation = 2
+	FileOperation_FILE_OPERATION_CREATE        FileOperation = 3
+	FileOperation_FILE_OPERATION_RENAME        FileOperation = 4
+	FileOperation_FILE_OPERATION_COPY          FileOperation = 5
+	FileOperation_FILE_OPERATION_DELETE        FileOperation = 6
+	FileOperation_FILE_OPERATION_UPLOAD_START  FileOperation = 7
+	FileOperation_FILE_OPERATION_UPLOAD_CHUNK  FileOperation = 8
+	FileOperation_FILE_OPERATION_UPLOAD_FINISH FileOperation = 9
+	FileOperation_FILE_OPERATION_DOWNLOAD      FileOperation = 10
+)
+
+// Enum value maps for FileOperation.
+var (
+	FileOperation_name = map[int32]string{
+		0:  "FILE_OPERATION_UNSPECIFIED",
+		1:  "FILE_OPERATION_LIST",
+		2:  "FILE_OPERATION_MKDIR",
+		3:  "FILE_OPERATION_CREATE",
+		4:  "FILE_OPERATION_RENAME",
+		5:  "FILE_OPERATION_COPY",
+		6:  "FILE_OPERATION_DELETE",
+		7:  "FILE_OPERATION_UPLOAD_START",
+		8:  "FILE_OPERATION_UPLOAD_CHUNK",
+		9:  "FILE_OPERATION_UPLOAD_FINISH",
+		10: "FILE_OPERATION_DOWNLOAD",
+	}
+	FileOperation_value = map[string]int32{
+		"FILE_OPERATION_UNSPECIFIED":   0,
+		"FILE_OPERATION_LIST":          1,
+		"FILE_OPERATION_MKDIR":         2,
+		"FILE_OPERATION_CREATE":        3,
+		"FILE_OPERATION_RENAME":        4,
+		"FILE_OPERATION_COPY":          5,
+		"FILE_OPERATION_DELETE":        6,
+		"FILE_OPERATION_UPLOAD_START":  7,
+		"FILE_OPERATION_UPLOAD_CHUNK":  8,
+		"FILE_OPERATION_UPLOAD_FINISH": 9,
+		"FILE_OPERATION_DOWNLOAD":      10,
+	}
+)
+
+func (x FileOperation) Enum() *FileOperation {
+	p := new(FileOperation)
+	*p = x
+	return p
+}
+
+func (x FileOperation) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (FileOperation) Descriptor() protoreflect.EnumDescriptor {
+	return file_komari_webssh_v1_webssh_proto_enumTypes[0].Descriptor()
+}
+
+func (FileOperation) Type() protoreflect.EnumType {
+	return &file_komari_webssh_v1_webssh_proto_enumTypes[0]
+}
+
+func (x FileOperation) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use FileOperation.Descriptor instead.
+func (FileOperation) EnumDescriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{0}
+}
+
 // CloseReason classifies terminal session cleanup.
 type CloseReason int32
 
@@ -69,11 +143,11 @@ func (x CloseReason) String() string {
 }
 
 func (CloseReason) Descriptor() protoreflect.EnumDescriptor {
-	return file_komari_webssh_v1_webssh_proto_enumTypes[0].Descriptor()
+	return file_komari_webssh_v1_webssh_proto_enumTypes[1].Descriptor()
 }
 
 func (CloseReason) Type() protoreflect.EnumType {
-	return &file_komari_webssh_v1_webssh_proto_enumTypes[0]
+	return &file_komari_webssh_v1_webssh_proto_enumTypes[1]
 }
 
 func (x CloseReason) Number() protoreflect.EnumNumber {
@@ -82,7 +156,7 @@ func (x CloseReason) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CloseReason.Descriptor instead.
 func (CloseReason) EnumDescriptor() ([]byte, []int) {
-	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{0}
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{1}
 }
 
 // SessionRequest carries exactly one client-side terminal event.
@@ -710,6 +784,1377 @@ func (x *SessionClosed) GetClosedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+// CreateSessionRequest starts one remote-management session with fresh 2FA.
+type CreateSessionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Start         *SessionStart          `protobuf:"bytes,1,opt,name=start,proto3" json:"start,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSessionRequest) Reset() {
+	*x = CreateSessionRequest{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSessionRequest) ProtoMessage() {}
+
+func (x *CreateSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSessionRequest.ProtoReflect.Descriptor instead.
+func (*CreateSessionRequest) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CreateSessionRequest) GetStart() *SessionStart {
+	if x != nil {
+		return x.Start
+	}
+	return nil
+}
+
+// CreateSessionResponse returns the allocated session.
+type CreateSessionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Started       *SessionStarted        `protobuf:"bytes,1,opt,name=started,proto3" json:"started,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSessionResponse) Reset() {
+	*x = CreateSessionResponse{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSessionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSessionResponse) ProtoMessage() {}
+
+func (x *CreateSessionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSessionResponse.ProtoReflect.Descriptor instead.
+func (*CreateSessionResponse) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *CreateSessionResponse) GetStarted() *SessionStarted {
+	if x != nil {
+		return x.Started
+	}
+	return nil
+}
+
+// SendSessionCommandRequest sends one idempotent browser-side command.
+type SendSessionCommandRequest struct {
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	SessionId string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	Sequence  uint64                 `protobuf:"varint,2,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	// Types that are valid to be assigned to Command:
+	//
+	//	*SendSessionCommandRequest_Input
+	//	*SendSessionCommandRequest_Resize
+	//	*SendSessionCommandRequest_File
+	Command       isSendSessionCommandRequest_Command `protobuf_oneof:"command"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendSessionCommandRequest) Reset() {
+	*x = SendSessionCommandRequest{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendSessionCommandRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendSessionCommandRequest) ProtoMessage() {}
+
+func (x *SendSessionCommandRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendSessionCommandRequest.ProtoReflect.Descriptor instead.
+func (*SendSessionCommandRequest) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *SendSessionCommandRequest) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *SendSessionCommandRequest) GetSequence() uint64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+func (x *SendSessionCommandRequest) GetCommand() isSendSessionCommandRequest_Command {
+	if x != nil {
+		return x.Command
+	}
+	return nil
+}
+
+func (x *SendSessionCommandRequest) GetInput() []byte {
+	if x != nil {
+		if x, ok := x.Command.(*SendSessionCommandRequest_Input); ok {
+			return x.Input
+		}
+	}
+	return nil
+}
+
+func (x *SendSessionCommandRequest) GetResize() *TerminalSize {
+	if x != nil {
+		if x, ok := x.Command.(*SendSessionCommandRequest_Resize); ok {
+			return x.Resize
+		}
+	}
+	return nil
+}
+
+func (x *SendSessionCommandRequest) GetFile() *FileCommand {
+	if x != nil {
+		if x, ok := x.Command.(*SendSessionCommandRequest_File); ok {
+			return x.File
+		}
+	}
+	return nil
+}
+
+type isSendSessionCommandRequest_Command interface {
+	isSendSessionCommandRequest_Command()
+}
+
+type SendSessionCommandRequest_Input struct {
+	Input []byte `protobuf:"bytes,3,opt,name=input,proto3,oneof"`
+}
+
+type SendSessionCommandRequest_Resize struct {
+	Resize *TerminalSize `protobuf:"bytes,4,opt,name=resize,proto3,oneof"`
+}
+
+type SendSessionCommandRequest_File struct {
+	File *FileCommand `protobuf:"bytes,5,opt,name=file,proto3,oneof"`
+}
+
+func (*SendSessionCommandRequest_Input) isSendSessionCommandRequest_Command() {}
+
+func (*SendSessionCommandRequest_Resize) isSendSessionCommandRequest_Command() {}
+
+func (*SendSessionCommandRequest_File) isSendSessionCommandRequest_Command() {}
+
+// SendSessionCommandResponse acknowledges the accepted browser sequence.
+type SendSessionCommandResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	AcceptedSequence uint64                 `protobuf:"varint,1,opt,name=accepted_sequence,json=acceptedSequence,proto3" json:"accepted_sequence,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *SendSessionCommandResponse) Reset() {
+	*x = SendSessionCommandResponse{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendSessionCommandResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendSessionCommandResponse) ProtoMessage() {}
+
+func (x *SendSessionCommandResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendSessionCommandResponse.ProtoReflect.Descriptor instead.
+func (*SendSessionCommandResponse) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *SendSessionCommandResponse) GetAcceptedSequence() uint64 {
+	if x != nil {
+		return x.AcceptedSequence
+	}
+	return 0
+}
+
+// WatchSessionRequest resumes browser output after a known sequence.
+type WatchSessionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	AfterSequence uint64                 `protobuf:"varint,2,opt,name=after_sequence,json=afterSequence,proto3" json:"after_sequence,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WatchSessionRequest) Reset() {
+	*x = WatchSessionRequest{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WatchSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WatchSessionRequest) ProtoMessage() {}
+
+func (x *WatchSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WatchSessionRequest.ProtoReflect.Descriptor instead.
+func (*WatchSessionRequest) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *WatchSessionRequest) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *WatchSessionRequest) GetAfterSequence() uint64 {
+	if x != nil {
+		return x.AfterSequence
+	}
+	return 0
+}
+
+// WatchSessionResponse carries one ordered remote-management event.
+type WatchSessionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Event         *SessionEvent          `protobuf:"bytes,1,opt,name=event,proto3" json:"event,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WatchSessionResponse) Reset() {
+	*x = WatchSessionResponse{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WatchSessionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WatchSessionResponse) ProtoMessage() {}
+
+func (x *WatchSessionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WatchSessionResponse.ProtoReflect.Descriptor instead.
+func (*WatchSessionResponse) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *WatchSessionResponse) GetEvent() *SessionEvent {
+	if x != nil {
+		return x.Event
+	}
+	return nil
+}
+
+// SessionEvent is an ordered terminal, file, or close event.
+type SessionEvent struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	SessionId  string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	Sequence   uint64                 `protobuf:"varint,2,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	OccurredAt *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	// Types that are valid to be assigned to Event:
+	//
+	//	*SessionEvent_Output
+	//	*SessionEvent_File
+	//	*SessionEvent_Closed
+	Event         isSessionEvent_Event `protobuf_oneof:"event"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SessionEvent) Reset() {
+	*x = SessionEvent{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SessionEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SessionEvent) ProtoMessage() {}
+
+func (x *SessionEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SessionEvent.ProtoReflect.Descriptor instead.
+func (*SessionEvent) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *SessionEvent) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *SessionEvent) GetSequence() uint64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+func (x *SessionEvent) GetOccurredAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.OccurredAt
+	}
+	return nil
+}
+
+func (x *SessionEvent) GetEvent() isSessionEvent_Event {
+	if x != nil {
+		return x.Event
+	}
+	return nil
+}
+
+func (x *SessionEvent) GetOutput() []byte {
+	if x != nil {
+		if x, ok := x.Event.(*SessionEvent_Output); ok {
+			return x.Output
+		}
+	}
+	return nil
+}
+
+func (x *SessionEvent) GetFile() *FileEvent {
+	if x != nil {
+		if x, ok := x.Event.(*SessionEvent_File); ok {
+			return x.File
+		}
+	}
+	return nil
+}
+
+func (x *SessionEvent) GetClosed() *SessionClosed {
+	if x != nil {
+		if x, ok := x.Event.(*SessionEvent_Closed); ok {
+			return x.Closed
+		}
+	}
+	return nil
+}
+
+type isSessionEvent_Event interface {
+	isSessionEvent_Event()
+}
+
+type SessionEvent_Output struct {
+	Output []byte `protobuf:"bytes,4,opt,name=output,proto3,oneof"`
+}
+
+type SessionEvent_File struct {
+	File *FileEvent `protobuf:"bytes,5,opt,name=file,proto3,oneof"`
+}
+
+type SessionEvent_Closed struct {
+	Closed *SessionClosed `protobuf:"bytes,6,opt,name=closed,proto3,oneof"`
+}
+
+func (*SessionEvent_Output) isSessionEvent_Event() {}
+
+func (*SessionEvent_File) isSessionEvent_Event() {}
+
+func (*SessionEvent_Closed) isSessionEvent_Event() {}
+
+// LeaseSessionsRequest opens the Agent assignment stream.
+type LeaseSessionsRequest struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	AgentId           string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	AfterAssignmentId string                 `protobuf:"bytes,2,opt,name=after_assignment_id,json=afterAssignmentId,proto3" json:"after_assignment_id,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *LeaseSessionsRequest) Reset() {
+	*x = LeaseSessionsRequest{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeaseSessionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeaseSessionsRequest) ProtoMessage() {}
+
+func (x *LeaseSessionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeaseSessionsRequest.ProtoReflect.Descriptor instead.
+func (*LeaseSessionsRequest) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *LeaseSessionsRequest) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+func (x *LeaseSessionsRequest) GetAfterAssignmentId() string {
+	if x != nil {
+		return x.AfterAssignmentId
+	}
+	return ""
+}
+
+// LeaseSessionsResponse contains one immutable pending assignment.
+type LeaseSessionsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Assignment    *SessionAssignment     `protobuf:"bytes,1,opt,name=assignment,proto3" json:"assignment,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LeaseSessionsResponse) Reset() {
+	*x = LeaseSessionsResponse{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeaseSessionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeaseSessionsResponse) ProtoMessage() {}
+
+func (x *LeaseSessionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeaseSessionsResponse.ProtoReflect.Descriptor instead.
+func (*LeaseSessionsResponse) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *LeaseSessionsResponse) GetAssignment() *SessionAssignment {
+	if x != nil {
+		return x.Assignment
+	}
+	return nil
+}
+
+// SessionAssignment describes one session that an Agent must attach to.
+type SessionAssignment struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	AssignmentId     string                 `protobuf:"bytes,1,opt,name=assignment_id,json=assignmentId,proto3" json:"assignment_id,omitempty"`
+	SessionId        string                 `protobuf:"bytes,2,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	AgentId          string                 `protobuf:"bytes,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	Shell            string                 `protobuf:"bytes,4,opt,name=shell,proto3" json:"shell,omitempty"`
+	Size             *TerminalSize          `protobuf:"bytes,5,opt,name=size,proto3" json:"size,omitempty"`
+	WorkingDirectory string                 `protobuf:"bytes,6,opt,name=working_directory,json=workingDirectory,proto3" json:"working_directory,omitempty"`
+	LeaseExpiresAt   *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=lease_expires_at,json=leaseExpiresAt,proto3" json:"lease_expires_at,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *SessionAssignment) Reset() {
+	*x = SessionAssignment{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SessionAssignment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SessionAssignment) ProtoMessage() {}
+
+func (x *SessionAssignment) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SessionAssignment.ProtoReflect.Descriptor instead.
+func (*SessionAssignment) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *SessionAssignment) GetAssignmentId() string {
+	if x != nil {
+		return x.AssignmentId
+	}
+	return ""
+}
+
+func (x *SessionAssignment) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *SessionAssignment) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+func (x *SessionAssignment) GetShell() string {
+	if x != nil {
+		return x.Shell
+	}
+	return ""
+}
+
+func (x *SessionAssignment) GetSize() *TerminalSize {
+	if x != nil {
+		return x.Size
+	}
+	return nil
+}
+
+func (x *SessionAssignment) GetWorkingDirectory() string {
+	if x != nil {
+		return x.WorkingDirectory
+	}
+	return ""
+}
+
+func (x *SessionAssignment) GetLeaseExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LeaseExpiresAt
+	}
+	return nil
+}
+
+// AttachSessionRequest carries the Agent handshake or an ordered event.
+type AttachSessionRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Message:
+	//
+	//	*AttachSessionRequest_Attach
+	//	*AttachSessionRequest_Event
+	Message       isAttachSessionRequest_Message `protobuf_oneof:"message"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AttachSessionRequest) Reset() {
+	*x = AttachSessionRequest{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AttachSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AttachSessionRequest) ProtoMessage() {}
+
+func (x *AttachSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AttachSessionRequest.ProtoReflect.Descriptor instead.
+func (*AttachSessionRequest) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *AttachSessionRequest) GetMessage() isAttachSessionRequest_Message {
+	if x != nil {
+		return x.Message
+	}
+	return nil
+}
+
+func (x *AttachSessionRequest) GetAttach() *AgentSessionAttach {
+	if x != nil {
+		if x, ok := x.Message.(*AttachSessionRequest_Attach); ok {
+			return x.Attach
+		}
+	}
+	return nil
+}
+
+func (x *AttachSessionRequest) GetEvent() *AgentSessionEvent {
+	if x != nil {
+		if x, ok := x.Message.(*AttachSessionRequest_Event); ok {
+			return x.Event
+		}
+	}
+	return nil
+}
+
+type isAttachSessionRequest_Message interface {
+	isAttachSessionRequest_Message()
+}
+
+type AttachSessionRequest_Attach struct {
+	Attach *AgentSessionAttach `protobuf:"bytes,1,opt,name=attach,proto3,oneof"`
+}
+
+type AttachSessionRequest_Event struct {
+	Event *AgentSessionEvent `protobuf:"bytes,2,opt,name=event,proto3,oneof"`
+}
+
+func (*AttachSessionRequest_Attach) isAttachSessionRequest_Message() {}
+
+func (*AttachSessionRequest_Event) isAttachSessionRequest_Message() {}
+
+// AgentSessionAttach binds an authenticated Agent to a leased session.
+type AgentSessionAttach struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	AssignmentId  string                 `protobuf:"bytes,2,opt,name=assignment_id,json=assignmentId,proto3" json:"assignment_id,omitempty"`
+	SessionId     string                 `protobuf:"bytes,3,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AgentSessionAttach) Reset() {
+	*x = AgentSessionAttach{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AgentSessionAttach) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AgentSessionAttach) ProtoMessage() {}
+
+func (x *AgentSessionAttach) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AgentSessionAttach.ProtoReflect.Descriptor instead.
+func (*AgentSessionAttach) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *AgentSessionAttach) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+func (x *AgentSessionAttach) GetAssignmentId() string {
+	if x != nil {
+		return x.AssignmentId
+	}
+	return ""
+}
+
+func (x *AgentSessionAttach) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+// AgentSessionEvent carries terminal/file output or a terminal state.
+type AgentSessionEvent struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	Sequence   uint64                 `protobuf:"varint,1,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	OccurredAt *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	// Types that are valid to be assigned to Event:
+	//
+	//	*AgentSessionEvent_Output
+	//	*AgentSessionEvent_File
+	//	*AgentSessionEvent_Closed
+	Event         isAgentSessionEvent_Event `protobuf_oneof:"event"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AgentSessionEvent) Reset() {
+	*x = AgentSessionEvent{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AgentSessionEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AgentSessionEvent) ProtoMessage() {}
+
+func (x *AgentSessionEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AgentSessionEvent.ProtoReflect.Descriptor instead.
+func (*AgentSessionEvent) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *AgentSessionEvent) GetSequence() uint64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+func (x *AgentSessionEvent) GetOccurredAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.OccurredAt
+	}
+	return nil
+}
+
+func (x *AgentSessionEvent) GetEvent() isAgentSessionEvent_Event {
+	if x != nil {
+		return x.Event
+	}
+	return nil
+}
+
+func (x *AgentSessionEvent) GetOutput() []byte {
+	if x != nil {
+		if x, ok := x.Event.(*AgentSessionEvent_Output); ok {
+			return x.Output
+		}
+	}
+	return nil
+}
+
+func (x *AgentSessionEvent) GetFile() *FileEvent {
+	if x != nil {
+		if x, ok := x.Event.(*AgentSessionEvent_File); ok {
+			return x.File
+		}
+	}
+	return nil
+}
+
+func (x *AgentSessionEvent) GetClosed() *SessionClosed {
+	if x != nil {
+		if x, ok := x.Event.(*AgentSessionEvent_Closed); ok {
+			return x.Closed
+		}
+	}
+	return nil
+}
+
+type isAgentSessionEvent_Event interface {
+	isAgentSessionEvent_Event()
+}
+
+type AgentSessionEvent_Output struct {
+	Output []byte `protobuf:"bytes,3,opt,name=output,proto3,oneof"`
+}
+
+type AgentSessionEvent_File struct {
+	File *FileEvent `protobuf:"bytes,4,opt,name=file,proto3,oneof"`
+}
+
+type AgentSessionEvent_Closed struct {
+	Closed *SessionClosed `protobuf:"bytes,5,opt,name=closed,proto3,oneof"`
+}
+
+func (*AgentSessionEvent_Output) isAgentSessionEvent_Event() {}
+
+func (*AgentSessionEvent_File) isAgentSessionEvent_Event() {}
+
+func (*AgentSessionEvent_Closed) isAgentSessionEvent_Event() {}
+
+// AttachSessionResponse carries one ordered command to the Agent.
+type AttachSessionResponse struct {
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	Sequence uint64                 `protobuf:"varint,1,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	// Types that are valid to be assigned to Command:
+	//
+	//	*AttachSessionResponse_Input
+	//	*AttachSessionResponse_Resize
+	//	*AttachSessionResponse_File
+	//	*AttachSessionResponse_CloseReason
+	Command       isAttachSessionResponse_Command `protobuf_oneof:"command"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AttachSessionResponse) Reset() {
+	*x = AttachSessionResponse{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AttachSessionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AttachSessionResponse) ProtoMessage() {}
+
+func (x *AttachSessionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AttachSessionResponse.ProtoReflect.Descriptor instead.
+func (*AttachSessionResponse) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *AttachSessionResponse) GetSequence() uint64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+func (x *AttachSessionResponse) GetCommand() isAttachSessionResponse_Command {
+	if x != nil {
+		return x.Command
+	}
+	return nil
+}
+
+func (x *AttachSessionResponse) GetInput() []byte {
+	if x != nil {
+		if x, ok := x.Command.(*AttachSessionResponse_Input); ok {
+			return x.Input
+		}
+	}
+	return nil
+}
+
+func (x *AttachSessionResponse) GetResize() *TerminalSize {
+	if x != nil {
+		if x, ok := x.Command.(*AttachSessionResponse_Resize); ok {
+			return x.Resize
+		}
+	}
+	return nil
+}
+
+func (x *AttachSessionResponse) GetFile() *FileCommand {
+	if x != nil {
+		if x, ok := x.Command.(*AttachSessionResponse_File); ok {
+			return x.File
+		}
+	}
+	return nil
+}
+
+func (x *AttachSessionResponse) GetCloseReason() string {
+	if x != nil {
+		if x, ok := x.Command.(*AttachSessionResponse_CloseReason); ok {
+			return x.CloseReason
+		}
+	}
+	return ""
+}
+
+type isAttachSessionResponse_Command interface {
+	isAttachSessionResponse_Command()
+}
+
+type AttachSessionResponse_Input struct {
+	Input []byte `protobuf:"bytes,2,opt,name=input,proto3,oneof"`
+}
+
+type AttachSessionResponse_Resize struct {
+	Resize *TerminalSize `protobuf:"bytes,3,opt,name=resize,proto3,oneof"`
+}
+
+type AttachSessionResponse_File struct {
+	File *FileCommand `protobuf:"bytes,4,opt,name=file,proto3,oneof"`
+}
+
+type AttachSessionResponse_CloseReason struct {
+	CloseReason string `protobuf:"bytes,5,opt,name=close_reason,json=closeReason,proto3,oneof"`
+}
+
+func (*AttachSessionResponse_Input) isAttachSessionResponse_Command() {}
+
+func (*AttachSessionResponse_Resize) isAttachSessionResponse_Command() {}
+
+func (*AttachSessionResponse_File) isAttachSessionResponse_Command() {}
+
+func (*AttachSessionResponse_CloseReason) isAttachSessionResponse_Command() {}
+
+// FileCommand is one typed file-manager request.
+type FileCommand struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RequestId     string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	Operation     FileOperation          `protobuf:"varint,2,opt,name=operation,proto3,enum=komari.webssh.v1.FileOperation" json:"operation,omitempty"`
+	Path          string                 `protobuf:"bytes,3,opt,name=path,proto3" json:"path,omitempty"`
+	Destination   string                 `protobuf:"bytes,4,opt,name=destination,proto3" json:"destination,omitempty"`
+	Recursive     bool                   `protobuf:"varint,5,opt,name=recursive,proto3" json:"recursive,omitempty"`
+	Overwrite     bool                   `protobuf:"varint,6,opt,name=overwrite,proto3" json:"overwrite,omitempty"`
+	Size          uint64                 `protobuf:"varint,7,opt,name=size,proto3" json:"size,omitempty"`
+	Sha256        string                 `protobuf:"bytes,8,opt,name=sha256,proto3" json:"sha256,omitempty"`
+	UploadId      string                 `protobuf:"bytes,9,opt,name=upload_id,json=uploadId,proto3" json:"upload_id,omitempty"`
+	Data          []byte                 `protobuf:"bytes,10,opt,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FileCommand) Reset() {
+	*x = FileCommand{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FileCommand) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FileCommand) ProtoMessage() {}
+
+func (x *FileCommand) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FileCommand.ProtoReflect.Descriptor instead.
+func (*FileCommand) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *FileCommand) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+func (x *FileCommand) GetOperation() FileOperation {
+	if x != nil {
+		return x.Operation
+	}
+	return FileOperation_FILE_OPERATION_UNSPECIFIED
+}
+
+func (x *FileCommand) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *FileCommand) GetDestination() string {
+	if x != nil {
+		return x.Destination
+	}
+	return ""
+}
+
+func (x *FileCommand) GetRecursive() bool {
+	if x != nil {
+		return x.Recursive
+	}
+	return false
+}
+
+func (x *FileCommand) GetOverwrite() bool {
+	if x != nil {
+		return x.Overwrite
+	}
+	return false
+}
+
+func (x *FileCommand) GetSize() uint64 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *FileCommand) GetSha256() string {
+	if x != nil {
+		return x.Sha256
+	}
+	return ""
+}
+
+func (x *FileCommand) GetUploadId() string {
+	if x != nil {
+		return x.UploadId
+	}
+	return ""
+}
+
+func (x *FileCommand) GetData() []byte {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// FileEntry is one directory entry without platform-specific metadata blobs.
+type FileEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Path          string                 `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
+	Directory     bool                   `protobuf:"varint,3,opt,name=directory,proto3" json:"directory,omitempty"`
+	Size          uint64                 `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`
+	ModifiedAt    *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=modified_at,json=modifiedAt,proto3" json:"modified_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FileEntry) Reset() {
+	*x = FileEntry{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FileEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FileEntry) ProtoMessage() {}
+
+func (x *FileEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FileEntry.ProtoReflect.Descriptor instead.
+func (*FileEntry) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *FileEntry) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *FileEntry) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *FileEntry) GetDirectory() bool {
+	if x != nil {
+		return x.Directory
+	}
+	return false
+}
+
+func (x *FileEntry) GetSize() uint64 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *FileEntry) GetModifiedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ModifiedAt
+	}
+	return nil
+}
+
+// FileEvent is one typed response or transfer chunk.
+type FileEvent struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RequestId     string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	Operation     FileOperation          `protobuf:"varint,2,opt,name=operation,proto3,enum=komari.webssh.v1.FileOperation" json:"operation,omitempty"`
+	Success       bool                   `protobuf:"varint,3,opt,name=success,proto3" json:"success,omitempty"`
+	Error         string                 `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
+	Entries       []*FileEntry           `protobuf:"bytes,5,rep,name=entries,proto3" json:"entries,omitempty"`
+	Parent        string                 `protobuf:"bytes,6,opt,name=parent,proto3" json:"parent,omitempty"`
+	UploadId      string                 `protobuf:"bytes,7,opt,name=upload_id,json=uploadId,proto3" json:"upload_id,omitempty"`
+	Size          uint64                 `protobuf:"varint,8,opt,name=size,proto3" json:"size,omitempty"`
+	Transferred   uint64                 `protobuf:"varint,9,opt,name=transferred,proto3" json:"transferred,omitempty"`
+	Sha256        string                 `protobuf:"bytes,10,opt,name=sha256,proto3" json:"sha256,omitempty"`
+	Data          []byte                 `protobuf:"bytes,11,opt,name=data,proto3" json:"data,omitempty"`
+	Complete      bool                   `protobuf:"varint,12,opt,name=complete,proto3" json:"complete,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FileEvent) Reset() {
+	*x = FileEvent{}
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FileEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FileEvent) ProtoMessage() {}
+
+func (x *FileEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FileEvent.ProtoReflect.Descriptor instead.
+func (*FileEvent) Descriptor() ([]byte, []int) {
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *FileEvent) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+func (x *FileEvent) GetOperation() FileOperation {
+	if x != nil {
+		return x.Operation
+	}
+	return FileOperation_FILE_OPERATION_UNSPECIFIED
+}
+
+func (x *FileEvent) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *FileEvent) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+func (x *FileEvent) GetEntries() []*FileEntry {
+	if x != nil {
+		return x.Entries
+	}
+	return nil
+}
+
+func (x *FileEvent) GetParent() string {
+	if x != nil {
+		return x.Parent
+	}
+	return ""
+}
+
+func (x *FileEvent) GetUploadId() string {
+	if x != nil {
+		return x.UploadId
+	}
+	return ""
+}
+
+func (x *FileEvent) GetSize() uint64 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *FileEvent) GetTransferred() uint64 {
+	if x != nil {
+		return x.Transferred
+	}
+	return 0
+}
+
+func (x *FileEvent) GetSha256() string {
+	if x != nil {
+		return x.Sha256
+	}
+	return ""
+}
+
+func (x *FileEvent) GetData() []byte {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+func (x *FileEvent) GetComplete() bool {
+	if x != nil {
+		return x.Complete
+	}
+	return false
+}
+
 // CloseSessionRequest explicitly closes one session.
 type CloseSessionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -721,7 +2166,7 @@ type CloseSessionRequest struct {
 
 func (x *CloseSessionRequest) Reset() {
 	*x = CloseSessionRequest{}
-	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[9]
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -733,7 +2178,7 @@ func (x *CloseSessionRequest) String() string {
 func (*CloseSessionRequest) ProtoMessage() {}
 
 func (x *CloseSessionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[9]
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -746,7 +2191,7 @@ func (x *CloseSessionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CloseSessionRequest.ProtoReflect.Descriptor instead.
 func (*CloseSessionRequest) Descriptor() ([]byte, []int) {
-	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{9}
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *CloseSessionRequest) GetSessionId() string {
@@ -773,7 +2218,7 @@ type CloseSessionResponse struct {
 
 func (x *CloseSessionResponse) Reset() {
 	*x = CloseSessionResponse{}
-	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[10]
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -785,7 +2230,7 @@ func (x *CloseSessionResponse) String() string {
 func (*CloseSessionResponse) ProtoMessage() {}
 
 func (x *CloseSessionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[10]
+	mi := &file_komari_webssh_v1_webssh_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -798,7 +2243,7 @@ func (x *CloseSessionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CloseSessionResponse.ProtoReflect.Descriptor instead.
 func (*CloseSessionResponse) Descriptor() ([]byte, []int) {
-	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{10}
+	return file_komari_webssh_v1_webssh_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *CloseSessionResponse) GetClosed() *SessionClosed {
@@ -860,12 +2305,130 @@ const file_komari_webssh_v1_webssh_proto_rawDesc = "" +
 	"\tclosed_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\bclosedAtB\f\n" +
 	"\n" +
 	"_exit_code\"L\n" +
+	"\x14CreateSessionRequest\x124\n" +
+	"\x05start\x18\x01 \x01(\v2\x1e.komari.webssh.v1.SessionStartR\x05start\"S\n" +
+	"\x15CreateSessionResponse\x12:\n" +
+	"\astarted\x18\x01 \x01(\v2 .komari.webssh.v1.SessionStartedR\astarted\"\xe8\x01\n" +
+	"\x19SendSessionCommandRequest\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x1a\n" +
+	"\bsequence\x18\x02 \x01(\x04R\bsequence\x12\x16\n" +
+	"\x05input\x18\x03 \x01(\fH\x00R\x05input\x128\n" +
+	"\x06resize\x18\x04 \x01(\v2\x1e.komari.webssh.v1.TerminalSizeH\x00R\x06resize\x123\n" +
+	"\x04file\x18\x05 \x01(\v2\x1d.komari.webssh.v1.FileCommandH\x00R\x04fileB\t\n" +
+	"\acommand\"I\n" +
+	"\x1aSendSessionCommandResponse\x12+\n" +
+	"\x11accepted_sequence\x18\x01 \x01(\x04R\x10acceptedSequence\"[\n" +
+	"\x13WatchSessionRequest\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\x12%\n" +
+	"\x0eafter_sequence\x18\x02 \x01(\x04R\rafterSequence\"L\n" +
+	"\x14WatchSessionResponse\x124\n" +
+	"\x05event\x18\x01 \x01(\v2\x1e.komari.webssh.v1.SessionEventR\x05event\"\x97\x02\n" +
+	"\fSessionEvent\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x1a\n" +
+	"\bsequence\x18\x02 \x01(\x04R\bsequence\x12;\n" +
+	"\voccurred_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"occurredAt\x12\x18\n" +
+	"\x06output\x18\x04 \x01(\fH\x00R\x06output\x121\n" +
+	"\x04file\x18\x05 \x01(\v2\x1b.komari.webssh.v1.FileEventH\x00R\x04file\x129\n" +
+	"\x06closed\x18\x06 \x01(\v2\x1f.komari.webssh.v1.SessionClosedH\x00R\x06closedB\a\n" +
+	"\x05event\"a\n" +
+	"\x14LeaseSessionsRequest\x12\x19\n" +
+	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12.\n" +
+	"\x13after_assignment_id\x18\x02 \x01(\tR\x11afterAssignmentId\"\\\n" +
+	"\x15LeaseSessionsResponse\x12C\n" +
+	"\n" +
+	"assignment\x18\x01 \x01(\v2#.komari.webssh.v1.SessionAssignmentR\n" +
+	"assignment\"\xaf\x02\n" +
+	"\x11SessionAssignment\x12#\n" +
+	"\rassignment_id\x18\x01 \x01(\tR\fassignmentId\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x02 \x01(\tR\tsessionId\x12\x19\n" +
+	"\bagent_id\x18\x03 \x01(\tR\aagentId\x12\x14\n" +
+	"\x05shell\x18\x04 \x01(\tR\x05shell\x122\n" +
+	"\x04size\x18\x05 \x01(\v2\x1e.komari.webssh.v1.TerminalSizeR\x04size\x12+\n" +
+	"\x11working_directory\x18\x06 \x01(\tR\x10workingDirectory\x12D\n" +
+	"\x10lease_expires_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\x0eleaseExpiresAt\"\x9e\x01\n" +
+	"\x14AttachSessionRequest\x12>\n" +
+	"\x06attach\x18\x01 \x01(\v2$.komari.webssh.v1.AgentSessionAttachH\x00R\x06attach\x12;\n" +
+	"\x05event\x18\x02 \x01(\v2#.komari.webssh.v1.AgentSessionEventH\x00R\x05eventB\t\n" +
+	"\amessage\"s\n" +
+	"\x12AgentSessionAttach\x12\x19\n" +
+	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12#\n" +
+	"\rassignment_id\x18\x02 \x01(\tR\fassignmentId\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x03 \x01(\tR\tsessionId\"\xfd\x01\n" +
+	"\x11AgentSessionEvent\x12\x1a\n" +
+	"\bsequence\x18\x01 \x01(\x04R\bsequence\x12;\n" +
+	"\voccurred_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"occurredAt\x12\x18\n" +
+	"\x06output\x18\x03 \x01(\fH\x00R\x06output\x121\n" +
+	"\x04file\x18\x04 \x01(\v2\x1b.komari.webssh.v1.FileEventH\x00R\x04file\x129\n" +
+	"\x06closed\x18\x05 \x01(\v2\x1f.komari.webssh.v1.SessionClosedH\x00R\x06closedB\a\n" +
+	"\x05event\"\xea\x01\n" +
+	"\x15AttachSessionResponse\x12\x1a\n" +
+	"\bsequence\x18\x01 \x01(\x04R\bsequence\x12\x16\n" +
+	"\x05input\x18\x02 \x01(\fH\x00R\x05input\x128\n" +
+	"\x06resize\x18\x03 \x01(\v2\x1e.komari.webssh.v1.TerminalSizeH\x00R\x06resize\x123\n" +
+	"\x04file\x18\x04 \x01(\v2\x1d.komari.webssh.v1.FileCommandH\x00R\x04file\x12#\n" +
+	"\fclose_reason\x18\x05 \x01(\tH\x00R\vcloseReasonB\t\n" +
+	"\acommand\"\xba\x02\n" +
+	"\vFileCommand\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12=\n" +
+	"\toperation\x18\x02 \x01(\x0e2\x1f.komari.webssh.v1.FileOperationR\toperation\x12\x12\n" +
+	"\x04path\x18\x03 \x01(\tR\x04path\x12 \n" +
+	"\vdestination\x18\x04 \x01(\tR\vdestination\x12\x1c\n" +
+	"\trecursive\x18\x05 \x01(\bR\trecursive\x12\x1c\n" +
+	"\toverwrite\x18\x06 \x01(\bR\toverwrite\x12\x12\n" +
+	"\x04size\x18\a \x01(\x04R\x04size\x12\x16\n" +
+	"\x06sha256\x18\b \x01(\tR\x06sha256\x12\x1b\n" +
+	"\tupload_id\x18\t \x01(\tR\buploadId\x12\x12\n" +
+	"\x04data\x18\n" +
+	" \x01(\fR\x04data\"\xa2\x01\n" +
+	"\tFileEntry\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
+	"\x04path\x18\x02 \x01(\tR\x04path\x12\x1c\n" +
+	"\tdirectory\x18\x03 \x01(\bR\tdirectory\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\x04R\x04size\x12;\n" +
+	"\vmodified_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"modifiedAt\"\x83\x03\n" +
+	"\tFileEvent\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12=\n" +
+	"\toperation\x18\x02 \x01(\x0e2\x1f.komari.webssh.v1.FileOperationR\toperation\x12\x18\n" +
+	"\asuccess\x18\x03 \x01(\bR\asuccess\x12\x14\n" +
+	"\x05error\x18\x04 \x01(\tR\x05error\x125\n" +
+	"\aentries\x18\x05 \x03(\v2\x1b.komari.webssh.v1.FileEntryR\aentries\x12\x16\n" +
+	"\x06parent\x18\x06 \x01(\tR\x06parent\x12\x1b\n" +
+	"\tupload_id\x18\a \x01(\tR\buploadId\x12\x12\n" +
+	"\x04size\x18\b \x01(\x04R\x04size\x12 \n" +
+	"\vtransferred\x18\t \x01(\x04R\vtransferred\x12\x16\n" +
+	"\x06sha256\x18\n" +
+	" \x01(\tR\x06sha256\x12\x12\n" +
+	"\x04data\x18\v \x01(\fR\x04data\x12\x1a\n" +
+	"\bcomplete\x18\f \x01(\bR\bcomplete\"L\n" +
 	"\x13CloseSessionRequest\x12\x1d\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x16\n" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\"O\n" +
 	"\x14CloseSessionResponse\x127\n" +
-	"\x06closed\x18\x01 \x01(\v2\x1f.komari.webssh.v1.SessionClosedR\x06closed*\xec\x01\n" +
+	"\x06closed\x18\x01 \x01(\v2\x1f.komari.webssh.v1.SessionClosedR\x06closed*\xcd\x02\n" +
+	"\rFileOperation\x12\x1e\n" +
+	"\x1aFILE_OPERATION_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13FILE_OPERATION_LIST\x10\x01\x12\x18\n" +
+	"\x14FILE_OPERATION_MKDIR\x10\x02\x12\x19\n" +
+	"\x15FILE_OPERATION_CREATE\x10\x03\x12\x19\n" +
+	"\x15FILE_OPERATION_RENAME\x10\x04\x12\x17\n" +
+	"\x13FILE_OPERATION_COPY\x10\x05\x12\x19\n" +
+	"\x15FILE_OPERATION_DELETE\x10\x06\x12\x1f\n" +
+	"\x1bFILE_OPERATION_UPLOAD_START\x10\a\x12\x1f\n" +
+	"\x1bFILE_OPERATION_UPLOAD_CHUNK\x10\b\x12 \n" +
+	"\x1cFILE_OPERATION_UPLOAD_FINISH\x10\t\x12\x1b\n" +
+	"\x17FILE_OPERATION_DOWNLOAD\x10\n" +
+	"*\xec\x01\n" +
 	"\vCloseReason\x12\x1c\n" +
 	"\x18CLOSE_REASON_UNSPECIFIED\x10\x00\x12\x17\n" +
 	"\x13CLOSE_REASON_NORMAL\x10\x01\x12\x1a\n" +
@@ -873,10 +2436,15 @@ const file_komari_webssh_v1_webssh_proto_rawDesc = "" +
 	"\x1eCLOSE_REASON_DEADLINE_EXCEEDED\x10\x03\x12(\n" +
 	"$CLOSE_REASON_REMOTE_CONTROL_DISABLED\x10\x04\x12#\n" +
 	"\x1fCLOSE_REASON_AGENT_DISCONNECTED\x10\x05\x12\x17\n" +
-	"\x13CLOSE_REASON_FAILED\x10\x062\xce\x01\n" +
+	"\x13CLOSE_REASON_FAILED\x10\x062\xcc\x05\n" +
 	"\rWebSSHService\x12^\n" +
-	"\vOpenSession\x12$.komari.webssh.v1.OpenSessionRequest\x1a%.komari.webssh.v1.OpenSessionResponse(\x010\x01\x12]\n" +
-	"\fCloseSession\x12%.komari.webssh.v1.CloseSessionRequest\x1a&.komari.webssh.v1.CloseSessionResponseB\xc9\x01\n" +
+	"\vOpenSession\x12$.komari.webssh.v1.OpenSessionRequest\x1a%.komari.webssh.v1.OpenSessionResponse(\x010\x01\x12`\n" +
+	"\rCreateSession\x12&.komari.webssh.v1.CreateSessionRequest\x1a'.komari.webssh.v1.CreateSessionResponse\x12o\n" +
+	"\x12SendSessionCommand\x12+.komari.webssh.v1.SendSessionCommandRequest\x1a,.komari.webssh.v1.SendSessionCommandResponse\x12_\n" +
+	"\fWatchSession\x12%.komari.webssh.v1.WatchSessionRequest\x1a&.komari.webssh.v1.WatchSessionResponse0\x01\x12]\n" +
+	"\fCloseSession\x12%.komari.webssh.v1.CloseSessionRequest\x1a&.komari.webssh.v1.CloseSessionResponse\x12b\n" +
+	"\rLeaseSessions\x12&.komari.webssh.v1.LeaseSessionsRequest\x1a'.komari.webssh.v1.LeaseSessionsResponse0\x01\x12d\n" +
+	"\rAttachSession\x12&.komari.webssh.v1.AttachSessionRequest\x1a'.komari.webssh.v1.AttachSessionResponse(\x010\x01B\xc9\x01\n" +
 	"\x14com.komari.webssh.v1B\vWebsshProtoP\x01ZBgithub.com/r11234567/komari-proto/gen/go/komari/webssh/v1;websshv1\xa2\x02\x03KWX\xaa\x02\x10Komari.Webssh.V1\xca\x02\x10Komari\\Webssh\\V1\xe2\x02\x1cKomari\\Webssh\\V1\\GPBMetadata\xea\x02\x12Komari::Webssh::V1b\x06proto3"
 
 var (
@@ -891,47 +2459,97 @@ func file_komari_webssh_v1_webssh_proto_rawDescGZIP() []byte {
 	return file_komari_webssh_v1_webssh_proto_rawDescData
 }
 
-var file_komari_webssh_v1_webssh_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_komari_webssh_v1_webssh_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_komari_webssh_v1_webssh_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_komari_webssh_v1_webssh_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_komari_webssh_v1_webssh_proto_goTypes = []any{
-	(CloseReason)(0),              // 0: komari.webssh.v1.CloseReason
-	(*OpenSessionRequest)(nil),    // 1: komari.webssh.v1.OpenSessionRequest
-	(*OpenSessionResponse)(nil),   // 2: komari.webssh.v1.OpenSessionResponse
-	(*SessionStart)(nil),          // 3: komari.webssh.v1.SessionStart
-	(*SessionStarted)(nil),        // 4: komari.webssh.v1.SessionStarted
-	(*TerminalInput)(nil),         // 5: komari.webssh.v1.TerminalInput
-	(*TerminalOutput)(nil),        // 6: komari.webssh.v1.TerminalOutput
-	(*TerminalResize)(nil),        // 7: komari.webssh.v1.TerminalResize
-	(*TerminalSize)(nil),          // 8: komari.webssh.v1.TerminalSize
-	(*SessionClosed)(nil),         // 9: komari.webssh.v1.SessionClosed
-	(*CloseSessionRequest)(nil),   // 10: komari.webssh.v1.CloseSessionRequest
-	(*CloseSessionResponse)(nil),  // 11: komari.webssh.v1.CloseSessionResponse
-	(*v1.TwoFactorProof)(nil),     // 12: komari.common.v1.TwoFactorProof
-	(*timestamppb.Timestamp)(nil), // 13: google.protobuf.Timestamp
+	(FileOperation)(0),                 // 0: komari.webssh.v1.FileOperation
+	(CloseReason)(0),                   // 1: komari.webssh.v1.CloseReason
+	(*OpenSessionRequest)(nil),         // 2: komari.webssh.v1.OpenSessionRequest
+	(*OpenSessionResponse)(nil),        // 3: komari.webssh.v1.OpenSessionResponse
+	(*SessionStart)(nil),               // 4: komari.webssh.v1.SessionStart
+	(*SessionStarted)(nil),             // 5: komari.webssh.v1.SessionStarted
+	(*TerminalInput)(nil),              // 6: komari.webssh.v1.TerminalInput
+	(*TerminalOutput)(nil),             // 7: komari.webssh.v1.TerminalOutput
+	(*TerminalResize)(nil),             // 8: komari.webssh.v1.TerminalResize
+	(*TerminalSize)(nil),               // 9: komari.webssh.v1.TerminalSize
+	(*SessionClosed)(nil),              // 10: komari.webssh.v1.SessionClosed
+	(*CreateSessionRequest)(nil),       // 11: komari.webssh.v1.CreateSessionRequest
+	(*CreateSessionResponse)(nil),      // 12: komari.webssh.v1.CreateSessionResponse
+	(*SendSessionCommandRequest)(nil),  // 13: komari.webssh.v1.SendSessionCommandRequest
+	(*SendSessionCommandResponse)(nil), // 14: komari.webssh.v1.SendSessionCommandResponse
+	(*WatchSessionRequest)(nil),        // 15: komari.webssh.v1.WatchSessionRequest
+	(*WatchSessionResponse)(nil),       // 16: komari.webssh.v1.WatchSessionResponse
+	(*SessionEvent)(nil),               // 17: komari.webssh.v1.SessionEvent
+	(*LeaseSessionsRequest)(nil),       // 18: komari.webssh.v1.LeaseSessionsRequest
+	(*LeaseSessionsResponse)(nil),      // 19: komari.webssh.v1.LeaseSessionsResponse
+	(*SessionAssignment)(nil),          // 20: komari.webssh.v1.SessionAssignment
+	(*AttachSessionRequest)(nil),       // 21: komari.webssh.v1.AttachSessionRequest
+	(*AgentSessionAttach)(nil),         // 22: komari.webssh.v1.AgentSessionAttach
+	(*AgentSessionEvent)(nil),          // 23: komari.webssh.v1.AgentSessionEvent
+	(*AttachSessionResponse)(nil),      // 24: komari.webssh.v1.AttachSessionResponse
+	(*FileCommand)(nil),                // 25: komari.webssh.v1.FileCommand
+	(*FileEntry)(nil),                  // 26: komari.webssh.v1.FileEntry
+	(*FileEvent)(nil),                  // 27: komari.webssh.v1.FileEvent
+	(*CloseSessionRequest)(nil),        // 28: komari.webssh.v1.CloseSessionRequest
+	(*CloseSessionResponse)(nil),       // 29: komari.webssh.v1.CloseSessionResponse
+	(*v1.TwoFactorProof)(nil),          // 30: komari.common.v1.TwoFactorProof
+	(*timestamppb.Timestamp)(nil),      // 31: google.protobuf.Timestamp
 }
 var file_komari_webssh_v1_webssh_proto_depIdxs = []int32{
-	3,  // 0: komari.webssh.v1.OpenSessionRequest.start:type_name -> komari.webssh.v1.SessionStart
-	5,  // 1: komari.webssh.v1.OpenSessionRequest.input:type_name -> komari.webssh.v1.TerminalInput
-	7,  // 2: komari.webssh.v1.OpenSessionRequest.resize:type_name -> komari.webssh.v1.TerminalResize
-	4,  // 3: komari.webssh.v1.OpenSessionResponse.started:type_name -> komari.webssh.v1.SessionStarted
-	6,  // 4: komari.webssh.v1.OpenSessionResponse.output:type_name -> komari.webssh.v1.TerminalOutput
-	9,  // 5: komari.webssh.v1.OpenSessionResponse.closed:type_name -> komari.webssh.v1.SessionClosed
-	8,  // 6: komari.webssh.v1.SessionStart.size:type_name -> komari.webssh.v1.TerminalSize
-	12, // 7: komari.webssh.v1.SessionStart.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	13, // 8: komari.webssh.v1.SessionStarted.started_at:type_name -> google.protobuf.Timestamp
-	8,  // 9: komari.webssh.v1.TerminalResize.size:type_name -> komari.webssh.v1.TerminalSize
-	0,  // 10: komari.webssh.v1.SessionClosed.reason:type_name -> komari.webssh.v1.CloseReason
-	13, // 11: komari.webssh.v1.SessionClosed.closed_at:type_name -> google.protobuf.Timestamp
-	9,  // 12: komari.webssh.v1.CloseSessionResponse.closed:type_name -> komari.webssh.v1.SessionClosed
-	1,  // 13: komari.webssh.v1.WebSSHService.OpenSession:input_type -> komari.webssh.v1.OpenSessionRequest
-	10, // 14: komari.webssh.v1.WebSSHService.CloseSession:input_type -> komari.webssh.v1.CloseSessionRequest
-	2,  // 15: komari.webssh.v1.WebSSHService.OpenSession:output_type -> komari.webssh.v1.OpenSessionResponse
-	11, // 16: komari.webssh.v1.WebSSHService.CloseSession:output_type -> komari.webssh.v1.CloseSessionResponse
-	15, // [15:17] is the sub-list for method output_type
-	13, // [13:15] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	4,  // 0: komari.webssh.v1.OpenSessionRequest.start:type_name -> komari.webssh.v1.SessionStart
+	6,  // 1: komari.webssh.v1.OpenSessionRequest.input:type_name -> komari.webssh.v1.TerminalInput
+	8,  // 2: komari.webssh.v1.OpenSessionRequest.resize:type_name -> komari.webssh.v1.TerminalResize
+	5,  // 3: komari.webssh.v1.OpenSessionResponse.started:type_name -> komari.webssh.v1.SessionStarted
+	7,  // 4: komari.webssh.v1.OpenSessionResponse.output:type_name -> komari.webssh.v1.TerminalOutput
+	10, // 5: komari.webssh.v1.OpenSessionResponse.closed:type_name -> komari.webssh.v1.SessionClosed
+	9,  // 6: komari.webssh.v1.SessionStart.size:type_name -> komari.webssh.v1.TerminalSize
+	30, // 7: komari.webssh.v1.SessionStart.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	31, // 8: komari.webssh.v1.SessionStarted.started_at:type_name -> google.protobuf.Timestamp
+	9,  // 9: komari.webssh.v1.TerminalResize.size:type_name -> komari.webssh.v1.TerminalSize
+	1,  // 10: komari.webssh.v1.SessionClosed.reason:type_name -> komari.webssh.v1.CloseReason
+	31, // 11: komari.webssh.v1.SessionClosed.closed_at:type_name -> google.protobuf.Timestamp
+	4,  // 12: komari.webssh.v1.CreateSessionRequest.start:type_name -> komari.webssh.v1.SessionStart
+	5,  // 13: komari.webssh.v1.CreateSessionResponse.started:type_name -> komari.webssh.v1.SessionStarted
+	9,  // 14: komari.webssh.v1.SendSessionCommandRequest.resize:type_name -> komari.webssh.v1.TerminalSize
+	25, // 15: komari.webssh.v1.SendSessionCommandRequest.file:type_name -> komari.webssh.v1.FileCommand
+	17, // 16: komari.webssh.v1.WatchSessionResponse.event:type_name -> komari.webssh.v1.SessionEvent
+	31, // 17: komari.webssh.v1.SessionEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	27, // 18: komari.webssh.v1.SessionEvent.file:type_name -> komari.webssh.v1.FileEvent
+	10, // 19: komari.webssh.v1.SessionEvent.closed:type_name -> komari.webssh.v1.SessionClosed
+	20, // 20: komari.webssh.v1.LeaseSessionsResponse.assignment:type_name -> komari.webssh.v1.SessionAssignment
+	9,  // 21: komari.webssh.v1.SessionAssignment.size:type_name -> komari.webssh.v1.TerminalSize
+	31, // 22: komari.webssh.v1.SessionAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
+	22, // 23: komari.webssh.v1.AttachSessionRequest.attach:type_name -> komari.webssh.v1.AgentSessionAttach
+	23, // 24: komari.webssh.v1.AttachSessionRequest.event:type_name -> komari.webssh.v1.AgentSessionEvent
+	31, // 25: komari.webssh.v1.AgentSessionEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	27, // 26: komari.webssh.v1.AgentSessionEvent.file:type_name -> komari.webssh.v1.FileEvent
+	10, // 27: komari.webssh.v1.AgentSessionEvent.closed:type_name -> komari.webssh.v1.SessionClosed
+	9,  // 28: komari.webssh.v1.AttachSessionResponse.resize:type_name -> komari.webssh.v1.TerminalSize
+	25, // 29: komari.webssh.v1.AttachSessionResponse.file:type_name -> komari.webssh.v1.FileCommand
+	0,  // 30: komari.webssh.v1.FileCommand.operation:type_name -> komari.webssh.v1.FileOperation
+	31, // 31: komari.webssh.v1.FileEntry.modified_at:type_name -> google.protobuf.Timestamp
+	0,  // 32: komari.webssh.v1.FileEvent.operation:type_name -> komari.webssh.v1.FileOperation
+	26, // 33: komari.webssh.v1.FileEvent.entries:type_name -> komari.webssh.v1.FileEntry
+	10, // 34: komari.webssh.v1.CloseSessionResponse.closed:type_name -> komari.webssh.v1.SessionClosed
+	2,  // 35: komari.webssh.v1.WebSSHService.OpenSession:input_type -> komari.webssh.v1.OpenSessionRequest
+	11, // 36: komari.webssh.v1.WebSSHService.CreateSession:input_type -> komari.webssh.v1.CreateSessionRequest
+	13, // 37: komari.webssh.v1.WebSSHService.SendSessionCommand:input_type -> komari.webssh.v1.SendSessionCommandRequest
+	15, // 38: komari.webssh.v1.WebSSHService.WatchSession:input_type -> komari.webssh.v1.WatchSessionRequest
+	28, // 39: komari.webssh.v1.WebSSHService.CloseSession:input_type -> komari.webssh.v1.CloseSessionRequest
+	18, // 40: komari.webssh.v1.WebSSHService.LeaseSessions:input_type -> komari.webssh.v1.LeaseSessionsRequest
+	21, // 41: komari.webssh.v1.WebSSHService.AttachSession:input_type -> komari.webssh.v1.AttachSessionRequest
+	3,  // 42: komari.webssh.v1.WebSSHService.OpenSession:output_type -> komari.webssh.v1.OpenSessionResponse
+	12, // 43: komari.webssh.v1.WebSSHService.CreateSession:output_type -> komari.webssh.v1.CreateSessionResponse
+	14, // 44: komari.webssh.v1.WebSSHService.SendSessionCommand:output_type -> komari.webssh.v1.SendSessionCommandResponse
+	16, // 45: komari.webssh.v1.WebSSHService.WatchSession:output_type -> komari.webssh.v1.WatchSessionResponse
+	29, // 46: komari.webssh.v1.WebSSHService.CloseSession:output_type -> komari.webssh.v1.CloseSessionResponse
+	19, // 47: komari.webssh.v1.WebSSHService.LeaseSessions:output_type -> komari.webssh.v1.LeaseSessionsResponse
+	24, // 48: komari.webssh.v1.WebSSHService.AttachSession:output_type -> komari.webssh.v1.AttachSessionResponse
+	42, // [42:49] is the sub-list for method output_type
+	35, // [35:42] is the sub-list for method input_type
+	35, // [35:35] is the sub-list for extension type_name
+	35, // [35:35] is the sub-list for extension extendee
+	0,  // [0:35] is the sub-list for field type_name
 }
 
 func init() { file_komari_webssh_v1_webssh_proto_init() }
@@ -950,13 +2568,38 @@ func file_komari_webssh_v1_webssh_proto_init() {
 		(*OpenSessionResponse_Closed)(nil),
 	}
 	file_komari_webssh_v1_webssh_proto_msgTypes[8].OneofWrappers = []any{}
+	file_komari_webssh_v1_webssh_proto_msgTypes[11].OneofWrappers = []any{
+		(*SendSessionCommandRequest_Input)(nil),
+		(*SendSessionCommandRequest_Resize)(nil),
+		(*SendSessionCommandRequest_File)(nil),
+	}
+	file_komari_webssh_v1_webssh_proto_msgTypes[15].OneofWrappers = []any{
+		(*SessionEvent_Output)(nil),
+		(*SessionEvent_File)(nil),
+		(*SessionEvent_Closed)(nil),
+	}
+	file_komari_webssh_v1_webssh_proto_msgTypes[19].OneofWrappers = []any{
+		(*AttachSessionRequest_Attach)(nil),
+		(*AttachSessionRequest_Event)(nil),
+	}
+	file_komari_webssh_v1_webssh_proto_msgTypes[21].OneofWrappers = []any{
+		(*AgentSessionEvent_Output)(nil),
+		(*AgentSessionEvent_File)(nil),
+		(*AgentSessionEvent_Closed)(nil),
+	}
+	file_komari_webssh_v1_webssh_proto_msgTypes[22].OneofWrappers = []any{
+		(*AttachSessionResponse_Input)(nil),
+		(*AttachSessionResponse_Resize)(nil),
+		(*AttachSessionResponse_File)(nil),
+		(*AttachSessionResponse_CloseReason)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_webssh_v1_webssh_proto_rawDesc), len(file_komari_webssh_v1_webssh_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   11,
+			NumEnums:      2,
+			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

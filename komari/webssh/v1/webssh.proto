@@ -9,10 +9,20 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/webssh/v1;w
 
 // WebSSHService owns interactive terminal sessions; this is the only bidi API.
 service WebSSHService {
-  // OpenSession carries terminal input and output until cancellation or close.
+  // OpenSession is retained for native clients that support bidi streams.
   rpc OpenSession(stream OpenSessionRequest) returns (stream OpenSessionResponse);
+  // CreateSession opens a browser-compatible remote-management session.
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
+  // SendSessionCommand carries terminal input, resize, and typed file operations.
+  rpc SendSessionCommand(SendSessionCommandRequest) returns (SendSessionCommandResponse);
+  // WatchSession streams terminal and file events to browser clients.
+  rpc WatchSession(WatchSessionRequest) returns (stream WatchSessionResponse);
   // CloseSession records explicit cleanup with a short independent deadline.
   rpc CloseSession(CloseSessionRequest) returns (CloseSessionResponse);
+  // LeaseSessions assigns pending sessions to an authenticated Agent.
+  rpc LeaseSessions(LeaseSessionsRequest) returns (stream LeaseSessionsResponse);
+  // AttachSession is the Agent-side bidirectional terminal/file channel.
+  rpc AttachSession(stream AttachSessionRequest) returns (stream AttachSessionResponse);
 }
 
 // SessionRequest carries exactly one client-side terminal event.
@@ -80,6 +90,168 @@ message SessionClosed {
   CloseReason reason = 2;
   optional int32 exit_code = 3;
   google.protobuf.Timestamp closed_at = 4;
+}
+
+// CreateSessionRequest starts one remote-management session with fresh 2FA.
+message CreateSessionRequest {
+  SessionStart start = 1;
+}
+
+// CreateSessionResponse returns the allocated session.
+message CreateSessionResponse {
+  SessionStarted started = 1;
+}
+
+// SendSessionCommandRequest sends one idempotent browser-side command.
+message SendSessionCommandRequest {
+  string session_id = 1;
+  uint64 sequence = 2;
+  oneof command {
+    bytes input = 3;
+    TerminalSize resize = 4;
+    FileCommand file = 5;
+  }
+}
+
+// SendSessionCommandResponse acknowledges the accepted browser sequence.
+message SendSessionCommandResponse {
+  uint64 accepted_sequence = 1;
+}
+
+// WatchSessionRequest resumes browser output after a known sequence.
+message WatchSessionRequest {
+  string session_id = 1;
+  uint64 after_sequence = 2;
+}
+
+// WatchSessionResponse carries one ordered remote-management event.
+message WatchSessionResponse {
+  SessionEvent event = 1;
+}
+
+// SessionEvent is an ordered terminal, file, or close event.
+message SessionEvent {
+  string session_id = 1;
+  uint64 sequence = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  oneof event {
+    bytes output = 4;
+    FileEvent file = 5;
+    SessionClosed closed = 6;
+  }
+}
+
+// LeaseSessionsRequest opens the Agent assignment stream.
+message LeaseSessionsRequest {
+  string agent_id = 1;
+  string after_assignment_id = 2;
+}
+
+// LeaseSessionsResponse contains one immutable pending assignment.
+message LeaseSessionsResponse {
+  SessionAssignment assignment = 1;
+}
+
+// SessionAssignment describes one session that an Agent must attach to.
+message SessionAssignment {
+  string assignment_id = 1;
+  string session_id = 2;
+  string agent_id = 3;
+  string shell = 4;
+  TerminalSize size = 5;
+  string working_directory = 6;
+  google.protobuf.Timestamp lease_expires_at = 7;
+}
+
+// AttachSessionRequest carries the Agent handshake or an ordered event.
+message AttachSessionRequest {
+  oneof message {
+    AgentSessionAttach attach = 1;
+    AgentSessionEvent event = 2;
+  }
+}
+
+// AgentSessionAttach binds an authenticated Agent to a leased session.
+message AgentSessionAttach {
+  string agent_id = 1;
+  string assignment_id = 2;
+  string session_id = 3;
+}
+
+// AgentSessionEvent carries terminal/file output or a terminal state.
+message AgentSessionEvent {
+  uint64 sequence = 1;
+  google.protobuf.Timestamp occurred_at = 2;
+  oneof event {
+    bytes output = 3;
+    FileEvent file = 4;
+    SessionClosed closed = 5;
+  }
+}
+
+// AttachSessionResponse carries one ordered command to the Agent.
+message AttachSessionResponse {
+  uint64 sequence = 1;
+  oneof command {
+    bytes input = 2;
+    TerminalSize resize = 3;
+    FileCommand file = 4;
+    string close_reason = 5;
+  }
+}
+
+// FileOperation enumerates bounded remote file-manager actions.
+enum FileOperation {
+  FILE_OPERATION_UNSPECIFIED = 0;
+  FILE_OPERATION_LIST = 1;
+  FILE_OPERATION_MKDIR = 2;
+  FILE_OPERATION_CREATE = 3;
+  FILE_OPERATION_RENAME = 4;
+  FILE_OPERATION_COPY = 5;
+  FILE_OPERATION_DELETE = 6;
+  FILE_OPERATION_UPLOAD_START = 7;
+  FILE_OPERATION_UPLOAD_CHUNK = 8;
+  FILE_OPERATION_UPLOAD_FINISH = 9;
+  FILE_OPERATION_DOWNLOAD = 10;
+}
+
+// FileCommand is one typed file-manager request.
+message FileCommand {
+  string request_id = 1;
+  FileOperation operation = 2;
+  string path = 3;
+  string destination = 4;
+  bool recursive = 5;
+  bool overwrite = 6;
+  uint64 size = 7;
+  string sha256 = 8;
+  string upload_id = 9;
+  bytes data = 10;
+}
+
+// FileEntry is one directory entry without platform-specific metadata blobs.
+message FileEntry {
+  string name = 1;
+  string path = 2;
+  bool directory = 3;
+  uint64 size = 4;
+  google.protobuf.Timestamp modified_at = 5;
+}
+
+// FileEvent is one typed response or transfer chunk.
+message FileEvent {
+  string request_id = 1;
+  FileOperation operation = 2;
+  bool success = 3;
+  string error = 4;
+  repeated FileEntry entries = 5;
+  string parent = 6;
+  string upload_id = 7;
+  uint64 size = 8;
+  uint64 transferred = 9;
+  string sha256 = 10;
+  bytes data = 11;
+  bool complete = 12;
 }
 
 // CloseSessionRequest explicitly closes one session.

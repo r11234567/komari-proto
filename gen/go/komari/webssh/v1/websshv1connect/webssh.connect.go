@@ -36,17 +36,42 @@ const (
 	// WebSSHServiceOpenSessionProcedure is the fully-qualified name of the WebSSHService's OpenSession
 	// RPC.
 	WebSSHServiceOpenSessionProcedure = "/komari.webssh.v1.WebSSHService/OpenSession"
+	// WebSSHServiceCreateSessionProcedure is the fully-qualified name of the WebSSHService's
+	// CreateSession RPC.
+	WebSSHServiceCreateSessionProcedure = "/komari.webssh.v1.WebSSHService/CreateSession"
+	// WebSSHServiceSendSessionCommandProcedure is the fully-qualified name of the WebSSHService's
+	// SendSessionCommand RPC.
+	WebSSHServiceSendSessionCommandProcedure = "/komari.webssh.v1.WebSSHService/SendSessionCommand"
+	// WebSSHServiceWatchSessionProcedure is the fully-qualified name of the WebSSHService's
+	// WatchSession RPC.
+	WebSSHServiceWatchSessionProcedure = "/komari.webssh.v1.WebSSHService/WatchSession"
 	// WebSSHServiceCloseSessionProcedure is the fully-qualified name of the WebSSHService's
 	// CloseSession RPC.
 	WebSSHServiceCloseSessionProcedure = "/komari.webssh.v1.WebSSHService/CloseSession"
+	// WebSSHServiceLeaseSessionsProcedure is the fully-qualified name of the WebSSHService's
+	// LeaseSessions RPC.
+	WebSSHServiceLeaseSessionsProcedure = "/komari.webssh.v1.WebSSHService/LeaseSessions"
+	// WebSSHServiceAttachSessionProcedure is the fully-qualified name of the WebSSHService's
+	// AttachSession RPC.
+	WebSSHServiceAttachSessionProcedure = "/komari.webssh.v1.WebSSHService/AttachSession"
 )
 
 // WebSSHServiceClient is a client for the komari.webssh.v1.WebSSHService service.
 type WebSSHServiceClient interface {
-	// OpenSession carries terminal input and output until cancellation or close.
+	// OpenSession is retained for native clients that support bidi streams.
 	OpenSession(context.Context) *connect.BidiStreamForClient[v1.OpenSessionRequest, v1.OpenSessionResponse]
+	// CreateSession opens a browser-compatible remote-management session.
+	CreateSession(context.Context, *connect.Request[v1.CreateSessionRequest]) (*connect.Response[v1.CreateSessionResponse], error)
+	// SendSessionCommand carries terminal input, resize, and typed file operations.
+	SendSessionCommand(context.Context, *connect.Request[v1.SendSessionCommandRequest]) (*connect.Response[v1.SendSessionCommandResponse], error)
+	// WatchSession streams terminal and file events to browser clients.
+	WatchSession(context.Context, *connect.Request[v1.WatchSessionRequest]) (*connect.ServerStreamForClient[v1.WatchSessionResponse], error)
 	// CloseSession records explicit cleanup with a short independent deadline.
 	CloseSession(context.Context, *connect.Request[v1.CloseSessionRequest]) (*connect.Response[v1.CloseSessionResponse], error)
+	// LeaseSessions assigns pending sessions to an authenticated Agent.
+	LeaseSessions(context.Context, *connect.Request[v1.LeaseSessionsRequest]) (*connect.ServerStreamForClient[v1.LeaseSessionsResponse], error)
+	// AttachSession is the Agent-side bidirectional terminal/file channel.
+	AttachSession(context.Context) *connect.BidiStreamForClient[v1.AttachSessionRequest, v1.AttachSessionResponse]
 }
 
 // NewWebSSHServiceClient constructs a client for the komari.webssh.v1.WebSSHService service. By
@@ -66,10 +91,40 @@ func NewWebSSHServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(webSSHServiceMethods.ByName("OpenSession")),
 			connect.WithClientOptions(opts...),
 		),
+		createSession: connect.NewClient[v1.CreateSessionRequest, v1.CreateSessionResponse](
+			httpClient,
+			baseURL+WebSSHServiceCreateSessionProcedure,
+			connect.WithSchema(webSSHServiceMethods.ByName("CreateSession")),
+			connect.WithClientOptions(opts...),
+		),
+		sendSessionCommand: connect.NewClient[v1.SendSessionCommandRequest, v1.SendSessionCommandResponse](
+			httpClient,
+			baseURL+WebSSHServiceSendSessionCommandProcedure,
+			connect.WithSchema(webSSHServiceMethods.ByName("SendSessionCommand")),
+			connect.WithClientOptions(opts...),
+		),
+		watchSession: connect.NewClient[v1.WatchSessionRequest, v1.WatchSessionResponse](
+			httpClient,
+			baseURL+WebSSHServiceWatchSessionProcedure,
+			connect.WithSchema(webSSHServiceMethods.ByName("WatchSession")),
+			connect.WithClientOptions(opts...),
+		),
 		closeSession: connect.NewClient[v1.CloseSessionRequest, v1.CloseSessionResponse](
 			httpClient,
 			baseURL+WebSSHServiceCloseSessionProcedure,
 			connect.WithSchema(webSSHServiceMethods.ByName("CloseSession")),
+			connect.WithClientOptions(opts...),
+		),
+		leaseSessions: connect.NewClient[v1.LeaseSessionsRequest, v1.LeaseSessionsResponse](
+			httpClient,
+			baseURL+WebSSHServiceLeaseSessionsProcedure,
+			connect.WithSchema(webSSHServiceMethods.ByName("LeaseSessions")),
+			connect.WithClientOptions(opts...),
+		),
+		attachSession: connect.NewClient[v1.AttachSessionRequest, v1.AttachSessionResponse](
+			httpClient,
+			baseURL+WebSSHServiceAttachSessionProcedure,
+			connect.WithSchema(webSSHServiceMethods.ByName("AttachSession")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -77,8 +132,13 @@ func NewWebSSHServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 
 // webSSHServiceClient implements WebSSHServiceClient.
 type webSSHServiceClient struct {
-	openSession  *connect.Client[v1.OpenSessionRequest, v1.OpenSessionResponse]
-	closeSession *connect.Client[v1.CloseSessionRequest, v1.CloseSessionResponse]
+	openSession        *connect.Client[v1.OpenSessionRequest, v1.OpenSessionResponse]
+	createSession      *connect.Client[v1.CreateSessionRequest, v1.CreateSessionResponse]
+	sendSessionCommand *connect.Client[v1.SendSessionCommandRequest, v1.SendSessionCommandResponse]
+	watchSession       *connect.Client[v1.WatchSessionRequest, v1.WatchSessionResponse]
+	closeSession       *connect.Client[v1.CloseSessionRequest, v1.CloseSessionResponse]
+	leaseSessions      *connect.Client[v1.LeaseSessionsRequest, v1.LeaseSessionsResponse]
+	attachSession      *connect.Client[v1.AttachSessionRequest, v1.AttachSessionResponse]
 }
 
 // OpenSession calls komari.webssh.v1.WebSSHService.OpenSession.
@@ -86,17 +146,52 @@ func (c *webSSHServiceClient) OpenSession(ctx context.Context) *connect.BidiStre
 	return c.openSession.CallBidiStream(ctx)
 }
 
+// CreateSession calls komari.webssh.v1.WebSSHService.CreateSession.
+func (c *webSSHServiceClient) CreateSession(ctx context.Context, req *connect.Request[v1.CreateSessionRequest]) (*connect.Response[v1.CreateSessionResponse], error) {
+	return c.createSession.CallUnary(ctx, req)
+}
+
+// SendSessionCommand calls komari.webssh.v1.WebSSHService.SendSessionCommand.
+func (c *webSSHServiceClient) SendSessionCommand(ctx context.Context, req *connect.Request[v1.SendSessionCommandRequest]) (*connect.Response[v1.SendSessionCommandResponse], error) {
+	return c.sendSessionCommand.CallUnary(ctx, req)
+}
+
+// WatchSession calls komari.webssh.v1.WebSSHService.WatchSession.
+func (c *webSSHServiceClient) WatchSession(ctx context.Context, req *connect.Request[v1.WatchSessionRequest]) (*connect.ServerStreamForClient[v1.WatchSessionResponse], error) {
+	return c.watchSession.CallServerStream(ctx, req)
+}
+
 // CloseSession calls komari.webssh.v1.WebSSHService.CloseSession.
 func (c *webSSHServiceClient) CloseSession(ctx context.Context, req *connect.Request[v1.CloseSessionRequest]) (*connect.Response[v1.CloseSessionResponse], error) {
 	return c.closeSession.CallUnary(ctx, req)
 }
 
+// LeaseSessions calls komari.webssh.v1.WebSSHService.LeaseSessions.
+func (c *webSSHServiceClient) LeaseSessions(ctx context.Context, req *connect.Request[v1.LeaseSessionsRequest]) (*connect.ServerStreamForClient[v1.LeaseSessionsResponse], error) {
+	return c.leaseSessions.CallServerStream(ctx, req)
+}
+
+// AttachSession calls komari.webssh.v1.WebSSHService.AttachSession.
+func (c *webSSHServiceClient) AttachSession(ctx context.Context) *connect.BidiStreamForClient[v1.AttachSessionRequest, v1.AttachSessionResponse] {
+	return c.attachSession.CallBidiStream(ctx)
+}
+
 // WebSSHServiceHandler is an implementation of the komari.webssh.v1.WebSSHService service.
 type WebSSHServiceHandler interface {
-	// OpenSession carries terminal input and output until cancellation or close.
+	// OpenSession is retained for native clients that support bidi streams.
 	OpenSession(context.Context, *connect.BidiStream[v1.OpenSessionRequest, v1.OpenSessionResponse]) error
+	// CreateSession opens a browser-compatible remote-management session.
+	CreateSession(context.Context, *connect.Request[v1.CreateSessionRequest]) (*connect.Response[v1.CreateSessionResponse], error)
+	// SendSessionCommand carries terminal input, resize, and typed file operations.
+	SendSessionCommand(context.Context, *connect.Request[v1.SendSessionCommandRequest]) (*connect.Response[v1.SendSessionCommandResponse], error)
+	// WatchSession streams terminal and file events to browser clients.
+	WatchSession(context.Context, *connect.Request[v1.WatchSessionRequest], *connect.ServerStream[v1.WatchSessionResponse]) error
 	// CloseSession records explicit cleanup with a short independent deadline.
 	CloseSession(context.Context, *connect.Request[v1.CloseSessionRequest]) (*connect.Response[v1.CloseSessionResponse], error)
+	// LeaseSessions assigns pending sessions to an authenticated Agent.
+	LeaseSessions(context.Context, *connect.Request[v1.LeaseSessionsRequest], *connect.ServerStream[v1.LeaseSessionsResponse]) error
+	// AttachSession is the Agent-side bidirectional terminal/file channel.
+	AttachSession(context.Context, *connect.BidiStream[v1.AttachSessionRequest, v1.AttachSessionResponse]) error
 }
 
 // NewWebSSHServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -112,18 +207,58 @@ func NewWebSSHServiceHandler(svc WebSSHServiceHandler, opts ...connect.HandlerOp
 		connect.WithSchema(webSSHServiceMethods.ByName("OpenSession")),
 		connect.WithHandlerOptions(opts...),
 	)
+	webSSHServiceCreateSessionHandler := connect.NewUnaryHandler(
+		WebSSHServiceCreateSessionProcedure,
+		svc.CreateSession,
+		connect.WithSchema(webSSHServiceMethods.ByName("CreateSession")),
+		connect.WithHandlerOptions(opts...),
+	)
+	webSSHServiceSendSessionCommandHandler := connect.NewUnaryHandler(
+		WebSSHServiceSendSessionCommandProcedure,
+		svc.SendSessionCommand,
+		connect.WithSchema(webSSHServiceMethods.ByName("SendSessionCommand")),
+		connect.WithHandlerOptions(opts...),
+	)
+	webSSHServiceWatchSessionHandler := connect.NewServerStreamHandler(
+		WebSSHServiceWatchSessionProcedure,
+		svc.WatchSession,
+		connect.WithSchema(webSSHServiceMethods.ByName("WatchSession")),
+		connect.WithHandlerOptions(opts...),
+	)
 	webSSHServiceCloseSessionHandler := connect.NewUnaryHandler(
 		WebSSHServiceCloseSessionProcedure,
 		svc.CloseSession,
 		connect.WithSchema(webSSHServiceMethods.ByName("CloseSession")),
 		connect.WithHandlerOptions(opts...),
 	)
+	webSSHServiceLeaseSessionsHandler := connect.NewServerStreamHandler(
+		WebSSHServiceLeaseSessionsProcedure,
+		svc.LeaseSessions,
+		connect.WithSchema(webSSHServiceMethods.ByName("LeaseSessions")),
+		connect.WithHandlerOptions(opts...),
+	)
+	webSSHServiceAttachSessionHandler := connect.NewBidiStreamHandler(
+		WebSSHServiceAttachSessionProcedure,
+		svc.AttachSession,
+		connect.WithSchema(webSSHServiceMethods.ByName("AttachSession")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/komari.webssh.v1.WebSSHService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case WebSSHServiceOpenSessionProcedure:
 			webSSHServiceOpenSessionHandler.ServeHTTP(w, r)
+		case WebSSHServiceCreateSessionProcedure:
+			webSSHServiceCreateSessionHandler.ServeHTTP(w, r)
+		case WebSSHServiceSendSessionCommandProcedure:
+			webSSHServiceSendSessionCommandHandler.ServeHTTP(w, r)
+		case WebSSHServiceWatchSessionProcedure:
+			webSSHServiceWatchSessionHandler.ServeHTTP(w, r)
 		case WebSSHServiceCloseSessionProcedure:
 			webSSHServiceCloseSessionHandler.ServeHTTP(w, r)
+		case WebSSHServiceLeaseSessionsProcedure:
+			webSSHServiceLeaseSessionsHandler.ServeHTTP(w, r)
+		case WebSSHServiceAttachSessionProcedure:
+			webSSHServiceAttachSessionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -137,6 +272,26 @@ func (UnimplementedWebSSHServiceHandler) OpenSession(context.Context, *connect.B
 	return connect.NewError(connect.CodeUnimplemented, errors.New("komari.webssh.v1.WebSSHService.OpenSession is not implemented"))
 }
 
+func (UnimplementedWebSSHServiceHandler) CreateSession(context.Context, *connect.Request[v1.CreateSessionRequest]) (*connect.Response[v1.CreateSessionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.webssh.v1.WebSSHService.CreateSession is not implemented"))
+}
+
+func (UnimplementedWebSSHServiceHandler) SendSessionCommand(context.Context, *connect.Request[v1.SendSessionCommandRequest]) (*connect.Response[v1.SendSessionCommandResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.webssh.v1.WebSSHService.SendSessionCommand is not implemented"))
+}
+
+func (UnimplementedWebSSHServiceHandler) WatchSession(context.Context, *connect.Request[v1.WatchSessionRequest], *connect.ServerStream[v1.WatchSessionResponse]) error {
+	return connect.NewError(connect.CodeUnimplemented, errors.New("komari.webssh.v1.WebSSHService.WatchSession is not implemented"))
+}
+
 func (UnimplementedWebSSHServiceHandler) CloseSession(context.Context, *connect.Request[v1.CloseSessionRequest]) (*connect.Response[v1.CloseSessionResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.webssh.v1.WebSSHService.CloseSession is not implemented"))
+}
+
+func (UnimplementedWebSSHServiceHandler) LeaseSessions(context.Context, *connect.Request[v1.LeaseSessionsRequest], *connect.ServerStream[v1.LeaseSessionsResponse]) error {
+	return connect.NewError(connect.CodeUnimplemented, errors.New("komari.webssh.v1.WebSSHService.LeaseSessions is not implemented"))
+}
+
+func (UnimplementedWebSSHServiceHandler) AttachSession(context.Context, *connect.BidiStream[v1.AttachSessionRequest, v1.AttachSessionResponse]) error {
+	return connect.NewError(connect.CodeUnimplemented, errors.New("komari.webssh.v1.WebSSHService.AttachSession is not implemented"))
 }
