@@ -17,6 +17,8 @@ service WebSSHService {
   rpc SendSessionCommand(SendSessionCommandRequest) returns (SendSessionCommandResponse);
   // WatchSession streams terminal and file events to browser clients.
   rpc WatchSession(WatchSessionRequest) returns (stream WatchSessionResponse);
+  // AcknowledgeSessionEvents releases replay buffers consumed by the browser.
+  rpc AcknowledgeSessionEvents(AcknowledgeSessionEventsRequest) returns (AcknowledgeSessionEventsResponse);
   // CloseSession records explicit cleanup with a short independent deadline.
   rpc CloseSession(CloseSessionRequest) returns (CloseSessionResponse);
   // LeaseSessions assigns pending sessions to an authenticated Agent.
@@ -127,6 +129,17 @@ message WatchSessionRequest {
 // WatchSessionResponse carries one ordered remote-management event.
 message WatchSessionResponse {
   SessionEvent event = 1;
+}
+
+// AcknowledgeSessionEventsRequest advances the browser replay cursor.
+message AcknowledgeSessionEventsRequest {
+  string session_id = 1;
+  uint64 accepted_sequence = 2;
+}
+
+// AcknowledgeSessionEventsResponse confirms the released replay cursor.
+message AcknowledgeSessionEventsResponse {
+  uint64 accepted_sequence = 1;
 }
 
 // SessionEvent is an ordered terminal, file, or close event.

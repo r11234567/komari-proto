@@ -45,6 +45,9 @@ const (
 	// WebSSHServiceWatchSessionProcedure is the fully-qualified name of the WebSSHService's
 	// WatchSession RPC.
 	WebSSHServiceWatchSessionProcedure = "/komari.webssh.v1.WebSSHService/WatchSession"
+	// WebSSHServiceAcknowledgeSessionEventsProcedure is the fully-qualified name of the WebSSHService's
+	// AcknowledgeSessionEvents RPC.
+	WebSSHServiceAcknowledgeSessionEventsProcedure = "/komari.webssh.v1.WebSSHService/AcknowledgeSessionEvents"
 	// WebSSHServiceCloseSessionProcedure is the fully-qualified name of the WebSSHService's
 	// CloseSession RPC.
 	WebSSHServiceCloseSessionProcedure = "/komari.webssh.v1.WebSSHService/CloseSession"
@@ -66,6 +69,8 @@ type WebSSHServiceClient interface {
 	SendSessionCommand(context.Context, *connect.Request[v1.SendSessionCommandRequest]) (*connect.Response[v1.SendSessionCommandResponse], error)
 	// WatchSession streams terminal and file events to browser clients.
 	WatchSession(context.Context, *connect.Request[v1.WatchSessionRequest]) (*connect.ServerStreamForClient[v1.WatchSessionResponse], error)
+	// AcknowledgeSessionEvents releases replay buffers consumed by the browser.
+	AcknowledgeSessionEvents(context.Context, *connect.Request[v1.AcknowledgeSessionEventsRequest]) (*connect.Response[v1.AcknowledgeSessionEventsResponse], error)
 	// CloseSession records explicit cleanup with a short independent deadline.
 	CloseSession(context.Context, *connect.Request[v1.CloseSessionRequest]) (*connect.Response[v1.CloseSessionResponse], error)
 	// LeaseSessions assigns pending sessions to an authenticated Agent.
@@ -109,6 +114,12 @@ func NewWebSSHServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(webSSHServiceMethods.ByName("WatchSession")),
 			connect.WithClientOptions(opts...),
 		),
+		acknowledgeSessionEvents: connect.NewClient[v1.AcknowledgeSessionEventsRequest, v1.AcknowledgeSessionEventsResponse](
+			httpClient,
+			baseURL+WebSSHServiceAcknowledgeSessionEventsProcedure,
+			connect.WithSchema(webSSHServiceMethods.ByName("AcknowledgeSessionEvents")),
+			connect.WithClientOptions(opts...),
+		),
 		closeSession: connect.NewClient[v1.CloseSessionRequest, v1.CloseSessionResponse](
 			httpClient,
 			baseURL+WebSSHServiceCloseSessionProcedure,
@@ -132,13 +143,14 @@ func NewWebSSHServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 
 // webSSHServiceClient implements WebSSHServiceClient.
 type webSSHServiceClient struct {
-	openSession        *connect.Client[v1.OpenSessionRequest, v1.OpenSessionResponse]
-	createSession      *connect.Client[v1.CreateSessionRequest, v1.CreateSessionResponse]
-	sendSessionCommand *connect.Client[v1.SendSessionCommandRequest, v1.SendSessionCommandResponse]
-	watchSession       *connect.Client[v1.WatchSessionRequest, v1.WatchSessionResponse]
-	closeSession       *connect.Client[v1.CloseSessionRequest, v1.CloseSessionResponse]
-	leaseSessions      *connect.Client[v1.LeaseSessionsRequest, v1.LeaseSessionsResponse]
-	attachSession      *connect.Client[v1.AttachSessionRequest, v1.AttachSessionResponse]
+	openSession              *connect.Client[v1.OpenSessionRequest, v1.OpenSessionResponse]
+	createSession            *connect.Client[v1.CreateSessionRequest, v1.CreateSessionResponse]
+	sendSessionCommand       *connect.Client[v1.SendSessionCommandRequest, v1.SendSessionCommandResponse]
+	watchSession             *connect.Client[v1.WatchSessionRequest, v1.WatchSessionResponse]
+	acknowledgeSessionEvents *connect.Client[v1.AcknowledgeSessionEventsRequest, v1.AcknowledgeSessionEventsResponse]
+	closeSession             *connect.Client[v1.CloseSessionRequest, v1.CloseSessionResponse]
+	leaseSessions            *connect.Client[v1.LeaseSessionsRequest, v1.LeaseSessionsResponse]
+	attachSession            *connect.Client[v1.AttachSessionRequest, v1.AttachSessionResponse]
 }
 
 // OpenSession calls komari.webssh.v1.WebSSHService.OpenSession.
@@ -159,6 +171,11 @@ func (c *webSSHServiceClient) SendSessionCommand(ctx context.Context, req *conne
 // WatchSession calls komari.webssh.v1.WebSSHService.WatchSession.
 func (c *webSSHServiceClient) WatchSession(ctx context.Context, req *connect.Request[v1.WatchSessionRequest]) (*connect.ServerStreamForClient[v1.WatchSessionResponse], error) {
 	return c.watchSession.CallServerStream(ctx, req)
+}
+
+// AcknowledgeSessionEvents calls komari.webssh.v1.WebSSHService.AcknowledgeSessionEvents.
+func (c *webSSHServiceClient) AcknowledgeSessionEvents(ctx context.Context, req *connect.Request[v1.AcknowledgeSessionEventsRequest]) (*connect.Response[v1.AcknowledgeSessionEventsResponse], error) {
+	return c.acknowledgeSessionEvents.CallUnary(ctx, req)
 }
 
 // CloseSession calls komari.webssh.v1.WebSSHService.CloseSession.
@@ -186,6 +203,8 @@ type WebSSHServiceHandler interface {
 	SendSessionCommand(context.Context, *connect.Request[v1.SendSessionCommandRequest]) (*connect.Response[v1.SendSessionCommandResponse], error)
 	// WatchSession streams terminal and file events to browser clients.
 	WatchSession(context.Context, *connect.Request[v1.WatchSessionRequest], *connect.ServerStream[v1.WatchSessionResponse]) error
+	// AcknowledgeSessionEvents releases replay buffers consumed by the browser.
+	AcknowledgeSessionEvents(context.Context, *connect.Request[v1.AcknowledgeSessionEventsRequest]) (*connect.Response[v1.AcknowledgeSessionEventsResponse], error)
 	// CloseSession records explicit cleanup with a short independent deadline.
 	CloseSession(context.Context, *connect.Request[v1.CloseSessionRequest]) (*connect.Response[v1.CloseSessionResponse], error)
 	// LeaseSessions assigns pending sessions to an authenticated Agent.
@@ -225,6 +244,12 @@ func NewWebSSHServiceHandler(svc WebSSHServiceHandler, opts ...connect.HandlerOp
 		connect.WithSchema(webSSHServiceMethods.ByName("WatchSession")),
 		connect.WithHandlerOptions(opts...),
 	)
+	webSSHServiceAcknowledgeSessionEventsHandler := connect.NewUnaryHandler(
+		WebSSHServiceAcknowledgeSessionEventsProcedure,
+		svc.AcknowledgeSessionEvents,
+		connect.WithSchema(webSSHServiceMethods.ByName("AcknowledgeSessionEvents")),
+		connect.WithHandlerOptions(opts...),
+	)
 	webSSHServiceCloseSessionHandler := connect.NewUnaryHandler(
 		WebSSHServiceCloseSessionProcedure,
 		svc.CloseSession,
@@ -253,6 +278,8 @@ func NewWebSSHServiceHandler(svc WebSSHServiceHandler, opts ...connect.HandlerOp
 			webSSHServiceSendSessionCommandHandler.ServeHTTP(w, r)
 		case WebSSHServiceWatchSessionProcedure:
 			webSSHServiceWatchSessionHandler.ServeHTTP(w, r)
+		case WebSSHServiceAcknowledgeSessionEventsProcedure:
+			webSSHServiceAcknowledgeSessionEventsHandler.ServeHTTP(w, r)
 		case WebSSHServiceCloseSessionProcedure:
 			webSSHServiceCloseSessionHandler.ServeHTTP(w, r)
 		case WebSSHServiceLeaseSessionsProcedure:
@@ -282,6 +309,10 @@ func (UnimplementedWebSSHServiceHandler) SendSessionCommand(context.Context, *co
 
 func (UnimplementedWebSSHServiceHandler) WatchSession(context.Context, *connect.Request[v1.WatchSessionRequest], *connect.ServerStream[v1.WatchSessionResponse]) error {
 	return connect.NewError(connect.CodeUnimplemented, errors.New("komari.webssh.v1.WebSSHService.WatchSession is not implemented"))
+}
+
+func (UnimplementedWebSSHServiceHandler) AcknowledgeSessionEvents(context.Context, *connect.Request[v1.AcknowledgeSessionEventsRequest]) (*connect.Response[v1.AcknowledgeSessionEventsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.webssh.v1.WebSSHService.AcknowledgeSessionEvents is not implemented"))
 }
 
 func (UnimplementedWebSSHServiceHandler) CloseSession(context.Context, *connect.Request[v1.CloseSessionRequest]) (*connect.Response[v1.CloseSessionResponse], error) {
