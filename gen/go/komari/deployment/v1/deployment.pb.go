@@ -103,7 +103,12 @@ type AgentRuntimeIdentity int32
 const (
 	AgentRuntimeIdentity_AGENT_RUNTIME_IDENTITY_UNSPECIFIED           AgentRuntimeIdentity = 0
 	AgentRuntimeIdentity_AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR AgentRuntimeIdentity = 1
-	AgentRuntimeIdentity_AGENT_RUNTIME_IDENTITY_CURRENT_USER          AgentRuntimeIdentity = 2
+	// Deprecated wire compatibility for deployments created before dedicated
+	// service accounts replaced the invoking user's identity.
+	//
+	// Deprecated: Marked as deprecated in komari/deployment/v1/deployment.proto.
+	AgentRuntimeIdentity_AGENT_RUNTIME_IDENTITY_CURRENT_USER    AgentRuntimeIdentity = 2
+	AgentRuntimeIdentity_AGENT_RUNTIME_IDENTITY_SERVICE_ACCOUNT AgentRuntimeIdentity = 3
 )
 
 // Enum value maps for AgentRuntimeIdentity.
@@ -112,11 +117,13 @@ var (
 		0: "AGENT_RUNTIME_IDENTITY_UNSPECIFIED",
 		1: "AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR",
 		2: "AGENT_RUNTIME_IDENTITY_CURRENT_USER",
+		3: "AGENT_RUNTIME_IDENTITY_SERVICE_ACCOUNT",
 	}
 	AgentRuntimeIdentity_value = map[string]int32{
 		"AGENT_RUNTIME_IDENTITY_UNSPECIFIED":           0,
 		"AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR": 1,
 		"AGENT_RUNTIME_IDENTITY_CURRENT_USER":          2,
+		"AGENT_RUNTIME_IDENTITY_SERVICE_ACCOUNT":       3,
 	}
 )
 
@@ -913,11 +920,12 @@ const file_komari_deployment_v1_deployment_proto_rawDesc = "" +
 	"\x15PLATFORM_DARWIN_AMD64\x10\x06\x12\x19\n" +
 	"\x15PLATFORM_DARWIN_ARM64\x10\a\x12\x1a\n" +
 	"\x16PLATFORM_FREEBSD_AMD64\x10\b\x12\x1a\n" +
-	"\x16PLATFORM_FREEBSD_ARM64\x10\t*\x99\x01\n" +
+	"\x16PLATFORM_FREEBSD_ARM64\x10\t*\xc9\x01\n" +
 	"\x14AgentRuntimeIdentity\x12&\n" +
 	"\"AGENT_RUNTIME_IDENTITY_UNSPECIFIED\x10\x00\x120\n" +
-	",AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR\x10\x01\x12'\n" +
-	"#AGENT_RUNTIME_IDENTITY_CURRENT_USER\x10\x022\x86\x03\n" +
+	",AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR\x10\x01\x12+\n" +
+	"#AGENT_RUNTIME_IDENTITY_CURRENT_USER\x10\x02\x1a\x02\b\x01\x12*\n" +
+	"&AGENT_RUNTIME_IDENTITY_SERVICE_ACCOUNT\x10\x032\x86\x03\n" +
 	"\x11DeploymentService\x12h\n" +
 	"\rGetDeployment\x12*.komari.deployment.v1.GetDeploymentRequest\x1a+.komari.deployment.v1.GetDeploymentResponse\x12\x80\x01\n" +
 	"\x15SaveDeploymentProfile\x122.komari.deployment.v1.SaveDeploymentProfileRequest\x1a3.komari.deployment.v1.SaveDeploymentProfileResponse\x12\x83\x01\n" +

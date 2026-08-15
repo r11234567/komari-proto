@@ -120,5 +120,8 @@ enum Platform {
 enum AgentRuntimeIdentity {
   AGENT_RUNTIME_IDENTITY_UNSPECIFIED = 0;
   AGENT_RUNTIME_IDENTITY_ROOT_OR_ADMINISTRATOR = 1;
-  AGENT_RUNTIME_IDENTITY_CURRENT_USER = 2;
+  // Deprecated wire compatibility for deployments created before dedicated
+  // service accounts replaced the invoking user's identity.
+  AGENT_RUNTIME_IDENTITY_CURRENT_USER = 2 [deprecated = true];
+  AGENT_RUNTIME_IDENTITY_SERVICE_ACCOUNT = 3;
 }
