@@ -13,6 +13,8 @@ service MetricsService {
   rpc SubmitMetrics(SubmitMetricsRequest) returns (SubmitMetricsResponse);
   // UploadMetrics stores a bounded client stream without sharing other lifecycles.
   rpc UploadMetrics(stream UploadMetricsRequest) returns (UploadMetricsResponse);
+  // StreamMetrics continuously uploads sequenced batches and acknowledges each batch.
+  rpc StreamMetrics(stream StreamMetricsRequest) returns (stream StreamMetricsResponse);
   // QueryMetrics retrieves a bounded time window.
   rpc QueryMetrics(QueryMetricsRequest) returns (QueryMetricsResponse);
   // ListMetricDefinitions returns the public metric catalog used by themes.
@@ -55,6 +57,17 @@ message UploadMetricsRequest {
 message UploadMetricsResponse {
   uint64 accepted_sequence = 1;
   uint64 accepted_points = 2;
+}
+
+// StreamMetricsRequest wraps one sequenced batch on the long-lived upload stream.
+message StreamMetricsRequest {
+  SubmitMetricsRequest batch = 1;
+}
+
+// StreamMetricsResponse acknowledges one committed batch before the next is sent.
+message StreamMetricsResponse {
+  uint64 accepted_sequence = 1;
+  uint32 accepted_points = 2;
 }
 
 // QueryMetricsRequest describes a bounded metrics query.
@@ -176,4 +189,5 @@ message WatchMetricsRequest {
 // WatchMetricsResponse wraps one live sample.
 message WatchMetricsResponse {
   MetricsPoint point = 1;
+  string agent_id = 2;
 }

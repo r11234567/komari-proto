@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file komari/metrics/v1/metrics.proto.
  */
 export const file_komari_metrics_v1_metrics: GenFile = /*@__PURE__*/
-  fileDesc("Ch9rb21hcmkvbWV0cmljcy92MS9tZXRyaWNzLnByb3RvEhFrb21hcmkubWV0cmljcy52MSLKAQoMTWV0cmljc1BvaW50Eg4KBm1ldHJpYxgBIAEoCRINCgV2YWx1ZRgCIAEoARIvCgtvYnNlcnZlZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASOwoGbGFiZWxzGAQgAygLMisua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50LkxhYmVsc0VudHJ5Gi0KC0xhYmVsc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiawoUU3VibWl0TWV0cmljc1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSEAoIc2VxdWVuY2UYAiABKAQSLwoGcG9pbnRzGAMgAygLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50IksKFVN1Ym1pdE1ldHJpY3NSZXNwb25zZRIZChFhY2NlcHRlZF9zZXF1ZW5jZRgBIAEoBBIXCg9hY2NlcHRlZF9wb2ludHMYAiABKA0iTgoUVXBsb2FkTWV0cmljc1JlcXVlc3QSNgoFYmF0Y2gYASABKAsyJy5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVxdWVzdCJLChVVcGxvYWRNZXRyaWNzUmVzcG9uc2USGQoRYWNjZXB0ZWRfc2VxdWVuY2UYASABKAQSFwoPYWNjZXB0ZWRfcG9pbnRzGAIgASgEIukCChNRdWVyeU1ldHJpY3NSZXF1ZXN0EhEKCWFnZW50X2lkcxgBIAMoCRIPCgdtZXRyaWNzGAIgAygJEi4KCnN0YXJ0X3RpbWUYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiwKCGVuZF90aW1lGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBISCgptYXhfcG9pbnRzGAUgASgNEj4KBHRhZ3MYBiADKAsyMC5rb21hcmkubWV0cmljcy52MS5RdWVyeU1ldHJpY3NSZXF1ZXN0LlRhZ3NFbnRyeRIXCgpkb3duc2FtcGxlGAcgASgISACIAQESEwoLYWdncmVnYXRpb24YCCABKAkSEgoKZmlsbF9lbXB0eRgJIAEoCBorCglUYWdzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4AUINCgtfZG93bnNhbXBsZSJIChRRdWVyeU1ldHJpY3NSZXNwb25zZRIwCgZzZXJpZXMYASADKAsyIC5rb21hcmkubWV0cmljcy52MS5NZXRyaWNzU2VyaWVzIo8DCg1NZXRyaWNzU2VyaWVzEhAKCGFnZW50X2lkGAEgASgJEg4KBm1ldHJpYxgCIAEoCRI8CgZsYWJlbHMYAyADKAsyLC5rb21hcmkubWV0cmljcy52MS5NZXRyaWNzU2VyaWVzLkxhYmVsc0VudHJ5Ei8KBnBvaW50cxgEIAMoCzIfLmtvbWFyaS5tZXRyaWNzLnYxLk1ldHJpY3NQb2ludBIzCgxxdWVyeV9wb2ludHMYBSADKAsyHS5rb21hcmkubWV0cmljcy52MS5RdWVyeVBvaW50EgwKBHR5cGUYBiABKAkSDAoEdW5pdBgHIAEoCRIWCg5yZXRlbnRpb25fZGF5cxgIIAEoDRITCgtkb3duc2FtcGxlZBgJIAEoCBITCgthZ2dyZWdhdGlvbhgKIAEoCRIrCghpbnRlcnZhbBgLIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhotCgtMYWJlbHNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBItsBCgpRdWVyeVBvaW50Ei8KC29ic2VydmVkX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBISCgV2YWx1ZRgCIAEoAUgAiAEBEhQKDHNhbXBsZV9jb3VudBgDIAEoDRI5CgZsYWJlbHMYBCADKAsyKS5rb21hcmkubWV0cmljcy52MS5RdWVyeVBvaW50LkxhYmVsc0VudHJ5Gi0KC0xhYmVsc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAFCCAoGX3ZhbHVlIh4KHExpc3RNZXRyaWNEZWZpbml0aW9uc1JlcXVlc3QiWQodTGlzdE1ldHJpY0RlZmluaXRpb25zUmVzcG9uc2USOAoLZGVmaW5pdGlvbnMYASADKAsyIy5rb21hcmkubWV0cmljcy52MS5NZXRyaWNEZWZpbml0aW9uIr8CChBNZXRyaWNEZWZpbml0aW9uEgwKBG5hbWUYASABKAkSEwoLZGVzY3JpcHRpb24YAiABKAkSDAoEdHlwZRgDIAEoCRIMCgR1bml0GAQgASgJEhYKDnJldGVudGlvbl9kYXlzGAUgASgNEkMKCG1ldGFkYXRhGAYgAygLMjEua29tYXJpLm1ldHJpY3MudjEuTWV0cmljRGVmaW5pdGlvbi5NZXRhZGF0YUVudHJ5Ei4KCmNyZWF0ZWRfYXQYByABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYCCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wGi8KDU1ldGFkYXRhRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ASIWChRMaXN0UGluZ1Rhc2tzUmVxdWVzdCJDChVMaXN0UGluZ1Rhc2tzUmVzcG9uc2USKgoFdGFza3MYASADKAsyGy5rb21hcmkubWV0cmljcy52MS5QaW5nVGFzayJkCghQaW5nVGFzaxIPCgd0YXNrX2lkGAEgASgEEgwKBG5hbWUYAiABKAkSDAoEdHlwZRgDIAEoCRIrCghpbnRlcnZhbBgEIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbiKsAQoTR2V0UGluZ1N0YXRzUmVxdWVzdBIRCglhZ2VudF9pZHMYASADKAkSEAoIdGFza19pZHMYAiADKAQSLgoKc3RhcnRfdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLAoIZW5kX3RpbWUYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhIKCm1heF9wb2ludHMYBSABKA0izQEKFEdldFBpbmdTdGF0c1Jlc3BvbnNlEi4KCnN0YXJ0X3RpbWUYASABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiwKCGVuZF90aW1lGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIrCghpbnRlcnZhbBgDIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhIqCgVzdGF0cxgEIAMoCzIbLmtvbWFyaS5tZXRyaWNzLnYxLlBpbmdTdGF0IrUECghQaW5nU3RhdBIQCghhZ2VudF9pZBgBIAEoCRIPCgd0YXNrX2lkGAIgASgEEgwKBG5hbWUYAyABKAkSDAoEdHlwZRgEIAEoCRIxCg5wcm9iZV9pbnRlcnZhbBgFIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhIzCgR0YWdzGAYgAygLMiUua29tYXJpLm1ldHJpY3MudjEuUGluZ1N0YXQuVGFnc0VudHJ5Eg0KBXRvdGFsGAcgASgNEg0KBXZhbGlkGAggASgNEhQKDGxvc3NfcGVyY2VudBgJIAEoARIYChBsb3NzX2FwcHJveGltYXRlGAogASgIEhQKB21pbmltdW0YCyABKAFIAIgBARIUCgdtYXhpbXVtGAwgASgBSAGIAQESFAoHYXZlcmFnZRgNIAEoAUgCiAEBEhMKBmxhdGVzdBgOIAEoAUgDiAEBEhAKA3A1MBgPIAEoAUgEiAEBEhAKA3A5ORgQIAEoAUgFiAEBEh8KEnN0YW5kYXJkX2RldmlhdGlvbhgRIAEoAUgGiAEBEhUKDXA5OV9wNTBfcmF0aW8YEiABKAEaKwoJVGFnc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAFCCgoIX21pbmltdW1CCgoIX21heGltdW1CCgoIX2F2ZXJhZ2VCCQoHX2xhdGVzdEIGCgRfcDUwQgYKBF9wOTlCFQoTX3N0YW5kYXJkX2RldmlhdGlvbiJuChNXYXRjaE1ldHJpY3NSZXF1ZXN0EhEKCWFnZW50X2lkcxgBIAMoCRIPCgdtZXRyaWNzGAIgAygJEjMKEG1pbmltdW1faW50ZXJ2YWwYAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24iRgoUV2F0Y2hNZXRyaWNzUmVzcG9uc2USLgoFcG9pbnQYASABKAsyHy5rb21hcmkubWV0cmljcy52MS5NZXRyaWNzUG9pbnQy3wUKDk1ldHJpY3NTZXJ2aWNlEmIKDVN1Ym1pdE1ldHJpY3MSJy5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVxdWVzdBooLmtvbWFyaS5tZXRyaWNzLnYxLlN1Ym1pdE1ldHJpY3NSZXNwb25zZRJkCg1VcGxvYWRNZXRyaWNzEicua29tYXJpLm1ldHJpY3MudjEuVXBsb2FkTWV0cmljc1JlcXVlc3QaKC5rb21hcmkubWV0cmljcy52MS5VcGxvYWRNZXRyaWNzUmVzcG9uc2UoARJfCgxRdWVyeU1ldHJpY3MSJi5rb21hcmkubWV0cmljcy52MS5RdWVyeU1ldHJpY3NSZXF1ZXN0Gicua29tYXJpLm1ldHJpY3MudjEuUXVlcnlNZXRyaWNzUmVzcG9uc2USegoVTGlzdE1ldHJpY0RlZmluaXRpb25zEi8ua29tYXJpLm1ldHJpY3MudjEuTGlzdE1ldHJpY0RlZmluaXRpb25zUmVxdWVzdBowLmtvbWFyaS5tZXRyaWNzLnYxLkxpc3RNZXRyaWNEZWZpbml0aW9uc1Jlc3BvbnNlEmIKDUxpc3RQaW5nVGFza3MSJy5rb21hcmkubWV0cmljcy52MS5MaXN0UGluZ1Rhc2tzUmVxdWVzdBooLmtvbWFyaS5tZXRyaWNzLnYxLkxpc3RQaW5nVGFza3NSZXNwb25zZRJfCgxHZXRQaW5nU3RhdHMSJi5rb21hcmkubWV0cmljcy52MS5HZXRQaW5nU3RhdHNSZXF1ZXN0Gicua29tYXJpLm1ldHJpY3MudjEuR2V0UGluZ1N0YXRzUmVzcG9uc2USYQoMV2F0Y2hNZXRyaWNzEiYua29tYXJpLm1ldHJpY3MudjEuV2F0Y2hNZXRyaWNzUmVxdWVzdBonLmtvbWFyaS5tZXRyaWNzLnYxLldhdGNoTWV0cmljc1Jlc3BvbnNlMAFC0QEKFWNvbS5rb21hcmkubWV0cmljcy52MUIMTWV0cmljc1Byb3RvUAFaRGdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL21ldHJpY3MvdjE7bWV0cmljc3YxogIDS01YqgIRS29tYXJpLk1ldHJpY3MuVjHKAhFLb21hcmlcTWV0cmljc1xWMeICHUtvbWFyaVxNZXRyaWNzXFYxXEdQQk1ldGFkYXRh6gITS29tYXJpOjpNZXRyaWNzOjpWMWIGcHJvdG8z", [file_google_protobuf_duration, file_google_protobuf_timestamp]);
+  fileDesc("Ch9rb21hcmkvbWV0cmljcy92MS9tZXRyaWNzLnByb3RvEhFrb21hcmkubWV0cmljcy52MSLKAQoMTWV0cmljc1BvaW50Eg4KBm1ldHJpYxgBIAEoCRINCgV2YWx1ZRgCIAEoARIvCgtvYnNlcnZlZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASOwoGbGFiZWxzGAQgAygLMisua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50LkxhYmVsc0VudHJ5Gi0KC0xhYmVsc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiawoUU3VibWl0TWV0cmljc1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSEAoIc2VxdWVuY2UYAiABKAQSLwoGcG9pbnRzGAMgAygLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50IksKFVN1Ym1pdE1ldHJpY3NSZXNwb25zZRIZChFhY2NlcHRlZF9zZXF1ZW5jZRgBIAEoBBIXCg9hY2NlcHRlZF9wb2ludHMYAiABKA0iTgoUVXBsb2FkTWV0cmljc1JlcXVlc3QSNgoFYmF0Y2gYASABKAsyJy5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVxdWVzdCJLChVVcGxvYWRNZXRyaWNzUmVzcG9uc2USGQoRYWNjZXB0ZWRfc2VxdWVuY2UYASABKAQSFwoPYWNjZXB0ZWRfcG9pbnRzGAIgASgEIk4KFFN0cmVhbU1ldHJpY3NSZXF1ZXN0EjYKBWJhdGNoGAEgASgLMicua29tYXJpLm1ldHJpY3MudjEuU3VibWl0TWV0cmljc1JlcXVlc3QiSwoVU3RyZWFtTWV0cmljc1Jlc3BvbnNlEhkKEWFjY2VwdGVkX3NlcXVlbmNlGAEgASgEEhcKD2FjY2VwdGVkX3BvaW50cxgCIAEoDSLpAgoTUXVlcnlNZXRyaWNzUmVxdWVzdBIRCglhZ2VudF9pZHMYASADKAkSDwoHbWV0cmljcxgCIAMoCRIuCgpzdGFydF90aW1lGAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIsCghlbmRfdGltZRgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEgoKbWF4X3BvaW50cxgFIAEoDRI+CgR0YWdzGAYgAygLMjAua29tYXJpLm1ldHJpY3MudjEuUXVlcnlNZXRyaWNzUmVxdWVzdC5UYWdzRW50cnkSFwoKZG93bnNhbXBsZRgHIAEoCEgAiAEBEhMKC2FnZ3JlZ2F0aW9uGAggASgJEhIKCmZpbGxfZW1wdHkYCSABKAgaKwoJVGFnc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAFCDQoLX2Rvd25zYW1wbGUiSAoUUXVlcnlNZXRyaWNzUmVzcG9uc2USMAoGc2VyaWVzGAEgAygLMiAua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1NlcmllcyKPAwoNTWV0cmljc1NlcmllcxIQCghhZ2VudF9pZBgBIAEoCRIOCgZtZXRyaWMYAiABKAkSPAoGbGFiZWxzGAMgAygLMiwua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1Nlcmllcy5MYWJlbHNFbnRyeRIvCgZwb2ludHMYBCADKAsyHy5rb21hcmkubWV0cmljcy52MS5NZXRyaWNzUG9pbnQSMwoMcXVlcnlfcG9pbnRzGAUgAygLMh0ua29tYXJpLm1ldHJpY3MudjEuUXVlcnlQb2ludBIMCgR0eXBlGAYgASgJEgwKBHVuaXQYByABKAkSFgoOcmV0ZW50aW9uX2RheXMYCCABKA0SEwoLZG93bnNhbXBsZWQYCSABKAgSEwoLYWdncmVnYXRpb24YCiABKAkSKwoIaW50ZXJ2YWwYCyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24aLQoLTGFiZWxzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ASLbAQoKUXVlcnlQb2ludBIvCgtvYnNlcnZlZF9hdBgBIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEgoFdmFsdWUYAiABKAFIAIgBARIUCgxzYW1wbGVfY291bnQYAyABKA0SOQoGbGFiZWxzGAQgAygLMikua29tYXJpLm1ldHJpY3MudjEuUXVlcnlQb2ludC5MYWJlbHNFbnRyeRotCgtMYWJlbHNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBQggKBl92YWx1ZSIeChxMaXN0TWV0cmljRGVmaW5pdGlvbnNSZXF1ZXN0IlkKHUxpc3RNZXRyaWNEZWZpbml0aW9uc1Jlc3BvbnNlEjgKC2RlZmluaXRpb25zGAEgAygLMiMua29tYXJpLm1ldHJpY3MudjEuTWV0cmljRGVmaW5pdGlvbiK/AgoQTWV0cmljRGVmaW5pdGlvbhIMCgRuYW1lGAEgASgJEhMKC2Rlc2NyaXB0aW9uGAIgASgJEgwKBHR5cGUYAyABKAkSDAoEdW5pdBgEIAEoCRIWCg5yZXRlbnRpb25fZGF5cxgFIAEoDRJDCghtZXRhZGF0YRgGIAMoCzIxLmtvbWFyaS5tZXRyaWNzLnYxLk1ldHJpY0RlZmluaXRpb24uTWV0YWRhdGFFbnRyeRIuCgpjcmVhdGVkX2F0GAcgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAggASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBovCg1NZXRhZGF0YUVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiFgoUTGlzdFBpbmdUYXNrc1JlcXVlc3QiQwoVTGlzdFBpbmdUYXNrc1Jlc3BvbnNlEioKBXRhc2tzGAEgAygLMhsua29tYXJpLm1ldHJpY3MudjEuUGluZ1Rhc2siZAoIUGluZ1Rhc2sSDwoHdGFza19pZBgBIAEoBBIMCgRuYW1lGAIgASgJEgwKBHR5cGUYAyABKAkSKwoIaW50ZXJ2YWwYBCABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24irAEKE0dldFBpbmdTdGF0c1JlcXVlc3QSEQoJYWdlbnRfaWRzGAEgAygJEhAKCHRhc2tfaWRzGAIgAygEEi4KCnN0YXJ0X3RpbWUYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiwKCGVuZF90aW1lGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBISCgptYXhfcG9pbnRzGAUgASgNIs0BChRHZXRQaW5nU3RhdHNSZXNwb25zZRIuCgpzdGFydF90aW1lGAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIsCghlbmRfdGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASKwoIaW50ZXJ2YWwYAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24SKgoFc3RhdHMYBCADKAsyGy5rb21hcmkubWV0cmljcy52MS5QaW5nU3RhdCK1BAoIUGluZ1N0YXQSEAoIYWdlbnRfaWQYASABKAkSDwoHdGFza19pZBgCIAEoBBIMCgRuYW1lGAMgASgJEgwKBHR5cGUYBCABKAkSMQoOcHJvYmVfaW50ZXJ2YWwYBSABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24SMwoEdGFncxgGIAMoCzIlLmtvbWFyaS5tZXRyaWNzLnYxLlBpbmdTdGF0LlRhZ3NFbnRyeRINCgV0b3RhbBgHIAEoDRINCgV2YWxpZBgIIAEoDRIUCgxsb3NzX3BlcmNlbnQYCSABKAESGAoQbG9zc19hcHByb3hpbWF0ZRgKIAEoCBIUCgdtaW5pbXVtGAsgASgBSACIAQESFAoHbWF4aW11bRgMIAEoAUgBiAEBEhQKB2F2ZXJhZ2UYDSABKAFIAogBARITCgZsYXRlc3QYDiABKAFIA4gBARIQCgNwNTAYDyABKAFIBIgBARIQCgNwOTkYECABKAFIBYgBARIfChJzdGFuZGFyZF9kZXZpYXRpb24YESABKAFIBogBARIVCg1wOTlfcDUwX3JhdGlvGBIgASgBGisKCVRhZ3NFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBQgoKCF9taW5pbXVtQgoKCF9tYXhpbXVtQgoKCF9hdmVyYWdlQgkKB19sYXRlc3RCBgoEX3A1MEIGCgRfcDk5QhUKE19zdGFuZGFyZF9kZXZpYXRpb24ibgoTV2F0Y2hNZXRyaWNzUmVxdWVzdBIRCglhZ2VudF9pZHMYASADKAkSDwoHbWV0cmljcxgCIAMoCRIzChBtaW5pbXVtX2ludGVydmFsGAMgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uIlgKFFdhdGNoTWV0cmljc1Jlc3BvbnNlEi4KBXBvaW50GAEgASgLMh8ua29tYXJpLm1ldHJpY3MudjEuTWV0cmljc1BvaW50EhAKCGFnZW50X2lkGAIgASgJMscGCg5NZXRyaWNzU2VydmljZRJiCg1TdWJtaXRNZXRyaWNzEicua29tYXJpLm1ldHJpY3MudjEuU3VibWl0TWV0cmljc1JlcXVlc3QaKC5rb21hcmkubWV0cmljcy52MS5TdWJtaXRNZXRyaWNzUmVzcG9uc2USZAoNVXBsb2FkTWV0cmljcxInLmtvbWFyaS5tZXRyaWNzLnYxLlVwbG9hZE1ldHJpY3NSZXF1ZXN0Gigua29tYXJpLm1ldHJpY3MudjEuVXBsb2FkTWV0cmljc1Jlc3BvbnNlKAESZgoNU3RyZWFtTWV0cmljcxInLmtvbWFyaS5tZXRyaWNzLnYxLlN0cmVhbU1ldHJpY3NSZXF1ZXN0Gigua29tYXJpLm1ldHJpY3MudjEuU3RyZWFtTWV0cmljc1Jlc3BvbnNlKAEwARJfCgxRdWVyeU1ldHJpY3MSJi5rb21hcmkubWV0cmljcy52MS5RdWVyeU1ldHJpY3NSZXF1ZXN0Gicua29tYXJpLm1ldHJpY3MudjEuUXVlcnlNZXRyaWNzUmVzcG9uc2USegoVTGlzdE1ldHJpY0RlZmluaXRpb25zEi8ua29tYXJpLm1ldHJpY3MudjEuTGlzdE1ldHJpY0RlZmluaXRpb25zUmVxdWVzdBowLmtvbWFyaS5tZXRyaWNzLnYxLkxpc3RNZXRyaWNEZWZpbml0aW9uc1Jlc3BvbnNlEmIKDUxpc3RQaW5nVGFza3MSJy5rb21hcmkubWV0cmljcy52MS5MaXN0UGluZ1Rhc2tzUmVxdWVzdBooLmtvbWFyaS5tZXRyaWNzLnYxLkxpc3RQaW5nVGFza3NSZXNwb25zZRJfCgxHZXRQaW5nU3RhdHMSJi5rb21hcmkubWV0cmljcy52MS5HZXRQaW5nU3RhdHNSZXF1ZXN0Gicua29tYXJpLm1ldHJpY3MudjEuR2V0UGluZ1N0YXRzUmVzcG9uc2USYQoMV2F0Y2hNZXRyaWNzEiYua29tYXJpLm1ldHJpY3MudjEuV2F0Y2hNZXRyaWNzUmVxdWVzdBonLmtvbWFyaS5tZXRyaWNzLnYxLldhdGNoTWV0cmljc1Jlc3BvbnNlMAFC0QEKFWNvbS5rb21hcmkubWV0cmljcy52MUIMTWV0cmljc1Byb3RvUAFaRGdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL21ldHJpY3MvdjE7bWV0cmljc3YxogIDS01YqgIRS29tYXJpLk1ldHJpY3MuVjHKAhFLb21hcmlcTWV0cmljc1xWMeICHUtvbWFyaVxNZXRyaWNzXFYxXEdQQk1ldGFkYXRh6gITS29tYXJpOjpNZXRyaWNzOjpWMWIGcHJvdG8z", [file_google_protobuf_duration, file_google_protobuf_timestamp]);
 
 /**
  * MetricsPoint is one typed metric sample.
@@ -145,6 +145,49 @@ export const UploadMetricsResponseSchema: GenMessage<UploadMetricsResponse> = /*
   messageDesc(file_komari_metrics_v1_metrics, 4);
 
 /**
+ * StreamMetricsRequest wraps one sequenced batch on the long-lived upload stream.
+ *
+ * @generated from message komari.metrics.v1.StreamMetricsRequest
+ */
+export type StreamMetricsRequest = Message<"komari.metrics.v1.StreamMetricsRequest"> & {
+  /**
+   * @generated from field: komari.metrics.v1.SubmitMetricsRequest batch = 1;
+   */
+  batch?: SubmitMetricsRequest | undefined;
+};
+
+/**
+ * Describes the message komari.metrics.v1.StreamMetricsRequest.
+ * Use `create(StreamMetricsRequestSchema)` to create a new message.
+ */
+export const StreamMetricsRequestSchema: GenMessage<StreamMetricsRequest> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 5);
+
+/**
+ * StreamMetricsResponse acknowledges one committed batch before the next is sent.
+ *
+ * @generated from message komari.metrics.v1.StreamMetricsResponse
+ */
+export type StreamMetricsResponse = Message<"komari.metrics.v1.StreamMetricsResponse"> & {
+  /**
+   * @generated from field: uint64 accepted_sequence = 1;
+   */
+  acceptedSequence: bigint;
+
+  /**
+   * @generated from field: uint32 accepted_points = 2;
+   */
+  acceptedPoints: number;
+};
+
+/**
+ * Describes the message komari.metrics.v1.StreamMetricsResponse.
+ * Use `create(StreamMetricsResponseSchema)` to create a new message.
+ */
+export const StreamMetricsResponseSchema: GenMessage<StreamMetricsResponse> = /*@__PURE__*/
+  messageDesc(file_komari_metrics_v1_metrics, 6);
+
+/**
  * QueryMetricsRequest describes a bounded metrics query.
  *
  * @generated from message komari.metrics.v1.QueryMetricsRequest
@@ -201,7 +244,7 @@ export type QueryMetricsRequest = Message<"komari.metrics.v1.QueryMetricsRequest
  * Use `create(QueryMetricsRequestSchema)` to create a new message.
  */
 export const QueryMetricsRequestSchema: GenMessage<QueryMetricsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 5);
+  messageDesc(file_komari_metrics_v1_metrics, 7);
 
 /**
  * QueryMetricsResponse contains grouped metric series.
@@ -220,7 +263,7 @@ export type QueryMetricsResponse = Message<"komari.metrics.v1.QueryMetricsRespon
  * Use `create(QueryMetricsResponseSchema)` to create a new message.
  */
 export const QueryMetricsResponseSchema: GenMessage<QueryMetricsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 6);
+  messageDesc(file_komari_metrics_v1_metrics, 8);
 
 /**
  * MetricsSeries groups ordered points for one agent and metric.
@@ -289,7 +332,7 @@ export type MetricsSeries = Message<"komari.metrics.v1.MetricsSeries"> & {
  * Use `create(MetricsSeriesSchema)` to create a new message.
  */
 export const MetricsSeriesSchema: GenMessage<MetricsSeries> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 7);
+  messageDesc(file_komari_metrics_v1_metrics, 9);
 
 /**
  * QueryPoint is one historical bucket. Missing value distinguishes an empty bucket from zero.
@@ -323,7 +366,7 @@ export type QueryPoint = Message<"komari.metrics.v1.QueryPoint"> & {
  * Use `create(QueryPointSchema)` to create a new message.
  */
 export const QueryPointSchema: GenMessage<QueryPoint> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 8);
+  messageDesc(file_komari_metrics_v1_metrics, 10);
 
 /**
  * ListMetricDefinitionsRequest is intentionally empty.
@@ -338,7 +381,7 @@ export type ListMetricDefinitionsRequest = Message<"komari.metrics.v1.ListMetric
  * Use `create(ListMetricDefinitionsRequestSchema)` to create a new message.
  */
 export const ListMetricDefinitionsRequestSchema: GenMessage<ListMetricDefinitionsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 9);
+  messageDesc(file_komari_metrics_v1_metrics, 11);
 
 /**
  * @generated from message komari.metrics.v1.ListMetricDefinitionsResponse
@@ -355,7 +398,7 @@ export type ListMetricDefinitionsResponse = Message<"komari.metrics.v1.ListMetri
  * Use `create(ListMetricDefinitionsResponseSchema)` to create a new message.
  */
 export const ListMetricDefinitionsResponseSchema: GenMessage<ListMetricDefinitionsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 10);
+  messageDesc(file_komari_metrics_v1_metrics, 12);
 
 /**
  * @generated from message komari.metrics.v1.MetricDefinition
@@ -407,7 +450,7 @@ export type MetricDefinition = Message<"komari.metrics.v1.MetricDefinition"> & {
  * Use `create(MetricDefinitionSchema)` to create a new message.
  */
 export const MetricDefinitionSchema: GenMessage<MetricDefinition> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 11);
+  messageDesc(file_komari_metrics_v1_metrics, 13);
 
 /**
  * ListPingTasksRequest is intentionally empty.
@@ -422,7 +465,7 @@ export type ListPingTasksRequest = Message<"komari.metrics.v1.ListPingTasksReque
  * Use `create(ListPingTasksRequestSchema)` to create a new message.
  */
 export const ListPingTasksRequestSchema: GenMessage<ListPingTasksRequest> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 12);
+  messageDesc(file_komari_metrics_v1_metrics, 14);
 
 /**
  * @generated from message komari.metrics.v1.ListPingTasksResponse
@@ -439,7 +482,7 @@ export type ListPingTasksResponse = Message<"komari.metrics.v1.ListPingTasksResp
  * Use `create(ListPingTasksResponseSchema)` to create a new message.
  */
 export const ListPingTasksResponseSchema: GenMessage<ListPingTasksResponse> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 13);
+  messageDesc(file_komari_metrics_v1_metrics, 15);
 
 /**
  * @generated from message komari.metrics.v1.PingTask
@@ -471,7 +514,7 @@ export type PingTask = Message<"komari.metrics.v1.PingTask"> & {
  * Use `create(PingTaskSchema)` to create a new message.
  */
 export const PingTaskSchema: GenMessage<PingTask> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 14);
+  messageDesc(file_komari_metrics_v1_metrics, 16);
 
 /**
  * @generated from message komari.metrics.v1.GetPingStatsRequest
@@ -508,7 +551,7 @@ export type GetPingStatsRequest = Message<"komari.metrics.v1.GetPingStatsRequest
  * Use `create(GetPingStatsRequestSchema)` to create a new message.
  */
 export const GetPingStatsRequestSchema: GenMessage<GetPingStatsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 15);
+  messageDesc(file_komari_metrics_v1_metrics, 17);
 
 /**
  * @generated from message komari.metrics.v1.GetPingStatsResponse
@@ -540,7 +583,7 @@ export type GetPingStatsResponse = Message<"komari.metrics.v1.GetPingStatsRespon
  * Use `create(GetPingStatsResponseSchema)` to create a new message.
  */
 export const GetPingStatsResponseSchema: GenMessage<GetPingStatsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 16);
+  messageDesc(file_komari_metrics_v1_metrics, 18);
 
 /**
  * @generated from message komari.metrics.v1.PingStat
@@ -642,7 +685,7 @@ export type PingStat = Message<"komari.metrics.v1.PingStat"> & {
  * Use `create(PingStatSchema)` to create a new message.
  */
 export const PingStatSchema: GenMessage<PingStat> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 17);
+  messageDesc(file_komari_metrics_v1_metrics, 19);
 
 /**
  * WatchMetricsRequest subscribes to current samples with a server-enforced interval.
@@ -671,7 +714,7 @@ export type WatchMetricsRequest = Message<"komari.metrics.v1.WatchMetricsRequest
  * Use `create(WatchMetricsRequestSchema)` to create a new message.
  */
 export const WatchMetricsRequestSchema: GenMessage<WatchMetricsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 18);
+  messageDesc(file_komari_metrics_v1_metrics, 20);
 
 /**
  * WatchMetricsResponse wraps one live sample.
@@ -683,6 +726,11 @@ export type WatchMetricsResponse = Message<"komari.metrics.v1.WatchMetricsRespon
    * @generated from field: komari.metrics.v1.MetricsPoint point = 1;
    */
   point?: MetricsPoint | undefined;
+
+  /**
+   * @generated from field: string agent_id = 2;
+   */
+  agentId: string;
 };
 
 /**
@@ -690,7 +738,7 @@ export type WatchMetricsResponse = Message<"komari.metrics.v1.WatchMetricsRespon
  * Use `create(WatchMetricsResponseSchema)` to create a new message.
  */
 export const WatchMetricsResponseSchema: GenMessage<WatchMetricsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_metrics_v1_metrics, 19);
+  messageDesc(file_komari_metrics_v1_metrics, 21);
 
 /**
  * MetricsService owns metric ingest, bounded queries, and live subscriptions.
@@ -717,6 +765,16 @@ export const MetricsService: GenService<{
     methodKind: "client_streaming";
     input: typeof UploadMetricsRequestSchema;
     output: typeof UploadMetricsResponseSchema;
+  },
+  /**
+   * StreamMetrics continuously uploads sequenced batches and acknowledges each batch.
+   *
+   * @generated from rpc komari.metrics.v1.MetricsService.StreamMetrics
+   */
+  streamMetrics: {
+    methodKind: "bidi_streaming";
+    input: typeof StreamMetricsRequestSchema;
+    output: typeof StreamMetricsResponseSchema;
   },
   /**
    * QueryMetrics retrieves a bounded time window.

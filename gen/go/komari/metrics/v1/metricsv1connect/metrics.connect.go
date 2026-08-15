@@ -39,6 +39,9 @@ const (
 	// MetricsServiceUploadMetricsProcedure is the fully-qualified name of the MetricsService's
 	// UploadMetrics RPC.
 	MetricsServiceUploadMetricsProcedure = "/komari.metrics.v1.MetricsService/UploadMetrics"
+	// MetricsServiceStreamMetricsProcedure is the fully-qualified name of the MetricsService's
+	// StreamMetrics RPC.
+	MetricsServiceStreamMetricsProcedure = "/komari.metrics.v1.MetricsService/StreamMetrics"
 	// MetricsServiceQueryMetricsProcedure is the fully-qualified name of the MetricsService's
 	// QueryMetrics RPC.
 	MetricsServiceQueryMetricsProcedure = "/komari.metrics.v1.MetricsService/QueryMetrics"
@@ -62,6 +65,8 @@ type MetricsServiceClient interface {
 	SubmitMetrics(context.Context, *connect.Request[v1.SubmitMetricsRequest]) (*connect.Response[v1.SubmitMetricsResponse], error)
 	// UploadMetrics stores a bounded client stream without sharing other lifecycles.
 	UploadMetrics(context.Context) *connect.ClientStreamForClient[v1.UploadMetricsRequest, v1.UploadMetricsResponse]
+	// StreamMetrics continuously uploads sequenced batches and acknowledges each batch.
+	StreamMetrics(context.Context) *connect.BidiStreamForClient[v1.StreamMetricsRequest, v1.StreamMetricsResponse]
 	// QueryMetrics retrieves a bounded time window.
 	QueryMetrics(context.Context, *connect.Request[v1.QueryMetricsRequest]) (*connect.Response[v1.QueryMetricsResponse], error)
 	// ListMetricDefinitions returns the public metric catalog used by themes.
@@ -95,6 +100,12 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			httpClient,
 			baseURL+MetricsServiceUploadMetricsProcedure,
 			connect.WithSchema(metricsServiceMethods.ByName("UploadMetrics")),
+			connect.WithClientOptions(opts...),
+		),
+		streamMetrics: connect.NewClient[v1.StreamMetricsRequest, v1.StreamMetricsResponse](
+			httpClient,
+			baseURL+MetricsServiceStreamMetricsProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("StreamMetrics")),
 			connect.WithClientOptions(opts...),
 		),
 		queryMetrics: connect.NewClient[v1.QueryMetricsRequest, v1.QueryMetricsResponse](
@@ -134,6 +145,7 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 type metricsServiceClient struct {
 	submitMetrics         *connect.Client[v1.SubmitMetricsRequest, v1.SubmitMetricsResponse]
 	uploadMetrics         *connect.Client[v1.UploadMetricsRequest, v1.UploadMetricsResponse]
+	streamMetrics         *connect.Client[v1.StreamMetricsRequest, v1.StreamMetricsResponse]
 	queryMetrics          *connect.Client[v1.QueryMetricsRequest, v1.QueryMetricsResponse]
 	listMetricDefinitions *connect.Client[v1.ListMetricDefinitionsRequest, v1.ListMetricDefinitionsResponse]
 	listPingTasks         *connect.Client[v1.ListPingTasksRequest, v1.ListPingTasksResponse]
@@ -149,6 +161,11 @@ func (c *metricsServiceClient) SubmitMetrics(ctx context.Context, req *connect.R
 // UploadMetrics calls komari.metrics.v1.MetricsService.UploadMetrics.
 func (c *metricsServiceClient) UploadMetrics(ctx context.Context) *connect.ClientStreamForClient[v1.UploadMetricsRequest, v1.UploadMetricsResponse] {
 	return c.uploadMetrics.CallClientStream(ctx)
+}
+
+// StreamMetrics calls komari.metrics.v1.MetricsService.StreamMetrics.
+func (c *metricsServiceClient) StreamMetrics(ctx context.Context) *connect.BidiStreamForClient[v1.StreamMetricsRequest, v1.StreamMetricsResponse] {
+	return c.streamMetrics.CallBidiStream(ctx)
 }
 
 // QueryMetrics calls komari.metrics.v1.MetricsService.QueryMetrics.
@@ -182,6 +199,8 @@ type MetricsServiceHandler interface {
 	SubmitMetrics(context.Context, *connect.Request[v1.SubmitMetricsRequest]) (*connect.Response[v1.SubmitMetricsResponse], error)
 	// UploadMetrics stores a bounded client stream without sharing other lifecycles.
 	UploadMetrics(context.Context, *connect.ClientStream[v1.UploadMetricsRequest]) (*connect.Response[v1.UploadMetricsResponse], error)
+	// StreamMetrics continuously uploads sequenced batches and acknowledges each batch.
+	StreamMetrics(context.Context, *connect.BidiStream[v1.StreamMetricsRequest, v1.StreamMetricsResponse]) error
 	// QueryMetrics retrieves a bounded time window.
 	QueryMetrics(context.Context, *connect.Request[v1.QueryMetricsRequest]) (*connect.Response[v1.QueryMetricsResponse], error)
 	// ListMetricDefinitions returns the public metric catalog used by themes.
@@ -211,6 +230,12 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 		MetricsServiceUploadMetricsProcedure,
 		svc.UploadMetrics,
 		connect.WithSchema(metricsServiceMethods.ByName("UploadMetrics")),
+		connect.WithHandlerOptions(opts...),
+	)
+	metricsServiceStreamMetricsHandler := connect.NewBidiStreamHandler(
+		MetricsServiceStreamMetricsProcedure,
+		svc.StreamMetrics,
+		connect.WithSchema(metricsServiceMethods.ByName("StreamMetrics")),
 		connect.WithHandlerOptions(opts...),
 	)
 	metricsServiceQueryMetricsHandler := connect.NewUnaryHandler(
@@ -249,6 +274,8 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 			metricsServiceSubmitMetricsHandler.ServeHTTP(w, r)
 		case MetricsServiceUploadMetricsProcedure:
 			metricsServiceUploadMetricsHandler.ServeHTTP(w, r)
+		case MetricsServiceStreamMetricsProcedure:
+			metricsServiceStreamMetricsHandler.ServeHTTP(w, r)
 		case MetricsServiceQueryMetricsProcedure:
 			metricsServiceQueryMetricsHandler.ServeHTTP(w, r)
 		case MetricsServiceListMetricDefinitionsProcedure:
@@ -274,6 +301,10 @@ func (UnimplementedMetricsServiceHandler) SubmitMetrics(context.Context, *connec
 
 func (UnimplementedMetricsServiceHandler) UploadMetrics(context.Context, *connect.ClientStream[v1.UploadMetricsRequest]) (*connect.Response[v1.UploadMetricsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.UploadMetrics is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) StreamMetrics(context.Context, *connect.BidiStream[v1.StreamMetricsRequest, v1.StreamMetricsResponse]) error {
+	return connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.StreamMetrics is not implemented"))
 }
 
 func (UnimplementedMetricsServiceHandler) QueryMetrics(context.Context, *connect.Request[v1.QueryMetricsRequest]) (*connect.Response[v1.QueryMetricsResponse], error) {
