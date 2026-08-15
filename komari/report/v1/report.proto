@@ -52,6 +52,9 @@ message SystemInfo {
   uint32 cpu_count = 7;
   uint64 memory_total_bytes = 8;
   google.protobuf.Duration uptime = 9;
+  string cpu_name = 10;
+  uint32 cpu_physical_count = 11;
+  string virtualization = 12;
 }
 
 // ResourceUsage is the current aggregate resource usage.

@@ -319,6 +319,9 @@ type SystemInfo struct {
 	CpuCount         uint32                 `protobuf:"varint,7,opt,name=cpu_count,json=cpuCount,proto3" json:"cpu_count,omitempty"`
 	MemoryTotalBytes uint64                 `protobuf:"varint,8,opt,name=memory_total_bytes,json=memoryTotalBytes,proto3" json:"memory_total_bytes,omitempty"`
 	Uptime           *durationpb.Duration   `protobuf:"bytes,9,opt,name=uptime,proto3" json:"uptime,omitempty"`
+	CpuName          string                 `protobuf:"bytes,10,opt,name=cpu_name,json=cpuName,proto3" json:"cpu_name,omitempty"`
+	CpuPhysicalCount uint32                 `protobuf:"varint,11,opt,name=cpu_physical_count,json=cpuPhysicalCount,proto3" json:"cpu_physical_count,omitempty"`
+	Virtualization   string                 `protobuf:"bytes,12,opt,name=virtualization,proto3" json:"virtualization,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -414,6 +417,27 @@ func (x *SystemInfo) GetUptime() *durationpb.Duration {
 		return x.Uptime
 	}
 	return nil
+}
+
+func (x *SystemInfo) GetCpuName() string {
+	if x != nil {
+		return x.CpuName
+	}
+	return ""
+}
+
+func (x *SystemInfo) GetCpuPhysicalCount() uint32 {
+	if x != nil {
+		return x.CpuPhysicalCount
+	}
+	return 0
+}
+
+func (x *SystemInfo) GetVirtualization() string {
+	if x != nil {
+		return x.Virtualization
+	}
+	return ""
 }
 
 // ResourceUsage is the current aggregate resource usage.
@@ -1090,7 +1114,7 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\x12network_interfaces\x18\x06 \x03(\v2\".komari.report.v1.NetworkInterfaceR\x11networkInterfaces\x120\n" +
 	"\x05disks\x18\a \x03(\v2\x1a.komari.report.v1.DiskInfoR\x05disks\x12;\n" +
 	"\bmetadata\x18\b \x01(\v2\x1f.komari.report.v1.AgentMetadataR\bmetadata\x12-\n" +
-	"\x12diagnostic_message\x18\t \x01(\tR\x11diagnosticMessage\"\xc8\x02\n" +
+	"\x12diagnostic_message\x18\t \x01(\tR\x11diagnosticMessage\"\xb9\x03\n" +
 	"\n" +
 	"SystemInfo\x12\x1a\n" +
 	"\bhostname\x18\x01 \x01(\tR\bhostname\x12\x0e\n" +
@@ -1101,7 +1125,11 @@ const file_komari_report_v1_report_proto_rawDesc = "" +
 	"\farchitecture\x18\x06 \x01(\tR\farchitecture\x12\x1b\n" +
 	"\tcpu_count\x18\a \x01(\rR\bcpuCount\x12,\n" +
 	"\x12memory_total_bytes\x18\b \x01(\x04R\x10memoryTotalBytes\x121\n" +
-	"\x06uptime\x18\t \x01(\v2\x19.google.protobuf.DurationR\x06uptime\"\xe7\x03\n" +
+	"\x06uptime\x18\t \x01(\v2\x19.google.protobuf.DurationR\x06uptime\x12\x19\n" +
+	"\bcpu_name\x18\n" +
+	" \x01(\tR\acpuName\x12,\n" +
+	"\x12cpu_physical_count\x18\v \x01(\rR\x10cpuPhysicalCount\x12&\n" +
+	"\x0evirtualization\x18\f \x01(\tR\x0evirtualization\"\xe7\x03\n" +
 	"\rResourceUsage\x12\x1f\n" +
 	"\vcpu_percent\x18\x01 \x01(\x01R\n" +
 	"cpuPercent\x12*\n" +
