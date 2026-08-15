@@ -9,10 +9,44 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/network/v1;
 
 // NetworkProbeService owns independently leased network diagnostics.
 service NetworkProbeService {
+  // LeasePingProbe long-polls for one scheduled latency assignment.
+  rpc LeasePingProbe(LeasePingProbeRequest) returns (LeasePingProbeResponse);
+  // SubmitPingProbeResult records one idempotent latency result.
+  rpc SubmitPingProbeResult(SubmitPingProbeResultRequest) returns (SubmitPingProbeResultResponse);
   // LeaseReturnRouteProbe long-polls for one return-route assignment.
   rpc LeaseReturnRouteProbe(LeaseReturnRouteProbeRequest) returns (LeaseReturnRouteProbeResponse);
   // SubmitReturnRouteProbeResult records one idempotent probe result.
   rpc SubmitReturnRouteProbeResult(SubmitReturnRouteProbeResultRequest) returns (SubmitReturnRouteProbeResultResponse);
+}
+
+message LeasePingProbeRequest {
+  string agent_id = 1;
+}
+
+message LeasePingProbeResponse {
+  optional PingProbeAssignment assignment = 1;
+}
+
+message PingProbeAssignment {
+  string assignment_id = 1;
+  uint64 task_id = 2;
+  string protocol = 3;
+  string target = 4;
+  google.protobuf.Duration timeout = 5;
+  google.protobuf.Timestamp lease_expires_at = 6;
+}
+
+message SubmitPingProbeResultRequest {
+  string agent_id = 1;
+  string assignment_id = 2;
+  uint64 task_id = 3;
+  string protocol = 4;
+  sint64 latency_ms = 5;
+  google.protobuf.Timestamp finished_at = 6;
+}
+
+message SubmitPingProbeResultResponse {
+  bool accepted = 1;
 }
 
 message LeaseReturnRouteProbeRequest {

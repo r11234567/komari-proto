@@ -23,6 +23,306 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type LeasePingProbeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LeasePingProbeRequest) Reset() {
+	*x = LeasePingProbeRequest{}
+	mi := &file_komari_network_v1_network_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeasePingProbeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeasePingProbeRequest) ProtoMessage() {}
+
+func (x *LeasePingProbeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_network_v1_network_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeasePingProbeRequest.ProtoReflect.Descriptor instead.
+func (*LeasePingProbeRequest) Descriptor() ([]byte, []int) {
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *LeasePingProbeRequest) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+type LeasePingProbeResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Assignment    *PingProbeAssignment   `protobuf:"bytes,1,opt,name=assignment,proto3,oneof" json:"assignment,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LeasePingProbeResponse) Reset() {
+	*x = LeasePingProbeResponse{}
+	mi := &file_komari_network_v1_network_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeasePingProbeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeasePingProbeResponse) ProtoMessage() {}
+
+func (x *LeasePingProbeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_network_v1_network_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeasePingProbeResponse.ProtoReflect.Descriptor instead.
+func (*LeasePingProbeResponse) Descriptor() ([]byte, []int) {
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *LeasePingProbeResponse) GetAssignment() *PingProbeAssignment {
+	if x != nil {
+		return x.Assignment
+	}
+	return nil
+}
+
+type PingProbeAssignment struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	AssignmentId   string                 `protobuf:"bytes,1,opt,name=assignment_id,json=assignmentId,proto3" json:"assignment_id,omitempty"`
+	TaskId         uint64                 `protobuf:"varint,2,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	Protocol       string                 `protobuf:"bytes,3,opt,name=protocol,proto3" json:"protocol,omitempty"`
+	Target         string                 `protobuf:"bytes,4,opt,name=target,proto3" json:"target,omitempty"`
+	Timeout        *durationpb.Duration   `protobuf:"bytes,5,opt,name=timeout,proto3" json:"timeout,omitempty"`
+	LeaseExpiresAt *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=lease_expires_at,json=leaseExpiresAt,proto3" json:"lease_expires_at,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *PingProbeAssignment) Reset() {
+	*x = PingProbeAssignment{}
+	mi := &file_komari_network_v1_network_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PingProbeAssignment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PingProbeAssignment) ProtoMessage() {}
+
+func (x *PingProbeAssignment) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_network_v1_network_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PingProbeAssignment.ProtoReflect.Descriptor instead.
+func (*PingProbeAssignment) Descriptor() ([]byte, []int) {
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PingProbeAssignment) GetAssignmentId() string {
+	if x != nil {
+		return x.AssignmentId
+	}
+	return ""
+}
+
+func (x *PingProbeAssignment) GetTaskId() uint64 {
+	if x != nil {
+		return x.TaskId
+	}
+	return 0
+}
+
+func (x *PingProbeAssignment) GetProtocol() string {
+	if x != nil {
+		return x.Protocol
+	}
+	return ""
+}
+
+func (x *PingProbeAssignment) GetTarget() string {
+	if x != nil {
+		return x.Target
+	}
+	return ""
+}
+
+func (x *PingProbeAssignment) GetTimeout() *durationpb.Duration {
+	if x != nil {
+		return x.Timeout
+	}
+	return nil
+}
+
+func (x *PingProbeAssignment) GetLeaseExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LeaseExpiresAt
+	}
+	return nil
+}
+
+type SubmitPingProbeResultRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	AssignmentId  string                 `protobuf:"bytes,2,opt,name=assignment_id,json=assignmentId,proto3" json:"assignment_id,omitempty"`
+	TaskId        uint64                 `protobuf:"varint,3,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	Protocol      string                 `protobuf:"bytes,4,opt,name=protocol,proto3" json:"protocol,omitempty"`
+	LatencyMs     int64                  `protobuf:"zigzag64,5,opt,name=latency_ms,json=latencyMs,proto3" json:"latency_ms,omitempty"`
+	FinishedAt    *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=finished_at,json=finishedAt,proto3" json:"finished_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitPingProbeResultRequest) Reset() {
+	*x = SubmitPingProbeResultRequest{}
+	mi := &file_komari_network_v1_network_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitPingProbeResultRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitPingProbeResultRequest) ProtoMessage() {}
+
+func (x *SubmitPingProbeResultRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_network_v1_network_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitPingProbeResultRequest.ProtoReflect.Descriptor instead.
+func (*SubmitPingProbeResultRequest) Descriptor() ([]byte, []int) {
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *SubmitPingProbeResultRequest) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+func (x *SubmitPingProbeResultRequest) GetAssignmentId() string {
+	if x != nil {
+		return x.AssignmentId
+	}
+	return ""
+}
+
+func (x *SubmitPingProbeResultRequest) GetTaskId() uint64 {
+	if x != nil {
+		return x.TaskId
+	}
+	return 0
+}
+
+func (x *SubmitPingProbeResultRequest) GetProtocol() string {
+	if x != nil {
+		return x.Protocol
+	}
+	return ""
+}
+
+func (x *SubmitPingProbeResultRequest) GetLatencyMs() int64 {
+	if x != nil {
+		return x.LatencyMs
+	}
+	return 0
+}
+
+func (x *SubmitPingProbeResultRequest) GetFinishedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.FinishedAt
+	}
+	return nil
+}
+
+type SubmitPingProbeResultResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Accepted      bool                   `protobuf:"varint,1,opt,name=accepted,proto3" json:"accepted,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitPingProbeResultResponse) Reset() {
+	*x = SubmitPingProbeResultResponse{}
+	mi := &file_komari_network_v1_network_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitPingProbeResultResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitPingProbeResultResponse) ProtoMessage() {}
+
+func (x *SubmitPingProbeResultResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_network_v1_network_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitPingProbeResultResponse.ProtoReflect.Descriptor instead.
+func (*SubmitPingProbeResultResponse) Descriptor() ([]byte, []int) {
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SubmitPingProbeResultResponse) GetAccepted() bool {
+	if x != nil {
+		return x.Accepted
+	}
+	return false
+}
+
 type LeaseReturnRouteProbeRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
@@ -32,7 +332,7 @@ type LeaseReturnRouteProbeRequest struct {
 
 func (x *LeaseReturnRouteProbeRequest) Reset() {
 	*x = LeaseReturnRouteProbeRequest{}
-	mi := &file_komari_network_v1_network_proto_msgTypes[0]
+	mi := &file_komari_network_v1_network_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44,7 +344,7 @@ func (x *LeaseReturnRouteProbeRequest) String() string {
 func (*LeaseReturnRouteProbeRequest) ProtoMessage() {}
 
 func (x *LeaseReturnRouteProbeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_network_v1_network_proto_msgTypes[0]
+	mi := &file_komari_network_v1_network_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +357,7 @@ func (x *LeaseReturnRouteProbeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LeaseReturnRouteProbeRequest.ProtoReflect.Descriptor instead.
 func (*LeaseReturnRouteProbeRequest) Descriptor() ([]byte, []int) {
-	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{0}
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *LeaseReturnRouteProbeRequest) GetAgentId() string {
@@ -76,7 +376,7 @@ type LeaseReturnRouteProbeResponse struct {
 
 func (x *LeaseReturnRouteProbeResponse) Reset() {
 	*x = LeaseReturnRouteProbeResponse{}
-	mi := &file_komari_network_v1_network_proto_msgTypes[1]
+	mi := &file_komari_network_v1_network_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -88,7 +388,7 @@ func (x *LeaseReturnRouteProbeResponse) String() string {
 func (*LeaseReturnRouteProbeResponse) ProtoMessage() {}
 
 func (x *LeaseReturnRouteProbeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_network_v1_network_proto_msgTypes[1]
+	mi := &file_komari_network_v1_network_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -101,7 +401,7 @@ func (x *LeaseReturnRouteProbeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LeaseReturnRouteProbeResponse.ProtoReflect.Descriptor instead.
 func (*LeaseReturnRouteProbeResponse) Descriptor() ([]byte, []int) {
-	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{1}
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *LeaseReturnRouteProbeResponse) GetAssignment() *ReturnRouteProbeAssignment {
@@ -127,7 +427,7 @@ type ReturnRouteProbeAssignment struct {
 
 func (x *ReturnRouteProbeAssignment) Reset() {
 	*x = ReturnRouteProbeAssignment{}
-	mi := &file_komari_network_v1_network_proto_msgTypes[2]
+	mi := &file_komari_network_v1_network_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -139,7 +439,7 @@ func (x *ReturnRouteProbeAssignment) String() string {
 func (*ReturnRouteProbeAssignment) ProtoMessage() {}
 
 func (x *ReturnRouteProbeAssignment) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_network_v1_network_proto_msgTypes[2]
+	mi := &file_komari_network_v1_network_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -152,7 +452,7 @@ func (x *ReturnRouteProbeAssignment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReturnRouteProbeAssignment.ProtoReflect.Descriptor instead.
 func (*ReturnRouteProbeAssignment) Descriptor() ([]byte, []int) {
-	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{2}
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ReturnRouteProbeAssignment) GetAssignmentId() string {
@@ -225,7 +525,7 @@ type SubmitReturnRouteProbeResultRequest struct {
 
 func (x *SubmitReturnRouteProbeResultRequest) Reset() {
 	*x = SubmitReturnRouteProbeResultRequest{}
-	mi := &file_komari_network_v1_network_proto_msgTypes[3]
+	mi := &file_komari_network_v1_network_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -237,7 +537,7 @@ func (x *SubmitReturnRouteProbeResultRequest) String() string {
 func (*SubmitReturnRouteProbeResultRequest) ProtoMessage() {}
 
 func (x *SubmitReturnRouteProbeResultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_network_v1_network_proto_msgTypes[3]
+	mi := &file_komari_network_v1_network_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -250,7 +550,7 @@ func (x *SubmitReturnRouteProbeResultRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use SubmitReturnRouteProbeResultRequest.ProtoReflect.Descriptor instead.
 func (*SubmitReturnRouteProbeResultRequest) Descriptor() ([]byte, []int) {
-	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{3}
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SubmitReturnRouteProbeResultRequest) GetAgentId() string {
@@ -304,7 +604,7 @@ type SubmitReturnRouteProbeResultResponse struct {
 
 func (x *SubmitReturnRouteProbeResultResponse) Reset() {
 	*x = SubmitReturnRouteProbeResultResponse{}
-	mi := &file_komari_network_v1_network_proto_msgTypes[4]
+	mi := &file_komari_network_v1_network_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -316,7 +616,7 @@ func (x *SubmitReturnRouteProbeResultResponse) String() string {
 func (*SubmitReturnRouteProbeResultResponse) ProtoMessage() {}
 
 func (x *SubmitReturnRouteProbeResultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_network_v1_network_proto_msgTypes[4]
+	mi := &file_komari_network_v1_network_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -329,7 +629,7 @@ func (x *SubmitReturnRouteProbeResultResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use SubmitReturnRouteProbeResultResponse.ProtoReflect.Descriptor instead.
 func (*SubmitReturnRouteProbeResultResponse) Descriptor() ([]byte, []int) {
-	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{4}
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SubmitReturnRouteProbeResultResponse) GetAccepted() bool {
@@ -351,7 +651,7 @@ type ReturnRouteHop struct {
 
 func (x *ReturnRouteHop) Reset() {
 	*x = ReturnRouteHop{}
-	mi := &file_komari_network_v1_network_proto_msgTypes[5]
+	mi := &file_komari_network_v1_network_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -363,7 +663,7 @@ func (x *ReturnRouteHop) String() string {
 func (*ReturnRouteHop) ProtoMessage() {}
 
 func (x *ReturnRouteHop) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_network_v1_network_proto_msgTypes[5]
+	mi := &file_komari_network_v1_network_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -376,7 +676,7 @@ func (x *ReturnRouteHop) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReturnRouteHop.ProtoReflect.Descriptor instead.
 func (*ReturnRouteHop) Descriptor() ([]byte, []int) {
-	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{5}
+	return file_komari_network_v1_network_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ReturnRouteHop) GetTtl() uint32 {
@@ -411,7 +711,32 @@ var File_komari_network_v1_network_proto protoreflect.FileDescriptor
 
 const file_komari_network_v1_network_proto_rawDesc = "" +
 	"\n" +
-	"\x1fkomari/network/v1/network.proto\x12\x11komari.network.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"9\n" +
+	"\x1fkomari/network/v1/network.proto\x12\x11komari.network.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"2\n" +
+	"\x15LeasePingProbeRequest\x12\x19\n" +
+	"\bagent_id\x18\x01 \x01(\tR\aagentId\"t\n" +
+	"\x16LeasePingProbeResponse\x12K\n" +
+	"\n" +
+	"assignment\x18\x01 \x01(\v2&.komari.network.v1.PingProbeAssignmentH\x00R\n" +
+	"assignment\x88\x01\x01B\r\n" +
+	"\v_assignment\"\x82\x02\n" +
+	"\x13PingProbeAssignment\x12#\n" +
+	"\rassignment_id\x18\x01 \x01(\tR\fassignmentId\x12\x17\n" +
+	"\atask_id\x18\x02 \x01(\x04R\x06taskId\x12\x1a\n" +
+	"\bprotocol\x18\x03 \x01(\tR\bprotocol\x12\x16\n" +
+	"\x06target\x18\x04 \x01(\tR\x06target\x123\n" +
+	"\atimeout\x18\x05 \x01(\v2\x19.google.protobuf.DurationR\atimeout\x12D\n" +
+	"\x10lease_expires_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\x0eleaseExpiresAt\"\xef\x01\n" +
+	"\x1cSubmitPingProbeResultRequest\x12\x19\n" +
+	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12#\n" +
+	"\rassignment_id\x18\x02 \x01(\tR\fassignmentId\x12\x17\n" +
+	"\atask_id\x18\x03 \x01(\x04R\x06taskId\x12\x1a\n" +
+	"\bprotocol\x18\x04 \x01(\tR\bprotocol\x12\x1d\n" +
+	"\n" +
+	"latency_ms\x18\x05 \x01(\x12R\tlatencyMs\x12;\n" +
+	"\vfinished_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"finishedAt\";\n" +
+	"\x1dSubmitPingProbeResultResponse\x12\x1a\n" +
+	"\baccepted\x18\x01 \x01(\bR\baccepted\"9\n" +
 	"\x1cLeaseReturnRouteProbeRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\"\x82\x01\n" +
 	"\x1dLeaseReturnRouteProbeResponse\x12R\n" +
@@ -445,8 +770,10 @@ const file_komari_network_v1_network_proto_rawDesc = "" +
 	"\x02ip\x18\x02 \x01(\tR\x02ip\x12\x1d\n" +
 	"\n" +
 	"latency_ms\x18\x03 \x01(\x01R\tlatencyMs\x12\x18\n" +
-	"\atimeout\x18\x04 \x01(\bR\atimeout2\xa3\x02\n" +
-	"\x13NetworkProbeService\x12z\n" +
+	"\atimeout\x18\x04 \x01(\bR\atimeout2\x86\x04\n" +
+	"\x13NetworkProbeService\x12e\n" +
+	"\x0eLeasePingProbe\x12(.komari.network.v1.LeasePingProbeRequest\x1a).komari.network.v1.LeasePingProbeResponse\x12z\n" +
+	"\x15SubmitPingProbeResult\x12/.komari.network.v1.SubmitPingProbeResultRequest\x1a0.komari.network.v1.SubmitPingProbeResultResponse\x12z\n" +
 	"\x15LeaseReturnRouteProbe\x12/.komari.network.v1.LeaseReturnRouteProbeRequest\x1a0.komari.network.v1.LeaseReturnRouteProbeResponse\x12\x8f\x01\n" +
 	"\x1cSubmitReturnRouteProbeResult\x126.komari.network.v1.SubmitReturnRouteProbeResultRequest\x1a7.komari.network.v1.SubmitReturnRouteProbeResultResponseB\xd1\x01\n" +
 	"\x15com.komari.network.v1B\fNetworkProtoP\x01ZDgithub.com/r11234567/komari-proto/gen/go/komari/network/v1;networkv1\xa2\x02\x03KNX\xaa\x02\x11Komari.Network.V1\xca\x02\x11Komari\\Network\\V1\xe2\x02\x1dKomari\\Network\\V1\\GPBMetadata\xea\x02\x13Komari::Network::V1b\x06proto3"
@@ -463,32 +790,45 @@ func file_komari_network_v1_network_proto_rawDescGZIP() []byte {
 	return file_komari_network_v1_network_proto_rawDescData
 }
 
-var file_komari_network_v1_network_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_komari_network_v1_network_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_komari_network_v1_network_proto_goTypes = []any{
-	(*LeaseReturnRouteProbeRequest)(nil),         // 0: komari.network.v1.LeaseReturnRouteProbeRequest
-	(*LeaseReturnRouteProbeResponse)(nil),        // 1: komari.network.v1.LeaseReturnRouteProbeResponse
-	(*ReturnRouteProbeAssignment)(nil),           // 2: komari.network.v1.ReturnRouteProbeAssignment
-	(*SubmitReturnRouteProbeResultRequest)(nil),  // 3: komari.network.v1.SubmitReturnRouteProbeResultRequest
-	(*SubmitReturnRouteProbeResultResponse)(nil), // 4: komari.network.v1.SubmitReturnRouteProbeResultResponse
-	(*ReturnRouteHop)(nil),                       // 5: komari.network.v1.ReturnRouteHop
-	(*durationpb.Duration)(nil),                  // 6: google.protobuf.Duration
-	(*timestamppb.Timestamp)(nil),                // 7: google.protobuf.Timestamp
+	(*LeasePingProbeRequest)(nil),                // 0: komari.network.v1.LeasePingProbeRequest
+	(*LeasePingProbeResponse)(nil),               // 1: komari.network.v1.LeasePingProbeResponse
+	(*PingProbeAssignment)(nil),                  // 2: komari.network.v1.PingProbeAssignment
+	(*SubmitPingProbeResultRequest)(nil),         // 3: komari.network.v1.SubmitPingProbeResultRequest
+	(*SubmitPingProbeResultResponse)(nil),        // 4: komari.network.v1.SubmitPingProbeResultResponse
+	(*LeaseReturnRouteProbeRequest)(nil),         // 5: komari.network.v1.LeaseReturnRouteProbeRequest
+	(*LeaseReturnRouteProbeResponse)(nil),        // 6: komari.network.v1.LeaseReturnRouteProbeResponse
+	(*ReturnRouteProbeAssignment)(nil),           // 7: komari.network.v1.ReturnRouteProbeAssignment
+	(*SubmitReturnRouteProbeResultRequest)(nil),  // 8: komari.network.v1.SubmitReturnRouteProbeResultRequest
+	(*SubmitReturnRouteProbeResultResponse)(nil), // 9: komari.network.v1.SubmitReturnRouteProbeResultResponse
+	(*ReturnRouteHop)(nil),                       // 10: komari.network.v1.ReturnRouteHop
+	(*durationpb.Duration)(nil),                  // 11: google.protobuf.Duration
+	(*timestamppb.Timestamp)(nil),                // 12: google.protobuf.Timestamp
 }
 var file_komari_network_v1_network_proto_depIdxs = []int32{
-	2, // 0: komari.network.v1.LeaseReturnRouteProbeResponse.assignment:type_name -> komari.network.v1.ReturnRouteProbeAssignment
-	6, // 1: komari.network.v1.ReturnRouteProbeAssignment.hop_timeout:type_name -> google.protobuf.Duration
-	7, // 2: komari.network.v1.ReturnRouteProbeAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
-	5, // 3: komari.network.v1.SubmitReturnRouteProbeResultRequest.hops:type_name -> komari.network.v1.ReturnRouteHop
-	7, // 4: komari.network.v1.SubmitReturnRouteProbeResultRequest.finished_at:type_name -> google.protobuf.Timestamp
-	0, // 5: komari.network.v1.NetworkProbeService.LeaseReturnRouteProbe:input_type -> komari.network.v1.LeaseReturnRouteProbeRequest
-	3, // 6: komari.network.v1.NetworkProbeService.SubmitReturnRouteProbeResult:input_type -> komari.network.v1.SubmitReturnRouteProbeResultRequest
-	1, // 7: komari.network.v1.NetworkProbeService.LeaseReturnRouteProbe:output_type -> komari.network.v1.LeaseReturnRouteProbeResponse
-	4, // 8: komari.network.v1.NetworkProbeService.SubmitReturnRouteProbeResult:output_type -> komari.network.v1.SubmitReturnRouteProbeResultResponse
-	7, // [7:9] is the sub-list for method output_type
-	5, // [5:7] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	2,  // 0: komari.network.v1.LeasePingProbeResponse.assignment:type_name -> komari.network.v1.PingProbeAssignment
+	11, // 1: komari.network.v1.PingProbeAssignment.timeout:type_name -> google.protobuf.Duration
+	12, // 2: komari.network.v1.PingProbeAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
+	12, // 3: komari.network.v1.SubmitPingProbeResultRequest.finished_at:type_name -> google.protobuf.Timestamp
+	7,  // 4: komari.network.v1.LeaseReturnRouteProbeResponse.assignment:type_name -> komari.network.v1.ReturnRouteProbeAssignment
+	11, // 5: komari.network.v1.ReturnRouteProbeAssignment.hop_timeout:type_name -> google.protobuf.Duration
+	12, // 6: komari.network.v1.ReturnRouteProbeAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
+	10, // 7: komari.network.v1.SubmitReturnRouteProbeResultRequest.hops:type_name -> komari.network.v1.ReturnRouteHop
+	12, // 8: komari.network.v1.SubmitReturnRouteProbeResultRequest.finished_at:type_name -> google.protobuf.Timestamp
+	0,  // 9: komari.network.v1.NetworkProbeService.LeasePingProbe:input_type -> komari.network.v1.LeasePingProbeRequest
+	3,  // 10: komari.network.v1.NetworkProbeService.SubmitPingProbeResult:input_type -> komari.network.v1.SubmitPingProbeResultRequest
+	5,  // 11: komari.network.v1.NetworkProbeService.LeaseReturnRouteProbe:input_type -> komari.network.v1.LeaseReturnRouteProbeRequest
+	8,  // 12: komari.network.v1.NetworkProbeService.SubmitReturnRouteProbeResult:input_type -> komari.network.v1.SubmitReturnRouteProbeResultRequest
+	1,  // 13: komari.network.v1.NetworkProbeService.LeasePingProbe:output_type -> komari.network.v1.LeasePingProbeResponse
+	4,  // 14: komari.network.v1.NetworkProbeService.SubmitPingProbeResult:output_type -> komari.network.v1.SubmitPingProbeResultResponse
+	6,  // 15: komari.network.v1.NetworkProbeService.LeaseReturnRouteProbe:output_type -> komari.network.v1.LeaseReturnRouteProbeResponse
+	9,  // 16: komari.network.v1.NetworkProbeService.SubmitReturnRouteProbeResult:output_type -> komari.network.v1.SubmitReturnRouteProbeResultResponse
+	13, // [13:17] is the sub-list for method output_type
+	9,  // [9:13] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_komari_network_v1_network_proto_init() }
@@ -497,13 +837,14 @@ func file_komari_network_v1_network_proto_init() {
 		return
 	}
 	file_komari_network_v1_network_proto_msgTypes[1].OneofWrappers = []any{}
+	file_komari_network_v1_network_proto_msgTypes[6].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_network_v1_network_proto_rawDesc), len(file_komari_network_v1_network_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

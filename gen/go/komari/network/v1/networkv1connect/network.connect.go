@@ -33,6 +33,12 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// NetworkProbeServiceLeasePingProbeProcedure is the fully-qualified name of the
+	// NetworkProbeService's LeasePingProbe RPC.
+	NetworkProbeServiceLeasePingProbeProcedure = "/komari.network.v1.NetworkProbeService/LeasePingProbe"
+	// NetworkProbeServiceSubmitPingProbeResultProcedure is the fully-qualified name of the
+	// NetworkProbeService's SubmitPingProbeResult RPC.
+	NetworkProbeServiceSubmitPingProbeResultProcedure = "/komari.network.v1.NetworkProbeService/SubmitPingProbeResult"
 	// NetworkProbeServiceLeaseReturnRouteProbeProcedure is the fully-qualified name of the
 	// NetworkProbeService's LeaseReturnRouteProbe RPC.
 	NetworkProbeServiceLeaseReturnRouteProbeProcedure = "/komari.network.v1.NetworkProbeService/LeaseReturnRouteProbe"
@@ -43,6 +49,10 @@ const (
 
 // NetworkProbeServiceClient is a client for the komari.network.v1.NetworkProbeService service.
 type NetworkProbeServiceClient interface {
+	// LeasePingProbe long-polls for one scheduled latency assignment.
+	LeasePingProbe(context.Context, *connect.Request[v1.LeasePingProbeRequest]) (*connect.Response[v1.LeasePingProbeResponse], error)
+	// SubmitPingProbeResult records one idempotent latency result.
+	SubmitPingProbeResult(context.Context, *connect.Request[v1.SubmitPingProbeResultRequest]) (*connect.Response[v1.SubmitPingProbeResultResponse], error)
 	// LeaseReturnRouteProbe long-polls for one return-route assignment.
 	LeaseReturnRouteProbe(context.Context, *connect.Request[v1.LeaseReturnRouteProbeRequest]) (*connect.Response[v1.LeaseReturnRouteProbeResponse], error)
 	// SubmitReturnRouteProbeResult records one idempotent probe result.
@@ -60,6 +70,18 @@ func NewNetworkProbeServiceClient(httpClient connect.HTTPClient, baseURL string,
 	baseURL = strings.TrimRight(baseURL, "/")
 	networkProbeServiceMethods := v1.File_komari_network_v1_network_proto.Services().ByName("NetworkProbeService").Methods()
 	return &networkProbeServiceClient{
+		leasePingProbe: connect.NewClient[v1.LeasePingProbeRequest, v1.LeasePingProbeResponse](
+			httpClient,
+			baseURL+NetworkProbeServiceLeasePingProbeProcedure,
+			connect.WithSchema(networkProbeServiceMethods.ByName("LeasePingProbe")),
+			connect.WithClientOptions(opts...),
+		),
+		submitPingProbeResult: connect.NewClient[v1.SubmitPingProbeResultRequest, v1.SubmitPingProbeResultResponse](
+			httpClient,
+			baseURL+NetworkProbeServiceSubmitPingProbeResultProcedure,
+			connect.WithSchema(networkProbeServiceMethods.ByName("SubmitPingProbeResult")),
+			connect.WithClientOptions(opts...),
+		),
 		leaseReturnRouteProbe: connect.NewClient[v1.LeaseReturnRouteProbeRequest, v1.LeaseReturnRouteProbeResponse](
 			httpClient,
 			baseURL+NetworkProbeServiceLeaseReturnRouteProbeProcedure,
@@ -77,8 +99,20 @@ func NewNetworkProbeServiceClient(httpClient connect.HTTPClient, baseURL string,
 
 // networkProbeServiceClient implements NetworkProbeServiceClient.
 type networkProbeServiceClient struct {
+	leasePingProbe               *connect.Client[v1.LeasePingProbeRequest, v1.LeasePingProbeResponse]
+	submitPingProbeResult        *connect.Client[v1.SubmitPingProbeResultRequest, v1.SubmitPingProbeResultResponse]
 	leaseReturnRouteProbe        *connect.Client[v1.LeaseReturnRouteProbeRequest, v1.LeaseReturnRouteProbeResponse]
 	submitReturnRouteProbeResult *connect.Client[v1.SubmitReturnRouteProbeResultRequest, v1.SubmitReturnRouteProbeResultResponse]
+}
+
+// LeasePingProbe calls komari.network.v1.NetworkProbeService.LeasePingProbe.
+func (c *networkProbeServiceClient) LeasePingProbe(ctx context.Context, req *connect.Request[v1.LeasePingProbeRequest]) (*connect.Response[v1.LeasePingProbeResponse], error) {
+	return c.leasePingProbe.CallUnary(ctx, req)
+}
+
+// SubmitPingProbeResult calls komari.network.v1.NetworkProbeService.SubmitPingProbeResult.
+func (c *networkProbeServiceClient) SubmitPingProbeResult(ctx context.Context, req *connect.Request[v1.SubmitPingProbeResultRequest]) (*connect.Response[v1.SubmitPingProbeResultResponse], error) {
+	return c.submitPingProbeResult.CallUnary(ctx, req)
 }
 
 // LeaseReturnRouteProbe calls komari.network.v1.NetworkProbeService.LeaseReturnRouteProbe.
@@ -95,6 +129,10 @@ func (c *networkProbeServiceClient) SubmitReturnRouteProbeResult(ctx context.Con
 // NetworkProbeServiceHandler is an implementation of the komari.network.v1.NetworkProbeService
 // service.
 type NetworkProbeServiceHandler interface {
+	// LeasePingProbe long-polls for one scheduled latency assignment.
+	LeasePingProbe(context.Context, *connect.Request[v1.LeasePingProbeRequest]) (*connect.Response[v1.LeasePingProbeResponse], error)
+	// SubmitPingProbeResult records one idempotent latency result.
+	SubmitPingProbeResult(context.Context, *connect.Request[v1.SubmitPingProbeResultRequest]) (*connect.Response[v1.SubmitPingProbeResultResponse], error)
 	// LeaseReturnRouteProbe long-polls for one return-route assignment.
 	LeaseReturnRouteProbe(context.Context, *connect.Request[v1.LeaseReturnRouteProbeRequest]) (*connect.Response[v1.LeaseReturnRouteProbeResponse], error)
 	// SubmitReturnRouteProbeResult records one idempotent probe result.
@@ -108,6 +146,18 @@ type NetworkProbeServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewNetworkProbeServiceHandler(svc NetworkProbeServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	networkProbeServiceMethods := v1.File_komari_network_v1_network_proto.Services().ByName("NetworkProbeService").Methods()
+	networkProbeServiceLeasePingProbeHandler := connect.NewUnaryHandler(
+		NetworkProbeServiceLeasePingProbeProcedure,
+		svc.LeasePingProbe,
+		connect.WithSchema(networkProbeServiceMethods.ByName("LeasePingProbe")),
+		connect.WithHandlerOptions(opts...),
+	)
+	networkProbeServiceSubmitPingProbeResultHandler := connect.NewUnaryHandler(
+		NetworkProbeServiceSubmitPingProbeResultProcedure,
+		svc.SubmitPingProbeResult,
+		connect.WithSchema(networkProbeServiceMethods.ByName("SubmitPingProbeResult")),
+		connect.WithHandlerOptions(opts...),
+	)
 	networkProbeServiceLeaseReturnRouteProbeHandler := connect.NewUnaryHandler(
 		NetworkProbeServiceLeaseReturnRouteProbeProcedure,
 		svc.LeaseReturnRouteProbe,
@@ -122,6 +172,10 @@ func NewNetworkProbeServiceHandler(svc NetworkProbeServiceHandler, opts ...conne
 	)
 	return "/komari.network.v1.NetworkProbeService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case NetworkProbeServiceLeasePingProbeProcedure:
+			networkProbeServiceLeasePingProbeHandler.ServeHTTP(w, r)
+		case NetworkProbeServiceSubmitPingProbeResultProcedure:
+			networkProbeServiceSubmitPingProbeResultHandler.ServeHTTP(w, r)
 		case NetworkProbeServiceLeaseReturnRouteProbeProcedure:
 			networkProbeServiceLeaseReturnRouteProbeHandler.ServeHTTP(w, r)
 		case NetworkProbeServiceSubmitReturnRouteProbeResultProcedure:
@@ -134,6 +188,14 @@ func NewNetworkProbeServiceHandler(svc NetworkProbeServiceHandler, opts ...conne
 
 // UnimplementedNetworkProbeServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedNetworkProbeServiceHandler struct{}
+
+func (UnimplementedNetworkProbeServiceHandler) LeasePingProbe(context.Context, *connect.Request[v1.LeasePingProbeRequest]) (*connect.Response[v1.LeasePingProbeResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.network.v1.NetworkProbeService.LeasePingProbe is not implemented"))
+}
+
+func (UnimplementedNetworkProbeServiceHandler) SubmitPingProbeResult(context.Context, *connect.Request[v1.SubmitPingProbeResultRequest]) (*connect.Response[v1.SubmitPingProbeResultResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.network.v1.NetworkProbeService.SubmitPingProbeResult is not implemented"))
+}
 
 func (UnimplementedNetworkProbeServiceHandler) LeaseReturnRouteProbe(context.Context, *connect.Request[v1.LeaseReturnRouteProbeRequest]) (*connect.Response[v1.LeaseReturnRouteProbeResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.network.v1.NetworkProbeService.LeaseReturnRouteProbe is not implemented"))
