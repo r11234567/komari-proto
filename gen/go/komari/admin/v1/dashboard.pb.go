@@ -1024,7 +1024,10 @@ type DashboardDatabaseStore struct {
 	SizeBytes *int64                  `protobuf:"varint,3,opt,name=size_bytes,json=sizeBytes,proto3,oneof" json:"size_bytes,omitempty"`
 	Files     *DashboardDatabaseFiles `protobuf:"bytes,4,opt,name=files,proto3" json:"files,omitempty"`
 	// error carries a per-store collection failure without failing the response.
-	Error         string `protobuf:"bytes,5,opt,name=error,proto3" json:"error,omitempty"`
+	Error string `protobuf:"bytes,5,opt,name=error,proto3" json:"error,omitempty"`
+	// action is the reclaim this driver supports, so a console can label the
+	// maintenance button before running it.
+	Action        string `protobuf:"bytes,6,opt,name=action,proto3" json:"action,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1090,6 +1093,13 @@ func (x *DashboardDatabaseStore) GetFiles() *DashboardDatabaseFiles {
 func (x *DashboardDatabaseStore) GetError() string {
 	if x != nil {
 		return x.Error
+	}
+	return ""
+}
+
+func (x *DashboardDatabaseStore) GetAction() string {
+	if x != nil {
+		return x.Action
 	}
 	return ""
 }
@@ -2557,14 +2567,15 @@ const file_komari_admin_v1_dashboard_proto_rawDesc = "" +
 	"monitoring\x18\x04 \x01(\v2'.komari.admin.v1.DashboardDatabaseStoreR\n" +
 	"monitoring\x12/\n" +
 	"\x11local_total_bytes\x18\x05 \x01(\x03H\x00R\x0flocalTotalBytes\x88\x01\x01B\x14\n" +
-	"\x12_local_total_bytes\"\xd4\x01\n" +
+	"\x12_local_total_bytes\"\xec\x01\n" +
 	"\x16DashboardDatabaseStore\x12\x16\n" +
 	"\x06driver\x18\x01 \x01(\tR\x06driver\x12\x1a\n" +
 	"\blocation\x18\x02 \x01(\tR\blocation\x12\"\n" +
 	"\n" +
 	"size_bytes\x18\x03 \x01(\x03H\x00R\tsizeBytes\x88\x01\x01\x12=\n" +
 	"\x05files\x18\x04 \x01(\v2'.komari.admin.v1.DashboardDatabaseFilesR\x05files\x12\x14\n" +
-	"\x05error\x18\x05 \x01(\tR\x05errorB\r\n" +
+	"\x05error\x18\x05 \x01(\tR\x05error\x12\x16\n" +
+	"\x06action\x18\x06 \x01(\tR\x06actionB\r\n" +
 	"\v_size_bytes\"y\n" +
 	"\x16DashboardDatabaseFiles\x12%\n" +
 	"\x0edatabase_bytes\x18\x01 \x01(\x03R\rdatabaseBytes\x12\x1b\n" +

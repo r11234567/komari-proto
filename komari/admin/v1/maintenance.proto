@@ -1,0 +1,186 @@
+syntax = "proto3";
+
+package komari.admin.v1;
+
+import "google/protobuf/timestamp.proto";
+import "komari/admin/v1/dashboard.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/admin/v1;adminv1";
+
+// MaintenanceService owns the administration console's housekeeping surfaces:
+// login sessions, the audit log, the command clipboard, record retention and
+// database storage maintenance.
+service MaintenanceService {
+  // ListSessions returns every login session and marks the caller's own.
+  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse);
+  // DeleteSession revokes one login session by its opaque token.
+  rpc DeleteSession(DeleteSessionRequest) returns (DeleteSessionResponse);
+  // DeleteAllSessions revokes every login session, including the caller's.
+  rpc DeleteAllSessions(DeleteAllSessionsRequest) returns (DeleteAllSessionsResponse);
+  // ListAuditLogs returns one page of audit entries, newest first.
+  rpc ListAuditLogs(ListAuditLogsRequest) returns (ListAuditLogsResponse);
+  // ListClipboardEntries returns every stored command clipboard entry.
+  rpc ListClipboardEntries(ListClipboardEntriesRequest) returns (ListClipboardEntriesResponse);
+  // GetClipboardEntry returns one command clipboard entry.
+  rpc GetClipboardEntry(GetClipboardEntryRequest) returns (GetClipboardEntryResponse);
+  // CreateClipboardEntry stores one new command clipboard entry.
+  rpc CreateClipboardEntry(CreateClipboardEntryRequest) returns (CreateClipboardEntryResponse);
+  // UpdateClipboardEntry patches only the fields present in the request.
+  rpc UpdateClipboardEntry(UpdateClipboardEntryRequest) returns (UpdateClipboardEntryResponse);
+  // DeleteClipboardEntries removes one or many entries in a single call.
+  rpc DeleteClipboardEntries(DeleteClipboardEntriesRequest) returns (DeleteClipboardEntriesResponse);
+  // ClearRecords deletes stored monitoring records.
+  rpc ClearRecords(ClearRecordsRequest) returns (ClearRecordsResponse);
+  // GetDatabaseStatus reports driver, location and size for both stores.
+  rpc GetDatabaseStatus(GetDatabaseStatusRequest) returns (GetDatabaseStatusResponse);
+  // VacuumDatabase reclaims storage and reports per-store outcomes.
+  rpc VacuumDatabase(VacuumDatabaseRequest) returns (VacuumDatabaseResponse);
+}
+
+message ListSessionsRequest {}
+
+message ListSessionsResponse {
+  // current_session identifies the caller's own session so a console can warn
+  // before revoking the credential it is using.
+  string current_session = 1;
+  repeated AdminSession sessions = 2;
+}
+
+message AdminSession {
+  string uuid = 1;
+  string session = 2;
+  string user_agent = 3;
+  string ip = 4;
+  string login_method = 5;
+  google.protobuf.Timestamp latest_online = 6;
+  string latest_user_agent = 7;
+  string latest_ip = 8;
+  google.protobuf.Timestamp expires = 9;
+  google.protobuf.Timestamp created_at = 10;
+}
+
+message DeleteSessionRequest {
+  string session = 1;
+}
+
+message DeleteSessionResponse {}
+
+message DeleteAllSessionsRequest {}
+
+message DeleteAllSessionsResponse {}
+
+message ListAuditLogsRequest {
+  uint32 limit = 1;
+  uint32 page = 2;
+  string message_type = 3;
+}
+
+message ListAuditLogsResponse {
+  repeated AuditLogEntry logs = 1;
+  int64 total = 2;
+}
+
+message AuditLogEntry {
+  uint64 id = 1;
+  string ip = 2;
+  string uuid = 3;
+  string message = 4;
+  string message_type = 5;
+  google.protobuf.Timestamp time = 6;
+}
+
+message ListClipboardEntriesRequest {}
+
+message ListClipboardEntriesResponse {
+  repeated ClipboardEntry entries = 1;
+}
+
+message GetClipboardEntryRequest {
+  int32 id = 1;
+}
+
+message GetClipboardEntryResponse {
+  ClipboardEntry entry = 1;
+}
+
+message CreateClipboardEntryRequest {
+  string name = 1;
+  string text = 2;
+  int32 weight = 3;
+  string remark = 4;
+}
+
+message CreateClipboardEntryResponse {
+  ClipboardEntry entry = 1;
+}
+
+// UpdateClipboardEntryRequest patches only the fields it carries, matching the
+// partial update the console has always performed.
+message UpdateClipboardEntryRequest {
+  int32 id = 1;
+  optional string name = 2;
+  optional string text = 3;
+  optional int32 weight = 4;
+  optional string remark = 5;
+}
+
+message UpdateClipboardEntryResponse {}
+
+message DeleteClipboardEntriesRequest {
+  repeated int32 ids = 1;
+}
+
+message DeleteClipboardEntriesResponse {}
+
+message ClipboardEntry {
+  int32 id = 1;
+  string name = 2;
+  string text = 3;
+  int32 weight = 4;
+  string remark = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+// ClearRecordsRequest deletes monitoring history. Ping results are a separate
+// opt-in because they are far more expensive to rebuild than load records.
+message ClearRecordsRequest {
+  bool include_ping_records = 1;
+}
+
+message ClearRecordsResponse {}
+
+message GetDatabaseStatusRequest {}
+
+message GetDatabaseStatusResponse {
+  // DashboardDatabase is reused verbatim: the console and the dashboard read
+  // the same store status, and duplicating it would let the two drift.
+  DashboardDatabase status = 1;
+}
+
+message VacuumDatabaseRequest {}
+
+message VacuumDatabaseResponse {
+  DatabaseMaintenance result = 1;
+}
+
+// DatabaseMaintenance keeps the flat before/after/size fields alongside the
+// per-store results to preserve the original main-store-only contract.
+message DatabaseMaintenance {
+  int64 before_bytes = 1;
+  int64 after_bytes = 2;
+  int64 size_bytes = 3;
+  bool all_succeeded = 4;
+  DatabaseMaintenanceResult main = 5;
+  DatabaseMaintenanceResult monitoring = 6;
+}
+
+message DatabaseMaintenanceResult {
+  string driver = 1;
+  string action = 2;
+  optional int64 before_bytes = 3;
+  optional int64 after_bytes = 4;
+  bool success = 5;
+  string error = 6;
+  string size_error = 7;
+}

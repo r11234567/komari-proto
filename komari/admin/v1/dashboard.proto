@@ -142,6 +142,9 @@ message DashboardDatabaseStore {
   DashboardDatabaseFiles files = 4;
   // error carries a per-store collection failure without failing the response.
   string error = 5;
+  // action is the reclaim this driver supports, so a console can label the
+  // maintenance button before running it.
+  string action = 6;
 }
 
 message DashboardDatabaseFiles {
