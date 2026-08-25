@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package komari.admin.v1;
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/admin/v1;adminv1";
+
+// PingTaskService owns latency probe task administration. Reading probe
+// results stays on komari.metrics.v1.MetricsService; this service only manages
+// the task definitions.
+service PingTaskService {
+  // ListPingTasks returns every configured probe task.
+  rpc ListPingTasks(ListPingTasksRequest) returns (ListPingTasksResponse);
+  // CreatePingTask registers one probe task and returns its assigned id.
+  rpc CreatePingTask(CreatePingTaskRequest) returns (CreatePingTaskResponse);
+  // UpdatePingTasks saves one or many probe tasks in a single call.
+  rpc UpdatePingTasks(UpdatePingTasksRequest) returns (UpdatePingTasksResponse);
+  // DeletePingTasks removes probe tasks by id.
+  rpc DeletePingTasks(DeletePingTasksRequest) returns (DeletePingTasksResponse);
+  // ReorderPingTasks assigns display weights to probe tasks.
+  rpc ReorderPingTasks(ReorderPingTasksRequest) returns (ReorderPingTasksResponse);
+}
+
+message ListPingTasksRequest {}
+
+message ListPingTasksResponse {
+  repeated PingTask tasks = 1;
+}
+
+message CreatePingTaskRequest {
+  string name = 1;
+  string target = 2;
+  string type = 3;
+  int32 interval_seconds = 4;
+  repeated string clients = 5;
+  // default_on enrolls newly registered agents automatically. Existing agents
+  // are unaffected, so clients is still required when it is false.
+  bool default_on = 6;
+}
+
+message CreatePingTaskResponse {
+  uint32 task_id = 1;
+}
+
+message UpdatePingTasksRequest {
+  repeated PingTask tasks = 1;
+}
+
+message UpdatePingTasksResponse {}
+
+message DeletePingTasksRequest {
+  repeated uint32 ids = 1;
+}
+
+message DeletePingTasksResponse {}
+
+message ReorderPingTasksRequest {
+  // weights maps a probe task id to its display weight.
+  map<uint32, int32> weights = 1;
+}
+
+message ReorderPingTasksResponse {}
+
+message PingTask {
+  uint32 id = 1;
+  string name = 2;
+  string target = 3;
+  string type = 4;
+  int32 interval_seconds = 5;
+  repeated string clients = 6;
+  bool default_on = 7;
+  int32 weight = 8;
+}
