@@ -1,0 +1,299 @@
+syntax = "proto3";
+
+package komari.admin.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/admin/v1;adminv1";
+
+// DashboardService owns the administration dashboard aggregates. Sections are
+// requested independently so one degraded subsystem never fails the whole view.
+service DashboardService {
+  // GetDashboardSummary returns the cached node, resource, storage and alert summary.
+  rpc GetDashboardSummary(GetDashboardSummaryRequest) returns (GetDashboardSummaryResponse);
+  // GetDashboardCharts returns the cached traffic, latency and packet loss series.
+  rpc GetDashboardCharts(GetDashboardChartsRequest) returns (GetDashboardChartsResponse);
+  // ListDashboardAlertItems lists the currently affected targets for one alert kind.
+  rpc ListDashboardAlertItems(ListDashboardAlertItemsRequest) returns (ListDashboardAlertItemsResponse);
+}
+
+// DashboardSection selects one independently computed summary section.
+enum DashboardSection {
+  DASHBOARD_SECTION_UNSPECIFIED = 0;
+  DASHBOARD_SECTION_SERVERS = 1;
+  DASHBOARD_SECTION_RESOURCES = 2;
+  DASHBOARD_SECTION_STORAGE = 3;
+  DASHBOARD_SECTION_RETURN_ROUTE = 4;
+  DASHBOARD_SECTION_ALERTS = 5;
+}
+
+// DashboardChart selects one independently computed chart series.
+enum DashboardChart {
+  DASHBOARD_CHART_UNSPECIFIED = 0;
+  DASHBOARD_CHART_TRAFFIC = 1;
+  DASHBOARD_CHART_LATENCY = 2;
+  DASHBOARD_CHART_LATENCY_JITTER = 3;
+  DASHBOARD_CHART_PACKET_LOSS = 4;
+}
+
+// DashboardAlertKind is the alert family an affected item belongs to.
+enum DashboardAlertKind {
+  DASHBOARD_ALERT_KIND_UNSPECIFIED = 0;
+  DASHBOARD_ALERT_KIND_OFFLINE = 1;
+  DASHBOARD_ALERT_KIND_RESOURCE = 2;
+  DASHBOARD_ALERT_KIND_LATENCY_LOSS = 3;
+  DASHBOARD_ALERT_KIND_TRAFFIC = 4;
+  DASHBOARD_ALERT_KIND_RETURN_ROUTE = 5;
+  DASHBOARD_ALERT_KIND_BILLING = 6;
+}
+
+// GetDashboardSummaryRequest selects sections; an empty selection returns all of them.
+message GetDashboardSummaryRequest {
+  repeated DashboardSection sections = 1;
+  uint32 ranking_limit = 2;
+}
+
+message GetDashboardSummaryResponse {
+  DashboardSummary summary = 1;
+}
+
+// GetDashboardChartsRequest selects series; an empty selection returns all of them.
+message GetDashboardChartsRequest {
+  repeated DashboardChart charts = 1;
+  uint32 ranking_limit = 2;
+}
+
+message GetDashboardChartsResponse {
+  DashboardCharts charts = 1;
+}
+
+message ListDashboardAlertItemsRequest {
+  DashboardAlertKind kind = 1;
+}
+
+message ListDashboardAlertItemsResponse {
+  DashboardAlertKind kind = 1;
+  repeated DashboardAlertItem items = 2;
+  google.protobuf.Timestamp generated_at = 3;
+}
+
+// DashboardSummary carries every requested section. Unrequested sections stay unset.
+message DashboardSummary {
+  DashboardServers servers = 1;
+  DashboardResources resources = 2;
+  DashboardDatabase database = 3;
+  DashboardStorage storage = 4;
+  DashboardReturnRoute return_route = 5;
+  DashboardAlerts alerts = 6;
+  google.protobuf.Timestamp generated_at = 7;
+}
+
+// DashboardCharts carries every requested series. Unrequested series stay unset.
+message DashboardCharts {
+  DashboardTraffic traffic = 1;
+  DashboardLatency latency = 2;
+  DashboardPacketLoss packet_loss = 3;
+  google.protobuf.Timestamp generated_at = 4;
+}
+
+message DashboardServers {
+  int32 total = 1;
+  int32 online = 2;
+  int32 offline = 3;
+  repeated DashboardOfflineNode offline_nodes = 4;
+}
+
+message DashboardOfflineNode {
+  string uuid = 1;
+  string name = 2;
+  string region = 3;
+  optional google.protobuf.Timestamp last_seen = 4;
+}
+
+message DashboardResources {
+  repeated DashboardResourceRankItem cpu = 1;
+  repeated DashboardResourceRankItem memory = 2;
+  repeated DashboardResourceRankItem disk = 3;
+}
+
+message DashboardResourceRankItem {
+  string uuid = 1;
+  string name = 2;
+  double cpu_percent = 3;
+  double memory_percent = 4;
+  double disk_percent = 5;
+  string detail_url = 6;
+}
+
+// DashboardDatabase reports the main and monitoring stores separately; type and
+// total_bytes preserve the original main-store-only response contract.
+message DashboardDatabase {
+  string type = 1;
+  int64 total_bytes = 2;
+  DashboardDatabaseStore main = 3;
+  DashboardDatabaseStore monitoring = 4;
+  optional int64 local_total_bytes = 5;
+}
+
+message DashboardDatabaseStore {
+  string driver = 1;
+  string location = 2;
+  optional int64 size_bytes = 3;
+  DashboardDatabaseFiles files = 4;
+  // error carries a per-store collection failure without failing the response.
+  string error = 5;
+}
+
+message DashboardDatabaseFiles {
+  int64 database_bytes = 1;
+  int64 wal_bytes = 2;
+  int64 shm_bytes = 3;
+}
+
+message DashboardStorage {
+  int64 database_file_bytes = 1;
+  int64 wal_bytes = 2;
+  int64 shm_bytes = 3;
+  int32 retention_days = 4;
+  optional google.protobuf.Timestamp last_compacted_at = 5;
+}
+
+message DashboardReturnRoute {
+  int64 tasks = 1;
+  int64 active = 2;
+  int64 healthy = 3;
+  int64 switched = 4;
+  int64 abnormal = 5;
+  int64 recent_events = 6;
+  DashboardReturnRouteEvent latest_event = 7;
+  string error = 8;
+}
+
+message DashboardReturnRouteEvent {
+  uint64 id = 1;
+  string task_name = 2;
+  string node_name = 3;
+  string expected_line = 4;
+  string from_line = 5;
+  string to_line = 6;
+  string kind = 7;
+  google.protobuf.Timestamp occurred_at = 8;
+}
+
+message DashboardAlerts {
+  DashboardAlertSummary resource = 1;
+  DashboardAlertSummary offline = 2;
+  DashboardAlertSummary latency_loss = 3;
+  DashboardAlertSummary traffic = 4;
+  DashboardAlertSummary return_route = 5;
+  DashboardAlertSummary billing = 6;
+}
+
+message DashboardAlertSummary {
+  int32 current = 1;
+  int32 affected_nodes = 2;
+  int32 recovered_today = 3;
+  DashboardAlertItem latest_alert = 4;
+  string error = 5;
+}
+
+// DashboardAlertItem describes one affected target. kind is unset inside a
+// summary's latest_alert and always set inside ListDashboardAlertItems.
+message DashboardAlertItem {
+  DashboardAlertKind kind = 1;
+  string title = 2;
+  string node_uuid = 3;
+  string node_name = 4;
+  uint32 task_id = 5;
+  string task_name = 6;
+  optional google.protobuf.Timestamp occurred_at = 7;
+  optional google.protobuf.Timestamp due_at = 8;
+}
+
+message DashboardTraffic {
+  int64 today_upload_bytes = 1;
+  int64 today_download_bytes = 2;
+  int64 today_billable_bytes = 3;
+  repeated DashboardTrafficBucket hourly = 4;
+  repeated DashboardTrafficDay daily = 5;
+  repeated DashboardTrafficRankItem ranking = 6;
+  bool history_ready = 7;
+  string error = 8;
+}
+
+// DashboardTrafficBucket carries the aggregated label because intraday buckets
+// are cut and rendered in the fixed billing reporting zone, not the viewer's zone.
+message DashboardTrafficBucket {
+  string label = 1;
+  int64 upload_bytes = 2;
+  int64 download_bytes = 3;
+}
+
+// DashboardTrafficDay keeps day as a calendar label because billing days are
+// settled in a fixed reporting zone rather than the viewer's local zone.
+message DashboardTrafficDay {
+  string day = 1;
+  int64 upload_bytes = 2;
+  int64 download_bytes = 3;
+  int64 billable_bytes = 4;
+}
+
+message DashboardTrafficRankItem {
+  string uuid = 1;
+  string name = 2;
+  int64 upload_bytes = 3;
+  int64 download_bytes = 4;
+  int64 billable_bytes = 5;
+  string detail_url = 6;
+}
+
+message DashboardLatency {
+  double average_ms = 1;
+  int32 targets = 2;
+  repeated DashboardLatencyPoint points = 3;
+  repeated DashboardLatencyRankItem ranking = 4;
+  repeated DashboardLatencyJitterRankItem jitter_ranking = 5;
+  string jitter_error = 6;
+  string error = 7;
+}
+
+message DashboardLatencyPoint {
+  google.protobuf.Timestamp time = 1;
+  double average_ms = 2;
+}
+
+message DashboardLatencyRankItem {
+  string uuid = 1;
+  string name = 2;
+  double average_ms = 3;
+  uint32 task_id = 4;
+  string detail_url = 5;
+}
+
+message DashboardLatencyJitterRankItem {
+  string uuid = 1;
+  string name = 2;
+  double previous_ms = 3;
+  double current_ms = 4;
+  double delta_ms = 5;
+  uint32 task_id = 6;
+  string detail_url = 7;
+}
+
+message DashboardPacketLoss {
+  int32 window_minutes = 1;
+  repeated DashboardPacketLossRankItem ranking = 2;
+  string error = 3;
+}
+
+message DashboardPacketLossRankItem {
+  string uuid = 1;
+  string name = 2;
+  uint32 task_id = 3;
+  string task_name = 4;
+  double loss_rate = 5;
+  int32 lost = 6;
+  int32 total = 7;
+  int32 valid = 8;
+  string detail_url = 9;
+}
