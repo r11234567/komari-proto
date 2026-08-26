@@ -124,6 +124,14 @@ message AgentBasicInfo {
   google.protobuf.Timestamp updated_at = 23;
   string ipv4 = 24;
   string ipv6 = 25;
+  // public_remark is the operator-authored note shown on the public dashboard.
+  string public_remark = 26;
+  bool auto_renewal = 27;
+  // billing_cycle_days is unsigned and cannot carry the one-time billing that
+  // the data model encodes as a negative cycle: that value gets clamped to
+  // zero, which is indistinguishable from "not configured". Publish it as its
+  // own flag so themes can tell the two apart.
+  bool billing_one_time = 28;
 }
 
 // GetThemeContractRequest is intentionally empty.

@@ -725,8 +725,16 @@ type AgentBasicInfo struct {
 	UpdatedAt         *timestamppb.Timestamp `protobuf:"bytes,23,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	Ipv4              string                 `protobuf:"bytes,24,opt,name=ipv4,proto3" json:"ipv4,omitempty"`
 	Ipv6              string                 `protobuf:"bytes,25,opt,name=ipv6,proto3" json:"ipv6,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// public_remark is the operator-authored note shown on the public dashboard.
+	PublicRemark string `protobuf:"bytes,26,opt,name=public_remark,json=publicRemark,proto3" json:"public_remark,omitempty"`
+	AutoRenewal  bool   `protobuf:"varint,27,opt,name=auto_renewal,json=autoRenewal,proto3" json:"auto_renewal,omitempty"`
+	// billing_cycle_days is unsigned and cannot carry the one-time billing that
+	// the data model encodes as a negative cycle: that value gets clamped to
+	// zero, which is indistinguishable from "not configured". Publish it as its
+	// own flag so themes can tell the two apart.
+	BillingOneTime bool `protobuf:"varint,28,opt,name=billing_one_time,json=billingOneTime,proto3" json:"billing_one_time,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *AgentBasicInfo) Reset() {
@@ -932,6 +940,27 @@ func (x *AgentBasicInfo) GetIpv6() string {
 		return x.Ipv6
 	}
 	return ""
+}
+
+func (x *AgentBasicInfo) GetPublicRemark() string {
+	if x != nil {
+		return x.PublicRemark
+	}
+	return ""
+}
+
+func (x *AgentBasicInfo) GetAutoRenewal() bool {
+	if x != nil {
+		return x.AutoRenewal
+	}
+	return false
+}
+
+func (x *AgentBasicInfo) GetBillingOneTime() bool {
+	if x != nil {
+		return x.BillingOneTime
+	}
+	return false
 }
 
 // GetThemeContractRequest is intentionally empty.
@@ -1271,7 +1300,7 @@ const file_komari_browser_v1_browser_proto_rawDesc = "" +
 	"\bevent_id\x18\a \x01(\tR\aeventId\x12G\n" +
 	"\fcapabilities\x18\b \x01(\v2#.komari.report.v1.AgentCapabilitiesR\fcapabilities\x12@\n" +
 	"\n" +
-	"basic_info\x18\t \x01(\v2!.komari.browser.v1.AgentBasicInfoR\tbasicInfo\"\xfe\x06\n" +
+	"basic_info\x18\t \x01(\v2!.komari.browser.v1.AgentBasicInfoR\tbasicInfo\"\xf0\a\n" +
 	"\x0eAgentBasicInfo\x12\x19\n" +
 	"\bcpu_name\x18\x01 \x01(\tR\acpuName\x12&\n" +
 	"\x0evirtualization\x18\x02 \x01(\tR\x0evirtualization\x12\"\n" +
@@ -1301,7 +1330,10 @@ const file_komari_browser_v1_browser_proto_rawDesc = "" +
 	"\n" +
 	"updated_at\x18\x17 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x12\n" +
 	"\x04ipv4\x18\x18 \x01(\tR\x04ipv4\x12\x12\n" +
-	"\x04ipv6\x18\x19 \x01(\tR\x04ipv6\"\x19\n" +
+	"\x04ipv6\x18\x19 \x01(\tR\x04ipv6\x12#\n" +
+	"\rpublic_remark\x18\x1a \x01(\tR\fpublicRemark\x12!\n" +
+	"\fauto_renewal\x18\x1b \x01(\bR\vautoRenewal\x12(\n" +
+	"\x10billing_one_time\x18\x1c \x01(\bR\x0ebillingOneTime\"\x19\n" +
 	"\x17GetThemeContractRequest\"\xcd\x01\n" +
 	"\x18GetThemeContractResponse\x12%\n" +
 	"\x0eschema_version\x18\x01 \x01(\rR\rschemaVersion\x12#\n" +
