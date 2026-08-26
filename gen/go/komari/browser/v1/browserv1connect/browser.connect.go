@@ -44,6 +44,9 @@ const (
 	// BrowserServiceWatchAgentStatusProcedure is the fully-qualified name of the BrowserService's
 	// WatchAgentStatus RPC.
 	BrowserServiceWatchAgentStatusProcedure = "/komari.browser.v1.BrowserService/WatchAgentStatus"
+	// BrowserServiceGetSessionProcedure is the fully-qualified name of the BrowserService's GetSession
+	// RPC.
+	BrowserServiceGetSessionProcedure = "/komari.browser.v1.BrowserService/GetSession"
 	// BrowserServiceGetThemeContractProcedure is the fully-qualified name of the BrowserService's
 	// GetThemeContract RPC.
 	BrowserServiceGetThemeContractProcedure = "/komari.browser.v1.BrowserService/GetThemeContract"
@@ -62,6 +65,8 @@ type BrowserServiceClient interface {
 	GetAgent(context.Context, *connect.Request[v1.GetAgentRequest]) (*connect.Response[v1.GetAgentResponse], error)
 	// WatchAgentStatus streams status changes until AbortSignal/deadline cancellation.
 	WatchAgentStatus(context.Context, *connect.Request[v1.WatchAgentStatusRequest]) (*connect.ServerStreamForClient[v1.WatchAgentStatusResponse], error)
+	// GetSession reports the calling visitor's own login state.
+	GetSession(context.Context, *connect.Request[v1.GetSessionRequest]) (*connect.Response[v1.GetSessionResponse], error)
 	// GetThemeContract returns the stable third-party theme integration contract.
 	GetThemeContract(context.Context, *connect.Request[v1.GetThemeContractRequest]) (*connect.Response[v1.GetThemeContractResponse], error)
 	// GetTrafficTrend returns an administrator-only rolling traffic trend.
@@ -103,6 +108,12 @@ func NewBrowserServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			connect.WithSchema(browserServiceMethods.ByName("WatchAgentStatus")),
 			connect.WithClientOptions(opts...),
 		),
+		getSession: connect.NewClient[v1.GetSessionRequest, v1.GetSessionResponse](
+			httpClient,
+			baseURL+BrowserServiceGetSessionProcedure,
+			connect.WithSchema(browserServiceMethods.ByName("GetSession")),
+			connect.WithClientOptions(opts...),
+		),
 		getThemeContract: connect.NewClient[v1.GetThemeContractRequest, v1.GetThemeContractResponse](
 			httpClient,
 			baseURL+BrowserServiceGetThemeContractProcedure,
@@ -124,6 +135,7 @@ type browserServiceClient struct {
 	listAgents       *connect.Client[v1.ListAgentsRequest, v1.ListAgentsResponse]
 	getAgent         *connect.Client[v1.GetAgentRequest, v1.GetAgentResponse]
 	watchAgentStatus *connect.Client[v1.WatchAgentStatusRequest, v1.WatchAgentStatusResponse]
+	getSession       *connect.Client[v1.GetSessionRequest, v1.GetSessionResponse]
 	getThemeContract *connect.Client[v1.GetThemeContractRequest, v1.GetThemeContractResponse]
 	getTrafficTrend  *connect.Client[v1.GetTrafficTrendRequest, v1.GetTrafficTrendResponse]
 }
@@ -148,6 +160,11 @@ func (c *browserServiceClient) WatchAgentStatus(ctx context.Context, req *connec
 	return c.watchAgentStatus.CallServerStream(ctx, req)
 }
 
+// GetSession calls komari.browser.v1.BrowserService.GetSession.
+func (c *browserServiceClient) GetSession(ctx context.Context, req *connect.Request[v1.GetSessionRequest]) (*connect.Response[v1.GetSessionResponse], error) {
+	return c.getSession.CallUnary(ctx, req)
+}
+
 // GetThemeContract calls komari.browser.v1.BrowserService.GetThemeContract.
 func (c *browserServiceClient) GetThemeContract(ctx context.Context, req *connect.Request[v1.GetThemeContractRequest]) (*connect.Response[v1.GetThemeContractResponse], error) {
 	return c.getThemeContract.CallUnary(ctx, req)
@@ -168,6 +185,8 @@ type BrowserServiceHandler interface {
 	GetAgent(context.Context, *connect.Request[v1.GetAgentRequest]) (*connect.Response[v1.GetAgentResponse], error)
 	// WatchAgentStatus streams status changes until AbortSignal/deadline cancellation.
 	WatchAgentStatus(context.Context, *connect.Request[v1.WatchAgentStatusRequest], *connect.ServerStream[v1.WatchAgentStatusResponse]) error
+	// GetSession reports the calling visitor's own login state.
+	GetSession(context.Context, *connect.Request[v1.GetSessionRequest]) (*connect.Response[v1.GetSessionResponse], error)
 	// GetThemeContract returns the stable third-party theme integration contract.
 	GetThemeContract(context.Context, *connect.Request[v1.GetThemeContractRequest]) (*connect.Response[v1.GetThemeContractResponse], error)
 	// GetTrafficTrend returns an administrator-only rolling traffic trend.
@@ -205,6 +224,12 @@ func NewBrowserServiceHandler(svc BrowserServiceHandler, opts ...connect.Handler
 		connect.WithSchema(browserServiceMethods.ByName("WatchAgentStatus")),
 		connect.WithHandlerOptions(opts...),
 	)
+	browserServiceGetSessionHandler := connect.NewUnaryHandler(
+		BrowserServiceGetSessionProcedure,
+		svc.GetSession,
+		connect.WithSchema(browserServiceMethods.ByName("GetSession")),
+		connect.WithHandlerOptions(opts...),
+	)
 	browserServiceGetThemeContractHandler := connect.NewUnaryHandler(
 		BrowserServiceGetThemeContractProcedure,
 		svc.GetThemeContract,
@@ -227,6 +252,8 @@ func NewBrowserServiceHandler(svc BrowserServiceHandler, opts ...connect.Handler
 			browserServiceGetAgentHandler.ServeHTTP(w, r)
 		case BrowserServiceWatchAgentStatusProcedure:
 			browserServiceWatchAgentStatusHandler.ServeHTTP(w, r)
+		case BrowserServiceGetSessionProcedure:
+			browserServiceGetSessionHandler.ServeHTTP(w, r)
 		case BrowserServiceGetThemeContractProcedure:
 			browserServiceGetThemeContractHandler.ServeHTTP(w, r)
 		case BrowserServiceGetTrafficTrendProcedure:
@@ -254,6 +281,10 @@ func (UnimplementedBrowserServiceHandler) GetAgent(context.Context, *connect.Req
 
 func (UnimplementedBrowserServiceHandler) WatchAgentStatus(context.Context, *connect.Request[v1.WatchAgentStatusRequest], *connect.ServerStream[v1.WatchAgentStatusResponse]) error {
 	return connect.NewError(connect.CodeUnimplemented, errors.New("komari.browser.v1.BrowserService.WatchAgentStatus is not implemented"))
+}
+
+func (UnimplementedBrowserServiceHandler) GetSession(context.Context, *connect.Request[v1.GetSessionRequest]) (*connect.Response[v1.GetSessionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.browser.v1.BrowserService.GetSession is not implemented"))
 }
 
 func (UnimplementedBrowserServiceHandler) GetThemeContract(context.Context, *connect.Request[v1.GetThemeContractRequest]) (*connect.Response[v1.GetThemeContractResponse], error) {

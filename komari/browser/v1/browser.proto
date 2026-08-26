@@ -20,6 +20,8 @@ service BrowserService {
   rpc GetAgent(GetAgentRequest) returns (GetAgentResponse);
   // WatchAgentStatus streams status changes until AbortSignal/deadline cancellation.
   rpc WatchAgentStatus(WatchAgentStatusRequest) returns (stream WatchAgentStatusResponse);
+  // GetSession reports the calling visitor's own login state.
+  rpc GetSession(GetSessionRequest) returns (GetSessionResponse);
   // GetThemeContract returns the stable third-party theme integration contract.
   rpc GetThemeContract(GetThemeContractRequest) returns (GetThemeContractResponse);
   // GetTrafficTrend returns an administrator-only rolling traffic trend.
@@ -132,6 +134,22 @@ message AgentBasicInfo {
   // zero, which is indistinguishable from "not configured". Publish it as its
   // own flag so themes can tell the two apart.
   bool billing_one_time = 28;
+}
+
+// GetSessionRequest is intentionally empty; the session is read from the request.
+message GetSessionRequest {}
+
+// GetSessionResponse describes the calling visitor. A theme uses it to decide
+// between offering a login prompt and linking straight to the admin console,
+// so it stays answerable by guests and never carries credentials.
+message GetSessionResponse {
+  bool logged_in = 1;
+  string user_id = 2;
+  string username = 3;
+  bool two_factor_enabled = 4;
+  string sso_provider = 5;
+  string language = 6;
+  string color = 7;
 }
 
 // GetThemeContractRequest is intentionally empty.
