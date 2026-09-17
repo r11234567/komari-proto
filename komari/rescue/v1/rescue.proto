@@ -5,6 +5,7 @@ package komari.rescue.v1;
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
+import "komari/diag/v1/diag.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/rescue/v1;rescuev1";
 
@@ -42,7 +43,14 @@ message CreateRescueSessionRequest {
   google.protobuf.Duration timeout = 4;
   uint64 max_output_bytes = 5;
   string idempotency_key = 6;
+  // two_factor is required for every action except the read-only performance
+  // diagnostics. The server decides, fail-closed, which actions may omit it;
+  // a client that sends it anyway is always accepted.
   komari.common.v1.TwoFactorProof two_factor = 7;
+  // ssh_port applies only to RESCUE_ACTION_TEMPORARY_SSH_ACCESS and defaults
+  // to 22. It travels as a typed field rather than through arguments, which
+  // the helper rejects outright for every action.
+  optional uint32 ssh_port = 8;
 }
 
 message CreateRescueSessionResponse {
@@ -131,6 +139,10 @@ message RescueSession {
   uint64 output_bytes = 9;
   optional komari.common.v1.ErrorDetail error = 10;
   optional google.protobuf.Timestamp deadline_at = 11;
+  // ssh_port is carried through to the helper for the temporary SSH actions.
+  // It is validated by the server when the session is created, so the helper
+  // receives a value it may act on rather than raw caller input.
+  optional uint32 ssh_port = 12;
 }
 
 message RescueEvent {
@@ -141,6 +153,57 @@ message RescueEvent {
   RescueOutputStream stream = 5;
   bytes output = 6;
   optional komari.common.v1.ErrorDetail error = 7;
+  // diagnostics is set instead of output for the performance diagnostic
+  // actions, so a panel renders typed fields rather than parsing text.
+  optional komari.diag.v1.DiagnosticsReport diagnostics = 8;
+  // ssh_access is set by the temporary SSH actions and reports the state the
+  // helper actually reached, including why it may be unreachable anyway.
+  optional TemporarySSHAccess ssh_access = 9;
+}
+
+// TemporarySSHAccess reports one temporary public SSH exposure.
+//
+// The expiry is enforced locally by the host, never by the control plane: a
+// nftables set element timeout where available, otherwise a systemd transient
+// timer, with a persisted deadline reconciled by the helper on every lease so
+// a helper restart cannot leave the port open.
+message TemporarySSHAccess {
+  uint32 port = 1;
+  bool granted = 2;
+  google.protobuf.Timestamp granted_at = 3;
+  google.protobuf.Timestamp expires_at = 4;
+  ExpiryMechanism expiry_mechanism = 5;
+  // sshd_state describes whether a daemon is actually reachable on this port.
+  // Opening the firewall is not the same as being able to log in, and this is
+  // the more common failure on a host whose public SSH was deliberately shut.
+  SSHDaemonState sshd_state = 6;
+}
+
+// SSHDaemonState is the pre-flight check performed before the firewall changes.
+message SSHDaemonState {
+  bool running = 1;
+  // listen_addresses is what sshd is configured to bind, which on a
+  // Tailscale-only host is frequently a private address only.
+  repeated string listen_addresses = 2;
+  // observed_listen_ports is what is actually bound, read from the kernel.
+  repeated uint32 observed_listen_ports = 3;
+  // reachable is false when nothing is listening on the requested port, in
+  // which case opening the firewall cannot make a login succeed.
+  bool reachable = 4;
+  string limitation = 5;
+}
+
+// ExpiryMechanism records which local mechanism will close the window, so an
+// operator can tell a kernel-enforced expiry from a best-effort one.
+enum ExpiryMechanism {
+  EXPIRY_MECHANISM_UNSPECIFIED = 0;
+  // Kernel-enforced nftables set element timeout. Survives helper restarts.
+  EXPIRY_MECHANISM_NFTABLES_TIMEOUT = 1;
+  // systemd transient timer unit. Survives helper restarts.
+  EXPIRY_MECHANISM_SYSTEMD_TIMER = 2;
+  // Helper reconciliation against a persisted deadline only. Always armed as
+  // a backstop, and the sole mechanism when neither of the above exists.
+  EXPIRY_MECHANISM_HELPER_RECONCILE = 3;
 }
 
 // RescueAction is deliberately bounded; the helper never exposes an arbitrary shell.
@@ -159,6 +222,15 @@ enum RescueAction {
   RESCUE_ACTION_ISOLATE_CONTROL_PLANE = 11;
   RESCUE_ACTION_RESTORE_NETWORK = 12;
   RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG = 13;
+  // Read-only performance diagnostics. These are the only actions the server
+  // may accept without a fresh two-factor proof, and they never require a
+  // privileged helper.
+  RESCUE_ACTION_DETAILED_CPU_METRICS = 14;
+  RESCUE_ACTION_DETAILED_MEMORY_METRICS = 15;
+  // Temporary public SSH exposure, which expires without any further
+  // instruction from the control plane.
+  RESCUE_ACTION_TEMPORARY_SSH_ACCESS = 16;
+  RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS = 17;
 }
 
 enum NetworkIsolationMode {

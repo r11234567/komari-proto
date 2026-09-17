@@ -1,0 +1,156 @@
+syntax = "proto3";
+
+package komari.enrollment.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "komari/common/v1/common.proto";
+import "komari/security/v1/security.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/enrollment/v1;enrollmentv1";
+
+// EnrollmentService replaces static agent tokens with a device authorization
+// grant and short-lived, rotating credentials.
+//
+// The flow is poll-based on purpose. An agent behind NAT, or reachable only
+// over a private mesh with its public ports closed, cannot receive an inbound
+// callback; requiring one would make enrollment impossible on exactly the
+// hosts this deployment targets. The agent therefore polls for its own
+// authorization instead of being called back.
+service EnrollmentService {
+  // BeginEnrollment starts a device authorization grant. The agent presents a
+  // freshly generated public key; the human approves it in a browser.
+  rpc BeginEnrollment(BeginEnrollmentRequest) returns (BeginEnrollmentResponse);
+  // PollEnrollment exchanges a device code for credentials once approved.
+  // It is polled at the interval the server dictates.
+  rpc PollEnrollment(PollEnrollmentRequest) returns (PollEnrollmentResponse);
+  // RefreshCredentials rotates the credential pair. This is the ordinary,
+  // unattended path: it never requires a human.
+  rpc RefreshCredentials(RefreshCredentialsRequest) returns (RefreshCredentialsResponse);
+  // RevokeCredentials invalidates a credential pair immediately.
+  rpc RevokeCredentials(RevokeCredentialsRequest) returns (RevokeCredentialsResponse);
+  // GetTrustBundle publishes the control-plane signing keys and the policy an
+  // agent applies when verifying signed instructions.
+  rpc GetTrustBundle(GetTrustBundleRequest) returns (GetTrustBundleResponse);
+}
+
+message BeginEnrollmentRequest {
+  // agent_public_key is generated on the agent and never leaves it in private
+  // form. Binding credentials to this key means a stolen bearer token alone is
+  // not sufficient to impersonate the agent.
+  komari.security.v1.PublicKey agent_public_key = 1;
+  DeviceIdentity device = 2;
+  // requested_scopes is advisory; the server decides what is granted.
+  repeated string requested_scopes = 3;
+}
+
+message BeginEnrollmentResponse {
+  // device_code is the agent's secret handle for this attempt.
+  string device_code = 1;
+  // user_code is short enough for a human to read aloud or retype.
+  string user_code = 2;
+  // verification_uri is shown to the operator.
+  string verification_uri = 3;
+  // verification_uri_complete embeds the user code for a one-click approval.
+  string verification_uri_complete = 4;
+  google.protobuf.Timestamp expires_at = 5;
+  // poll_interval is the minimum interval between PollEnrollment calls. An
+  // agent that polls faster is told to slow down rather than being failed.
+  google.protobuf.Duration poll_interval = 6;
+}
+
+message PollEnrollmentRequest {
+  string device_code = 1;
+}
+
+message PollEnrollmentResponse {
+  EnrollmentState state = 1;
+  // credentials is set only when state is APPROVED.
+  optional AgentCredentials credentials = 2;
+  // poll_interval is re-sent so the server can slow a client down.
+  google.protobuf.Duration poll_interval = 3;
+  optional komari.common.v1.ErrorDetail error = 4;
+}
+
+message RefreshCredentialsRequest {
+  // refresh_token is the long-lived half of the pair.
+  string refresh_token = 1;
+  // proof binds this refresh to the enrolled agent key, so a leaked refresh
+  // token alone cannot mint new credentials.
+  optional komari.security.v1.SignedEnvelope proof = 2;
+}
+
+message RefreshCredentialsResponse {
+  AgentCredentials credentials = 1;
+}
+
+message RevokeCredentialsRequest {
+  string agent_id = 1;
+  // reason is recorded for audit.
+  string reason = 2;
+  komari.common.v1.TwoFactorProof two_factor = 3;
+}
+
+message RevokeCredentialsResponse {
+  bool accepted = 1;
+}
+
+message GetTrustBundleRequest {
+  string agent_id = 1;
+}
+
+message GetTrustBundleResponse {
+  // signing_keys are the control-plane keys permitted to sign instructions.
+  repeated komari.security.v1.PublicKey signing_keys = 1;
+  komari.security.v1.VerificationPolicy policy = 2;
+  // refresh_after tells the agent when to re-fetch, so key rotation converges
+  // without a restart.
+  google.protobuf.Duration refresh_after = 3;
+}
+
+// AgentCredentials is one access/refresh pair.
+//
+// The access token is short-lived and carried on ordinary requests. The
+// refresh token is long-lived and used only to rotate. Rotation is silent and
+// unattended; a human is involved only if the refresh token itself is lost or
+// revoked.
+message AgentCredentials {
+  string agent_id = 1;
+  string access_token = 2;
+  google.protobuf.Timestamp access_token_expires_at = 3;
+  string refresh_token = 4;
+  google.protobuf.Timestamp refresh_token_expires_at = 5;
+  repeated string scopes = 6;
+  // previous_token_expires_at is when the credential being replaced stops
+  // working. A non-zero grace window keeps an agent that crashed mid-rotation
+  // from locking itself out.
+  optional google.protobuf.Timestamp previous_token_expires_at = 7;
+}
+
+// DeviceIdentity is what the approving human sees before granting access.
+message DeviceIdentity {
+  string hostname = 1;
+  string operating_system = 2;
+  string architecture = 3;
+  string agent_version = 4;
+  // fingerprint is a stable host identifier used to recognize a re-enrollment
+  // of the same machine.
+  string fingerprint = 5;
+  // control_plane_key_fingerprint is the server key the agent pinned on first
+  // contact. The operator entered the panel's domain by hand, so it is a trust
+  // anchor established on first use; echoing it back lets the server detect an
+  // agent that pinned a different, possibly intercepted, endpoint.
+  string control_plane_key_fingerprint = 6;
+}
+
+// EnrollmentState is the state of one device authorization attempt.
+enum EnrollmentState {
+  ENROLLMENT_STATE_UNSPECIFIED = 0;
+  // Waiting for the human to approve in a browser.
+  ENROLLMENT_STATE_PENDING = 1;
+  // The agent is polling faster than poll_interval.
+  ENROLLMENT_STATE_SLOW_DOWN = 2;
+  ENROLLMENT_STATE_APPROVED = 3;
+  ENROLLMENT_STATE_DENIED = 4;
+  ENROLLMENT_STATE_EXPIRED = 5;
+}
