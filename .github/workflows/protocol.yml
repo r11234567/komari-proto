@@ -37,9 +37,19 @@ jobs:
         run: buf format --write
       - name: Lint
         run: buf lint
+      # Checking out the head branch by name means only that ref is fetched, so
+      # the base branch has to be brought in explicitly before it can be used
+      # as a comparison point.
+      - name: Fetch base branch
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: git fetch --no-tags origin "+refs/heads/${BASE_REF}:refs/heads/${BASE_REF}"
       - name: Breaking
         if: github.event_name == 'pull_request'
-        run: buf breaking --against '.git#branch=${{ github.base_ref }}'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: buf breaking --against ".git#branch=${BASE_REF}"
       - name: Generate
         run: buf generate
       # Pushed with [skip ci] so this does not retrigger itself; the steps
