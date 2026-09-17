@@ -5,6 +5,7 @@ package komari.config.v1;
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
+import "komari/report/v1/report.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/config/v1;configv1";
 
@@ -33,6 +34,106 @@ message RuntimeConfig {
   optional uint32 traffic_reset_day = 8;
   // Deprecated: remote-control enablement requires reinstalling the Agent.
   optional bool remote_control_enabled = 9 [deprecated = true];
+
+  // Fields below complete the delivery surface: every agent setting that a
+  // running agent can adopt is deliverable, so an operator never edits a
+  // config file by hand to change something the panel already knows.
+  //
+  // Deliverability is not the same as automatic application. Settings that a
+  // running agent cannot adopt, or that would widen what the agent is allowed
+  // to do, are classified separately in UpgradePlan below and are never
+  // applied by the agent on its own.
+  optional bool memory_report_raw_used = 10;
+  optional string custom_dns = 11;
+  // prefer_ip_version is "4", "6" or empty for no preference.
+  optional string prefer_ip_version = 12;
+  optional google.protobuf.Duration info_report_interval = 13;
+  optional uint32 max_retries = 14;
+  optional google.protobuf.Duration reconnect_interval = 15;
+  optional bool disable_compression = 16;
+  optional string custom_ipv4 = 17;
+  optional string custom_ipv6 = 18;
+  optional bool get_ip_addr_from_nic = 19;
+  optional bool disable_auto_update = 20;
+  // ignore_unsafe_cert weakens transport verification. It is deliverable so a
+  // misconfigured fleet can be repaired centrally, but it is classified as a
+  // confirmed change rather than an automatic one.
+  optional bool ignore_unsafe_cert = 21;
+}
+
+// PrivilegedConfig holds settings whose adoption changes what the agent is
+// permitted to do, rather than how it observes the host.
+//
+// These are delivered in the same revision as RuntimeConfig but are never
+// self-applied. Remote control executes commands with the agent's own process
+// identity, so enabling it on a non-privileged agent is a privilege change and
+// is gated behind an out-of-band, human-performed upgrade.
+message PrivilegedConfig {
+  optional bool remote_control_enabled = 1;
+  optional bool webssh_enabled = 2;
+  optional bool execution_enabled = 3;
+  optional bool enable_gpu = 4;
+  // rescue_helper_enabled controls whether the separately privileged rescue
+  // helper may be installed and leased.
+  optional bool rescue_helper_enabled = 5;
+  // required_privilege_mode is the privilege level these settings assume. When
+  // it exceeds what the agent currently holds, the revision produces a manual
+  // upgrade task instead of being applied.
+  komari.report.v1.PrivilegeMode required_privilege_mode = 6;
+}
+
+// UpgradePlan states how one delivered revision may be adopted.
+//
+// The classification is computed by the control plane from the revision's
+// content and the agent's reported privilege mode, and is delivered with the
+// revision so the agent and the panel agree on what is permitted without
+// either re-deriving it.
+message UpgradePlan {
+  UpgradeClass upgrade_class = 1;
+  // reasons explains, in operator-facing terms, why this is not automatic.
+  repeated string reasons = 2;
+  // from_privilege_mode and to_privilege_mode are set when the plan crosses a
+  // privilege boundary.
+  komari.report.v1.PrivilegeMode from_privilege_mode = 3;
+  komari.report.v1.PrivilegeMode to_privilege_mode = 4;
+  // manual_task is set for classes that require action outside the agent.
+  optional ManualUpgradeTask manual_task = 5;
+}
+
+// ManualUpgradeTask is an upgrade a human must perform on the host itself.
+//
+// The control plane never collects a host credential. The operator runs the
+// command on the machine, in their own session, and the local sudo or PAM
+// stack collects and verifies the password there. The panel learns only that
+// the upgrade succeeded.
+message ManualUpgradeTask {
+  string task_id = 1;
+  // nonce is single-use and ties the completion report back to this task.
+  string nonce = 2;
+  // command is what the operator runs on the host.
+  string command = 3;
+  google.protobuf.Timestamp expires_at = 4;
+  // require_local_password demands the upgrade script verify the invoking
+  // user's password even when sudo is configured NOPASSWD, so that a passwordless
+  // sudo rule alone cannot silently widen the agent's privileges.
+  bool require_local_password = 5;
+  // audit_facility names the local log facility the script must write to, so
+  // the privilege change is recorded on the host independently of the panel.
+  string audit_facility = 6;
+}
+
+// UpgradeClass classifies how a delivered revision may be adopted.
+enum UpgradeClass {
+  UPGRADE_CLASS_UNSPECIFIED = 0;
+  // The running agent can adopt this revision atomically. No human involved.
+  UPGRADE_CLASS_AUTOMATIC = 1;
+  // Adoption is safe but not self-applied: it needs an explicit confirmation
+  // in the panel. This covers a restart within the same privilege level.
+  UPGRADE_CLASS_MANUAL_CONFIRM = 2;
+  // Adoption crosses a privilege boundary, such as a non-privileged agent
+  // gaining remote control or being reinstalled as a privileged service. The
+  // operator must run the upgrade on the host and authenticate locally.
+  UPGRADE_CLASS_MANUAL_PRIVILEGED = 3;
 }
 
 // DesiredConfig is an immutable desired runtime snapshot.
@@ -42,6 +143,12 @@ message DesiredConfig {
   RuntimeConfig runtime = 3;
   google.protobuf.Timestamp saved_at = 4;
   string minimum_agent_version = 5;
+  // privileged carries settings the agent never self-applies.
+  optional PrivilegedConfig privileged = 6;
+  // plan states how this revision may be adopted. An agent that receives a
+  // revision whose plan is not AUTOMATIC acknowledges it as requiring an
+  // upgrade rather than applying it.
+  optional UpgradePlan plan = 7;
 }
 
 // GetDesiredConfigRequest asks for a revision newer than the currently applied one.

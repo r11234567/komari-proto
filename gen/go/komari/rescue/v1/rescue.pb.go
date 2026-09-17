@@ -8,6 +8,7 @@ package rescuev1
 
 import (
 	v1 "github.com/r11234567/komari-proto/gen/go/komari/common/v1"
+	v11 "github.com/r11234567/komari-proto/gen/go/komari/diag/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
@@ -23,6 +24,64 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
+
+// ExpiryMechanism records which local mechanism will close the window, so an
+// operator can tell a kernel-enforced expiry from a best-effort one.
+type ExpiryMechanism int32
+
+const (
+	ExpiryMechanism_EXPIRY_MECHANISM_UNSPECIFIED ExpiryMechanism = 0
+	// Kernel-enforced nftables set element timeout. Survives helper restarts.
+	ExpiryMechanism_EXPIRY_MECHANISM_NFTABLES_TIMEOUT ExpiryMechanism = 1
+	// systemd transient timer unit. Survives helper restarts.
+	ExpiryMechanism_EXPIRY_MECHANISM_SYSTEMD_TIMER ExpiryMechanism = 2
+	// Helper reconciliation against a persisted deadline only. Always armed as
+	// a backstop, and the sole mechanism when neither of the above exists.
+	ExpiryMechanism_EXPIRY_MECHANISM_HELPER_RECONCILE ExpiryMechanism = 3
+)
+
+// Enum value maps for ExpiryMechanism.
+var (
+	ExpiryMechanism_name = map[int32]string{
+		0: "EXPIRY_MECHANISM_UNSPECIFIED",
+		1: "EXPIRY_MECHANISM_NFTABLES_TIMEOUT",
+		2: "EXPIRY_MECHANISM_SYSTEMD_TIMER",
+		3: "EXPIRY_MECHANISM_HELPER_RECONCILE",
+	}
+	ExpiryMechanism_value = map[string]int32{
+		"EXPIRY_MECHANISM_UNSPECIFIED":      0,
+		"EXPIRY_MECHANISM_NFTABLES_TIMEOUT": 1,
+		"EXPIRY_MECHANISM_SYSTEMD_TIMER":    2,
+		"EXPIRY_MECHANISM_HELPER_RECONCILE": 3,
+	}
+)
+
+func (x ExpiryMechanism) Enum() *ExpiryMechanism {
+	p := new(ExpiryMechanism)
+	*p = x
+	return p
+}
+
+func (x ExpiryMechanism) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ExpiryMechanism) Descriptor() protoreflect.EnumDescriptor {
+	return file_komari_rescue_v1_rescue_proto_enumTypes[0].Descriptor()
+}
+
+func (ExpiryMechanism) Type() protoreflect.EnumType {
+	return &file_komari_rescue_v1_rescue_proto_enumTypes[0]
+}
+
+func (x ExpiryMechanism) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ExpiryMechanism.Descriptor instead.
+func (ExpiryMechanism) EnumDescriptor() ([]byte, []int) {
+	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{0}
+}
 
 // RescueAction is deliberately bounded; the helper never exposes an arbitrary shell.
 type RescueAction int32
@@ -47,6 +106,15 @@ const (
 	RescueAction_RESCUE_ACTION_ISOLATE_CONTROL_PLANE      RescueAction = 11
 	RescueAction_RESCUE_ACTION_RESTORE_NETWORK            RescueAction = 12
 	RescueAction_RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG     RescueAction = 13
+	// Read-only performance diagnostics. These are the only actions the server
+	// may accept without a fresh two-factor proof, and they never require a
+	// privileged helper.
+	RescueAction_RESCUE_ACTION_DETAILED_CPU_METRICS    RescueAction = 14
+	RescueAction_RESCUE_ACTION_DETAILED_MEMORY_METRICS RescueAction = 15
+	// Temporary public SSH exposure, which expires without any further
+	// instruction from the control plane.
+	RescueAction_RESCUE_ACTION_TEMPORARY_SSH_ACCESS        RescueAction = 16
+	RescueAction_RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS RescueAction = 17
 )
 
 // Enum value maps for RescueAction.
@@ -66,22 +134,30 @@ var (
 		11: "RESCUE_ACTION_ISOLATE_CONTROL_PLANE",
 		12: "RESCUE_ACTION_RESTORE_NETWORK",
 		13: "RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG",
+		14: "RESCUE_ACTION_DETAILED_CPU_METRICS",
+		15: "RESCUE_ACTION_DETAILED_MEMORY_METRICS",
+		16: "RESCUE_ACTION_TEMPORARY_SSH_ACCESS",
+		17: "RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS",
 	}
 	RescueAction_value = map[string]int32{
-		"RESCUE_ACTION_UNSPECIFIED":                0,
-		"RESCUE_ACTION_DIAGNOSTICS":                1,
-		"RESCUE_ACTION_VERIFY_INSTALLATION":        2,
-		"RESCUE_ACTION_RESTORE_LAST_CONFIG":        3,
-		"RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT":  4,
-		"RESCUE_ACTION_REPAIR_FIREWALL":            5,
-		"RESCUE_ACTION_RESTART_AGENT":              6,
-		"RESCUE_ACTION_SHUTDOWN":                   7,
-		"RESCUE_ACTION_REBOOT":                     8,
-		"RESCUE_ACTION_BLOCK_PUBLIC_INTERFACES":    9,
-		"RESCUE_ACTION_BLOCK_TAILSCALE_INTERFACES": 10,
-		"RESCUE_ACTION_ISOLATE_CONTROL_PLANE":      11,
-		"RESCUE_ACTION_RESTORE_NETWORK":            12,
-		"RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG":     13,
+		"RESCUE_ACTION_UNSPECIFIED":                 0,
+		"RESCUE_ACTION_DIAGNOSTICS":                 1,
+		"RESCUE_ACTION_VERIFY_INSTALLATION":         2,
+		"RESCUE_ACTION_RESTORE_LAST_CONFIG":         3,
+		"RESCUE_ACTION_ROLLBACK_RUNTIME_SNAPSHOT":   4,
+		"RESCUE_ACTION_REPAIR_FIREWALL":             5,
+		"RESCUE_ACTION_RESTART_AGENT":               6,
+		"RESCUE_ACTION_SHUTDOWN":                    7,
+		"RESCUE_ACTION_REBOOT":                      8,
+		"RESCUE_ACTION_BLOCK_PUBLIC_INTERFACES":     9,
+		"RESCUE_ACTION_BLOCK_TAILSCALE_INTERFACES":  10,
+		"RESCUE_ACTION_ISOLATE_CONTROL_PLANE":       11,
+		"RESCUE_ACTION_RESTORE_NETWORK":             12,
+		"RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG":      13,
+		"RESCUE_ACTION_DETAILED_CPU_METRICS":        14,
+		"RESCUE_ACTION_DETAILED_MEMORY_METRICS":     15,
+		"RESCUE_ACTION_TEMPORARY_SSH_ACCESS":        16,
+		"RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS": 17,
 	}
 )
 
@@ -96,11 +172,11 @@ func (x RescueAction) String() string {
 }
 
 func (RescueAction) Descriptor() protoreflect.EnumDescriptor {
-	return file_komari_rescue_v1_rescue_proto_enumTypes[0].Descriptor()
+	return file_komari_rescue_v1_rescue_proto_enumTypes[1].Descriptor()
 }
 
 func (RescueAction) Type() protoreflect.EnumType {
-	return &file_komari_rescue_v1_rescue_proto_enumTypes[0]
+	return &file_komari_rescue_v1_rescue_proto_enumTypes[1]
 }
 
 func (x RescueAction) Number() protoreflect.EnumNumber {
@@ -109,7 +185,7 @@ func (x RescueAction) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RescueAction.Descriptor instead.
 func (RescueAction) EnumDescriptor() ([]byte, []int) {
-	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{0}
+	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{1}
 }
 
 type NetworkIsolationMode int32
@@ -151,11 +227,11 @@ func (x NetworkIsolationMode) String() string {
 }
 
 func (NetworkIsolationMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_komari_rescue_v1_rescue_proto_enumTypes[1].Descriptor()
+	return file_komari_rescue_v1_rescue_proto_enumTypes[2].Descriptor()
 }
 
 func (NetworkIsolationMode) Type() protoreflect.EnumType {
-	return &file_komari_rescue_v1_rescue_proto_enumTypes[1]
+	return &file_komari_rescue_v1_rescue_proto_enumTypes[2]
 }
 
 func (x NetworkIsolationMode) Number() protoreflect.EnumNumber {
@@ -164,7 +240,7 @@ func (x NetworkIsolationMode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use NetworkIsolationMode.Descriptor instead.
 func (NetworkIsolationMode) EnumDescriptor() ([]byte, []int) {
-	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{1}
+	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{2}
 }
 
 type RescueOutputStream int32
@@ -200,11 +276,11 @@ func (x RescueOutputStream) String() string {
 }
 
 func (RescueOutputStream) Descriptor() protoreflect.EnumDescriptor {
-	return file_komari_rescue_v1_rescue_proto_enumTypes[2].Descriptor()
+	return file_komari_rescue_v1_rescue_proto_enumTypes[3].Descriptor()
 }
 
 func (RescueOutputStream) Type() protoreflect.EnumType {
-	return &file_komari_rescue_v1_rescue_proto_enumTypes[2]
+	return &file_komari_rescue_v1_rescue_proto_enumTypes[3]
 }
 
 func (x RescueOutputStream) Number() protoreflect.EnumNumber {
@@ -213,7 +289,7 @@ func (x RescueOutputStream) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RescueOutputStream.Descriptor instead.
 func (RescueOutputStream) EnumDescriptor() ([]byte, []int) {
-	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{2}
+	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{3}
 }
 
 type GetRescueStatusRequest struct {
@@ -312,9 +388,16 @@ type CreateRescueSessionRequest struct {
 	Timeout        *durationpb.Duration   `protobuf:"bytes,4,opt,name=timeout,proto3" json:"timeout,omitempty"`
 	MaxOutputBytes uint64                 `protobuf:"varint,5,opt,name=max_output_bytes,json=maxOutputBytes,proto3" json:"max_output_bytes,omitempty"`
 	IdempotencyKey string                 `protobuf:"bytes,6,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
-	TwoFactor      *v1.TwoFactorProof     `protobuf:"bytes,7,opt,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// two_factor is required for every action except the read-only performance
+	// diagnostics. The server decides, fail-closed, which actions may omit it;
+	// a client that sends it anyway is always accepted.
+	TwoFactor *v1.TwoFactorProof `protobuf:"bytes,7,opt,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
+	// ssh_port applies only to RESCUE_ACTION_TEMPORARY_SSH_ACCESS and defaults
+	// to 22. It travels as a typed field rather than through arguments, which
+	// the helper rejects outright for every action.
+	SshPort       *uint32 `protobuf:"varint,8,opt,name=ssh_port,json=sshPort,proto3,oneof" json:"ssh_port,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateRescueSessionRequest) Reset() {
@@ -394,6 +477,13 @@ func (x *CreateRescueSessionRequest) GetTwoFactor() *v1.TwoFactorProof {
 		return x.TwoFactor
 	}
 	return nil
+}
+
+func (x *CreateRescueSessionRequest) GetSshPort() uint32 {
+	if x != nil && x.SshPort != nil {
+		return *x.SshPort
+	}
+	return 0
 }
 
 type CreateRescueSessionResponse struct {
@@ -1140,18 +1230,22 @@ func (x *RescueHelperStatus) GetBlockedInterfaces() []string {
 }
 
 type RescueSession struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
-	AgentId       string                 `protobuf:"bytes,2,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	Action        RescueAction           `protobuf:"varint,3,opt,name=action,proto3,enum=komari.rescue.v1.RescueAction" json:"action,omitempty"`
-	Arguments     []string               `protobuf:"bytes,4,rep,name=arguments,proto3" json:"arguments,omitempty"`
-	State         v1.OperationState      `protobuf:"varint,5,opt,name=state,proto3,enum=komari.common.v1.OperationState" json:"state,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	StartedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=started_at,json=startedAt,proto3,oneof" json:"started_at,omitempty"`
-	FinishedAt    *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=finished_at,json=finishedAt,proto3,oneof" json:"finished_at,omitempty"`
-	OutputBytes   uint64                 `protobuf:"varint,9,opt,name=output_bytes,json=outputBytes,proto3" json:"output_bytes,omitempty"`
-	Error         *v1.ErrorDetail        `protobuf:"bytes,10,opt,name=error,proto3,oneof" json:"error,omitempty"`
-	DeadlineAt    *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=deadline_at,json=deadlineAt,proto3,oneof" json:"deadline_at,omitempty"`
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	SessionId   string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	AgentId     string                 `protobuf:"bytes,2,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	Action      RescueAction           `protobuf:"varint,3,opt,name=action,proto3,enum=komari.rescue.v1.RescueAction" json:"action,omitempty"`
+	Arguments   []string               `protobuf:"bytes,4,rep,name=arguments,proto3" json:"arguments,omitempty"`
+	State       v1.OperationState      `protobuf:"varint,5,opt,name=state,proto3,enum=komari.common.v1.OperationState" json:"state,omitempty"`
+	CreatedAt   *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	StartedAt   *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=started_at,json=startedAt,proto3,oneof" json:"started_at,omitempty"`
+	FinishedAt  *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=finished_at,json=finishedAt,proto3,oneof" json:"finished_at,omitempty"`
+	OutputBytes uint64                 `protobuf:"varint,9,opt,name=output_bytes,json=outputBytes,proto3" json:"output_bytes,omitempty"`
+	Error       *v1.ErrorDetail        `protobuf:"bytes,10,opt,name=error,proto3,oneof" json:"error,omitempty"`
+	DeadlineAt  *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=deadline_at,json=deadlineAt,proto3,oneof" json:"deadline_at,omitempty"`
+	// ssh_port is carried through to the helper for the temporary SSH actions.
+	// It is validated by the server when the session is created, so the helper
+	// receives a value it may act on rather than raw caller input.
+	SshPort       *uint32 `protobuf:"varint,12,opt,name=ssh_port,json=sshPort,proto3,oneof" json:"ssh_port,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1263,15 +1357,28 @@ func (x *RescueSession) GetDeadlineAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *RescueSession) GetSshPort() uint32 {
+	if x != nil && x.SshPort != nil {
+		return *x.SshPort
+	}
+	return 0
+}
+
 type RescueEvent struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
-	Sequence      uint64                 `protobuf:"varint,2,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	OccurredAt    *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	State         v1.OperationState      `protobuf:"varint,4,opt,name=state,proto3,enum=komari.common.v1.OperationState" json:"state,omitempty"`
-	Stream        RescueOutputStream     `protobuf:"varint,5,opt,name=stream,proto3,enum=komari.rescue.v1.RescueOutputStream" json:"stream,omitempty"`
-	Output        []byte                 `protobuf:"bytes,6,opt,name=output,proto3" json:"output,omitempty"`
-	Error         *v1.ErrorDetail        `protobuf:"bytes,7,opt,name=error,proto3,oneof" json:"error,omitempty"`
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	SessionId  string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	Sequence   uint64                 `protobuf:"varint,2,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	OccurredAt *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	State      v1.OperationState      `protobuf:"varint,4,opt,name=state,proto3,enum=komari.common.v1.OperationState" json:"state,omitempty"`
+	Stream     RescueOutputStream     `protobuf:"varint,5,opt,name=stream,proto3,enum=komari.rescue.v1.RescueOutputStream" json:"stream,omitempty"`
+	Output     []byte                 `protobuf:"bytes,6,opt,name=output,proto3" json:"output,omitempty"`
+	Error      *v1.ErrorDetail        `protobuf:"bytes,7,opt,name=error,proto3,oneof" json:"error,omitempty"`
+	// diagnostics is set instead of output for the performance diagnostic
+	// actions, so a panel renders typed fields rather than parsing text.
+	Diagnostics *v11.DiagnosticsReport `protobuf:"bytes,8,opt,name=diagnostics,proto3,oneof" json:"diagnostics,omitempty"`
+	// ssh_access is set by the temporary SSH actions and reports the state the
+	// helper actually reached, including why it may be unreachable anyway.
+	SshAccess     *TemporarySSHAccess `protobuf:"bytes,9,opt,name=ssh_access,json=sshAccess,proto3,oneof" json:"ssh_access,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1355,15 +1462,204 @@ func (x *RescueEvent) GetError() *v1.ErrorDetail {
 	return nil
 }
 
+func (x *RescueEvent) GetDiagnostics() *v11.DiagnosticsReport {
+	if x != nil {
+		return x.Diagnostics
+	}
+	return nil
+}
+
+func (x *RescueEvent) GetSshAccess() *TemporarySSHAccess {
+	if x != nil {
+		return x.SshAccess
+	}
+	return nil
+}
+
+// TemporarySSHAccess reports one temporary public SSH exposure.
+//
+// The expiry is enforced locally by the host, never by the control plane: a
+// nftables set element timeout where available, otherwise a systemd transient
+// timer, with a persisted deadline reconciled by the helper on every lease so
+// a helper restart cannot leave the port open.
+type TemporarySSHAccess struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Port            uint32                 `protobuf:"varint,1,opt,name=port,proto3" json:"port,omitempty"`
+	Granted         bool                   `protobuf:"varint,2,opt,name=granted,proto3" json:"granted,omitempty"`
+	GrantedAt       *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=granted_at,json=grantedAt,proto3" json:"granted_at,omitempty"`
+	ExpiresAt       *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	ExpiryMechanism ExpiryMechanism        `protobuf:"varint,5,opt,name=expiry_mechanism,json=expiryMechanism,proto3,enum=komari.rescue.v1.ExpiryMechanism" json:"expiry_mechanism,omitempty"`
+	// sshd_state describes whether a daemon is actually reachable on this port.
+	// Opening the firewall is not the same as being able to log in, and this is
+	// the more common failure on a host whose public SSH was deliberately shut.
+	SshdState     *SSHDaemonState `protobuf:"bytes,6,opt,name=sshd_state,json=sshdState,proto3" json:"sshd_state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TemporarySSHAccess) Reset() {
+	*x = TemporarySSHAccess{}
+	mi := &file_komari_rescue_v1_rescue_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TemporarySSHAccess) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TemporarySSHAccess) ProtoMessage() {}
+
+func (x *TemporarySSHAccess) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_rescue_v1_rescue_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TemporarySSHAccess.ProtoReflect.Descriptor instead.
+func (*TemporarySSHAccess) Descriptor() ([]byte, []int) {
+	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *TemporarySSHAccess) GetPort() uint32 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
+func (x *TemporarySSHAccess) GetGranted() bool {
+	if x != nil {
+		return x.Granted
+	}
+	return false
+}
+
+func (x *TemporarySSHAccess) GetGrantedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.GrantedAt
+	}
+	return nil
+}
+
+func (x *TemporarySSHAccess) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return nil
+}
+
+func (x *TemporarySSHAccess) GetExpiryMechanism() ExpiryMechanism {
+	if x != nil {
+		return x.ExpiryMechanism
+	}
+	return ExpiryMechanism_EXPIRY_MECHANISM_UNSPECIFIED
+}
+
+func (x *TemporarySSHAccess) GetSshdState() *SSHDaemonState {
+	if x != nil {
+		return x.SshdState
+	}
+	return nil
+}
+
+// SSHDaemonState is the pre-flight check performed before the firewall changes.
+type SSHDaemonState struct {
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	Running bool                   `protobuf:"varint,1,opt,name=running,proto3" json:"running,omitempty"`
+	// listen_addresses is what sshd is configured to bind, which on a
+	// Tailscale-only host is frequently a private address only.
+	ListenAddresses []string `protobuf:"bytes,2,rep,name=listen_addresses,json=listenAddresses,proto3" json:"listen_addresses,omitempty"`
+	// observed_listen_ports is what is actually bound, read from the kernel.
+	ObservedListenPorts []uint32 `protobuf:"varint,3,rep,packed,name=observed_listen_ports,json=observedListenPorts,proto3" json:"observed_listen_ports,omitempty"`
+	// reachable is false when nothing is listening on the requested port, in
+	// which case opening the firewall cannot make a login succeed.
+	Reachable     bool   `protobuf:"varint,4,opt,name=reachable,proto3" json:"reachable,omitempty"`
+	Limitation    string `protobuf:"bytes,5,opt,name=limitation,proto3" json:"limitation,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SSHDaemonState) Reset() {
+	*x = SSHDaemonState{}
+	mi := &file_komari_rescue_v1_rescue_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SSHDaemonState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SSHDaemonState) ProtoMessage() {}
+
+func (x *SSHDaemonState) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_rescue_v1_rescue_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SSHDaemonState.ProtoReflect.Descriptor instead.
+func (*SSHDaemonState) Descriptor() ([]byte, []int) {
+	return file_komari_rescue_v1_rescue_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *SSHDaemonState) GetRunning() bool {
+	if x != nil {
+		return x.Running
+	}
+	return false
+}
+
+func (x *SSHDaemonState) GetListenAddresses() []string {
+	if x != nil {
+		return x.ListenAddresses
+	}
+	return nil
+}
+
+func (x *SSHDaemonState) GetObservedListenPorts() []uint32 {
+	if x != nil {
+		return x.ObservedListenPorts
+	}
+	return nil
+}
+
+func (x *SSHDaemonState) GetReachable() bool {
+	if x != nil {
+		return x.Reachable
+	}
+	return false
+}
+
+func (x *SSHDaemonState) GetLimitation() string {
+	if x != nil {
+		return x.Limitation
+	}
+	return ""
+}
+
 var File_komari_rescue_v1_rescue_proto protoreflect.FileDescriptor
 
 const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\n" +
-	"\x1dkomari/rescue/v1/rescue.proto\x12\x10komari.rescue.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\"3\n" +
+	"\x1dkomari/rescue/v1/rescue.proto\x12\x10komari.rescue.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x19komari/diag/v1/diag.proto\"3\n" +
 	"\x16GetRescueStatusRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\"W\n" +
 	"\x17GetRescueStatusResponse\x12<\n" +
-	"\x06status\x18\x01 \x01(\v2$.komari.rescue.v1.RescueHelperStatusR\x06status\"\xd6\x02\n" +
+	"\x06status\x18\x01 \x01(\v2$.komari.rescue.v1.RescueHelperStatusR\x06status\"\x83\x03\n" +
 	"\x1aCreateRescueSessionRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x126\n" +
 	"\x06action\x18\x02 \x01(\x0e2\x1e.komari.rescue.v1.RescueActionR\x06action\x12\x1c\n" +
@@ -1372,7 +1668,9 @@ const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\x10max_output_bytes\x18\x05 \x01(\x04R\x0emaxOutputBytes\x12'\n" +
 	"\x0fidempotency_key\x18\x06 \x01(\tR\x0eidempotencyKey\x12?\n" +
 	"\n" +
-	"two_factor\x18\a \x01(\v2 .komari.common.v1.TwoFactorProofR\ttwoFactor\"X\n" +
+	"two_factor\x18\a \x01(\v2 .komari.common.v1.TwoFactorProofR\ttwoFactor\x12\x1e\n" +
+	"\bssh_port\x18\b \x01(\rH\x00R\asshPort\x88\x01\x01B\v\n" +
+	"\t_ssh_port\"X\n" +
 	"\x1bCreateRescueSessionResponse\x129\n" +
 	"\asession\x18\x01 \x01(\v2\x1f.komari.rescue.v1.RescueSessionR\asession\"a\n" +
 	"\x19WatchRescueSessionRequest\x12\x1d\n" +
@@ -1427,7 +1725,7 @@ const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\x11network_isolation\x18\n" +
 	" \x01(\x0e2&.komari.rescue.v1.NetworkIsolationModeR\x10networkIsolation\x12-\n" +
 	"\x12blocked_interfaces\x18\v \x03(\tR\x11blockedInterfacesB\b\n" +
-	"\x06_error\"\xec\x04\n" +
+	"\x06_error\"\x99\x05\n" +
 	"\rRescueSession\x12\x1d\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x19\n" +
@@ -1445,11 +1743,13 @@ const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\x05error\x18\n" +
 	" \x01(\v2\x1d.komari.common.v1.ErrorDetailH\x02R\x05error\x88\x01\x01\x12@\n" +
 	"\vdeadline_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampH\x03R\n" +
-	"deadlineAt\x88\x01\x01B\r\n" +
+	"deadlineAt\x88\x01\x01\x12\x1e\n" +
+	"\bssh_port\x18\f \x01(\rH\x04R\asshPort\x88\x01\x01B\r\n" +
 	"\v_started_atB\x0e\n" +
 	"\f_finished_atB\b\n" +
 	"\x06_errorB\x0e\n" +
-	"\f_deadline_at\"\xd7\x02\n" +
+	"\f_deadline_atB\v\n" +
+	"\t_ssh_port\"\x8a\x04\n" +
 	"\vRescueEvent\x12\x1d\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x1a\n" +
@@ -1459,8 +1759,36 @@ const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\x05state\x18\x04 \x01(\x0e2 .komari.common.v1.OperationStateR\x05state\x12<\n" +
 	"\x06stream\x18\x05 \x01(\x0e2$.komari.rescue.v1.RescueOutputStreamR\x06stream\x12\x16\n" +
 	"\x06output\x18\x06 \x01(\fR\x06output\x128\n" +
-	"\x05error\x18\a \x01(\v2\x1d.komari.common.v1.ErrorDetailH\x00R\x05error\x88\x01\x01B\b\n" +
-	"\x06_error*\xa4\x04\n" +
+	"\x05error\x18\a \x01(\v2\x1d.komari.common.v1.ErrorDetailH\x00R\x05error\x88\x01\x01\x12H\n" +
+	"\vdiagnostics\x18\b \x01(\v2!.komari.diag.v1.DiagnosticsReportH\x01R\vdiagnostics\x88\x01\x01\x12H\n" +
+	"\n" +
+	"ssh_access\x18\t \x01(\v2$.komari.rescue.v1.TemporarySSHAccessH\x02R\tsshAccess\x88\x01\x01B\b\n" +
+	"\x06_errorB\x0e\n" +
+	"\f_diagnosticsB\r\n" +
+	"\v_ssh_access\"\xc7\x02\n" +
+	"\x12TemporarySSHAccess\x12\x12\n" +
+	"\x04port\x18\x01 \x01(\rR\x04port\x12\x18\n" +
+	"\agranted\x18\x02 \x01(\bR\agranted\x129\n" +
+	"\n" +
+	"granted_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tgrantedAt\x129\n" +
+	"\n" +
+	"expires_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12L\n" +
+	"\x10expiry_mechanism\x18\x05 \x01(\x0e2!.komari.rescue.v1.ExpiryMechanismR\x0fexpiryMechanism\x12?\n" +
+	"\n" +
+	"sshd_state\x18\x06 \x01(\v2 .komari.rescue.v1.SSHDaemonStateR\tsshdState\"\xc7\x01\n" +
+	"\x0eSSHDaemonState\x12\x18\n" +
+	"\arunning\x18\x01 \x01(\bR\arunning\x12)\n" +
+	"\x10listen_addresses\x18\x02 \x03(\tR\x0flistenAddresses\x122\n" +
+	"\x15observed_listen_ports\x18\x03 \x03(\rR\x13observedListenPorts\x12\x1c\n" +
+	"\treachable\x18\x04 \x01(\bR\treachable\x12\x1e\n" +
+	"\n" +
+	"limitation\x18\x05 \x01(\tR\n" +
+	"limitation*\xa5\x01\n" +
+	"\x0fExpiryMechanism\x12 \n" +
+	"\x1cEXPIRY_MECHANISM_UNSPECIFIED\x10\x00\x12%\n" +
+	"!EXPIRY_MECHANISM_NFTABLES_TIMEOUT\x10\x01\x12\"\n" +
+	"\x1eEXPIRY_MECHANISM_SYSTEMD_TIMER\x10\x02\x12%\n" +
+	"!EXPIRY_MECHANISM_HELPER_RECONCILE\x10\x03*\xce\x05\n" +
 	"\fRescueAction\x12\x1d\n" +
 	"\x19RESCUE_ACTION_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19RESCUE_ACTION_DIAGNOSTICS\x10\x01\x12)\n" +
@@ -1476,7 +1804,11 @@ const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\x12'\n" +
 	"#RESCUE_ACTION_ISOLATE_CONTROL_PLANE\x10\v\x12!\n" +
 	"\x1dRESCUE_ACTION_RESTORE_NETWORK\x10\f\x12(\n" +
-	"$RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG\x10\r*\xed\x01\n" +
+	"$RESCUE_ACTION_ROLLBACK_ONLINE_CONFIG\x10\r\x12&\n" +
+	"\"RESCUE_ACTION_DETAILED_CPU_METRICS\x10\x0e\x12)\n" +
+	"%RESCUE_ACTION_DETAILED_MEMORY_METRICS\x10\x0f\x12&\n" +
+	"\"RESCUE_ACTION_TEMPORARY_SSH_ACCESS\x10\x10\x12-\n" +
+	")RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS\x10\x11*\xed\x01\n" +
 	"\x14NetworkIsolationMode\x12&\n" +
 	"\"NETWORK_ISOLATION_MODE_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bNETWORK_ISOLATION_MODE_NONE\x10\x01\x12,\n" +
@@ -1509,84 +1841,94 @@ func file_komari_rescue_v1_rescue_proto_rawDescGZIP() []byte {
 	return file_komari_rescue_v1_rescue_proto_rawDescData
 }
 
-var file_komari_rescue_v1_rescue_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_komari_rescue_v1_rescue_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_komari_rescue_v1_rescue_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_komari_rescue_v1_rescue_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_komari_rescue_v1_rescue_proto_goTypes = []any{
-	(RescueAction)(0),                   // 0: komari.rescue.v1.RescueAction
-	(NetworkIsolationMode)(0),           // 1: komari.rescue.v1.NetworkIsolationMode
-	(RescueOutputStream)(0),             // 2: komari.rescue.v1.RescueOutputStream
-	(*GetRescueStatusRequest)(nil),      // 3: komari.rescue.v1.GetRescueStatusRequest
-	(*GetRescueStatusResponse)(nil),     // 4: komari.rescue.v1.GetRescueStatusResponse
-	(*CreateRescueSessionRequest)(nil),  // 5: komari.rescue.v1.CreateRescueSessionRequest
-	(*CreateRescueSessionResponse)(nil), // 6: komari.rescue.v1.CreateRescueSessionResponse
-	(*WatchRescueSessionRequest)(nil),   // 7: komari.rescue.v1.WatchRescueSessionRequest
-	(*WatchRescueSessionResponse)(nil),  // 8: komari.rescue.v1.WatchRescueSessionResponse
-	(*CancelRescueSessionRequest)(nil),  // 9: komari.rescue.v1.CancelRescueSessionRequest
-	(*CancelRescueSessionResponse)(nil), // 10: komari.rescue.v1.CancelRescueSessionResponse
-	(*LeaseRescueSessionsRequest)(nil),  // 11: komari.rescue.v1.LeaseRescueSessionsRequest
-	(*LeaseRescueSessionsResponse)(nil), // 12: komari.rescue.v1.LeaseRescueSessionsResponse
-	(*RescueAssignment)(nil),            // 13: komari.rescue.v1.RescueAssignment
-	(*ReportRescueEventRequest)(nil),    // 14: komari.rescue.v1.ReportRescueEventRequest
-	(*ReportRescueEventResponse)(nil),   // 15: komari.rescue.v1.ReportRescueEventResponse
-	(*ReportRescueStatusRequest)(nil),   // 16: komari.rescue.v1.ReportRescueStatusRequest
-	(*ReportRescueStatusResponse)(nil),  // 17: komari.rescue.v1.ReportRescueStatusResponse
-	(*RescueHelperStatus)(nil),          // 18: komari.rescue.v1.RescueHelperStatus
-	(*RescueSession)(nil),               // 19: komari.rescue.v1.RescueSession
-	(*RescueEvent)(nil),                 // 20: komari.rescue.v1.RescueEvent
-	(*durationpb.Duration)(nil),         // 21: google.protobuf.Duration
-	(*v1.TwoFactorProof)(nil),           // 22: komari.common.v1.TwoFactorProof
-	(*timestamppb.Timestamp)(nil),       // 23: google.protobuf.Timestamp
-	(*v1.ErrorDetail)(nil),              // 24: komari.common.v1.ErrorDetail
-	(v1.OperationState)(0),              // 25: komari.common.v1.OperationState
+	(ExpiryMechanism)(0),                // 0: komari.rescue.v1.ExpiryMechanism
+	(RescueAction)(0),                   // 1: komari.rescue.v1.RescueAction
+	(NetworkIsolationMode)(0),           // 2: komari.rescue.v1.NetworkIsolationMode
+	(RescueOutputStream)(0),             // 3: komari.rescue.v1.RescueOutputStream
+	(*GetRescueStatusRequest)(nil),      // 4: komari.rescue.v1.GetRescueStatusRequest
+	(*GetRescueStatusResponse)(nil),     // 5: komari.rescue.v1.GetRescueStatusResponse
+	(*CreateRescueSessionRequest)(nil),  // 6: komari.rescue.v1.CreateRescueSessionRequest
+	(*CreateRescueSessionResponse)(nil), // 7: komari.rescue.v1.CreateRescueSessionResponse
+	(*WatchRescueSessionRequest)(nil),   // 8: komari.rescue.v1.WatchRescueSessionRequest
+	(*WatchRescueSessionResponse)(nil),  // 9: komari.rescue.v1.WatchRescueSessionResponse
+	(*CancelRescueSessionRequest)(nil),  // 10: komari.rescue.v1.CancelRescueSessionRequest
+	(*CancelRescueSessionResponse)(nil), // 11: komari.rescue.v1.CancelRescueSessionResponse
+	(*LeaseRescueSessionsRequest)(nil),  // 12: komari.rescue.v1.LeaseRescueSessionsRequest
+	(*LeaseRescueSessionsResponse)(nil), // 13: komari.rescue.v1.LeaseRescueSessionsResponse
+	(*RescueAssignment)(nil),            // 14: komari.rescue.v1.RescueAssignment
+	(*ReportRescueEventRequest)(nil),    // 15: komari.rescue.v1.ReportRescueEventRequest
+	(*ReportRescueEventResponse)(nil),   // 16: komari.rescue.v1.ReportRescueEventResponse
+	(*ReportRescueStatusRequest)(nil),   // 17: komari.rescue.v1.ReportRescueStatusRequest
+	(*ReportRescueStatusResponse)(nil),  // 18: komari.rescue.v1.ReportRescueStatusResponse
+	(*RescueHelperStatus)(nil),          // 19: komari.rescue.v1.RescueHelperStatus
+	(*RescueSession)(nil),               // 20: komari.rescue.v1.RescueSession
+	(*RescueEvent)(nil),                 // 21: komari.rescue.v1.RescueEvent
+	(*TemporarySSHAccess)(nil),          // 22: komari.rescue.v1.TemporarySSHAccess
+	(*SSHDaemonState)(nil),              // 23: komari.rescue.v1.SSHDaemonState
+	(*durationpb.Duration)(nil),         // 24: google.protobuf.Duration
+	(*v1.TwoFactorProof)(nil),           // 25: komari.common.v1.TwoFactorProof
+	(*timestamppb.Timestamp)(nil),       // 26: google.protobuf.Timestamp
+	(*v1.ErrorDetail)(nil),              // 27: komari.common.v1.ErrorDetail
+	(v1.OperationState)(0),              // 28: komari.common.v1.OperationState
+	(*v11.DiagnosticsReport)(nil),       // 29: komari.diag.v1.DiagnosticsReport
 }
 var file_komari_rescue_v1_rescue_proto_depIdxs = []int32{
-	18, // 0: komari.rescue.v1.GetRescueStatusResponse.status:type_name -> komari.rescue.v1.RescueHelperStatus
-	0,  // 1: komari.rescue.v1.CreateRescueSessionRequest.action:type_name -> komari.rescue.v1.RescueAction
-	21, // 2: komari.rescue.v1.CreateRescueSessionRequest.timeout:type_name -> google.protobuf.Duration
-	22, // 3: komari.rescue.v1.CreateRescueSessionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	19, // 4: komari.rescue.v1.CreateRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
-	20, // 5: komari.rescue.v1.WatchRescueSessionResponse.event:type_name -> komari.rescue.v1.RescueEvent
-	19, // 6: komari.rescue.v1.WatchRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
-	22, // 7: komari.rescue.v1.CancelRescueSessionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	19, // 8: komari.rescue.v1.CancelRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
-	13, // 9: komari.rescue.v1.LeaseRescueSessionsResponse.assignment:type_name -> komari.rescue.v1.RescueAssignment
-	19, // 10: komari.rescue.v1.RescueAssignment.session:type_name -> komari.rescue.v1.RescueSession
-	23, // 11: komari.rescue.v1.RescueAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
-	20, // 12: komari.rescue.v1.ReportRescueEventRequest.event:type_name -> komari.rescue.v1.RescueEvent
-	18, // 13: komari.rescue.v1.ReportRescueStatusRequest.status:type_name -> komari.rescue.v1.RescueHelperStatus
-	24, // 14: komari.rescue.v1.RescueHelperStatus.error:type_name -> komari.common.v1.ErrorDetail
-	23, // 15: komari.rescue.v1.RescueHelperStatus.observed_at:type_name -> google.protobuf.Timestamp
-	1,  // 16: komari.rescue.v1.RescueHelperStatus.network_isolation:type_name -> komari.rescue.v1.NetworkIsolationMode
-	0,  // 17: komari.rescue.v1.RescueSession.action:type_name -> komari.rescue.v1.RescueAction
-	25, // 18: komari.rescue.v1.RescueSession.state:type_name -> komari.common.v1.OperationState
-	23, // 19: komari.rescue.v1.RescueSession.created_at:type_name -> google.protobuf.Timestamp
-	23, // 20: komari.rescue.v1.RescueSession.started_at:type_name -> google.protobuf.Timestamp
-	23, // 21: komari.rescue.v1.RescueSession.finished_at:type_name -> google.protobuf.Timestamp
-	24, // 22: komari.rescue.v1.RescueSession.error:type_name -> komari.common.v1.ErrorDetail
-	23, // 23: komari.rescue.v1.RescueSession.deadline_at:type_name -> google.protobuf.Timestamp
-	23, // 24: komari.rescue.v1.RescueEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 25: komari.rescue.v1.RescueEvent.state:type_name -> komari.common.v1.OperationState
-	2,  // 26: komari.rescue.v1.RescueEvent.stream:type_name -> komari.rescue.v1.RescueOutputStream
-	24, // 27: komari.rescue.v1.RescueEvent.error:type_name -> komari.common.v1.ErrorDetail
-	3,  // 28: komari.rescue.v1.RescueService.GetRescueStatus:input_type -> komari.rescue.v1.GetRescueStatusRequest
-	5,  // 29: komari.rescue.v1.RescueService.CreateRescueSession:input_type -> komari.rescue.v1.CreateRescueSessionRequest
-	7,  // 30: komari.rescue.v1.RescueService.WatchRescueSession:input_type -> komari.rescue.v1.WatchRescueSessionRequest
-	9,  // 31: komari.rescue.v1.RescueService.CancelRescueSession:input_type -> komari.rescue.v1.CancelRescueSessionRequest
-	11, // 32: komari.rescue.v1.RescueService.LeaseRescueSessions:input_type -> komari.rescue.v1.LeaseRescueSessionsRequest
-	14, // 33: komari.rescue.v1.RescueService.ReportRescueEvent:input_type -> komari.rescue.v1.ReportRescueEventRequest
-	16, // 34: komari.rescue.v1.RescueService.ReportRescueStatus:input_type -> komari.rescue.v1.ReportRescueStatusRequest
-	4,  // 35: komari.rescue.v1.RescueService.GetRescueStatus:output_type -> komari.rescue.v1.GetRescueStatusResponse
-	6,  // 36: komari.rescue.v1.RescueService.CreateRescueSession:output_type -> komari.rescue.v1.CreateRescueSessionResponse
-	8,  // 37: komari.rescue.v1.RescueService.WatchRescueSession:output_type -> komari.rescue.v1.WatchRescueSessionResponse
-	10, // 38: komari.rescue.v1.RescueService.CancelRescueSession:output_type -> komari.rescue.v1.CancelRescueSessionResponse
-	12, // 39: komari.rescue.v1.RescueService.LeaseRescueSessions:output_type -> komari.rescue.v1.LeaseRescueSessionsResponse
-	15, // 40: komari.rescue.v1.RescueService.ReportRescueEvent:output_type -> komari.rescue.v1.ReportRescueEventResponse
-	17, // 41: komari.rescue.v1.RescueService.ReportRescueStatus:output_type -> komari.rescue.v1.ReportRescueStatusResponse
-	35, // [35:42] is the sub-list for method output_type
-	28, // [28:35] is the sub-list for method input_type
-	28, // [28:28] is the sub-list for extension type_name
-	28, // [28:28] is the sub-list for extension extendee
-	0,  // [0:28] is the sub-list for field type_name
+	19, // 0: komari.rescue.v1.GetRescueStatusResponse.status:type_name -> komari.rescue.v1.RescueHelperStatus
+	1,  // 1: komari.rescue.v1.CreateRescueSessionRequest.action:type_name -> komari.rescue.v1.RescueAction
+	24, // 2: komari.rescue.v1.CreateRescueSessionRequest.timeout:type_name -> google.protobuf.Duration
+	25, // 3: komari.rescue.v1.CreateRescueSessionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	20, // 4: komari.rescue.v1.CreateRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
+	21, // 5: komari.rescue.v1.WatchRescueSessionResponse.event:type_name -> komari.rescue.v1.RescueEvent
+	20, // 6: komari.rescue.v1.WatchRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
+	25, // 7: komari.rescue.v1.CancelRescueSessionRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	20, // 8: komari.rescue.v1.CancelRescueSessionResponse.session:type_name -> komari.rescue.v1.RescueSession
+	14, // 9: komari.rescue.v1.LeaseRescueSessionsResponse.assignment:type_name -> komari.rescue.v1.RescueAssignment
+	20, // 10: komari.rescue.v1.RescueAssignment.session:type_name -> komari.rescue.v1.RescueSession
+	26, // 11: komari.rescue.v1.RescueAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
+	21, // 12: komari.rescue.v1.ReportRescueEventRequest.event:type_name -> komari.rescue.v1.RescueEvent
+	19, // 13: komari.rescue.v1.ReportRescueStatusRequest.status:type_name -> komari.rescue.v1.RescueHelperStatus
+	27, // 14: komari.rescue.v1.RescueHelperStatus.error:type_name -> komari.common.v1.ErrorDetail
+	26, // 15: komari.rescue.v1.RescueHelperStatus.observed_at:type_name -> google.protobuf.Timestamp
+	2,  // 16: komari.rescue.v1.RescueHelperStatus.network_isolation:type_name -> komari.rescue.v1.NetworkIsolationMode
+	1,  // 17: komari.rescue.v1.RescueSession.action:type_name -> komari.rescue.v1.RescueAction
+	28, // 18: komari.rescue.v1.RescueSession.state:type_name -> komari.common.v1.OperationState
+	26, // 19: komari.rescue.v1.RescueSession.created_at:type_name -> google.protobuf.Timestamp
+	26, // 20: komari.rescue.v1.RescueSession.started_at:type_name -> google.protobuf.Timestamp
+	26, // 21: komari.rescue.v1.RescueSession.finished_at:type_name -> google.protobuf.Timestamp
+	27, // 22: komari.rescue.v1.RescueSession.error:type_name -> komari.common.v1.ErrorDetail
+	26, // 23: komari.rescue.v1.RescueSession.deadline_at:type_name -> google.protobuf.Timestamp
+	26, // 24: komari.rescue.v1.RescueEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	28, // 25: komari.rescue.v1.RescueEvent.state:type_name -> komari.common.v1.OperationState
+	3,  // 26: komari.rescue.v1.RescueEvent.stream:type_name -> komari.rescue.v1.RescueOutputStream
+	27, // 27: komari.rescue.v1.RescueEvent.error:type_name -> komari.common.v1.ErrorDetail
+	29, // 28: komari.rescue.v1.RescueEvent.diagnostics:type_name -> komari.diag.v1.DiagnosticsReport
+	22, // 29: komari.rescue.v1.RescueEvent.ssh_access:type_name -> komari.rescue.v1.TemporarySSHAccess
+	26, // 30: komari.rescue.v1.TemporarySSHAccess.granted_at:type_name -> google.protobuf.Timestamp
+	26, // 31: komari.rescue.v1.TemporarySSHAccess.expires_at:type_name -> google.protobuf.Timestamp
+	0,  // 32: komari.rescue.v1.TemporarySSHAccess.expiry_mechanism:type_name -> komari.rescue.v1.ExpiryMechanism
+	23, // 33: komari.rescue.v1.TemporarySSHAccess.sshd_state:type_name -> komari.rescue.v1.SSHDaemonState
+	4,  // 34: komari.rescue.v1.RescueService.GetRescueStatus:input_type -> komari.rescue.v1.GetRescueStatusRequest
+	6,  // 35: komari.rescue.v1.RescueService.CreateRescueSession:input_type -> komari.rescue.v1.CreateRescueSessionRequest
+	8,  // 36: komari.rescue.v1.RescueService.WatchRescueSession:input_type -> komari.rescue.v1.WatchRescueSessionRequest
+	10, // 37: komari.rescue.v1.RescueService.CancelRescueSession:input_type -> komari.rescue.v1.CancelRescueSessionRequest
+	12, // 38: komari.rescue.v1.RescueService.LeaseRescueSessions:input_type -> komari.rescue.v1.LeaseRescueSessionsRequest
+	15, // 39: komari.rescue.v1.RescueService.ReportRescueEvent:input_type -> komari.rescue.v1.ReportRescueEventRequest
+	17, // 40: komari.rescue.v1.RescueService.ReportRescueStatus:input_type -> komari.rescue.v1.ReportRescueStatusRequest
+	5,  // 41: komari.rescue.v1.RescueService.GetRescueStatus:output_type -> komari.rescue.v1.GetRescueStatusResponse
+	7,  // 42: komari.rescue.v1.RescueService.CreateRescueSession:output_type -> komari.rescue.v1.CreateRescueSessionResponse
+	9,  // 43: komari.rescue.v1.RescueService.WatchRescueSession:output_type -> komari.rescue.v1.WatchRescueSessionResponse
+	11, // 44: komari.rescue.v1.RescueService.CancelRescueSession:output_type -> komari.rescue.v1.CancelRescueSessionResponse
+	13, // 45: komari.rescue.v1.RescueService.LeaseRescueSessions:output_type -> komari.rescue.v1.LeaseRescueSessionsResponse
+	16, // 46: komari.rescue.v1.RescueService.ReportRescueEvent:output_type -> komari.rescue.v1.ReportRescueEventResponse
+	18, // 47: komari.rescue.v1.RescueService.ReportRescueStatus:output_type -> komari.rescue.v1.ReportRescueStatusResponse
+	41, // [41:48] is the sub-list for method output_type
+	34, // [34:41] is the sub-list for method input_type
+	34, // [34:34] is the sub-list for extension type_name
+	34, // [34:34] is the sub-list for extension extendee
+	0,  // [0:34] is the sub-list for field type_name
 }
 
 func init() { file_komari_rescue_v1_rescue_proto_init() }
@@ -1594,6 +1936,7 @@ func file_komari_rescue_v1_rescue_proto_init() {
 	if File_komari_rescue_v1_rescue_proto != nil {
 		return
 	}
+	file_komari_rescue_v1_rescue_proto_msgTypes[2].OneofWrappers = []any{}
 	file_komari_rescue_v1_rescue_proto_msgTypes[15].OneofWrappers = []any{}
 	file_komari_rescue_v1_rescue_proto_msgTypes[16].OneofWrappers = []any{}
 	file_komari_rescue_v1_rescue_proto_msgTypes[17].OneofWrappers = []any{}
@@ -1602,8 +1945,8 @@ func file_komari_rescue_v1_rescue_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_rescue_v1_rescue_proto_rawDesc), len(file_komari_rescue_v1_rescue_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   18,
+			NumEnums:      4,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

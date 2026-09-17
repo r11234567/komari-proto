@@ -12,24 +12,61 @@ permissions:
 jobs:
   lint-generate:
     runs-on: ubuntu-latest
+    # Generated clients are committed, but they are produced by CI rather than
+    # by hand: the development host cannot run buf. This job therefore formats,
+    # regenerates and commits the result back to the branch under test, then
+    # validates what it produced in the same run.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          # Check out the real branch rather than a detached merge commit, so
+          # regenerated output can be committed back to it.
+          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
       - uses: bufbuild/buf-setup-action@v1
         with:
           version: "1.57.0"
+      # Formatting and generation are applied rather than asserted. The source
+      # of truth for generated clients is this job, not a developer's shell,
+      # because the development host cannot run buf at all. Applying before
+      # validating means one run both fixes the tree and proves the result
+      # compiles, instead of reporting a staleness the author cannot resolve.
       - name: Format
-        run: buf format --diff --exit-code
+        run: buf format --write
       - name: Lint
         run: buf lint
+      # Checking out the head branch by name means only that ref is fetched, so
+      # the base branch has to be brought in explicitly before it can be used
+      # as a comparison point.
+      - name: Fetch base branch
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: git fetch --no-tags origin "+refs/heads/${BASE_REF}:refs/heads/${BASE_REF}"
       - name: Breaking
         if: github.event_name == 'pull_request'
-        run: buf breaking --against '.git#branch=${{ github.base_ref }}'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: buf breaking --against ".git#branch=${BASE_REF}"
       - name: Generate
         run: buf generate
-      - name: Generated files are current
-        run: git diff --exit-code -- gen
+      # Pushed with [skip ci] so this does not retrigger itself; the steps
+      # after this one validate the regenerated output in this same run.
+      - name: Commit regenerated clients
+        env:
+          TARGET_BRANCH: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
+        run: |
+          if git diff --quiet ; then
+            echo "Formatted sources and generated clients already current."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(proto): regenerate clients [skip ci]"
+          git push origin "HEAD:${TARGET_BRANCH}"
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod

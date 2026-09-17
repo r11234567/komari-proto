@@ -1,0 +1,164 @@
+syntax = "proto3";
+
+package komari.diag.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/diag/v1;diagv1";
+
+// DiagnosticsReport is one read-only performance snapshot.
+//
+// Every collector reads only kernel virtual files under /proc and sleeps
+// between the two samples it needs for rate fields. It never samples in a
+// loop and never walks /proc/<pid>, because a diagnostic that itself costs
+// CPU is unusable on a host whose provider throttles sustained CPU.
+message DiagnosticsReport {
+  google.protobuf.Timestamp collected_at = 1;
+  // sample_interval is the wall time between the two counter samples used for
+  // every per-second field below.
+  google.protobuf.Duration sample_interval = 2;
+  // collection_duration is what producing this report cost, so an operator can
+  // confirm the diagnostic is not itself the load.
+  google.protobuf.Duration collection_duration = 3;
+  optional CpuDiagnostics cpu = 4;
+  optional MemoryDiagnostics memory = 5;
+  // warnings records collectors that were unavailable without failing the
+  // whole report, for example a kernel built without PSI.
+  repeated string warnings = 6;
+}
+
+// CpuDiagnostics is the guest kernel's own view of CPU time.
+//
+// This is deliberately guest-side only. A hypervisor control panel bills the
+// vhost/emulator threads that serve this guest's virtio queues to the guest,
+// and those threads are invisible here: no counter in /proc can observe them.
+// Comparing panel_comparable_cores against a panel reading is therefore the
+// supported way to size that gap, not a bug to be reconciled away.
+message CpuDiagnostics {
+  uint32 logical_cpu_count = 1;
+  // busy_percent is normalized across all CPUs and never exceeds 100.
+  double busy_percent = 2;
+  // panel_comparable_cores is busy_percent x logical_cpu_count / 100, the
+  // "cores consumed" quantity a libvirt-derived panel reports. A panel value
+  // above 100% per core that this does not account for is host-side overhead.
+  double panel_comparable_cores = 3;
+  CpuStateBreakdown states = 4;
+  // per_cpu is omitted when a single logical CPU is present.
+  repeated CpuStateBreakdown per_cpu = 5;
+  SoftirqActivity softirq = 6;
+  optional PressureStall pressure = 7;
+  repeated double load_average = 8;
+  uint64 context_switches_per_second = 9;
+  uint64 interrupts_per_second = 10;
+  uint64 forks_per_second = 11;
+  uint64 procs_running = 12;
+  uint64 procs_blocked = 13;
+}
+
+// CpuStateBreakdown splits CPU time into its /proc/stat states as percentages
+// of the sampled interval. Fields mirror /proc/stat field order.
+message CpuStateBreakdown {
+  // cpu_id is empty for the aggregate line and "cpu0", "cpu1" ... per CPU.
+  string cpu_id = 1;
+  double user_percent = 2;
+  double nice_percent = 3;
+  double system_percent = 4;
+  double idle_percent = 5;
+  double iowait_percent = 6;
+  double irq_percent = 7;
+  double softirq_percent = 8;
+  // steal_percent is time this vCPU was runnable but the host ran something
+  // else. It is the only host contention signal a guest can observe directly.
+  double steal_percent = 9;
+  double guest_percent = 10;
+  double guest_nice_percent = 11;
+  // kernel_percent is system + irq + softirq: all time spent in the kernel on
+  // this guest's behalf, which is what a packet-forwarding workload drives up.
+  double kernel_percent = 12;
+}
+
+// SoftirqActivity reports /proc/softirqs rates. NET_RX and NET_TX dominate on
+// a proxy or download workload and are the guest-side evidence of how much
+// network softirq work actually lands inside this guest.
+message SoftirqActivity {
+  uint64 total_per_second = 1;
+  uint64 hi_per_second = 2;
+  uint64 timer_per_second = 3;
+  uint64 net_tx_per_second = 4;
+  uint64 net_rx_per_second = 5;
+  uint64 block_per_second = 6;
+  uint64 irq_poll_per_second = 7;
+  uint64 tasklet_per_second = 8;
+  uint64 sched_per_second = 9;
+  uint64 hrtimer_per_second = 10;
+  uint64 rcu_per_second = 11;
+}
+
+// MemoryDiagnostics reports /proc/meminfo partitioning plus the paging
+// activity that a single used/total pair cannot express.
+message MemoryDiagnostics {
+  uint64 total_bytes = 1;
+  uint64 free_bytes = 2;
+  uint64 available_bytes = 3;
+  uint64 buffers_bytes = 4;
+  uint64 cached_bytes = 5;
+  uint64 sreclaimable_bytes = 6;
+  uint64 shmem_bytes = 7;
+  // used_bytes follows the htop partitioning already used for agent reports.
+  uint64 used_bytes = 8;
+  uint64 swap_total_bytes = 9;
+  uint64 swap_free_bytes = 10;
+  uint64 swap_cached_bytes = 11;
+  uint64 swap_used_bytes = 12;
+  // zswap_compressed_bytes is physical memory held by the compressed pool;
+  // zswapped_original_bytes is what it holds before compression.
+  uint64 zswap_compressed_bytes = 13;
+  uint64 zswapped_original_bytes = 14;
+  PagingActivity paging = 15;
+  optional PressureStall pressure = 16;
+  ThrashingLevel thrashing = 17;
+}
+
+// PagingActivity reports /proc/vmstat deltas as rates. Absolute vmstat values
+// are monotonic counters and are never reported directly.
+message PagingActivity {
+  // swap_in_pages_per_second and swap_out_pages_per_second are pswpin/pswpout:
+  // actual swap device traffic, the direct evidence of a swap storm.
+  uint64 swap_in_pages_per_second = 1;
+  uint64 swap_out_pages_per_second = 2;
+  uint64 page_in_per_second = 3;
+  uint64 page_out_per_second = 4;
+  // major_faults_per_second is pgmajfault: faults served from a backing device
+  // rather than memory, the core thrashing indicator.
+  uint64 major_faults_per_second = 5;
+  uint64 minor_faults_per_second = 6;
+  uint64 kswapd_scanned_per_second = 7;
+  uint64 direct_scanned_per_second = 8;
+  uint64 kswapd_reclaimed_per_second = 9;
+  uint64 direct_reclaimed_per_second = 10;
+  uint64 oom_kills_total = 11;
+}
+
+// PressureStall carries Linux PSI averages from /proc/pressure/*. These are
+// the single best answer to "is the stall severe", because they measure time
+// lost to a resource rather than the resource's own utilization.
+message PressureStall {
+  double some_avg10 = 1;
+  double some_avg60 = 2;
+  double some_avg300 = 3;
+  // full_* is unset for CPU pressure, which reports only some_*.
+  optional double full_avg10 = 4;
+  optional double full_avg60 = 5;
+  optional double full_avg300 = 6;
+}
+
+// ThrashingLevel classifies memory stall severity from paging rates and PSI.
+// It is advisory: the underlying rates are always reported alongside it.
+enum ThrashingLevel {
+  THRASHING_LEVEL_UNSPECIFIED = 0;
+  THRASHING_LEVEL_NONE = 1;
+  THRASHING_LEVEL_LIGHT = 2;
+  THRASHING_LEVEL_MODERATE = 3;
+  THRASHING_LEVEL_SEVERE = 4;
+}
