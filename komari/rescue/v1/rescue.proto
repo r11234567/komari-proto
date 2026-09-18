@@ -231,6 +231,15 @@ enum RescueAction {
   // instruction from the control plane.
   RESCUE_ACTION_TEMPORARY_SSH_ACCESS = 16;
   RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS = 17;
+  // Withdraw the active privileged configuration locally.
+  //
+  // This exists because a privilege change has to be undoable from the host
+  // without the control plane's cooperation. If the only way back were a
+  // panel instruction, then a panel that is unreachable, or that was itself
+  // the source of a bad change, would leave the host stuck with widened
+  // privileges. The agent reports the rollback afterwards; the report is a
+  // notification, not a request for permission.
+  RESCUE_ACTION_ROLLBACK_PRIVILEGED_CONFIG = 18;
 }
 
 enum NetworkIsolationMode {

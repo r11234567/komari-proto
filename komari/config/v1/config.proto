@@ -21,6 +21,155 @@ service ConfigService {
   rpc UpdateDesiredConfig(UpdateDesiredConfigRequest) returns (UpdateDesiredConfigResponse);
 }
 
+// PrivilegedDeliveryService owns the separate delivery track for settings a
+// running agent never applies on its own.
+//
+// It is deliberately a second track rather than an extension of ConfigService.
+// The ordinary track is a convergence loop: the panel names a desired state
+// and the agent reaches it unattended. These settings cannot work that way,
+// because adopting one widens what the agent is permitted to do, and an agent
+// that could grant itself more privilege on the panel's word alone would make
+// the panel a single point from which every host can be escalated. So this
+// track carries an explicit human decision, and the ordinary track keeps its
+// existing behaviour untouched.
+service PrivilegedDeliveryService {
+  // GetPrivilegedDelivery returns the current privileged revision and its
+  // state. Suitable for reconnect recovery.
+  rpc GetPrivilegedDelivery(GetPrivilegedDeliveryRequest) returns (GetPrivilegedDeliveryResponse);
+  // WatchPrivilegedDelivery streams privileged revisions and state changes.
+  rpc WatchPrivilegedDelivery(WatchPrivilegedDeliveryRequest) returns (stream WatchPrivilegedDeliveryResponse);
+  // UpdatePrivilegedDelivery stores a new privileged revision, computing the
+  // upgrade class from the agent's reported privilege mode.
+  rpc UpdatePrivilegedDelivery(UpdatePrivilegedDeliveryRequest) returns (UpdatePrivilegedDeliveryResponse);
+  // ConfirmPrivilegedDelivery records the operator's second confirmation in
+  // the panel. It never applies anything by itself: for a revision that
+  // crosses a privilege boundary it only authorizes the host-side upgrade.
+  rpc ConfirmPrivilegedDelivery(ConfirmPrivilegedDeliveryRequest) returns (ConfirmPrivilegedDeliveryResponse);
+  // ReportPrivilegedDelivery is how the agent, or the upgrade script running
+  // on the host, reports the outcome including a local rollback.
+  rpc ReportPrivilegedDelivery(ReportPrivilegedDeliveryRequest) returns (ReportPrivilegedDeliveryResponse);
+  // CompleteManualUpgrade is called by the host-side upgrade script with the
+  // task nonce. It is the only way a privileged revision becomes active, and
+  // it proves the operator ran the upgrade on the machine itself.
+  rpc CompleteManualUpgrade(CompleteManualUpgradeRequest) returns (CompleteManualUpgradeResponse);
+}
+
+message GetPrivilegedDeliveryRequest {
+  string agent_id = 1;
+  uint64 applied_revision = 2;
+}
+
+message GetPrivilegedDeliveryResponse {
+  optional PrivilegedRevision revision = 1;
+}
+
+message WatchPrivilegedDeliveryRequest {
+  string agent_id = 1;
+  uint64 after_revision = 2;
+}
+
+message WatchPrivilegedDeliveryResponse {
+  PrivilegedRevision revision = 1;
+}
+
+message UpdatePrivilegedDeliveryRequest {
+  string agent_id = 1;
+  PrivilegedConfig privileged = 2;
+  uint64 expected_revision = 3;
+  string reason = 4;
+}
+
+message UpdatePrivilegedDeliveryResponse {
+  PrivilegedRevision revision = 1;
+}
+
+message ConfirmPrivilegedDeliveryRequest {
+  string agent_id = 1;
+  uint64 revision = 2;
+  // two_factor is required: confirming here is what authorizes a privilege
+  // change on the host.
+  komari.common.v1.TwoFactorProof two_factor = 3;
+}
+
+message ConfirmPrivilegedDeliveryResponse {
+  PrivilegedRevision revision = 1;
+}
+
+message ReportPrivilegedDeliveryRequest {
+  string agent_id = 1;
+  uint64 revision = 2;
+  PrivilegedDeliveryState state = 3;
+  repeated komari.common.v1.ErrorDetail errors = 4;
+  google.protobuf.Timestamp finished_at = 5;
+  // active_privilege_mode is what the agent actually holds after the
+  // transition, which the panel checks against what the revision assumed
+  // rather than trusting the reported state alone.
+  komari.report.v1.PrivilegeMode active_privilege_mode = 6;
+}
+
+message ReportPrivilegedDeliveryResponse {
+  bool accepted = 1;
+  PrivilegedRevision revision = 2;
+}
+
+message CompleteManualUpgradeRequest {
+  string agent_id = 1;
+  // nonce is the single-use value issued with the ManualUpgradeTask.
+  string nonce = 2;
+  // local_authentication names how the operator was verified on the host, for
+  // the audit trail. The credential itself never leaves the machine.
+  string local_authentication = 3;
+  // operator is the host account that ran the upgrade.
+  string operator = 4;
+  komari.report.v1.PrivilegeMode resulting_privilege_mode = 5;
+}
+
+message CompleteManualUpgradeResponse {
+  bool accepted = 1;
+  PrivilegedRevision revision = 2;
+}
+
+// PrivilegedRevision is one immutable privileged desired snapshot plus the
+// state of the human decision attached to it.
+message PrivilegedRevision {
+  string agent_id = 1;
+  uint64 revision = 2;
+  PrivilegedConfig privileged = 3;
+  UpgradePlan plan = 4;
+  PrivilegedDeliveryState state = 5;
+  google.protobuf.Timestamp saved_at = 6;
+  optional google.protobuf.Timestamp confirmed_at = 7;
+  optional google.protobuf.Timestamp finished_at = 8;
+  repeated komari.common.v1.ErrorDetail errors = 9;
+  // previous_revision is what a rollback returns to, so a panel can show what
+  // rolling back would mean before it happens.
+  optional uint64 previous_revision = 10;
+}
+
+// PrivilegedDeliveryState is the state of one privileged revision.
+//
+// These are business states of a human decision, not transport states, which
+// is why they are separate from DeliveryState: "sent" is meaningless for a
+// change that a machine is never allowed to adopt by itself.
+enum PrivilegedDeliveryState {
+  PRIVILEGED_DELIVERY_STATE_UNSPECIFIED = 0;
+  // Saved, and waiting for an operator to confirm in the panel. This is the
+  // resting state of a change within one privilege level.
+  PRIVILEGED_DELIVERY_STATE_NEEDS_CONFIRMATION = 1;
+  // Confirmed in the panel, but it crosses a privilege boundary, so it now
+  // waits for the operator to run the upgrade on the host and authenticate
+  // there. The panel cannot advance this state on its own.
+  PRIVILEGED_DELIVERY_STATE_NEEDS_MANUAL_AUTHORIZATION = 2;
+  // Active on the agent.
+  PRIVILEGED_DELIVERY_STATE_DELIVERED = 3;
+  // Withdrawn after being active. A rollback may be initiated from the panel
+  // or locally on the host, since the host must be able to undo a privilege
+  // change without the panel's cooperation.
+  PRIVILEGED_DELIVERY_STATE_ROLLED_BACK = 4;
+  // The transition was attempted and failed; errors carries why.
+  PRIVILEGED_DELIVERY_STATE_FAILED = 5;
+}
+
 // RuntimeConfig contains settings that can be atomically applied without reinstalling.
 message RuntimeConfig {
   optional bool memory_include_cache = 1;
