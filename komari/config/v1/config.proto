@@ -6,6 +6,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
 import "komari/report/v1/report.proto";
+import "komari/security/v1/security.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/config/v1;configv1";
 
@@ -144,6 +145,19 @@ message PrivilegedRevision {
   // previous_revision is what a rollback returns to, so a panel can show what
   // rolling back would mean before it happens.
   optional uint64 previous_revision = 10;
+  // signature authenticates this revision end to end.
+  //
+  // TLS cannot establish it: the connection commonly terminates at a reverse
+  // proxy or access gateway that sees plaintext, so anything past that point
+  // could compose a revision widening what the agent may do. The envelope
+  // carries a SignedInstruction whose agent_id, nonce and expiry are inside
+  // the signature, which is what stops a captured revision from being replayed
+  // against another host or at another time.
+  //
+  // It is optional only so an agent can report a missing signature as a
+  // refusal rather than failing to parse. An agent that has pinned keys must
+  // never act on a revision without one.
+  optional komari.security.v1.SignedEnvelope signature = 11;
 }
 
 // PrivilegedDeliveryState is the state of one privileged revision.
