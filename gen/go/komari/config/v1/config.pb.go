@@ -9,6 +9,7 @@ package configv1
 import (
 	v1 "github.com/r11234567/komari-proto/gen/go/komari/common/v1"
 	v11 "github.com/r11234567/komari-proto/gen/go/komari/report/v1"
+	v12 "github.com/r11234567/komari-proto/gen/go/komari/security/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
@@ -907,8 +908,21 @@ type PrivilegedRevision struct {
 	// previous_revision is what a rollback returns to, so a panel can show what
 	// rolling back would mean before it happens.
 	PreviousRevision *uint64 `protobuf:"varint,10,opt,name=previous_revision,json=previousRevision,proto3,oneof" json:"previous_revision,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// signature authenticates this revision end to end.
+	//
+	// TLS cannot establish it: the connection commonly terminates at a reverse
+	// proxy or access gateway that sees plaintext, so anything past that point
+	// could compose a revision widening what the agent may do. The envelope
+	// carries a SignedInstruction whose agent_id, nonce and expiry are inside
+	// the signature, which is what stops a captured revision from being replayed
+	// against another host or at another time.
+	//
+	// It is optional only so an agent can report a missing signature as a
+	// refusal rather than failing to parse. An agent that has pinned keys must
+	// never act on a revision without one.
+	Signature     *v12.SignedEnvelope `protobuf:"bytes,11,opt,name=signature,proto3,oneof" json:"signature,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *PrivilegedRevision) Reset() {
@@ -1009,6 +1023,13 @@ func (x *PrivilegedRevision) GetPreviousRevision() uint64 {
 		return *x.PreviousRevision
 	}
 	return 0
+}
+
+func (x *PrivilegedRevision) GetSignature() *v12.SignedEnvelope {
+	if x != nil {
+		return x.Signature
+	}
+	return nil
 }
 
 // RuntimeConfig contains settings that can be atomically applied without reinstalling.
@@ -2081,7 +2102,7 @@ var File_komari_config_v1_config_proto protoreflect.FileDescriptor
 
 const file_komari_config_v1_config_proto_rawDesc = "" +
 	"\n" +
-	"\x1dkomari/config/v1/config.proto\x12\x10komari.config.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/report/v1/report.proto\"d\n" +
+	"\x1dkomari/config/v1/config.proto\x12\x10komari.config.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/report/v1/report.proto\x1a!komari/security/v1/security.proto\"d\n" +
 	"\x1cGetPrivilegedDeliveryRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12)\n" +
 	"\x10applied_revision\x18\x02 \x01(\x04R\x0fappliedRevision\"s\n" +
@@ -2128,7 +2149,7 @@ const file_komari_config_v1_config_proto_rawDesc = "" +
 	"\x18resulting_privilege_mode\x18\x05 \x01(\x0e2\x1f.komari.report.v1.PrivilegeModeR\x16resultingPrivilegeMode\"}\n" +
 	"\x1dCompleteManualUpgradeResponse\x12\x1a\n" +
 	"\baccepted\x18\x01 \x01(\bR\baccepted\x12@\n" +
-	"\brevision\x18\x02 \x01(\v2$.komari.config.v1.PrivilegedRevisionR\brevision\"\xe0\x04\n" +
+	"\brevision\x18\x02 \x01(\v2$.komari.config.v1.PrivilegedRevisionR\brevision\"\xb5\x05\n" +
 	"\x12PrivilegedRevision\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x1a\n" +
 	"\brevision\x18\x02 \x01(\x04R\brevision\x12B\n" +
@@ -2143,10 +2164,13 @@ const file_komari_config_v1_config_proto_rawDesc = "" +
 	"finishedAt\x88\x01\x01\x125\n" +
 	"\x06errors\x18\t \x03(\v2\x1d.komari.common.v1.ErrorDetailR\x06errors\x120\n" +
 	"\x11previous_revision\x18\n" +
-	" \x01(\x04H\x02R\x10previousRevision\x88\x01\x01B\x0f\n" +
+	" \x01(\x04H\x02R\x10previousRevision\x88\x01\x01\x12E\n" +
+	"\tsignature\x18\v \x01(\v2\".komari.security.v1.SignedEnvelopeH\x03R\tsignature\x88\x01\x01B\x0f\n" +
 	"\r_confirmed_atB\x0e\n" +
 	"\f_finished_atB\x14\n" +
-	"\x12_previous_revision\"\xb9\v\n" +
+	"\x12_previous_revisionB\f\n" +
+	"\n" +
+	"_signature\"\xb9\v\n" +
 	"\rRuntimeConfig\x125\n" +
 	"\x14memory_include_cache\x18\x01 \x01(\bH\x00R\x12memoryIncludeCache\x88\x01\x01\x12&\n" +
 	"\n" +
@@ -2346,8 +2370,9 @@ var file_komari_config_v1_config_proto_goTypes = []any{
 	(*v1.ErrorDetail)(nil),                    // 30: komari.common.v1.ErrorDetail
 	(*timestamppb.Timestamp)(nil),             // 31: google.protobuf.Timestamp
 	(v11.PrivilegeMode)(0),                    // 32: komari.report.v1.PrivilegeMode
-	(*durationpb.Duration)(nil),               // 33: google.protobuf.Duration
-	(v1.DeliveryState)(0),                     // 34: komari.common.v1.DeliveryState
+	(*v12.SignedEnvelope)(nil),                // 33: komari.security.v1.SignedEnvelope
+	(*durationpb.Duration)(nil),               // 34: google.protobuf.Duration
+	(v1.DeliveryState)(0),                     // 35: komari.common.v1.DeliveryState
 }
 var file_komari_config_v1_config_proto_depIdxs = []int32{
 	15, // 0: komari.config.v1.GetPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
@@ -2370,54 +2395,55 @@ var file_komari_config_v1_config_proto_depIdxs = []int32{
 	31, // 17: komari.config.v1.PrivilegedRevision.confirmed_at:type_name -> google.protobuf.Timestamp
 	31, // 18: komari.config.v1.PrivilegedRevision.finished_at:type_name -> google.protobuf.Timestamp
 	30, // 19: komari.config.v1.PrivilegedRevision.errors:type_name -> komari.common.v1.ErrorDetail
-	33, // 20: komari.config.v1.RuntimeConfig.report_interval:type_name -> google.protobuf.Duration
-	33, // 21: komari.config.v1.RuntimeConfig.info_report_interval:type_name -> google.protobuf.Duration
-	33, // 22: komari.config.v1.RuntimeConfig.reconnect_interval:type_name -> google.protobuf.Duration
-	32, // 23: komari.config.v1.PrivilegedConfig.required_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	1,  // 24: komari.config.v1.UpgradePlan.upgrade_class:type_name -> komari.config.v1.UpgradeClass
-	32, // 25: komari.config.v1.UpgradePlan.from_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	32, // 26: komari.config.v1.UpgradePlan.to_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	19, // 27: komari.config.v1.UpgradePlan.manual_task:type_name -> komari.config.v1.ManualUpgradeTask
-	31, // 28: komari.config.v1.ManualUpgradeTask.expires_at:type_name -> google.protobuf.Timestamp
-	16, // 29: komari.config.v1.DesiredConfig.runtime:type_name -> komari.config.v1.RuntimeConfig
-	31, // 30: komari.config.v1.DesiredConfig.saved_at:type_name -> google.protobuf.Timestamp
-	17, // 31: komari.config.v1.DesiredConfig.privileged:type_name -> komari.config.v1.PrivilegedConfig
-	18, // 32: komari.config.v1.DesiredConfig.plan:type_name -> komari.config.v1.UpgradePlan
-	20, // 33: komari.config.v1.GetDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
-	34, // 34: komari.config.v1.GetDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
-	20, // 35: komari.config.v1.WatchDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
-	2,  // 36: komari.config.v1.AcknowledgeConfigRequest.status:type_name -> komari.config.v1.ConfigApplyStatus
-	30, // 37: komari.config.v1.AcknowledgeConfigRequest.errors:type_name -> komari.common.v1.ErrorDetail
-	31, // 38: komari.config.v1.AcknowledgeConfigRequest.finished_at:type_name -> google.protobuf.Timestamp
-	34, // 39: komari.config.v1.AcknowledgeConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
-	16, // 40: komari.config.v1.UpdateDesiredConfigRequest.runtime:type_name -> komari.config.v1.RuntimeConfig
-	20, // 41: komari.config.v1.UpdateDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
-	34, // 42: komari.config.v1.UpdateDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
-	21, // 43: komari.config.v1.ConfigService.GetDesiredConfig:input_type -> komari.config.v1.GetDesiredConfigRequest
-	23, // 44: komari.config.v1.ConfigService.WatchDesiredConfig:input_type -> komari.config.v1.WatchDesiredConfigRequest
-	25, // 45: komari.config.v1.ConfigService.AcknowledgeConfig:input_type -> komari.config.v1.AcknowledgeConfigRequest
-	27, // 46: komari.config.v1.ConfigService.UpdateDesiredConfig:input_type -> komari.config.v1.UpdateDesiredConfigRequest
-	3,  // 47: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:input_type -> komari.config.v1.GetPrivilegedDeliveryRequest
-	5,  // 48: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:input_type -> komari.config.v1.WatchPrivilegedDeliveryRequest
-	7,  // 49: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:input_type -> komari.config.v1.UpdatePrivilegedDeliveryRequest
-	9,  // 50: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:input_type -> komari.config.v1.ConfirmPrivilegedDeliveryRequest
-	11, // 51: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:input_type -> komari.config.v1.ReportPrivilegedDeliveryRequest
-	13, // 52: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:input_type -> komari.config.v1.CompleteManualUpgradeRequest
-	22, // 53: komari.config.v1.ConfigService.GetDesiredConfig:output_type -> komari.config.v1.GetDesiredConfigResponse
-	24, // 54: komari.config.v1.ConfigService.WatchDesiredConfig:output_type -> komari.config.v1.WatchDesiredConfigResponse
-	26, // 55: komari.config.v1.ConfigService.AcknowledgeConfig:output_type -> komari.config.v1.AcknowledgeConfigResponse
-	28, // 56: komari.config.v1.ConfigService.UpdateDesiredConfig:output_type -> komari.config.v1.UpdateDesiredConfigResponse
-	4,  // 57: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:output_type -> komari.config.v1.GetPrivilegedDeliveryResponse
-	6,  // 58: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:output_type -> komari.config.v1.WatchPrivilegedDeliveryResponse
-	8,  // 59: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:output_type -> komari.config.v1.UpdatePrivilegedDeliveryResponse
-	10, // 60: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:output_type -> komari.config.v1.ConfirmPrivilegedDeliveryResponse
-	12, // 61: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:output_type -> komari.config.v1.ReportPrivilegedDeliveryResponse
-	14, // 62: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:output_type -> komari.config.v1.CompleteManualUpgradeResponse
-	53, // [53:63] is the sub-list for method output_type
-	43, // [43:53] is the sub-list for method input_type
-	43, // [43:43] is the sub-list for extension type_name
-	43, // [43:43] is the sub-list for extension extendee
-	0,  // [0:43] is the sub-list for field type_name
+	33, // 20: komari.config.v1.PrivilegedRevision.signature:type_name -> komari.security.v1.SignedEnvelope
+	34, // 21: komari.config.v1.RuntimeConfig.report_interval:type_name -> google.protobuf.Duration
+	34, // 22: komari.config.v1.RuntimeConfig.info_report_interval:type_name -> google.protobuf.Duration
+	34, // 23: komari.config.v1.RuntimeConfig.reconnect_interval:type_name -> google.protobuf.Duration
+	32, // 24: komari.config.v1.PrivilegedConfig.required_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	1,  // 25: komari.config.v1.UpgradePlan.upgrade_class:type_name -> komari.config.v1.UpgradeClass
+	32, // 26: komari.config.v1.UpgradePlan.from_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	32, // 27: komari.config.v1.UpgradePlan.to_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	19, // 28: komari.config.v1.UpgradePlan.manual_task:type_name -> komari.config.v1.ManualUpgradeTask
+	31, // 29: komari.config.v1.ManualUpgradeTask.expires_at:type_name -> google.protobuf.Timestamp
+	16, // 30: komari.config.v1.DesiredConfig.runtime:type_name -> komari.config.v1.RuntimeConfig
+	31, // 31: komari.config.v1.DesiredConfig.saved_at:type_name -> google.protobuf.Timestamp
+	17, // 32: komari.config.v1.DesiredConfig.privileged:type_name -> komari.config.v1.PrivilegedConfig
+	18, // 33: komari.config.v1.DesiredConfig.plan:type_name -> komari.config.v1.UpgradePlan
+	20, // 34: komari.config.v1.GetDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
+	35, // 35: komari.config.v1.GetDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
+	20, // 36: komari.config.v1.WatchDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
+	2,  // 37: komari.config.v1.AcknowledgeConfigRequest.status:type_name -> komari.config.v1.ConfigApplyStatus
+	30, // 38: komari.config.v1.AcknowledgeConfigRequest.errors:type_name -> komari.common.v1.ErrorDetail
+	31, // 39: komari.config.v1.AcknowledgeConfigRequest.finished_at:type_name -> google.protobuf.Timestamp
+	35, // 40: komari.config.v1.AcknowledgeConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
+	16, // 41: komari.config.v1.UpdateDesiredConfigRequest.runtime:type_name -> komari.config.v1.RuntimeConfig
+	20, // 42: komari.config.v1.UpdateDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
+	35, // 43: komari.config.v1.UpdateDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
+	21, // 44: komari.config.v1.ConfigService.GetDesiredConfig:input_type -> komari.config.v1.GetDesiredConfigRequest
+	23, // 45: komari.config.v1.ConfigService.WatchDesiredConfig:input_type -> komari.config.v1.WatchDesiredConfigRequest
+	25, // 46: komari.config.v1.ConfigService.AcknowledgeConfig:input_type -> komari.config.v1.AcknowledgeConfigRequest
+	27, // 47: komari.config.v1.ConfigService.UpdateDesiredConfig:input_type -> komari.config.v1.UpdateDesiredConfigRequest
+	3,  // 48: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:input_type -> komari.config.v1.GetPrivilegedDeliveryRequest
+	5,  // 49: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:input_type -> komari.config.v1.WatchPrivilegedDeliveryRequest
+	7,  // 50: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:input_type -> komari.config.v1.UpdatePrivilegedDeliveryRequest
+	9,  // 51: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:input_type -> komari.config.v1.ConfirmPrivilegedDeliveryRequest
+	11, // 52: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:input_type -> komari.config.v1.ReportPrivilegedDeliveryRequest
+	13, // 53: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:input_type -> komari.config.v1.CompleteManualUpgradeRequest
+	22, // 54: komari.config.v1.ConfigService.GetDesiredConfig:output_type -> komari.config.v1.GetDesiredConfigResponse
+	24, // 55: komari.config.v1.ConfigService.WatchDesiredConfig:output_type -> komari.config.v1.WatchDesiredConfigResponse
+	26, // 56: komari.config.v1.ConfigService.AcknowledgeConfig:output_type -> komari.config.v1.AcknowledgeConfigResponse
+	28, // 57: komari.config.v1.ConfigService.UpdateDesiredConfig:output_type -> komari.config.v1.UpdateDesiredConfigResponse
+	4,  // 58: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:output_type -> komari.config.v1.GetPrivilegedDeliveryResponse
+	6,  // 59: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:output_type -> komari.config.v1.WatchPrivilegedDeliveryResponse
+	8,  // 60: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:output_type -> komari.config.v1.UpdatePrivilegedDeliveryResponse
+	10, // 61: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:output_type -> komari.config.v1.ConfirmPrivilegedDeliveryResponse
+	12, // 62: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:output_type -> komari.config.v1.ReportPrivilegedDeliveryResponse
+	14, // 63: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:output_type -> komari.config.v1.CompleteManualUpgradeResponse
+	54, // [54:64] is the sub-list for method output_type
+	44, // [44:54] is the sub-list for method input_type
+	44, // [44:44] is the sub-list for extension type_name
+	44, // [44:44] is the sub-list for extension extendee
+	0,  // [0:44] is the sub-list for field type_name
 }
 
 func init() { file_komari_config_v1_config_proto_init() }
