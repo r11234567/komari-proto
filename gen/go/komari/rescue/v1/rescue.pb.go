@@ -115,6 +115,15 @@ const (
 	// instruction from the control plane.
 	RescueAction_RESCUE_ACTION_TEMPORARY_SSH_ACCESS        RescueAction = 16
 	RescueAction_RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS RescueAction = 17
+	// Withdraw the active privileged configuration locally.
+	//
+	// This exists because a privilege change has to be undoable from the host
+	// without the control plane's cooperation. If the only way back were a
+	// panel instruction, then a panel that is unreachable, or that was itself
+	// the source of a bad change, would leave the host stuck with widened
+	// privileges. The agent reports the rollback afterwards; the report is a
+	// notification, not a request for permission.
+	RescueAction_RESCUE_ACTION_ROLLBACK_PRIVILEGED_CONFIG RescueAction = 18
 )
 
 // Enum value maps for RescueAction.
@@ -138,6 +147,7 @@ var (
 		15: "RESCUE_ACTION_DETAILED_MEMORY_METRICS",
 		16: "RESCUE_ACTION_TEMPORARY_SSH_ACCESS",
 		17: "RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS",
+		18: "RESCUE_ACTION_ROLLBACK_PRIVILEGED_CONFIG",
 	}
 	RescueAction_value = map[string]int32{
 		"RESCUE_ACTION_UNSPECIFIED":                 0,
@@ -158,6 +168,7 @@ var (
 		"RESCUE_ACTION_DETAILED_MEMORY_METRICS":     15,
 		"RESCUE_ACTION_TEMPORARY_SSH_ACCESS":        16,
 		"RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS": 17,
+		"RESCUE_ACTION_ROLLBACK_PRIVILEGED_CONFIG":  18,
 	}
 )
 
@@ -1788,7 +1799,7 @@ const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\x1cEXPIRY_MECHANISM_UNSPECIFIED\x10\x00\x12%\n" +
 	"!EXPIRY_MECHANISM_NFTABLES_TIMEOUT\x10\x01\x12\"\n" +
 	"\x1eEXPIRY_MECHANISM_SYSTEMD_TIMER\x10\x02\x12%\n" +
-	"!EXPIRY_MECHANISM_HELPER_RECONCILE\x10\x03*\xce\x05\n" +
+	"!EXPIRY_MECHANISM_HELPER_RECONCILE\x10\x03*\xfc\x05\n" +
 	"\fRescueAction\x12\x1d\n" +
 	"\x19RESCUE_ACTION_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19RESCUE_ACTION_DIAGNOSTICS\x10\x01\x12)\n" +
@@ -1808,7 +1819,8 @@ const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\"RESCUE_ACTION_DETAILED_CPU_METRICS\x10\x0e\x12)\n" +
 	"%RESCUE_ACTION_DETAILED_MEMORY_METRICS\x10\x0f\x12&\n" +
 	"\"RESCUE_ACTION_TEMPORARY_SSH_ACCESS\x10\x10\x12-\n" +
-	")RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS\x10\x11*\xed\x01\n" +
+	")RESCUE_ACTION_REVOKE_TEMPORARY_SSH_ACCESS\x10\x11\x12,\n" +
+	"(RESCUE_ACTION_ROLLBACK_PRIVILEGED_CONFIG\x10\x12*\xed\x01\n" +
 	"\x14NetworkIsolationMode\x12&\n" +
 	"\"NETWORK_ISOLATION_MODE_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bNETWORK_ISOLATION_MODE_NONE\x10\x01\x12,\n" +

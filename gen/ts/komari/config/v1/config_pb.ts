@@ -6,7 +6,7 @@ import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobu
 import { enumDesc, fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Duration, Timestamp } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_duration, file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
-import type { DeliveryState, ErrorDetail } from "../../common/v1/common_pb";
+import type { DeliveryState, ErrorDetail, TwoFactorProof } from "../../common/v1/common_pb";
 import { file_komari_common_v1_common } from "../../common/v1/common_pb";
 import type { PrivilegeMode } from "../../report/v1/report_pb";
 import { file_komari_report_v1_report } from "../../report/v1/report_pb";
@@ -16,7 +16,383 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file komari/config/v1/config.proto.
  */
 export const file_komari_config_v1_config: GenFile = /*@__PURE__*/
-  fileDesc("Ch1rb21hcmkvY29uZmlnL3YxL2NvbmZpZy5wcm90bxIQa29tYXJpLmNvbmZpZy52MSLhCAoNUnVudGltZUNvbmZpZxIhChRtZW1vcnlfaW5jbHVkZV9jYWNoZRgBIAEoCEgAiAEBEhsKCmVuYWJsZV9ncHUYAiABKAhCAhgBSAGIAQESGQoMZGV0YWlsZWRfZ3B1GAMgASgISAKIAQESFAoMaW5jbHVkZV9uaWNzGAQgAygJEhQKDGV4Y2x1ZGVfbmljcxgFIAMoCRIbChNpbmNsdWRlX21vdW50cG9pbnRzGAYgAygJEjcKD3JlcG9ydF9pbnRlcnZhbBgHIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbkgDiAEBEh4KEXRyYWZmaWNfcmVzZXRfZGF5GAggASgNSASIAQESJwoWcmVtb3RlX2NvbnRyb2xfZW5hYmxlZBgJIAEoCEICGAFIBYgBARIjChZtZW1vcnlfcmVwb3J0X3Jhd191c2VkGAogASgISAaIAQESFwoKY3VzdG9tX2RucxgLIAEoCUgHiAEBEh4KEXByZWZlcl9pcF92ZXJzaW9uGAwgASgJSAiIAQESPAoUaW5mb19yZXBvcnRfaW50ZXJ2YWwYDSABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb25ICYgBARIYCgttYXhfcmV0cmllcxgOIAEoDUgKiAEBEjoKEnJlY29ubmVjdF9pbnRlcnZhbBgPIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbkgLiAEBEiAKE2Rpc2FibGVfY29tcHJlc3Npb24YECABKAhIDIgBARIYCgtjdXN0b21faXB2NBgRIAEoCUgNiAEBEhgKC2N1c3RvbV9pcHY2GBIgASgJSA6IAQESIQoUZ2V0X2lwX2FkZHJfZnJvbV9uaWMYEyABKAhID4gBARIgChNkaXNhYmxlX2F1dG9fdXBkYXRlGBQgASgISBCIAQESHwoSaWdub3JlX3Vuc2FmZV9jZXJ0GBUgASgISBGIAQFCFwoVX21lbW9yeV9pbmNsdWRlX2NhY2hlQg0KC19lbmFibGVfZ3B1Qg8KDV9kZXRhaWxlZF9ncHVCEgoQX3JlcG9ydF9pbnRlcnZhbEIUChJfdHJhZmZpY19yZXNldF9kYXlCGQoXX3JlbW90ZV9jb250cm9sX2VuYWJsZWRCGQoXX21lbW9yeV9yZXBvcnRfcmF3X3VzZWRCDQoLX2N1c3RvbV9kbnNCFAoSX3ByZWZlcl9pcF92ZXJzaW9uQhcKFV9pbmZvX3JlcG9ydF9pbnRlcnZhbEIOCgxfbWF4X3JldHJpZXNCFQoTX3JlY29ubmVjdF9pbnRlcnZhbEIWChRfZGlzYWJsZV9jb21wcmVzc2lvbkIOCgxfY3VzdG9tX2lwdjRCDgoMX2N1c3RvbV9pcHY2QhcKFV9nZXRfaXBfYWRkcl9mcm9tX25pY0IWChRfZGlzYWJsZV9hdXRvX3VwZGF0ZUIVChNfaWdub3JlX3Vuc2FmZV9jZXJ0IuACChBQcml2aWxlZ2VkQ29uZmlnEiMKFnJlbW90ZV9jb250cm9sX2VuYWJsZWQYASABKAhIAIgBARIbCg53ZWJzc2hfZW5hYmxlZBgCIAEoCEgBiAEBEh4KEWV4ZWN1dGlvbl9lbmFibGVkGAMgASgISAKIAQESFwoKZW5hYmxlX2dwdRgEIAEoCEgDiAEBEiIKFXJlc2N1ZV9oZWxwZXJfZW5hYmxlZBgFIAEoCEgEiAEBEkAKF3JlcXVpcmVkX3ByaXZpbGVnZV9tb2RlGAYgASgOMh8ua29tYXJpLnJlcG9ydC52MS5Qcml2aWxlZ2VNb2RlQhkKF19yZW1vdGVfY29udHJvbF9lbmFibGVkQhEKD193ZWJzc2hfZW5hYmxlZEIUChJfZXhlY3V0aW9uX2VuYWJsZWRCDQoLX2VuYWJsZV9ncHVCGAoWX3Jlc2N1ZV9oZWxwZXJfZW5hYmxlZCKeAgoLVXBncmFkZVBsYW4SNQoNdXBncmFkZV9jbGFzcxgBIAEoDjIeLmtvbWFyaS5jb25maWcudjEuVXBncmFkZUNsYXNzEg8KB3JlYXNvbnMYAiADKAkSPAoTZnJvbV9wcml2aWxlZ2VfbW9kZRgDIAEoDjIfLmtvbWFyaS5yZXBvcnQudjEuUHJpdmlsZWdlTW9kZRI6ChF0b19wcml2aWxlZ2VfbW9kZRgEIAEoDjIfLmtvbWFyaS5yZXBvcnQudjEuUHJpdmlsZWdlTW9kZRI9CgttYW51YWxfdGFzaxgFIAEoCzIjLmtvbWFyaS5jb25maWcudjEuTWFudWFsVXBncmFkZVRhc2tIAIgBAUIOCgxfbWFudWFsX3Rhc2sirAEKEU1hbnVhbFVwZ3JhZGVUYXNrEg8KB3Rhc2tfaWQYASABKAkSDQoFbm9uY2UYAiABKAkSDwoHY29tbWFuZBgDIAEoCRIuCgpleHBpcmVzX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIeChZyZXF1aXJlX2xvY2FsX3Bhc3N3b3JkGAUgASgIEhYKDmF1ZGl0X2ZhY2lsaXR5GAYgASgJIrkCCg1EZXNpcmVkQ29uZmlnEhAKCGFnZW50X2lkGAEgASgJEhAKCHJldmlzaW9uGAIgASgEEjAKB3J1bnRpbWUYAyABKAsyHy5rb21hcmkuY29uZmlnLnYxLlJ1bnRpbWVDb25maWcSLAoIc2F2ZWRfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEh0KFW1pbmltdW1fYWdlbnRfdmVyc2lvbhgFIAEoCRI7Cgpwcml2aWxlZ2VkGAYgASgLMiIua29tYXJpLmNvbmZpZy52MS5Qcml2aWxlZ2VkQ29uZmlnSACIAQESMAoEcGxhbhgHIAEoCzIdLmtvbWFyaS5jb25maWcudjEuVXBncmFkZVBsYW5IAYgBAUINCgtfcHJpdmlsZWdlZEIHCgVfcGxhbiJFChdHZXREZXNpcmVkQ29uZmlnUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIYChBhcHBsaWVkX3JldmlzaW9uGAIgASgEIpYBChhHZXREZXNpcmVkQ29uZmlnUmVzcG9uc2USNQoHZGVzaXJlZBgBIAEoCzIfLmtvbWFyaS5jb25maWcudjEuRGVzaXJlZENvbmZpZ0gAiAEBEjcKDmRlbGl2ZXJ5X3N0YXRlGAIgASgOMh8ua29tYXJpLmNvbW1vbi52MS5EZWxpdmVyeVN0YXRlQgoKCF9kZXNpcmVkIkUKGVdhdGNoRGVzaXJlZENvbmZpZ1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSFgoOYWZ0ZXJfcmV2aXNpb24YAiABKAQiTgoaV2F0Y2hEZXNpcmVkQ29uZmlnUmVzcG9uc2USMAoHZGVzaXJlZBgBIAEoCzIfLmtvbWFyaS5jb25maWcudjEuRGVzaXJlZENvbmZpZyLTAQoYQWNrbm93bGVkZ2VDb25maWdSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEhAKCHJldmlzaW9uGAIgASgEEjMKBnN0YXR1cxgDIAEoDjIjLmtvbWFyaS5jb25maWcudjEuQ29uZmlnQXBwbHlTdGF0dXMSLQoGZXJyb3JzGAQgAygLMh0ua29tYXJpLmNvbW1vbi52MS5FcnJvckRldGFpbBIvCgtmaW5pc2hlZF9hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiZgoZQWNrbm93bGVkZ2VDb25maWdSZXNwb25zZRIQCghhY2NlcHRlZBgBIAEoCBI3Cg5kZWxpdmVyeV9zdGF0ZRgCIAEoDjIfLmtvbWFyaS5jb21tb24udjEuRGVsaXZlcnlTdGF0ZSKjAQoaVXBkYXRlRGVzaXJlZENvbmZpZ1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSMAoHcnVudGltZRgCIAEoCzIfLmtvbWFyaS5jb25maWcudjEuUnVudGltZUNvbmZpZxIZChFleHBlY3RlZF9yZXZpc2lvbhgDIAEoBBIOCgZyZWFzb24YBCABKAkSFgoOZm9yY2VfZGlzcGF0Y2gYBSABKAgiiAEKG1VwZGF0ZURlc2lyZWRDb25maWdSZXNwb25zZRIwCgdkZXNpcmVkGAEgASgLMh8ua29tYXJpLmNvbmZpZy52MS5EZXNpcmVkQ29uZmlnEjcKDmRlbGl2ZXJ5X3N0YXRlGAIgASgOMh8ua29tYXJpLmNvbW1vbi52MS5EZWxpdmVyeVN0YXRlKpEBCgxVcGdyYWRlQ2xhc3MSHQoZVVBHUkFERV9DTEFTU19VTlNQRUNJRklFRBAAEhsKF1VQR1JBREVfQ0xBU1NfQVVUT01BVElDEAESIAocVVBHUkFERV9DTEFTU19NQU5VQUxfQ09ORklSTRACEiMKH1VQR1JBREVfQ0xBU1NfTUFOVUFMX1BSSVZJTEVHRUQQAyqlAQoRQ29uZmlnQXBwbHlTdGF0dXMSIwofQ09ORklHX0FQUExZX1NUQVRVU19VTlNQRUNJRklFRBAAEh8KG0NPTkZJR19BUFBMWV9TVEFUVVNfQVBQTElFRBABEiAKHENPTkZJR19BUFBMWV9TVEFUVVNfUkVKRUNURUQQAhIoCiRDT05GSUdfQVBQTFlfU1RBVFVTX1VQR1JBREVfUkVRVUlSRUQQAzLPAwoNQ29uZmlnU2VydmljZRJpChBHZXREZXNpcmVkQ29uZmlnEikua29tYXJpLmNvbmZpZy52MS5HZXREZXNpcmVkQ29uZmlnUmVxdWVzdBoqLmtvbWFyaS5jb25maWcudjEuR2V0RGVzaXJlZENvbmZpZ1Jlc3BvbnNlEnEKEldhdGNoRGVzaXJlZENvbmZpZxIrLmtvbWFyaS5jb25maWcudjEuV2F0Y2hEZXNpcmVkQ29uZmlnUmVxdWVzdBosLmtvbWFyaS5jb25maWcudjEuV2F0Y2hEZXNpcmVkQ29uZmlnUmVzcG9uc2UwARJsChFBY2tub3dsZWRnZUNvbmZpZxIqLmtvbWFyaS5jb25maWcudjEuQWNrbm93bGVkZ2VDb25maWdSZXF1ZXN0Gisua29tYXJpLmNvbmZpZy52MS5BY2tub3dsZWRnZUNvbmZpZ1Jlc3BvbnNlEnIKE1VwZGF0ZURlc2lyZWRDb25maWcSLC5rb21hcmkuY29uZmlnLnYxLlVwZGF0ZURlc2lyZWRDb25maWdSZXF1ZXN0Gi0ua29tYXJpLmNvbmZpZy52MS5VcGRhdGVEZXNpcmVkQ29uZmlnUmVzcG9uc2VCyQEKFGNvbS5rb21hcmkuY29uZmlnLnYxQgtDb25maWdQcm90b1ABWkJnaXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9jb25maWcvdjE7Y29uZmlndjGiAgNLQ1iqAhBLb21hcmkuQ29uZmlnLlYxygIQS29tYXJpXENvbmZpZ1xWMeICHEtvbWFyaVxDb25maWdcVjFcR1BCTWV0YWRhdGHqAhJLb21hcmk6OkNvbmZpZzo6VjFiBnByb3RvMw", [file_google_protobuf_duration, file_google_protobuf_timestamp, file_komari_common_v1_common, file_komari_report_v1_report]);
+  fileDesc("Ch1rb21hcmkvY29uZmlnL3YxL2NvbmZpZy5wcm90bxIQa29tYXJpLmNvbmZpZy52MSJKChxHZXRQcml2aWxlZ2VkRGVsaXZlcnlSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEhgKEGFwcGxpZWRfcmV2aXNpb24YAiABKAQiaQodR2V0UHJpdmlsZWdlZERlbGl2ZXJ5UmVzcG9uc2USOwoIcmV2aXNpb24YASABKAsyJC5rb21hcmkuY29uZmlnLnYxLlByaXZpbGVnZWRSZXZpc2lvbkgAiAEBQgsKCV9yZXZpc2lvbiJKCh5XYXRjaFByaXZpbGVnZWREZWxpdmVyeVJlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSFgoOYWZ0ZXJfcmV2aXNpb24YAiABKAQiWQofV2F0Y2hQcml2aWxlZ2VkRGVsaXZlcnlSZXNwb25zZRI2CghyZXZpc2lvbhgBIAEoCzIkLmtvbWFyaS5jb25maWcudjEuUHJpdmlsZWdlZFJldmlzaW9uIpYBCh9VcGRhdGVQcml2aWxlZ2VkRGVsaXZlcnlSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEjYKCnByaXZpbGVnZWQYAiABKAsyIi5rb21hcmkuY29uZmlnLnYxLlByaXZpbGVnZWRDb25maWcSGQoRZXhwZWN0ZWRfcmV2aXNpb24YAyABKAQSDgoGcmVhc29uGAQgASgJIloKIFVwZGF0ZVByaXZpbGVnZWREZWxpdmVyeVJlc3BvbnNlEjYKCHJldmlzaW9uGAEgASgLMiQua29tYXJpLmNvbmZpZy52MS5Qcml2aWxlZ2VkUmV2aXNpb24ifAogQ29uZmlybVByaXZpbGVnZWREZWxpdmVyeVJlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSEAoIcmV2aXNpb24YAiABKAQSNAoKdHdvX2ZhY3RvchgDIAEoCzIgLmtvbWFyaS5jb21tb24udjEuVHdvRmFjdG9yUHJvb2YiWwohQ29uZmlybVByaXZpbGVnZWREZWxpdmVyeVJlc3BvbnNlEjYKCHJldmlzaW9uGAEgASgLMiQua29tYXJpLmNvbmZpZy52MS5Qcml2aWxlZ2VkUmV2aXNpb24inwIKH1JlcG9ydFByaXZpbGVnZWREZWxpdmVyeVJlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSEAoIcmV2aXNpb24YAiABKAQSOAoFc3RhdGUYAyABKA4yKS5rb21hcmkuY29uZmlnLnYxLlByaXZpbGVnZWREZWxpdmVyeVN0YXRlEi0KBmVycm9ycxgEIAMoCzIdLmtvbWFyaS5jb21tb24udjEuRXJyb3JEZXRhaWwSLwoLZmluaXNoZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEj4KFWFjdGl2ZV9wcml2aWxlZ2VfbW9kZRgGIAEoDjIfLmtvbWFyaS5yZXBvcnQudjEuUHJpdmlsZWdlTW9kZSJsCiBSZXBvcnRQcml2aWxlZ2VkRGVsaXZlcnlSZXNwb25zZRIQCghhY2NlcHRlZBgBIAEoCBI2CghyZXZpc2lvbhgCIAEoCzIkLmtvbWFyaS5jb25maWcudjEuUHJpdmlsZWdlZFJldmlzaW9uIrIBChxDb21wbGV0ZU1hbnVhbFVwZ3JhZGVSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEg0KBW5vbmNlGAIgASgJEhwKFGxvY2FsX2F1dGhlbnRpY2F0aW9uGAMgASgJEhAKCG9wZXJhdG9yGAQgASgJEkEKGHJlc3VsdGluZ19wcml2aWxlZ2VfbW9kZRgFIAEoDjIfLmtvbWFyaS5yZXBvcnQudjEuUHJpdmlsZWdlTW9kZSJpCh1Db21wbGV0ZU1hbnVhbFVwZ3JhZGVSZXNwb25zZRIQCghhY2NlcHRlZBgBIAEoCBI2CghyZXZpc2lvbhgCIAEoCzIkLmtvbWFyaS5jb25maWcudjEuUHJpdmlsZWdlZFJldmlzaW9uIvgDChJQcml2aWxlZ2VkUmV2aXNpb24SEAoIYWdlbnRfaWQYASABKAkSEAoIcmV2aXNpb24YAiABKAQSNgoKcHJpdmlsZWdlZBgDIAEoCzIiLmtvbWFyaS5jb25maWcudjEuUHJpdmlsZWdlZENvbmZpZxIrCgRwbGFuGAQgASgLMh0ua29tYXJpLmNvbmZpZy52MS5VcGdyYWRlUGxhbhI4CgVzdGF0ZRgFIAEoDjIpLmtvbWFyaS5jb25maWcudjEuUHJpdmlsZWdlZERlbGl2ZXJ5U3RhdGUSLAoIc2F2ZWRfYXQYBiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjUKDGNvbmZpcm1lZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAIgBARI0CgtmaW5pc2hlZF9hdBgIIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAYgBARItCgZlcnJvcnMYCSADKAsyHS5rb21hcmkuY29tbW9uLnYxLkVycm9yRGV0YWlsEh4KEXByZXZpb3VzX3JldmlzaW9uGAogASgESAKIAQFCDwoNX2NvbmZpcm1lZF9hdEIOCgxfZmluaXNoZWRfYXRCFAoSX3ByZXZpb3VzX3JldmlzaW9uIuEICg1SdW50aW1lQ29uZmlnEiEKFG1lbW9yeV9pbmNsdWRlX2NhY2hlGAEgASgISACIAQESGwoKZW5hYmxlX2dwdRgCIAEoCEICGAFIAYgBARIZCgxkZXRhaWxlZF9ncHUYAyABKAhIAogBARIUCgxpbmNsdWRlX25pY3MYBCADKAkSFAoMZXhjbHVkZV9uaWNzGAUgAygJEhsKE2luY2x1ZGVfbW91bnRwb2ludHMYBiADKAkSNwoPcmVwb3J0X2ludGVydmFsGAcgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uSAOIAQESHgoRdHJhZmZpY19yZXNldF9kYXkYCCABKA1IBIgBARInChZyZW1vdGVfY29udHJvbF9lbmFibGVkGAkgASgIQgIYAUgFiAEBEiMKFm1lbW9yeV9yZXBvcnRfcmF3X3VzZWQYCiABKAhIBogBARIXCgpjdXN0b21fZG5zGAsgASgJSAeIAQESHgoRcHJlZmVyX2lwX3ZlcnNpb24YDCABKAlICIgBARI8ChRpbmZvX3JlcG9ydF9pbnRlcnZhbBgNIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbkgJiAEBEhgKC21heF9yZXRyaWVzGA4gASgNSAqIAQESOgoScmVjb25uZWN0X2ludGVydmFsGA8gASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uSAuIAQESIAoTZGlzYWJsZV9jb21wcmVzc2lvbhgQIAEoCEgMiAEBEhgKC2N1c3RvbV9pcHY0GBEgASgJSA2IAQESGAoLY3VzdG9tX2lwdjYYEiABKAlIDogBARIhChRnZXRfaXBfYWRkcl9mcm9tX25pYxgTIAEoCEgPiAEBEiAKE2Rpc2FibGVfYXV0b191cGRhdGUYFCABKAhIEIgBARIfChJpZ25vcmVfdW5zYWZlX2NlcnQYFSABKAhIEYgBAUIXChVfbWVtb3J5X2luY2x1ZGVfY2FjaGVCDQoLX2VuYWJsZV9ncHVCDwoNX2RldGFpbGVkX2dwdUISChBfcmVwb3J0X2ludGVydmFsQhQKEl90cmFmZmljX3Jlc2V0X2RheUIZChdfcmVtb3RlX2NvbnRyb2xfZW5hYmxlZEIZChdfbWVtb3J5X3JlcG9ydF9yYXdfdXNlZEINCgtfY3VzdG9tX2Ruc0IUChJfcHJlZmVyX2lwX3ZlcnNpb25CFwoVX2luZm9fcmVwb3J0X2ludGVydmFsQg4KDF9tYXhfcmV0cmllc0IVChNfcmVjb25uZWN0X2ludGVydmFsQhYKFF9kaXNhYmxlX2NvbXByZXNzaW9uQg4KDF9jdXN0b21faXB2NEIOCgxfY3VzdG9tX2lwdjZCFwoVX2dldF9pcF9hZGRyX2Zyb21fbmljQhYKFF9kaXNhYmxlX2F1dG9fdXBkYXRlQhUKE19pZ25vcmVfdW5zYWZlX2NlcnQi4AIKEFByaXZpbGVnZWRDb25maWcSIwoWcmVtb3RlX2NvbnRyb2xfZW5hYmxlZBgBIAEoCEgAiAEBEhsKDndlYnNzaF9lbmFibGVkGAIgASgISAGIAQESHgoRZXhlY3V0aW9uX2VuYWJsZWQYAyABKAhIAogBARIXCgplbmFibGVfZ3B1GAQgASgISAOIAQESIgoVcmVzY3VlX2hlbHBlcl9lbmFibGVkGAUgASgISASIAQESQAoXcmVxdWlyZWRfcHJpdmlsZWdlX21vZGUYBiABKA4yHy5rb21hcmkucmVwb3J0LnYxLlByaXZpbGVnZU1vZGVCGQoXX3JlbW90ZV9jb250cm9sX2VuYWJsZWRCEQoPX3dlYnNzaF9lbmFibGVkQhQKEl9leGVjdXRpb25fZW5hYmxlZEINCgtfZW5hYmxlX2dwdUIYChZfcmVzY3VlX2hlbHBlcl9lbmFibGVkIp4CCgtVcGdyYWRlUGxhbhI1Cg11cGdyYWRlX2NsYXNzGAEgASgOMh4ua29tYXJpLmNvbmZpZy52MS5VcGdyYWRlQ2xhc3MSDwoHcmVhc29ucxgCIAMoCRI8ChNmcm9tX3ByaXZpbGVnZV9tb2RlGAMgASgOMh8ua29tYXJpLnJlcG9ydC52MS5Qcml2aWxlZ2VNb2RlEjoKEXRvX3ByaXZpbGVnZV9tb2RlGAQgASgOMh8ua29tYXJpLnJlcG9ydC52MS5Qcml2aWxlZ2VNb2RlEj0KC21hbnVhbF90YXNrGAUgASgLMiMua29tYXJpLmNvbmZpZy52MS5NYW51YWxVcGdyYWRlVGFza0gAiAEBQg4KDF9tYW51YWxfdGFzayKsAQoRTWFudWFsVXBncmFkZVRhc2sSDwoHdGFza19pZBgBIAEoCRINCgVub25jZRgCIAEoCRIPCgdjb21tYW5kGAMgASgJEi4KCmV4cGlyZXNfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEh4KFnJlcXVpcmVfbG9jYWxfcGFzc3dvcmQYBSABKAgSFgoOYXVkaXRfZmFjaWxpdHkYBiABKAkiuQIKDURlc2lyZWRDb25maWcSEAoIYWdlbnRfaWQYASABKAkSEAoIcmV2aXNpb24YAiABKAQSMAoHcnVudGltZRgDIAEoCzIfLmtvbWFyaS5jb25maWcudjEuUnVudGltZUNvbmZpZxIsCghzYXZlZF9hdBgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASHQoVbWluaW11bV9hZ2VudF92ZXJzaW9uGAUgASgJEjsKCnByaXZpbGVnZWQYBiABKAsyIi5rb21hcmkuY29uZmlnLnYxLlByaXZpbGVnZWRDb25maWdIAIgBARIwCgRwbGFuGAcgASgLMh0ua29tYXJpLmNvbmZpZy52MS5VcGdyYWRlUGxhbkgBiAEBQg0KC19wcml2aWxlZ2VkQgcKBV9wbGFuIkUKF0dldERlc2lyZWRDb25maWdSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEhgKEGFwcGxpZWRfcmV2aXNpb24YAiABKAQilgEKGEdldERlc2lyZWRDb25maWdSZXNwb25zZRI1CgdkZXNpcmVkGAEgASgLMh8ua29tYXJpLmNvbmZpZy52MS5EZXNpcmVkQ29uZmlnSACIAQESNwoOZGVsaXZlcnlfc3RhdGUYAiABKA4yHy5rb21hcmkuY29tbW9uLnYxLkRlbGl2ZXJ5U3RhdGVCCgoIX2Rlc2lyZWQiRQoZV2F0Y2hEZXNpcmVkQ29uZmlnUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIWCg5hZnRlcl9yZXZpc2lvbhgCIAEoBCJOChpXYXRjaERlc2lyZWRDb25maWdSZXNwb25zZRIwCgdkZXNpcmVkGAEgASgLMh8ua29tYXJpLmNvbmZpZy52MS5EZXNpcmVkQ29uZmlnItMBChhBY2tub3dsZWRnZUNvbmZpZ1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSEAoIcmV2aXNpb24YAiABKAQSMwoGc3RhdHVzGAMgASgOMiMua29tYXJpLmNvbmZpZy52MS5Db25maWdBcHBseVN0YXR1cxItCgZlcnJvcnMYBCADKAsyHS5rb21hcmkuY29tbW9uLnYxLkVycm9yRGV0YWlsEi8KC2ZpbmlzaGVkX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCJmChlBY2tub3dsZWRnZUNvbmZpZ1Jlc3BvbnNlEhAKCGFjY2VwdGVkGAEgASgIEjcKDmRlbGl2ZXJ5X3N0YXRlGAIgASgOMh8ua29tYXJpLmNvbW1vbi52MS5EZWxpdmVyeVN0YXRlIqMBChpVcGRhdGVEZXNpcmVkQ29uZmlnUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIwCgdydW50aW1lGAIgASgLMh8ua29tYXJpLmNvbmZpZy52MS5SdW50aW1lQ29uZmlnEhkKEWV4cGVjdGVkX3JldmlzaW9uGAMgASgEEg4KBnJlYXNvbhgEIAEoCRIWCg5mb3JjZV9kaXNwYXRjaBgFIAEoCCKIAQobVXBkYXRlRGVzaXJlZENvbmZpZ1Jlc3BvbnNlEjAKB2Rlc2lyZWQYASABKAsyHy5rb21hcmkuY29uZmlnLnYxLkRlc2lyZWRDb25maWcSNwoOZGVsaXZlcnlfc3RhdGUYAiABKA4yHy5rb21hcmkuY29tbW9uLnYxLkRlbGl2ZXJ5U3RhdGUqqgIKF1ByaXZpbGVnZWREZWxpdmVyeVN0YXRlEikKJVBSSVZJTEVHRURfREVMSVZFUllfU1RBVEVfVU5TUEVDSUZJRUQQABIwCixQUklWSUxFR0VEX0RFTElWRVJZX1NUQVRFX05FRURTX0NPTkZJUk1BVElPThABEjgKNFBSSVZJTEVHRURfREVMSVZFUllfU1RBVEVfTkVFRFNfTUFOVUFMX0FVVEhPUklaQVRJT04QAhInCiNQUklWSUxFR0VEX0RFTElWRVJZX1NUQVRFX0RFTElWRVJFRBADEikKJVBSSVZJTEVHRURfREVMSVZFUllfU1RBVEVfUk9MTEVEX0JBQ0sQBBIkCiBQUklWSUxFR0VEX0RFTElWRVJZX1NUQVRFX0ZBSUxFRBAFKpEBCgxVcGdyYWRlQ2xhc3MSHQoZVVBHUkFERV9DTEFTU19VTlNQRUNJRklFRBAAEhsKF1VQR1JBREVfQ0xBU1NfQVVUT01BVElDEAESIAocVVBHUkFERV9DTEFTU19NQU5VQUxfQ09ORklSTRACEiMKH1VQR1JBREVfQ0xBU1NfTUFOVUFMX1BSSVZJTEVHRUQQAyqlAQoRQ29uZmlnQXBwbHlTdGF0dXMSIwofQ09ORklHX0FQUExZX1NUQVRVU19VTlNQRUNJRklFRBAAEh8KG0NPTkZJR19BUFBMWV9TVEFUVVNfQVBQTElFRBABEiAKHENPTkZJR19BUFBMWV9TVEFUVVNfUkVKRUNURUQQAhIoCiRDT05GSUdfQVBQTFlfU1RBVFVTX1VQR1JBREVfUkVRVUlSRUQQAzLPAwoNQ29uZmlnU2VydmljZRJpChBHZXREZXNpcmVkQ29uZmlnEikua29tYXJpLmNvbmZpZy52MS5HZXREZXNpcmVkQ29uZmlnUmVxdWVzdBoqLmtvbWFyaS5jb25maWcudjEuR2V0RGVzaXJlZENvbmZpZ1Jlc3BvbnNlEnEKEldhdGNoRGVzaXJlZENvbmZpZxIrLmtvbWFyaS5jb25maWcudjEuV2F0Y2hEZXNpcmVkQ29uZmlnUmVxdWVzdBosLmtvbWFyaS5jb25maWcudjEuV2F0Y2hEZXNpcmVkQ29uZmlnUmVzcG9uc2UwARJsChFBY2tub3dsZWRnZUNvbmZpZxIqLmtvbWFyaS5jb25maWcudjEuQWNrbm93bGVkZ2VDb25maWdSZXF1ZXN0Gisua29tYXJpLmNvbmZpZy52MS5BY2tub3dsZWRnZUNvbmZpZ1Jlc3BvbnNlEnIKE1VwZGF0ZURlc2lyZWRDb25maWcSLC5rb21hcmkuY29uZmlnLnYxLlVwZGF0ZURlc2lyZWRDb25maWdSZXF1ZXN0Gi0ua29tYXJpLmNvbmZpZy52MS5VcGRhdGVEZXNpcmVkQ29uZmlnUmVzcG9uc2UyoQYKGVByaXZpbGVnZWREZWxpdmVyeVNlcnZpY2USeAoVR2V0UHJpdmlsZWdlZERlbGl2ZXJ5Ei4ua29tYXJpLmNvbmZpZy52MS5HZXRQcml2aWxlZ2VkRGVsaXZlcnlSZXF1ZXN0Gi8ua29tYXJpLmNvbmZpZy52MS5HZXRQcml2aWxlZ2VkRGVsaXZlcnlSZXNwb25zZRKAAQoXV2F0Y2hQcml2aWxlZ2VkRGVsaXZlcnkSMC5rb21hcmkuY29uZmlnLnYxLldhdGNoUHJpdmlsZWdlZERlbGl2ZXJ5UmVxdWVzdBoxLmtvbWFyaS5jb25maWcudjEuV2F0Y2hQcml2aWxlZ2VkRGVsaXZlcnlSZXNwb25zZTABEoEBChhVcGRhdGVQcml2aWxlZ2VkRGVsaXZlcnkSMS5rb21hcmkuY29uZmlnLnYxLlVwZGF0ZVByaXZpbGVnZWREZWxpdmVyeVJlcXVlc3QaMi5rb21hcmkuY29uZmlnLnYxLlVwZGF0ZVByaXZpbGVnZWREZWxpdmVyeVJlc3BvbnNlEoQBChlDb25maXJtUHJpdmlsZWdlZERlbGl2ZXJ5EjIua29tYXJpLmNvbmZpZy52MS5Db25maXJtUHJpdmlsZWdlZERlbGl2ZXJ5UmVxdWVzdBozLmtvbWFyaS5jb25maWcudjEuQ29uZmlybVByaXZpbGVnZWREZWxpdmVyeVJlc3BvbnNlEoEBChhSZXBvcnRQcml2aWxlZ2VkRGVsaXZlcnkSMS5rb21hcmkuY29uZmlnLnYxLlJlcG9ydFByaXZpbGVnZWREZWxpdmVyeVJlcXVlc3QaMi5rb21hcmkuY29uZmlnLnYxLlJlcG9ydFByaXZpbGVnZWREZWxpdmVyeVJlc3BvbnNlEngKFUNvbXBsZXRlTWFudWFsVXBncmFkZRIuLmtvbWFyaS5jb25maWcudjEuQ29tcGxldGVNYW51YWxVcGdyYWRlUmVxdWVzdBovLmtvbWFyaS5jb25maWcudjEuQ29tcGxldGVNYW51YWxVcGdyYWRlUmVzcG9uc2VCyQEKFGNvbS5rb21hcmkuY29uZmlnLnYxQgtDb25maWdQcm90b1ABWkJnaXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9jb25maWcvdjE7Y29uZmlndjGiAgNLQ1iqAhBLb21hcmkuQ29uZmlnLlYxygIQS29tYXJpXENvbmZpZ1xWMeICHEtvbWFyaVxDb25maWdcVjFcR1BCTWV0YWRhdGHqAhJLb21hcmk6OkNvbmZpZzo6VjFiBnByb3RvMw", [file_google_protobuf_duration, file_google_protobuf_timestamp, file_komari_common_v1_common, file_komari_report_v1_report]);
+
+/**
+ * @generated from message komari.config.v1.GetPrivilegedDeliveryRequest
+ */
+export type GetPrivilegedDeliveryRequest = Message<"komari.config.v1.GetPrivilegedDeliveryRequest"> & {
+  /**
+   * @generated from field: string agent_id = 1;
+   */
+  agentId: string;
+
+  /**
+   * @generated from field: uint64 applied_revision = 2;
+   */
+  appliedRevision: bigint;
+};
+
+/**
+ * Describes the message komari.config.v1.GetPrivilegedDeliveryRequest.
+ * Use `create(GetPrivilegedDeliveryRequestSchema)` to create a new message.
+ */
+export const GetPrivilegedDeliveryRequestSchema: GenMessage<GetPrivilegedDeliveryRequest> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 0);
+
+/**
+ * @generated from message komari.config.v1.GetPrivilegedDeliveryResponse
+ */
+export type GetPrivilegedDeliveryResponse = Message<"komari.config.v1.GetPrivilegedDeliveryResponse"> & {
+  /**
+   * @generated from field: optional komari.config.v1.PrivilegedRevision revision = 1;
+   */
+  revision?: PrivilegedRevision | undefined;
+};
+
+/**
+ * Describes the message komari.config.v1.GetPrivilegedDeliveryResponse.
+ * Use `create(GetPrivilegedDeliveryResponseSchema)` to create a new message.
+ */
+export const GetPrivilegedDeliveryResponseSchema: GenMessage<GetPrivilegedDeliveryResponse> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 1);
+
+/**
+ * @generated from message komari.config.v1.WatchPrivilegedDeliveryRequest
+ */
+export type WatchPrivilegedDeliveryRequest = Message<"komari.config.v1.WatchPrivilegedDeliveryRequest"> & {
+  /**
+   * @generated from field: string agent_id = 1;
+   */
+  agentId: string;
+
+  /**
+   * @generated from field: uint64 after_revision = 2;
+   */
+  afterRevision: bigint;
+};
+
+/**
+ * Describes the message komari.config.v1.WatchPrivilegedDeliveryRequest.
+ * Use `create(WatchPrivilegedDeliveryRequestSchema)` to create a new message.
+ */
+export const WatchPrivilegedDeliveryRequestSchema: GenMessage<WatchPrivilegedDeliveryRequest> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 2);
+
+/**
+ * @generated from message komari.config.v1.WatchPrivilegedDeliveryResponse
+ */
+export type WatchPrivilegedDeliveryResponse = Message<"komari.config.v1.WatchPrivilegedDeliveryResponse"> & {
+  /**
+   * @generated from field: komari.config.v1.PrivilegedRevision revision = 1;
+   */
+  revision?: PrivilegedRevision | undefined;
+};
+
+/**
+ * Describes the message komari.config.v1.WatchPrivilegedDeliveryResponse.
+ * Use `create(WatchPrivilegedDeliveryResponseSchema)` to create a new message.
+ */
+export const WatchPrivilegedDeliveryResponseSchema: GenMessage<WatchPrivilegedDeliveryResponse> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 3);
+
+/**
+ * @generated from message komari.config.v1.UpdatePrivilegedDeliveryRequest
+ */
+export type UpdatePrivilegedDeliveryRequest = Message<"komari.config.v1.UpdatePrivilegedDeliveryRequest"> & {
+  /**
+   * @generated from field: string agent_id = 1;
+   */
+  agentId: string;
+
+  /**
+   * @generated from field: komari.config.v1.PrivilegedConfig privileged = 2;
+   */
+  privileged?: PrivilegedConfig | undefined;
+
+  /**
+   * @generated from field: uint64 expected_revision = 3;
+   */
+  expectedRevision: bigint;
+
+  /**
+   * @generated from field: string reason = 4;
+   */
+  reason: string;
+};
+
+/**
+ * Describes the message komari.config.v1.UpdatePrivilegedDeliveryRequest.
+ * Use `create(UpdatePrivilegedDeliveryRequestSchema)` to create a new message.
+ */
+export const UpdatePrivilegedDeliveryRequestSchema: GenMessage<UpdatePrivilegedDeliveryRequest> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 4);
+
+/**
+ * @generated from message komari.config.v1.UpdatePrivilegedDeliveryResponse
+ */
+export type UpdatePrivilegedDeliveryResponse = Message<"komari.config.v1.UpdatePrivilegedDeliveryResponse"> & {
+  /**
+   * @generated from field: komari.config.v1.PrivilegedRevision revision = 1;
+   */
+  revision?: PrivilegedRevision | undefined;
+};
+
+/**
+ * Describes the message komari.config.v1.UpdatePrivilegedDeliveryResponse.
+ * Use `create(UpdatePrivilegedDeliveryResponseSchema)` to create a new message.
+ */
+export const UpdatePrivilegedDeliveryResponseSchema: GenMessage<UpdatePrivilegedDeliveryResponse> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 5);
+
+/**
+ * @generated from message komari.config.v1.ConfirmPrivilegedDeliveryRequest
+ */
+export type ConfirmPrivilegedDeliveryRequest = Message<"komari.config.v1.ConfirmPrivilegedDeliveryRequest"> & {
+  /**
+   * @generated from field: string agent_id = 1;
+   */
+  agentId: string;
+
+  /**
+   * @generated from field: uint64 revision = 2;
+   */
+  revision: bigint;
+
+  /**
+   * two_factor is required: confirming here is what authorizes a privilege
+   * change on the host.
+   *
+   * @generated from field: komari.common.v1.TwoFactorProof two_factor = 3;
+   */
+  twoFactor?: TwoFactorProof | undefined;
+};
+
+/**
+ * Describes the message komari.config.v1.ConfirmPrivilegedDeliveryRequest.
+ * Use `create(ConfirmPrivilegedDeliveryRequestSchema)` to create a new message.
+ */
+export const ConfirmPrivilegedDeliveryRequestSchema: GenMessage<ConfirmPrivilegedDeliveryRequest> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 6);
+
+/**
+ * @generated from message komari.config.v1.ConfirmPrivilegedDeliveryResponse
+ */
+export type ConfirmPrivilegedDeliveryResponse = Message<"komari.config.v1.ConfirmPrivilegedDeliveryResponse"> & {
+  /**
+   * @generated from field: komari.config.v1.PrivilegedRevision revision = 1;
+   */
+  revision?: PrivilegedRevision | undefined;
+};
+
+/**
+ * Describes the message komari.config.v1.ConfirmPrivilegedDeliveryResponse.
+ * Use `create(ConfirmPrivilegedDeliveryResponseSchema)` to create a new message.
+ */
+export const ConfirmPrivilegedDeliveryResponseSchema: GenMessage<ConfirmPrivilegedDeliveryResponse> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 7);
+
+/**
+ * @generated from message komari.config.v1.ReportPrivilegedDeliveryRequest
+ */
+export type ReportPrivilegedDeliveryRequest = Message<"komari.config.v1.ReportPrivilegedDeliveryRequest"> & {
+  /**
+   * @generated from field: string agent_id = 1;
+   */
+  agentId: string;
+
+  /**
+   * @generated from field: uint64 revision = 2;
+   */
+  revision: bigint;
+
+  /**
+   * @generated from field: komari.config.v1.PrivilegedDeliveryState state = 3;
+   */
+  state: PrivilegedDeliveryState;
+
+  /**
+   * @generated from field: repeated komari.common.v1.ErrorDetail errors = 4;
+   */
+  errors: ErrorDetail[];
+
+  /**
+   * @generated from field: google.protobuf.Timestamp finished_at = 5;
+   */
+  finishedAt?: Timestamp | undefined;
+
+  /**
+   * active_privilege_mode is what the agent actually holds after the
+   * transition, which the panel checks against what the revision assumed
+   * rather than trusting the reported state alone.
+   *
+   * @generated from field: komari.report.v1.PrivilegeMode active_privilege_mode = 6;
+   */
+  activePrivilegeMode: PrivilegeMode;
+};
+
+/**
+ * Describes the message komari.config.v1.ReportPrivilegedDeliveryRequest.
+ * Use `create(ReportPrivilegedDeliveryRequestSchema)` to create a new message.
+ */
+export const ReportPrivilegedDeliveryRequestSchema: GenMessage<ReportPrivilegedDeliveryRequest> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 8);
+
+/**
+ * @generated from message komari.config.v1.ReportPrivilegedDeliveryResponse
+ */
+export type ReportPrivilegedDeliveryResponse = Message<"komari.config.v1.ReportPrivilegedDeliveryResponse"> & {
+  /**
+   * @generated from field: bool accepted = 1;
+   */
+  accepted: boolean;
+
+  /**
+   * @generated from field: komari.config.v1.PrivilegedRevision revision = 2;
+   */
+  revision?: PrivilegedRevision | undefined;
+};
+
+/**
+ * Describes the message komari.config.v1.ReportPrivilegedDeliveryResponse.
+ * Use `create(ReportPrivilegedDeliveryResponseSchema)` to create a new message.
+ */
+export const ReportPrivilegedDeliveryResponseSchema: GenMessage<ReportPrivilegedDeliveryResponse> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 9);
+
+/**
+ * @generated from message komari.config.v1.CompleteManualUpgradeRequest
+ */
+export type CompleteManualUpgradeRequest = Message<"komari.config.v1.CompleteManualUpgradeRequest"> & {
+  /**
+   * @generated from field: string agent_id = 1;
+   */
+  agentId: string;
+
+  /**
+   * nonce is the single-use value issued with the ManualUpgradeTask.
+   *
+   * @generated from field: string nonce = 2;
+   */
+  nonce: string;
+
+  /**
+   * local_authentication names how the operator was verified on the host, for
+   * the audit trail. The credential itself never leaves the machine.
+   *
+   * @generated from field: string local_authentication = 3;
+   */
+  localAuthentication: string;
+
+  /**
+   * operator is the host account that ran the upgrade.
+   *
+   * @generated from field: string operator = 4;
+   */
+  operator: string;
+
+  /**
+   * @generated from field: komari.report.v1.PrivilegeMode resulting_privilege_mode = 5;
+   */
+  resultingPrivilegeMode: PrivilegeMode;
+};
+
+/**
+ * Describes the message komari.config.v1.CompleteManualUpgradeRequest.
+ * Use `create(CompleteManualUpgradeRequestSchema)` to create a new message.
+ */
+export const CompleteManualUpgradeRequestSchema: GenMessage<CompleteManualUpgradeRequest> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 10);
+
+/**
+ * @generated from message komari.config.v1.CompleteManualUpgradeResponse
+ */
+export type CompleteManualUpgradeResponse = Message<"komari.config.v1.CompleteManualUpgradeResponse"> & {
+  /**
+   * @generated from field: bool accepted = 1;
+   */
+  accepted: boolean;
+
+  /**
+   * @generated from field: komari.config.v1.PrivilegedRevision revision = 2;
+   */
+  revision?: PrivilegedRevision | undefined;
+};
+
+/**
+ * Describes the message komari.config.v1.CompleteManualUpgradeResponse.
+ * Use `create(CompleteManualUpgradeResponseSchema)` to create a new message.
+ */
+export const CompleteManualUpgradeResponseSchema: GenMessage<CompleteManualUpgradeResponse> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 11);
+
+/**
+ * PrivilegedRevision is one immutable privileged desired snapshot plus the
+ * state of the human decision attached to it.
+ *
+ * @generated from message komari.config.v1.PrivilegedRevision
+ */
+export type PrivilegedRevision = Message<"komari.config.v1.PrivilegedRevision"> & {
+  /**
+   * @generated from field: string agent_id = 1;
+   */
+  agentId: string;
+
+  /**
+   * @generated from field: uint64 revision = 2;
+   */
+  revision: bigint;
+
+  /**
+   * @generated from field: komari.config.v1.PrivilegedConfig privileged = 3;
+   */
+  privileged?: PrivilegedConfig | undefined;
+
+  /**
+   * @generated from field: komari.config.v1.UpgradePlan plan = 4;
+   */
+  plan?: UpgradePlan | undefined;
+
+  /**
+   * @generated from field: komari.config.v1.PrivilegedDeliveryState state = 5;
+   */
+  state: PrivilegedDeliveryState;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp saved_at = 6;
+   */
+  savedAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: optional google.protobuf.Timestamp confirmed_at = 7;
+   */
+  confirmedAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: optional google.protobuf.Timestamp finished_at = 8;
+   */
+  finishedAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: repeated komari.common.v1.ErrorDetail errors = 9;
+   */
+  errors: ErrorDetail[];
+
+  /**
+   * previous_revision is what a rollback returns to, so a panel can show what
+   * rolling back would mean before it happens.
+   *
+   * @generated from field: optional uint64 previous_revision = 10;
+   */
+  previousRevision?: bigint | undefined;
+};
+
+/**
+ * Describes the message komari.config.v1.PrivilegedRevision.
+ * Use `create(PrivilegedRevisionSchema)` to create a new message.
+ */
+export const PrivilegedRevisionSchema: GenMessage<PrivilegedRevision> = /*@__PURE__*/
+  messageDesc(file_komari_config_v1_config, 12);
 
 /**
  * RuntimeConfig contains settings that can be atomically applied without reinstalling.
@@ -156,7 +532,7 @@ export type RuntimeConfig = Message<"komari.config.v1.RuntimeConfig"> & {
  * Use `create(RuntimeConfigSchema)` to create a new message.
  */
 export const RuntimeConfigSchema: GenMessage<RuntimeConfig> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 0);
+  messageDesc(file_komari_config_v1_config, 13);
 
 /**
  * PrivilegedConfig holds settings whose adoption changes what the agent is
@@ -213,7 +589,7 @@ export type PrivilegedConfig = Message<"komari.config.v1.PrivilegedConfig"> & {
  * Use `create(PrivilegedConfigSchema)` to create a new message.
  */
 export const PrivilegedConfigSchema: GenMessage<PrivilegedConfig> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 1);
+  messageDesc(file_komari_config_v1_config, 14);
 
 /**
  * UpgradePlan states how one delivered revision may be adopted.
@@ -264,7 +640,7 @@ export type UpgradePlan = Message<"komari.config.v1.UpgradePlan"> & {
  * Use `create(UpgradePlanSchema)` to create a new message.
  */
 export const UpgradePlanSchema: GenMessage<UpgradePlan> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 2);
+  messageDesc(file_komari_config_v1_config, 15);
 
 /**
  * ManualUpgradeTask is an upgrade a human must perform on the host itself.
@@ -324,7 +700,7 @@ export type ManualUpgradeTask = Message<"komari.config.v1.ManualUpgradeTask"> & 
  * Use `create(ManualUpgradeTaskSchema)` to create a new message.
  */
 export const ManualUpgradeTaskSchema: GenMessage<ManualUpgradeTask> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 3);
+  messageDesc(file_komari_config_v1_config, 16);
 
 /**
  * DesiredConfig is an immutable desired runtime snapshot.
@@ -379,7 +755,7 @@ export type DesiredConfig = Message<"komari.config.v1.DesiredConfig"> & {
  * Use `create(DesiredConfigSchema)` to create a new message.
  */
 export const DesiredConfigSchema: GenMessage<DesiredConfig> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 4);
+  messageDesc(file_komari_config_v1_config, 17);
 
 /**
  * GetDesiredConfigRequest asks for a revision newer than the currently applied one.
@@ -403,7 +779,7 @@ export type GetDesiredConfigRequest = Message<"komari.config.v1.GetDesiredConfig
  * Use `create(GetDesiredConfigRequestSchema)` to create a new message.
  */
 export const GetDesiredConfigRequestSchema: GenMessage<GetDesiredConfigRequest> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 5);
+  messageDesc(file_komari_config_v1_config, 18);
 
 /**
  * GetDesiredConfigResponse contains the current desired snapshot when it differs.
@@ -427,7 +803,7 @@ export type GetDesiredConfigResponse = Message<"komari.config.v1.GetDesiredConfi
  * Use `create(GetDesiredConfigResponseSchema)` to create a new message.
  */
 export const GetDesiredConfigResponseSchema: GenMessage<GetDesiredConfigResponse> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 6);
+  messageDesc(file_komari_config_v1_config, 19);
 
 /**
  * WatchDesiredConfigRequest subscribes after a known revision.
@@ -451,7 +827,7 @@ export type WatchDesiredConfigRequest = Message<"komari.config.v1.WatchDesiredCo
  * Use `create(WatchDesiredConfigRequestSchema)` to create a new message.
  */
 export const WatchDesiredConfigRequestSchema: GenMessage<WatchDesiredConfigRequest> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 7);
+  messageDesc(file_komari_config_v1_config, 20);
 
 /**
  * WatchDesiredConfigResponse wraps one immutable desired revision.
@@ -470,7 +846,7 @@ export type WatchDesiredConfigResponse = Message<"komari.config.v1.WatchDesiredC
  * Use `create(WatchDesiredConfigResponseSchema)` to create a new message.
  */
 export const WatchDesiredConfigResponseSchema: GenMessage<WatchDesiredConfigResponse> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 8);
+  messageDesc(file_komari_config_v1_config, 21);
 
 /**
  * AcknowledgeConfigRequest reports the atomic apply result.
@@ -509,7 +885,7 @@ export type AcknowledgeConfigRequest = Message<"komari.config.v1.AcknowledgeConf
  * Use `create(AcknowledgeConfigRequestSchema)` to create a new message.
  */
 export const AcknowledgeConfigRequestSchema: GenMessage<AcknowledgeConfigRequest> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 9);
+  messageDesc(file_komari_config_v1_config, 22);
 
 /**
  * AcknowledgeConfigResponse returns the canonical delivery state.
@@ -533,7 +909,7 @@ export type AcknowledgeConfigResponse = Message<"komari.config.v1.AcknowledgeCon
  * Use `create(AcknowledgeConfigResponseSchema)` to create a new message.
  */
 export const AcknowledgeConfigResponseSchema: GenMessage<AcknowledgeConfigResponse> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 10);
+  messageDesc(file_komari_config_v1_config, 23);
 
 /**
  * UpdateDesiredConfigRequest creates a revision using optimistic concurrency.
@@ -574,7 +950,7 @@ export type UpdateDesiredConfigRequest = Message<"komari.config.v1.UpdateDesired
  * Use `create(UpdateDesiredConfigRequestSchema)` to create a new message.
  */
 export const UpdateDesiredConfigRequestSchema: GenMessage<UpdateDesiredConfigRequest> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 11);
+  messageDesc(file_komari_config_v1_config, 24);
 
 /**
  * UpdateDesiredConfigResponse contains the stored immutable snapshot.
@@ -598,7 +974,69 @@ export type UpdateDesiredConfigResponse = Message<"komari.config.v1.UpdateDesire
  * Use `create(UpdateDesiredConfigResponseSchema)` to create a new message.
  */
 export const UpdateDesiredConfigResponseSchema: GenMessage<UpdateDesiredConfigResponse> = /*@__PURE__*/
-  messageDesc(file_komari_config_v1_config, 12);
+  messageDesc(file_komari_config_v1_config, 25);
+
+/**
+ * PrivilegedDeliveryState is the state of one privileged revision.
+ *
+ * These are business states of a human decision, not transport states, which
+ * is why they are separate from DeliveryState: "sent" is meaningless for a
+ * change that a machine is never allowed to adopt by itself.
+ *
+ * @generated from enum komari.config.v1.PrivilegedDeliveryState
+ */
+export enum PrivilegedDeliveryState {
+  /**
+   * @generated from enum value: PRIVILEGED_DELIVERY_STATE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * Saved, and waiting for an operator to confirm in the panel. This is the
+   * resting state of a change within one privilege level.
+   *
+   * @generated from enum value: PRIVILEGED_DELIVERY_STATE_NEEDS_CONFIRMATION = 1;
+   */
+  NEEDS_CONFIRMATION = 1,
+
+  /**
+   * Confirmed in the panel, but it crosses a privilege boundary, so it now
+   * waits for the operator to run the upgrade on the host and authenticate
+   * there. The panel cannot advance this state on its own.
+   *
+   * @generated from enum value: PRIVILEGED_DELIVERY_STATE_NEEDS_MANUAL_AUTHORIZATION = 2;
+   */
+  NEEDS_MANUAL_AUTHORIZATION = 2,
+
+  /**
+   * Active on the agent.
+   *
+   * @generated from enum value: PRIVILEGED_DELIVERY_STATE_DELIVERED = 3;
+   */
+  DELIVERED = 3,
+
+  /**
+   * Withdrawn after being active. A rollback may be initiated from the panel
+   * or locally on the host, since the host must be able to undo a privilege
+   * change without the panel's cooperation.
+   *
+   * @generated from enum value: PRIVILEGED_DELIVERY_STATE_ROLLED_BACK = 4;
+   */
+  ROLLED_BACK = 4,
+
+  /**
+   * The transition was attempted and failed; errors carries why.
+   *
+   * @generated from enum value: PRIVILEGED_DELIVERY_STATE_FAILED = 5;
+   */
+  FAILED = 5,
+}
+
+/**
+ * Describes the enum komari.config.v1.PrivilegedDeliveryState.
+ */
+export const PrivilegedDeliveryStateSchema: GenEnum<PrivilegedDeliveryState> = /*@__PURE__*/
+  enumDesc(file_komari_config_v1_config, 0);
 
 /**
  * UpgradeClass classifies how a delivered revision may be adopted.
@@ -640,7 +1078,7 @@ export enum UpgradeClass {
  * Describes the enum komari.config.v1.UpgradeClass.
  */
 export const UpgradeClassSchema: GenEnum<UpgradeClass> = /*@__PURE__*/
-  enumDesc(file_komari_config_v1_config, 0);
+  enumDesc(file_komari_config_v1_config, 1);
 
 /**
  * ConfigApplyStatus is the agent's terminal apply result.
@@ -673,7 +1111,7 @@ export enum ConfigApplyStatus {
  * Describes the enum komari.config.v1.ConfigApplyStatus.
  */
 export const ConfigApplyStatusSchema: GenEnum<ConfigApplyStatus> = /*@__PURE__*/
-  enumDesc(file_komari_config_v1_config, 1);
+  enumDesc(file_komari_config_v1_config, 2);
 
 /**
  * ConfigService owns desired runtime configuration and revision acknowledgements.
@@ -723,4 +1161,90 @@ export const ConfigService: GenService<{
   },
 }> = /*@__PURE__*/
   serviceDesc(file_komari_config_v1_config, 0);
+
+/**
+ * PrivilegedDeliveryService owns the separate delivery track for settings a
+ * running agent never applies on its own.
+ *
+ * It is deliberately a second track rather than an extension of ConfigService.
+ * The ordinary track is a convergence loop: the panel names a desired state
+ * and the agent reaches it unattended. These settings cannot work that way,
+ * because adopting one widens what the agent is permitted to do, and an agent
+ * that could grant itself more privilege on the panel's word alone would make
+ * the panel a single point from which every host can be escalated. So this
+ * track carries an explicit human decision, and the ordinary track keeps its
+ * existing behaviour untouched.
+ *
+ * @generated from service komari.config.v1.PrivilegedDeliveryService
+ */
+export const PrivilegedDeliveryService: GenService<{
+  /**
+   * GetPrivilegedDelivery returns the current privileged revision and its
+   * state. Suitable for reconnect recovery.
+   *
+   * @generated from rpc komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery
+   */
+  getPrivilegedDelivery: {
+    methodKind: "unary";
+    input: typeof GetPrivilegedDeliveryRequestSchema;
+    output: typeof GetPrivilegedDeliveryResponseSchema;
+  },
+  /**
+   * WatchPrivilegedDelivery streams privileged revisions and state changes.
+   *
+   * @generated from rpc komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery
+   */
+  watchPrivilegedDelivery: {
+    methodKind: "server_streaming";
+    input: typeof WatchPrivilegedDeliveryRequestSchema;
+    output: typeof WatchPrivilegedDeliveryResponseSchema;
+  },
+  /**
+   * UpdatePrivilegedDelivery stores a new privileged revision, computing the
+   * upgrade class from the agent's reported privilege mode.
+   *
+   * @generated from rpc komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery
+   */
+  updatePrivilegedDelivery: {
+    methodKind: "unary";
+    input: typeof UpdatePrivilegedDeliveryRequestSchema;
+    output: typeof UpdatePrivilegedDeliveryResponseSchema;
+  },
+  /**
+   * ConfirmPrivilegedDelivery records the operator's second confirmation in
+   * the panel. It never applies anything by itself: for a revision that
+   * crosses a privilege boundary it only authorizes the host-side upgrade.
+   *
+   * @generated from rpc komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery
+   */
+  confirmPrivilegedDelivery: {
+    methodKind: "unary";
+    input: typeof ConfirmPrivilegedDeliveryRequestSchema;
+    output: typeof ConfirmPrivilegedDeliveryResponseSchema;
+  },
+  /**
+   * ReportPrivilegedDelivery is how the agent, or the upgrade script running
+   * on the host, reports the outcome including a local rollback.
+   *
+   * @generated from rpc komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery
+   */
+  reportPrivilegedDelivery: {
+    methodKind: "unary";
+    input: typeof ReportPrivilegedDeliveryRequestSchema;
+    output: typeof ReportPrivilegedDeliveryResponseSchema;
+  },
+  /**
+   * CompleteManualUpgrade is called by the host-side upgrade script with the
+   * task nonce. It is the only way a privileged revision becomes active, and
+   * it proves the operator ran the upgrade on the machine itself.
+   *
+   * @generated from rpc komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade
+   */
+  completeManualUpgrade: {
+    methodKind: "unary";
+    input: typeof CompleteManualUpgradeRequestSchema;
+    output: typeof CompleteManualUpgradeResponseSchema;
+  },
+}> = /*@__PURE__*/
+  serviceDesc(file_komari_config_v1_config, 1);
 

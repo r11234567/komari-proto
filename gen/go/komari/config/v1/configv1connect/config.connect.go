@@ -23,6 +23,9 @@ const _ = connect.IsAtLeastVersion1_13_0
 const (
 	// ConfigServiceName is the fully-qualified name of the ConfigService service.
 	ConfigServiceName = "komari.config.v1.ConfigService"
+	// PrivilegedDeliveryServiceName is the fully-qualified name of the PrivilegedDeliveryService
+	// service.
+	PrivilegedDeliveryServiceName = "komari.config.v1.PrivilegedDeliveryService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -45,6 +48,24 @@ const (
 	// ConfigServiceUpdateDesiredConfigProcedure is the fully-qualified name of the ConfigService's
 	// UpdateDesiredConfig RPC.
 	ConfigServiceUpdateDesiredConfigProcedure = "/komari.config.v1.ConfigService/UpdateDesiredConfig"
+	// PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure is the fully-qualified name of the
+	// PrivilegedDeliveryService's GetPrivilegedDelivery RPC.
+	PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure = "/komari.config.v1.PrivilegedDeliveryService/GetPrivilegedDelivery"
+	// PrivilegedDeliveryServiceWatchPrivilegedDeliveryProcedure is the fully-qualified name of the
+	// PrivilegedDeliveryService's WatchPrivilegedDelivery RPC.
+	PrivilegedDeliveryServiceWatchPrivilegedDeliveryProcedure = "/komari.config.v1.PrivilegedDeliveryService/WatchPrivilegedDelivery"
+	// PrivilegedDeliveryServiceUpdatePrivilegedDeliveryProcedure is the fully-qualified name of the
+	// PrivilegedDeliveryService's UpdatePrivilegedDelivery RPC.
+	PrivilegedDeliveryServiceUpdatePrivilegedDeliveryProcedure = "/komari.config.v1.PrivilegedDeliveryService/UpdatePrivilegedDelivery"
+	// PrivilegedDeliveryServiceConfirmPrivilegedDeliveryProcedure is the fully-qualified name of the
+	// PrivilegedDeliveryService's ConfirmPrivilegedDelivery RPC.
+	PrivilegedDeliveryServiceConfirmPrivilegedDeliveryProcedure = "/komari.config.v1.PrivilegedDeliveryService/ConfirmPrivilegedDelivery"
+	// PrivilegedDeliveryServiceReportPrivilegedDeliveryProcedure is the fully-qualified name of the
+	// PrivilegedDeliveryService's ReportPrivilegedDelivery RPC.
+	PrivilegedDeliveryServiceReportPrivilegedDeliveryProcedure = "/komari.config.v1.PrivilegedDeliveryService/ReportPrivilegedDelivery"
+	// PrivilegedDeliveryServiceCompleteManualUpgradeProcedure is the fully-qualified name of the
+	// PrivilegedDeliveryService's CompleteManualUpgrade RPC.
+	PrivilegedDeliveryServiceCompleteManualUpgradeProcedure = "/komari.config.v1.PrivilegedDeliveryService/CompleteManualUpgrade"
 )
 
 // ConfigServiceClient is a client for the komari.config.v1.ConfigService service.
@@ -201,4 +222,235 @@ func (UnimplementedConfigServiceHandler) AcknowledgeConfig(context.Context, *con
 
 func (UnimplementedConfigServiceHandler) UpdateDesiredConfig(context.Context, *connect.Request[v1.UpdateDesiredConfigRequest]) (*connect.Response[v1.UpdateDesiredConfigResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.ConfigService.UpdateDesiredConfig is not implemented"))
+}
+
+// PrivilegedDeliveryServiceClient is a client for the komari.config.v1.PrivilegedDeliveryService
+// service.
+type PrivilegedDeliveryServiceClient interface {
+	// GetPrivilegedDelivery returns the current privileged revision and its
+	// state. Suitable for reconnect recovery.
+	GetPrivilegedDelivery(context.Context, *connect.Request[v1.GetPrivilegedDeliveryRequest]) (*connect.Response[v1.GetPrivilegedDeliveryResponse], error)
+	// WatchPrivilegedDelivery streams privileged revisions and state changes.
+	WatchPrivilegedDelivery(context.Context, *connect.Request[v1.WatchPrivilegedDeliveryRequest]) (*connect.ServerStreamForClient[v1.WatchPrivilegedDeliveryResponse], error)
+	// UpdatePrivilegedDelivery stores a new privileged revision, computing the
+	// upgrade class from the agent's reported privilege mode.
+	UpdatePrivilegedDelivery(context.Context, *connect.Request[v1.UpdatePrivilegedDeliveryRequest]) (*connect.Response[v1.UpdatePrivilegedDeliveryResponse], error)
+	// ConfirmPrivilegedDelivery records the operator's second confirmation in
+	// the panel. It never applies anything by itself: for a revision that
+	// crosses a privilege boundary it only authorizes the host-side upgrade.
+	ConfirmPrivilegedDelivery(context.Context, *connect.Request[v1.ConfirmPrivilegedDeliveryRequest]) (*connect.Response[v1.ConfirmPrivilegedDeliveryResponse], error)
+	// ReportPrivilegedDelivery is how the agent, or the upgrade script running
+	// on the host, reports the outcome including a local rollback.
+	ReportPrivilegedDelivery(context.Context, *connect.Request[v1.ReportPrivilegedDeliveryRequest]) (*connect.Response[v1.ReportPrivilegedDeliveryResponse], error)
+	// CompleteManualUpgrade is called by the host-side upgrade script with the
+	// task nonce. It is the only way a privileged revision becomes active, and
+	// it proves the operator ran the upgrade on the machine itself.
+	CompleteManualUpgrade(context.Context, *connect.Request[v1.CompleteManualUpgradeRequest]) (*connect.Response[v1.CompleteManualUpgradeResponse], error)
+}
+
+// NewPrivilegedDeliveryServiceClient constructs a client for the
+// komari.config.v1.PrivilegedDeliveryService service. By default, it uses the Connect protocol with
+// the binary Protobuf Codec, asks for gzipped responses, and sends uncompressed requests. To use
+// the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or connect.WithGRPCWeb() options.
+//
+// The URL supplied here should be the base URL for the Connect or gRPC server (for example,
+// http://api.acme.com or https://acme.com/grpc).
+func NewPrivilegedDeliveryServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) PrivilegedDeliveryServiceClient {
+	baseURL = strings.TrimRight(baseURL, "/")
+	privilegedDeliveryServiceMethods := v1.File_komari_config_v1_config_proto.Services().ByName("PrivilegedDeliveryService").Methods()
+	return &privilegedDeliveryServiceClient{
+		getPrivilegedDelivery: connect.NewClient[v1.GetPrivilegedDeliveryRequest, v1.GetPrivilegedDeliveryResponse](
+			httpClient,
+			baseURL+PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure,
+			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("GetPrivilegedDelivery")),
+			connect.WithClientOptions(opts...),
+		),
+		watchPrivilegedDelivery: connect.NewClient[v1.WatchPrivilegedDeliveryRequest, v1.WatchPrivilegedDeliveryResponse](
+			httpClient,
+			baseURL+PrivilegedDeliveryServiceWatchPrivilegedDeliveryProcedure,
+			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("WatchPrivilegedDelivery")),
+			connect.WithClientOptions(opts...),
+		),
+		updatePrivilegedDelivery: connect.NewClient[v1.UpdatePrivilegedDeliveryRequest, v1.UpdatePrivilegedDeliveryResponse](
+			httpClient,
+			baseURL+PrivilegedDeliveryServiceUpdatePrivilegedDeliveryProcedure,
+			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("UpdatePrivilegedDelivery")),
+			connect.WithClientOptions(opts...),
+		),
+		confirmPrivilegedDelivery: connect.NewClient[v1.ConfirmPrivilegedDeliveryRequest, v1.ConfirmPrivilegedDeliveryResponse](
+			httpClient,
+			baseURL+PrivilegedDeliveryServiceConfirmPrivilegedDeliveryProcedure,
+			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("ConfirmPrivilegedDelivery")),
+			connect.WithClientOptions(opts...),
+		),
+		reportPrivilegedDelivery: connect.NewClient[v1.ReportPrivilegedDeliveryRequest, v1.ReportPrivilegedDeliveryResponse](
+			httpClient,
+			baseURL+PrivilegedDeliveryServiceReportPrivilegedDeliveryProcedure,
+			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("ReportPrivilegedDelivery")),
+			connect.WithClientOptions(opts...),
+		),
+		completeManualUpgrade: connect.NewClient[v1.CompleteManualUpgradeRequest, v1.CompleteManualUpgradeResponse](
+			httpClient,
+			baseURL+PrivilegedDeliveryServiceCompleteManualUpgradeProcedure,
+			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("CompleteManualUpgrade")),
+			connect.WithClientOptions(opts...),
+		),
+	}
+}
+
+// privilegedDeliveryServiceClient implements PrivilegedDeliveryServiceClient.
+type privilegedDeliveryServiceClient struct {
+	getPrivilegedDelivery     *connect.Client[v1.GetPrivilegedDeliveryRequest, v1.GetPrivilegedDeliveryResponse]
+	watchPrivilegedDelivery   *connect.Client[v1.WatchPrivilegedDeliveryRequest, v1.WatchPrivilegedDeliveryResponse]
+	updatePrivilegedDelivery  *connect.Client[v1.UpdatePrivilegedDeliveryRequest, v1.UpdatePrivilegedDeliveryResponse]
+	confirmPrivilegedDelivery *connect.Client[v1.ConfirmPrivilegedDeliveryRequest, v1.ConfirmPrivilegedDeliveryResponse]
+	reportPrivilegedDelivery  *connect.Client[v1.ReportPrivilegedDeliveryRequest, v1.ReportPrivilegedDeliveryResponse]
+	completeManualUpgrade     *connect.Client[v1.CompleteManualUpgradeRequest, v1.CompleteManualUpgradeResponse]
+}
+
+// GetPrivilegedDelivery calls komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery.
+func (c *privilegedDeliveryServiceClient) GetPrivilegedDelivery(ctx context.Context, req *connect.Request[v1.GetPrivilegedDeliveryRequest]) (*connect.Response[v1.GetPrivilegedDeliveryResponse], error) {
+	return c.getPrivilegedDelivery.CallUnary(ctx, req)
+}
+
+// WatchPrivilegedDelivery calls komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery.
+func (c *privilegedDeliveryServiceClient) WatchPrivilegedDelivery(ctx context.Context, req *connect.Request[v1.WatchPrivilegedDeliveryRequest]) (*connect.ServerStreamForClient[v1.WatchPrivilegedDeliveryResponse], error) {
+	return c.watchPrivilegedDelivery.CallServerStream(ctx, req)
+}
+
+// UpdatePrivilegedDelivery calls
+// komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery.
+func (c *privilegedDeliveryServiceClient) UpdatePrivilegedDelivery(ctx context.Context, req *connect.Request[v1.UpdatePrivilegedDeliveryRequest]) (*connect.Response[v1.UpdatePrivilegedDeliveryResponse], error) {
+	return c.updatePrivilegedDelivery.CallUnary(ctx, req)
+}
+
+// ConfirmPrivilegedDelivery calls
+// komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery.
+func (c *privilegedDeliveryServiceClient) ConfirmPrivilegedDelivery(ctx context.Context, req *connect.Request[v1.ConfirmPrivilegedDeliveryRequest]) (*connect.Response[v1.ConfirmPrivilegedDeliveryResponse], error) {
+	return c.confirmPrivilegedDelivery.CallUnary(ctx, req)
+}
+
+// ReportPrivilegedDelivery calls
+// komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery.
+func (c *privilegedDeliveryServiceClient) ReportPrivilegedDelivery(ctx context.Context, req *connect.Request[v1.ReportPrivilegedDeliveryRequest]) (*connect.Response[v1.ReportPrivilegedDeliveryResponse], error) {
+	return c.reportPrivilegedDelivery.CallUnary(ctx, req)
+}
+
+// CompleteManualUpgrade calls komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade.
+func (c *privilegedDeliveryServiceClient) CompleteManualUpgrade(ctx context.Context, req *connect.Request[v1.CompleteManualUpgradeRequest]) (*connect.Response[v1.CompleteManualUpgradeResponse], error) {
+	return c.completeManualUpgrade.CallUnary(ctx, req)
+}
+
+// PrivilegedDeliveryServiceHandler is an implementation of the
+// komari.config.v1.PrivilegedDeliveryService service.
+type PrivilegedDeliveryServiceHandler interface {
+	// GetPrivilegedDelivery returns the current privileged revision and its
+	// state. Suitable for reconnect recovery.
+	GetPrivilegedDelivery(context.Context, *connect.Request[v1.GetPrivilegedDeliveryRequest]) (*connect.Response[v1.GetPrivilegedDeliveryResponse], error)
+	// WatchPrivilegedDelivery streams privileged revisions and state changes.
+	WatchPrivilegedDelivery(context.Context, *connect.Request[v1.WatchPrivilegedDeliveryRequest], *connect.ServerStream[v1.WatchPrivilegedDeliveryResponse]) error
+	// UpdatePrivilegedDelivery stores a new privileged revision, computing the
+	// upgrade class from the agent's reported privilege mode.
+	UpdatePrivilegedDelivery(context.Context, *connect.Request[v1.UpdatePrivilegedDeliveryRequest]) (*connect.Response[v1.UpdatePrivilegedDeliveryResponse], error)
+	// ConfirmPrivilegedDelivery records the operator's second confirmation in
+	// the panel. It never applies anything by itself: for a revision that
+	// crosses a privilege boundary it only authorizes the host-side upgrade.
+	ConfirmPrivilegedDelivery(context.Context, *connect.Request[v1.ConfirmPrivilegedDeliveryRequest]) (*connect.Response[v1.ConfirmPrivilegedDeliveryResponse], error)
+	// ReportPrivilegedDelivery is how the agent, or the upgrade script running
+	// on the host, reports the outcome including a local rollback.
+	ReportPrivilegedDelivery(context.Context, *connect.Request[v1.ReportPrivilegedDeliveryRequest]) (*connect.Response[v1.ReportPrivilegedDeliveryResponse], error)
+	// CompleteManualUpgrade is called by the host-side upgrade script with the
+	// task nonce. It is the only way a privileged revision becomes active, and
+	// it proves the operator ran the upgrade on the machine itself.
+	CompleteManualUpgrade(context.Context, *connect.Request[v1.CompleteManualUpgradeRequest]) (*connect.Response[v1.CompleteManualUpgradeResponse], error)
+}
+
+// NewPrivilegedDeliveryServiceHandler builds an HTTP handler from the service implementation. It
+// returns the path on which to mount the handler and the handler itself.
+//
+// By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
+// and JSON codecs. They also support gzip compression.
+func NewPrivilegedDeliveryServiceHandler(svc PrivilegedDeliveryServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	privilegedDeliveryServiceMethods := v1.File_komari_config_v1_config_proto.Services().ByName("PrivilegedDeliveryService").Methods()
+	privilegedDeliveryServiceGetPrivilegedDeliveryHandler := connect.NewUnaryHandler(
+		PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure,
+		svc.GetPrivilegedDelivery,
+		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("GetPrivilegedDelivery")),
+		connect.WithHandlerOptions(opts...),
+	)
+	privilegedDeliveryServiceWatchPrivilegedDeliveryHandler := connect.NewServerStreamHandler(
+		PrivilegedDeliveryServiceWatchPrivilegedDeliveryProcedure,
+		svc.WatchPrivilegedDelivery,
+		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("WatchPrivilegedDelivery")),
+		connect.WithHandlerOptions(opts...),
+	)
+	privilegedDeliveryServiceUpdatePrivilegedDeliveryHandler := connect.NewUnaryHandler(
+		PrivilegedDeliveryServiceUpdatePrivilegedDeliveryProcedure,
+		svc.UpdatePrivilegedDelivery,
+		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("UpdatePrivilegedDelivery")),
+		connect.WithHandlerOptions(opts...),
+	)
+	privilegedDeliveryServiceConfirmPrivilegedDeliveryHandler := connect.NewUnaryHandler(
+		PrivilegedDeliveryServiceConfirmPrivilegedDeliveryProcedure,
+		svc.ConfirmPrivilegedDelivery,
+		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("ConfirmPrivilegedDelivery")),
+		connect.WithHandlerOptions(opts...),
+	)
+	privilegedDeliveryServiceReportPrivilegedDeliveryHandler := connect.NewUnaryHandler(
+		PrivilegedDeliveryServiceReportPrivilegedDeliveryProcedure,
+		svc.ReportPrivilegedDelivery,
+		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("ReportPrivilegedDelivery")),
+		connect.WithHandlerOptions(opts...),
+	)
+	privilegedDeliveryServiceCompleteManualUpgradeHandler := connect.NewUnaryHandler(
+		PrivilegedDeliveryServiceCompleteManualUpgradeProcedure,
+		svc.CompleteManualUpgrade,
+		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("CompleteManualUpgrade")),
+		connect.WithHandlerOptions(opts...),
+	)
+	return "/komari.config.v1.PrivilegedDeliveryService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure:
+			privilegedDeliveryServiceGetPrivilegedDeliveryHandler.ServeHTTP(w, r)
+		case PrivilegedDeliveryServiceWatchPrivilegedDeliveryProcedure:
+			privilegedDeliveryServiceWatchPrivilegedDeliveryHandler.ServeHTTP(w, r)
+		case PrivilegedDeliveryServiceUpdatePrivilegedDeliveryProcedure:
+			privilegedDeliveryServiceUpdatePrivilegedDeliveryHandler.ServeHTTP(w, r)
+		case PrivilegedDeliveryServiceConfirmPrivilegedDeliveryProcedure:
+			privilegedDeliveryServiceConfirmPrivilegedDeliveryHandler.ServeHTTP(w, r)
+		case PrivilegedDeliveryServiceReportPrivilegedDeliveryProcedure:
+			privilegedDeliveryServiceReportPrivilegedDeliveryHandler.ServeHTTP(w, r)
+		case PrivilegedDeliveryServiceCompleteManualUpgradeProcedure:
+			privilegedDeliveryServiceCompleteManualUpgradeHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
+}
+
+// UnimplementedPrivilegedDeliveryServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedPrivilegedDeliveryServiceHandler struct{}
+
+func (UnimplementedPrivilegedDeliveryServiceHandler) GetPrivilegedDelivery(context.Context, *connect.Request[v1.GetPrivilegedDeliveryRequest]) (*connect.Response[v1.GetPrivilegedDeliveryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery is not implemented"))
+}
+
+func (UnimplementedPrivilegedDeliveryServiceHandler) WatchPrivilegedDelivery(context.Context, *connect.Request[v1.WatchPrivilegedDeliveryRequest], *connect.ServerStream[v1.WatchPrivilegedDeliveryResponse]) error {
+	return connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery is not implemented"))
+}
+
+func (UnimplementedPrivilegedDeliveryServiceHandler) UpdatePrivilegedDelivery(context.Context, *connect.Request[v1.UpdatePrivilegedDeliveryRequest]) (*connect.Response[v1.UpdatePrivilegedDeliveryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery is not implemented"))
+}
+
+func (UnimplementedPrivilegedDeliveryServiceHandler) ConfirmPrivilegedDelivery(context.Context, *connect.Request[v1.ConfirmPrivilegedDeliveryRequest]) (*connect.Response[v1.ConfirmPrivilegedDeliveryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery is not implemented"))
+}
+
+func (UnimplementedPrivilegedDeliveryServiceHandler) ReportPrivilegedDelivery(context.Context, *connect.Request[v1.ReportPrivilegedDeliveryRequest]) (*connect.Response[v1.ReportPrivilegedDeliveryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery is not implemented"))
+}
+
+func (UnimplementedPrivilegedDeliveryServiceHandler) CompleteManualUpgrade(context.Context, *connect.Request[v1.CompleteManualUpgradeRequest]) (*connect.Response[v1.CompleteManualUpgradeResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade is not implemented"))
 }
