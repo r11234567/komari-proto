@@ -7,8 +7,8 @@
 package configv1
 
 import (
-	v1 "github.com/r11234567/komari-proto/gen/go/komari/common/v1"
-	v11 "github.com/r11234567/komari-proto/gen/go/komari/report/v1"
+	v11 "github.com/r11234567/komari-proto/gen/go/komari/common/v1"
+	v1 "github.com/r11234567/komari-proto/gen/go/komari/report/v1"
 	v12 "github.com/r11234567/komari-proto/gen/go/komari/security/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -211,6 +211,125 @@ func (ConfigApplyStatus) EnumDescriptor() ([]byte, []int) {
 	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{2}
 }
 
+type ListPrivilegedRevisionsRequest struct {
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	AgentId string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	// limit bounds the history returned; zero means a server default.
+	Limit         uint32 `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPrivilegedRevisionsRequest) Reset() {
+	*x = ListPrivilegedRevisionsRequest{}
+	mi := &file_komari_config_v1_config_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPrivilegedRevisionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPrivilegedRevisionsRequest) ProtoMessage() {}
+
+func (x *ListPrivilegedRevisionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_config_v1_config_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPrivilegedRevisionsRequest.ProtoReflect.Descriptor instead.
+func (*ListPrivilegedRevisionsRequest) Descriptor() ([]byte, []int) {
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *ListPrivilegedRevisionsRequest) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+func (x *ListPrivilegedRevisionsRequest) GetLimit() uint32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type ListPrivilegedRevisionsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// revisions are newest first.
+	Revisions []*PrivilegedRevision `protobuf:"bytes,1,rep,name=revisions,proto3" json:"revisions,omitempty"`
+	// applied_revision is the newest revision the host reported as delivered,
+	// which is what the machine is running, as opposed to the newest one saved.
+	AppliedRevision uint64 `protobuf:"varint,2,opt,name=applied_revision,json=appliedRevision,proto3" json:"applied_revision,omitempty"`
+	// installed_privilege_mode is what the agent service is installed as, which
+	// decides whether a widening change can be confirmed in the panel or has to
+	// be upgraded on the host.
+	InstalledPrivilegeMode v1.PrivilegeMode `protobuf:"varint,3,opt,name=installed_privilege_mode,json=installedPrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"installed_privilege_mode,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *ListPrivilegedRevisionsResponse) Reset() {
+	*x = ListPrivilegedRevisionsResponse{}
+	mi := &file_komari_config_v1_config_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPrivilegedRevisionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPrivilegedRevisionsResponse) ProtoMessage() {}
+
+func (x *ListPrivilegedRevisionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_config_v1_config_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPrivilegedRevisionsResponse.ProtoReflect.Descriptor instead.
+func (*ListPrivilegedRevisionsResponse) Descriptor() ([]byte, []int) {
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ListPrivilegedRevisionsResponse) GetRevisions() []*PrivilegedRevision {
+	if x != nil {
+		return x.Revisions
+	}
+	return nil
+}
+
+func (x *ListPrivilegedRevisionsResponse) GetAppliedRevision() uint64 {
+	if x != nil {
+		return x.AppliedRevision
+	}
+	return 0
+}
+
+func (x *ListPrivilegedRevisionsResponse) GetInstalledPrivilegeMode() v1.PrivilegeMode {
+	if x != nil {
+		return x.InstalledPrivilegeMode
+	}
+	return v1.PrivilegeMode(0)
+}
+
 type GetPrivilegedDeliveryRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	AgentId         string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
@@ -221,7 +340,7 @@ type GetPrivilegedDeliveryRequest struct {
 
 func (x *GetPrivilegedDeliveryRequest) Reset() {
 	*x = GetPrivilegedDeliveryRequest{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[0]
+	mi := &file_komari_config_v1_config_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -233,7 +352,7 @@ func (x *GetPrivilegedDeliveryRequest) String() string {
 func (*GetPrivilegedDeliveryRequest) ProtoMessage() {}
 
 func (x *GetPrivilegedDeliveryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[0]
+	mi := &file_komari_config_v1_config_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -246,7 +365,7 @@ func (x *GetPrivilegedDeliveryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPrivilegedDeliveryRequest.ProtoReflect.Descriptor instead.
 func (*GetPrivilegedDeliveryRequest) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{0}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetPrivilegedDeliveryRequest) GetAgentId() string {
@@ -272,7 +391,7 @@ type GetPrivilegedDeliveryResponse struct {
 
 func (x *GetPrivilegedDeliveryResponse) Reset() {
 	*x = GetPrivilegedDeliveryResponse{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[1]
+	mi := &file_komari_config_v1_config_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -284,7 +403,7 @@ func (x *GetPrivilegedDeliveryResponse) String() string {
 func (*GetPrivilegedDeliveryResponse) ProtoMessage() {}
 
 func (x *GetPrivilegedDeliveryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[1]
+	mi := &file_komari_config_v1_config_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -297,7 +416,7 @@ func (x *GetPrivilegedDeliveryResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPrivilegedDeliveryResponse.ProtoReflect.Descriptor instead.
 func (*GetPrivilegedDeliveryResponse) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{1}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetPrivilegedDeliveryResponse) GetRevision() *PrivilegedRevision {
@@ -317,7 +436,7 @@ type WatchPrivilegedDeliveryRequest struct {
 
 func (x *WatchPrivilegedDeliveryRequest) Reset() {
 	*x = WatchPrivilegedDeliveryRequest{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[2]
+	mi := &file_komari_config_v1_config_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -329,7 +448,7 @@ func (x *WatchPrivilegedDeliveryRequest) String() string {
 func (*WatchPrivilegedDeliveryRequest) ProtoMessage() {}
 
 func (x *WatchPrivilegedDeliveryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[2]
+	mi := &file_komari_config_v1_config_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -342,7 +461,7 @@ func (x *WatchPrivilegedDeliveryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WatchPrivilegedDeliveryRequest.ProtoReflect.Descriptor instead.
 func (*WatchPrivilegedDeliveryRequest) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{2}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *WatchPrivilegedDeliveryRequest) GetAgentId() string {
@@ -368,7 +487,7 @@ type WatchPrivilegedDeliveryResponse struct {
 
 func (x *WatchPrivilegedDeliveryResponse) Reset() {
 	*x = WatchPrivilegedDeliveryResponse{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[3]
+	mi := &file_komari_config_v1_config_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -380,7 +499,7 @@ func (x *WatchPrivilegedDeliveryResponse) String() string {
 func (*WatchPrivilegedDeliveryResponse) ProtoMessage() {}
 
 func (x *WatchPrivilegedDeliveryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[3]
+	mi := &file_komari_config_v1_config_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -393,7 +512,7 @@ func (x *WatchPrivilegedDeliveryResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WatchPrivilegedDeliveryResponse.ProtoReflect.Descriptor instead.
 func (*WatchPrivilegedDeliveryResponse) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{3}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *WatchPrivilegedDeliveryResponse) GetRevision() *PrivilegedRevision {
@@ -415,7 +534,7 @@ type UpdatePrivilegedDeliveryRequest struct {
 
 func (x *UpdatePrivilegedDeliveryRequest) Reset() {
 	*x = UpdatePrivilegedDeliveryRequest{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[4]
+	mi := &file_komari_config_v1_config_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -427,7 +546,7 @@ func (x *UpdatePrivilegedDeliveryRequest) String() string {
 func (*UpdatePrivilegedDeliveryRequest) ProtoMessage() {}
 
 func (x *UpdatePrivilegedDeliveryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[4]
+	mi := &file_komari_config_v1_config_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -440,7 +559,7 @@ func (x *UpdatePrivilegedDeliveryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePrivilegedDeliveryRequest.ProtoReflect.Descriptor instead.
 func (*UpdatePrivilegedDeliveryRequest) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{4}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UpdatePrivilegedDeliveryRequest) GetAgentId() string {
@@ -480,7 +599,7 @@ type UpdatePrivilegedDeliveryResponse struct {
 
 func (x *UpdatePrivilegedDeliveryResponse) Reset() {
 	*x = UpdatePrivilegedDeliveryResponse{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[5]
+	mi := &file_komari_config_v1_config_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -492,7 +611,7 @@ func (x *UpdatePrivilegedDeliveryResponse) String() string {
 func (*UpdatePrivilegedDeliveryResponse) ProtoMessage() {}
 
 func (x *UpdatePrivilegedDeliveryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[5]
+	mi := &file_komari_config_v1_config_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -505,7 +624,7 @@ func (x *UpdatePrivilegedDeliveryResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePrivilegedDeliveryResponse.ProtoReflect.Descriptor instead.
 func (*UpdatePrivilegedDeliveryResponse) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{5}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *UpdatePrivilegedDeliveryResponse) GetRevision() *PrivilegedRevision {
@@ -521,14 +640,14 @@ type ConfirmPrivilegedDeliveryRequest struct {
 	Revision uint64                 `protobuf:"varint,2,opt,name=revision,proto3" json:"revision,omitempty"`
 	// two_factor is required: confirming here is what authorizes a privilege
 	// change on the host.
-	TwoFactor     *v1.TwoFactorProof `protobuf:"bytes,3,opt,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
+	TwoFactor     *v11.TwoFactorProof `protobuf:"bytes,3,opt,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ConfirmPrivilegedDeliveryRequest) Reset() {
 	*x = ConfirmPrivilegedDeliveryRequest{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[6]
+	mi := &file_komari_config_v1_config_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -540,7 +659,7 @@ func (x *ConfirmPrivilegedDeliveryRequest) String() string {
 func (*ConfirmPrivilegedDeliveryRequest) ProtoMessage() {}
 
 func (x *ConfirmPrivilegedDeliveryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[6]
+	mi := &file_komari_config_v1_config_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -553,7 +672,7 @@ func (x *ConfirmPrivilegedDeliveryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfirmPrivilegedDeliveryRequest.ProtoReflect.Descriptor instead.
 func (*ConfirmPrivilegedDeliveryRequest) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{6}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ConfirmPrivilegedDeliveryRequest) GetAgentId() string {
@@ -570,7 +689,7 @@ func (x *ConfirmPrivilegedDeliveryRequest) GetRevision() uint64 {
 	return 0
 }
 
-func (x *ConfirmPrivilegedDeliveryRequest) GetTwoFactor() *v1.TwoFactorProof {
+func (x *ConfirmPrivilegedDeliveryRequest) GetTwoFactor() *v11.TwoFactorProof {
 	if x != nil {
 		return x.TwoFactor
 	}
@@ -586,7 +705,7 @@ type ConfirmPrivilegedDeliveryResponse struct {
 
 func (x *ConfirmPrivilegedDeliveryResponse) Reset() {
 	*x = ConfirmPrivilegedDeliveryResponse{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[7]
+	mi := &file_komari_config_v1_config_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -598,7 +717,7 @@ func (x *ConfirmPrivilegedDeliveryResponse) String() string {
 func (*ConfirmPrivilegedDeliveryResponse) ProtoMessage() {}
 
 func (x *ConfirmPrivilegedDeliveryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[7]
+	mi := &file_komari_config_v1_config_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -611,7 +730,7 @@ func (x *ConfirmPrivilegedDeliveryResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use ConfirmPrivilegedDeliveryResponse.ProtoReflect.Descriptor instead.
 func (*ConfirmPrivilegedDeliveryResponse) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{7}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ConfirmPrivilegedDeliveryResponse) GetRevision() *PrivilegedRevision {
@@ -626,19 +745,19 @@ type ReportPrivilegedDeliveryRequest struct {
 	AgentId    string                  `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
 	Revision   uint64                  `protobuf:"varint,2,opt,name=revision,proto3" json:"revision,omitempty"`
 	State      PrivilegedDeliveryState `protobuf:"varint,3,opt,name=state,proto3,enum=komari.config.v1.PrivilegedDeliveryState" json:"state,omitempty"`
-	Errors     []*v1.ErrorDetail       `protobuf:"bytes,4,rep,name=errors,proto3" json:"errors,omitempty"`
+	Errors     []*v11.ErrorDetail      `protobuf:"bytes,4,rep,name=errors,proto3" json:"errors,omitempty"`
 	FinishedAt *timestamppb.Timestamp  `protobuf:"bytes,5,opt,name=finished_at,json=finishedAt,proto3" json:"finished_at,omitempty"`
 	// active_privilege_mode is what the agent actually holds after the
 	// transition, which the panel checks against what the revision assumed
 	// rather than trusting the reported state alone.
-	ActivePrivilegeMode v11.PrivilegeMode `protobuf:"varint,6,opt,name=active_privilege_mode,json=activePrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"active_privilege_mode,omitempty"`
+	ActivePrivilegeMode v1.PrivilegeMode `protobuf:"varint,6,opt,name=active_privilege_mode,json=activePrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"active_privilege_mode,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
 
 func (x *ReportPrivilegedDeliveryRequest) Reset() {
 	*x = ReportPrivilegedDeliveryRequest{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[8]
+	mi := &file_komari_config_v1_config_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -650,7 +769,7 @@ func (x *ReportPrivilegedDeliveryRequest) String() string {
 func (*ReportPrivilegedDeliveryRequest) ProtoMessage() {}
 
 func (x *ReportPrivilegedDeliveryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[8]
+	mi := &file_komari_config_v1_config_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -663,7 +782,7 @@ func (x *ReportPrivilegedDeliveryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReportPrivilegedDeliveryRequest.ProtoReflect.Descriptor instead.
 func (*ReportPrivilegedDeliveryRequest) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{8}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ReportPrivilegedDeliveryRequest) GetAgentId() string {
@@ -687,7 +806,7 @@ func (x *ReportPrivilegedDeliveryRequest) GetState() PrivilegedDeliveryState {
 	return PrivilegedDeliveryState_PRIVILEGED_DELIVERY_STATE_UNSPECIFIED
 }
 
-func (x *ReportPrivilegedDeliveryRequest) GetErrors() []*v1.ErrorDetail {
+func (x *ReportPrivilegedDeliveryRequest) GetErrors() []*v11.ErrorDetail {
 	if x != nil {
 		return x.Errors
 	}
@@ -701,11 +820,11 @@ func (x *ReportPrivilegedDeliveryRequest) GetFinishedAt() *timestamppb.Timestamp
 	return nil
 }
 
-func (x *ReportPrivilegedDeliveryRequest) GetActivePrivilegeMode() v11.PrivilegeMode {
+func (x *ReportPrivilegedDeliveryRequest) GetActivePrivilegeMode() v1.PrivilegeMode {
 	if x != nil {
 		return x.ActivePrivilegeMode
 	}
-	return v11.PrivilegeMode(0)
+	return v1.PrivilegeMode(0)
 }
 
 type ReportPrivilegedDeliveryResponse struct {
@@ -718,7 +837,7 @@ type ReportPrivilegedDeliveryResponse struct {
 
 func (x *ReportPrivilegedDeliveryResponse) Reset() {
 	*x = ReportPrivilegedDeliveryResponse{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[9]
+	mi := &file_komari_config_v1_config_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -730,7 +849,7 @@ func (x *ReportPrivilegedDeliveryResponse) String() string {
 func (*ReportPrivilegedDeliveryResponse) ProtoMessage() {}
 
 func (x *ReportPrivilegedDeliveryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[9]
+	mi := &file_komari_config_v1_config_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -743,7 +862,7 @@ func (x *ReportPrivilegedDeliveryResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReportPrivilegedDeliveryResponse.ProtoReflect.Descriptor instead.
 func (*ReportPrivilegedDeliveryResponse) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{9}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ReportPrivilegedDeliveryResponse) GetAccepted() bool {
@@ -769,15 +888,15 @@ type CompleteManualUpgradeRequest struct {
 	// the audit trail. The credential itself never leaves the machine.
 	LocalAuthentication string `protobuf:"bytes,3,opt,name=local_authentication,json=localAuthentication,proto3" json:"local_authentication,omitempty"`
 	// operator is the host account that ran the upgrade.
-	Operator               string            `protobuf:"bytes,4,opt,name=operator,proto3" json:"operator,omitempty"`
-	ResultingPrivilegeMode v11.PrivilegeMode `protobuf:"varint,5,opt,name=resulting_privilege_mode,json=resultingPrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"resulting_privilege_mode,omitempty"`
+	Operator               string           `protobuf:"bytes,4,opt,name=operator,proto3" json:"operator,omitempty"`
+	ResultingPrivilegeMode v1.PrivilegeMode `protobuf:"varint,5,opt,name=resulting_privilege_mode,json=resultingPrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"resulting_privilege_mode,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
 
 func (x *CompleteManualUpgradeRequest) Reset() {
 	*x = CompleteManualUpgradeRequest{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[10]
+	mi := &file_komari_config_v1_config_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -789,7 +908,7 @@ func (x *CompleteManualUpgradeRequest) String() string {
 func (*CompleteManualUpgradeRequest) ProtoMessage() {}
 
 func (x *CompleteManualUpgradeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[10]
+	mi := &file_komari_config_v1_config_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -802,7 +921,7 @@ func (x *CompleteManualUpgradeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompleteManualUpgradeRequest.ProtoReflect.Descriptor instead.
 func (*CompleteManualUpgradeRequest) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{10}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *CompleteManualUpgradeRequest) GetAgentId() string {
@@ -833,11 +952,11 @@ func (x *CompleteManualUpgradeRequest) GetOperator() string {
 	return ""
 }
 
-func (x *CompleteManualUpgradeRequest) GetResultingPrivilegeMode() v11.PrivilegeMode {
+func (x *CompleteManualUpgradeRequest) GetResultingPrivilegeMode() v1.PrivilegeMode {
 	if x != nil {
 		return x.ResultingPrivilegeMode
 	}
-	return v11.PrivilegeMode(0)
+	return v1.PrivilegeMode(0)
 }
 
 type CompleteManualUpgradeResponse struct {
@@ -850,7 +969,7 @@ type CompleteManualUpgradeResponse struct {
 
 func (x *CompleteManualUpgradeResponse) Reset() {
 	*x = CompleteManualUpgradeResponse{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[11]
+	mi := &file_komari_config_v1_config_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -862,7 +981,7 @@ func (x *CompleteManualUpgradeResponse) String() string {
 func (*CompleteManualUpgradeResponse) ProtoMessage() {}
 
 func (x *CompleteManualUpgradeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[11]
+	mi := &file_komari_config_v1_config_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -875,7 +994,7 @@ func (x *CompleteManualUpgradeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompleteManualUpgradeResponse.ProtoReflect.Descriptor instead.
 func (*CompleteManualUpgradeResponse) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{11}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *CompleteManualUpgradeResponse) GetAccepted() bool {
@@ -904,7 +1023,7 @@ type PrivilegedRevision struct {
 	SavedAt     *timestamppb.Timestamp  `protobuf:"bytes,6,opt,name=saved_at,json=savedAt,proto3" json:"saved_at,omitempty"`
 	ConfirmedAt *timestamppb.Timestamp  `protobuf:"bytes,7,opt,name=confirmed_at,json=confirmedAt,proto3,oneof" json:"confirmed_at,omitempty"`
 	FinishedAt  *timestamppb.Timestamp  `protobuf:"bytes,8,opt,name=finished_at,json=finishedAt,proto3,oneof" json:"finished_at,omitempty"`
-	Errors      []*v1.ErrorDetail       `protobuf:"bytes,9,rep,name=errors,proto3" json:"errors,omitempty"`
+	Errors      []*v11.ErrorDetail      `protobuf:"bytes,9,rep,name=errors,proto3" json:"errors,omitempty"`
 	// previous_revision is what a rollback returns to, so a panel can show what
 	// rolling back would mean before it happens.
 	PreviousRevision *uint64 `protobuf:"varint,10,opt,name=previous_revision,json=previousRevision,proto3,oneof" json:"previous_revision,omitempty"`
@@ -927,7 +1046,7 @@ type PrivilegedRevision struct {
 
 func (x *PrivilegedRevision) Reset() {
 	*x = PrivilegedRevision{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[12]
+	mi := &file_komari_config_v1_config_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -939,7 +1058,7 @@ func (x *PrivilegedRevision) String() string {
 func (*PrivilegedRevision) ProtoMessage() {}
 
 func (x *PrivilegedRevision) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[12]
+	mi := &file_komari_config_v1_config_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -952,7 +1071,7 @@ func (x *PrivilegedRevision) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrivilegedRevision.ProtoReflect.Descriptor instead.
 func (*PrivilegedRevision) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{12}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *PrivilegedRevision) GetAgentId() string {
@@ -1011,7 +1130,7 @@ func (x *PrivilegedRevision) GetFinishedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *PrivilegedRevision) GetErrors() []*v1.ErrorDetail {
+func (x *PrivilegedRevision) GetErrors() []*v11.ErrorDetail {
 	if x != nil {
 		return x.Errors
 	}
@@ -1080,7 +1199,7 @@ type RuntimeConfig struct {
 
 func (x *RuntimeConfig) Reset() {
 	*x = RuntimeConfig{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[13]
+	mi := &file_komari_config_v1_config_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1092,7 +1211,7 @@ func (x *RuntimeConfig) String() string {
 func (*RuntimeConfig) ProtoMessage() {}
 
 func (x *RuntimeConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[13]
+	mi := &file_komari_config_v1_config_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1105,7 +1224,7 @@ func (x *RuntimeConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RuntimeConfig.ProtoReflect.Descriptor instead.
 func (*RuntimeConfig) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{13}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *RuntimeConfig) GetMemoryIncludeCache() bool {
@@ -1276,14 +1395,14 @@ type PrivilegedConfig struct {
 	// required_privilege_mode is the privilege level these settings assume. When
 	// it exceeds what the agent currently holds, the revision produces a manual
 	// upgrade task instead of being applied.
-	RequiredPrivilegeMode v11.PrivilegeMode `protobuf:"varint,6,opt,name=required_privilege_mode,json=requiredPrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"required_privilege_mode,omitempty"`
+	RequiredPrivilegeMode v1.PrivilegeMode `protobuf:"varint,6,opt,name=required_privilege_mode,json=requiredPrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"required_privilege_mode,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
 
 func (x *PrivilegedConfig) Reset() {
 	*x = PrivilegedConfig{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[14]
+	mi := &file_komari_config_v1_config_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1295,7 +1414,7 @@ func (x *PrivilegedConfig) String() string {
 func (*PrivilegedConfig) ProtoMessage() {}
 
 func (x *PrivilegedConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[14]
+	mi := &file_komari_config_v1_config_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1308,7 +1427,7 @@ func (x *PrivilegedConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrivilegedConfig.ProtoReflect.Descriptor instead.
 func (*PrivilegedConfig) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{14}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *PrivilegedConfig) GetRemoteControlEnabled() bool {
@@ -1346,11 +1465,11 @@ func (x *PrivilegedConfig) GetRescueHelperEnabled() bool {
 	return false
 }
 
-func (x *PrivilegedConfig) GetRequiredPrivilegeMode() v11.PrivilegeMode {
+func (x *PrivilegedConfig) GetRequiredPrivilegeMode() v1.PrivilegeMode {
 	if x != nil {
 		return x.RequiredPrivilegeMode
 	}
-	return v11.PrivilegeMode(0)
+	return v1.PrivilegeMode(0)
 }
 
 // UpgradePlan states how one delivered revision may be adopted.
@@ -1366,8 +1485,8 @@ type UpgradePlan struct {
 	Reasons []string `protobuf:"bytes,2,rep,name=reasons,proto3" json:"reasons,omitempty"`
 	// from_privilege_mode and to_privilege_mode are set when the plan crosses a
 	// privilege boundary.
-	FromPrivilegeMode v11.PrivilegeMode `protobuf:"varint,3,opt,name=from_privilege_mode,json=fromPrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"from_privilege_mode,omitempty"`
-	ToPrivilegeMode   v11.PrivilegeMode `protobuf:"varint,4,opt,name=to_privilege_mode,json=toPrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"to_privilege_mode,omitempty"`
+	FromPrivilegeMode v1.PrivilegeMode `protobuf:"varint,3,opt,name=from_privilege_mode,json=fromPrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"from_privilege_mode,omitempty"`
+	ToPrivilegeMode   v1.PrivilegeMode `protobuf:"varint,4,opt,name=to_privilege_mode,json=toPrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"to_privilege_mode,omitempty"`
 	// manual_task is set for classes that require action outside the agent.
 	ManualTask    *ManualUpgradeTask `protobuf:"bytes,5,opt,name=manual_task,json=manualTask,proto3,oneof" json:"manual_task,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1376,7 +1495,7 @@ type UpgradePlan struct {
 
 func (x *UpgradePlan) Reset() {
 	*x = UpgradePlan{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[15]
+	mi := &file_komari_config_v1_config_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1388,7 +1507,7 @@ func (x *UpgradePlan) String() string {
 func (*UpgradePlan) ProtoMessage() {}
 
 func (x *UpgradePlan) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[15]
+	mi := &file_komari_config_v1_config_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1401,7 +1520,7 @@ func (x *UpgradePlan) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpgradePlan.ProtoReflect.Descriptor instead.
 func (*UpgradePlan) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{15}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *UpgradePlan) GetUpgradeClass() UpgradeClass {
@@ -1418,18 +1537,18 @@ func (x *UpgradePlan) GetReasons() []string {
 	return nil
 }
 
-func (x *UpgradePlan) GetFromPrivilegeMode() v11.PrivilegeMode {
+func (x *UpgradePlan) GetFromPrivilegeMode() v1.PrivilegeMode {
 	if x != nil {
 		return x.FromPrivilegeMode
 	}
-	return v11.PrivilegeMode(0)
+	return v1.PrivilegeMode(0)
 }
 
-func (x *UpgradePlan) GetToPrivilegeMode() v11.PrivilegeMode {
+func (x *UpgradePlan) GetToPrivilegeMode() v1.PrivilegeMode {
 	if x != nil {
 		return x.ToPrivilegeMode
 	}
-	return v11.PrivilegeMode(0)
+	return v1.PrivilegeMode(0)
 }
 
 func (x *UpgradePlan) GetManualTask() *ManualUpgradeTask {
@@ -1466,7 +1585,7 @@ type ManualUpgradeTask struct {
 
 func (x *ManualUpgradeTask) Reset() {
 	*x = ManualUpgradeTask{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[16]
+	mi := &file_komari_config_v1_config_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1478,7 +1597,7 @@ func (x *ManualUpgradeTask) String() string {
 func (*ManualUpgradeTask) ProtoMessage() {}
 
 func (x *ManualUpgradeTask) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[16]
+	mi := &file_komari_config_v1_config_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1491,7 +1610,7 @@ func (x *ManualUpgradeTask) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ManualUpgradeTask.ProtoReflect.Descriptor instead.
 func (*ManualUpgradeTask) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{16}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ManualUpgradeTask) GetTaskId() string {
@@ -1556,7 +1675,7 @@ type DesiredConfig struct {
 
 func (x *DesiredConfig) Reset() {
 	*x = DesiredConfig{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[17]
+	mi := &file_komari_config_v1_config_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1568,7 +1687,7 @@ func (x *DesiredConfig) String() string {
 func (*DesiredConfig) ProtoMessage() {}
 
 func (x *DesiredConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[17]
+	mi := &file_komari_config_v1_config_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1581,7 +1700,7 @@ func (x *DesiredConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DesiredConfig.ProtoReflect.Descriptor instead.
 func (*DesiredConfig) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{17}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *DesiredConfig) GetAgentId() string {
@@ -1644,7 +1763,7 @@ type GetDesiredConfigRequest struct {
 
 func (x *GetDesiredConfigRequest) Reset() {
 	*x = GetDesiredConfigRequest{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[18]
+	mi := &file_komari_config_v1_config_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1656,7 +1775,7 @@ func (x *GetDesiredConfigRequest) String() string {
 func (*GetDesiredConfigRequest) ProtoMessage() {}
 
 func (x *GetDesiredConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[18]
+	mi := &file_komari_config_v1_config_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1669,7 +1788,7 @@ func (x *GetDesiredConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDesiredConfigRequest.ProtoReflect.Descriptor instead.
 func (*GetDesiredConfigRequest) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{18}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetDesiredConfigRequest) GetAgentId() string {
@@ -1690,14 +1809,14 @@ func (x *GetDesiredConfigRequest) GetAppliedRevision() uint64 {
 type GetDesiredConfigResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Desired       *DesiredConfig         `protobuf:"bytes,1,opt,name=desired,proto3,oneof" json:"desired,omitempty"`
-	DeliveryState v1.DeliveryState       `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
+	DeliveryState v11.DeliveryState      `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetDesiredConfigResponse) Reset() {
 	*x = GetDesiredConfigResponse{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[19]
+	mi := &file_komari_config_v1_config_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1709,7 +1828,7 @@ func (x *GetDesiredConfigResponse) String() string {
 func (*GetDesiredConfigResponse) ProtoMessage() {}
 
 func (x *GetDesiredConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[19]
+	mi := &file_komari_config_v1_config_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1722,7 +1841,7 @@ func (x *GetDesiredConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDesiredConfigResponse.ProtoReflect.Descriptor instead.
 func (*GetDesiredConfigResponse) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{19}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GetDesiredConfigResponse) GetDesired() *DesiredConfig {
@@ -1732,11 +1851,11 @@ func (x *GetDesiredConfigResponse) GetDesired() *DesiredConfig {
 	return nil
 }
 
-func (x *GetDesiredConfigResponse) GetDeliveryState() v1.DeliveryState {
+func (x *GetDesiredConfigResponse) GetDeliveryState() v11.DeliveryState {
 	if x != nil {
 		return x.DeliveryState
 	}
-	return v1.DeliveryState(0)
+	return v11.DeliveryState(0)
 }
 
 // WatchDesiredConfigRequest subscribes after a known revision.
@@ -1750,7 +1869,7 @@ type WatchDesiredConfigRequest struct {
 
 func (x *WatchDesiredConfigRequest) Reset() {
 	*x = WatchDesiredConfigRequest{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[20]
+	mi := &file_komari_config_v1_config_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1762,7 +1881,7 @@ func (x *WatchDesiredConfigRequest) String() string {
 func (*WatchDesiredConfigRequest) ProtoMessage() {}
 
 func (x *WatchDesiredConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[20]
+	mi := &file_komari_config_v1_config_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1775,7 +1894,7 @@ func (x *WatchDesiredConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WatchDesiredConfigRequest.ProtoReflect.Descriptor instead.
 func (*WatchDesiredConfigRequest) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{20}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *WatchDesiredConfigRequest) GetAgentId() string {
@@ -1802,7 +1921,7 @@ type WatchDesiredConfigResponse struct {
 
 func (x *WatchDesiredConfigResponse) Reset() {
 	*x = WatchDesiredConfigResponse{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[21]
+	mi := &file_komari_config_v1_config_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1814,7 +1933,7 @@ func (x *WatchDesiredConfigResponse) String() string {
 func (*WatchDesiredConfigResponse) ProtoMessage() {}
 
 func (x *WatchDesiredConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[21]
+	mi := &file_komari_config_v1_config_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1827,7 +1946,7 @@ func (x *WatchDesiredConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WatchDesiredConfigResponse.ProtoReflect.Descriptor instead.
 func (*WatchDesiredConfigResponse) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{21}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *WatchDesiredConfigResponse) GetDesired() *DesiredConfig {
@@ -1843,7 +1962,7 @@ type AcknowledgeConfigRequest struct {
 	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
 	Revision      uint64                 `protobuf:"varint,2,opt,name=revision,proto3" json:"revision,omitempty"`
 	Status        ConfigApplyStatus      `protobuf:"varint,3,opt,name=status,proto3,enum=komari.config.v1.ConfigApplyStatus" json:"status,omitempty"`
-	Errors        []*v1.ErrorDetail      `protobuf:"bytes,4,rep,name=errors,proto3" json:"errors,omitempty"`
+	Errors        []*v11.ErrorDetail     `protobuf:"bytes,4,rep,name=errors,proto3" json:"errors,omitempty"`
 	FinishedAt    *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=finished_at,json=finishedAt,proto3" json:"finished_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1851,7 +1970,7 @@ type AcknowledgeConfigRequest struct {
 
 func (x *AcknowledgeConfigRequest) Reset() {
 	*x = AcknowledgeConfigRequest{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[22]
+	mi := &file_komari_config_v1_config_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1863,7 +1982,7 @@ func (x *AcknowledgeConfigRequest) String() string {
 func (*AcknowledgeConfigRequest) ProtoMessage() {}
 
 func (x *AcknowledgeConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[22]
+	mi := &file_komari_config_v1_config_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1876,7 +1995,7 @@ func (x *AcknowledgeConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AcknowledgeConfigRequest.ProtoReflect.Descriptor instead.
 func (*AcknowledgeConfigRequest) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{22}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *AcknowledgeConfigRequest) GetAgentId() string {
@@ -1900,7 +2019,7 @@ func (x *AcknowledgeConfigRequest) GetStatus() ConfigApplyStatus {
 	return ConfigApplyStatus_CONFIG_APPLY_STATUS_UNSPECIFIED
 }
 
-func (x *AcknowledgeConfigRequest) GetErrors() []*v1.ErrorDetail {
+func (x *AcknowledgeConfigRequest) GetErrors() []*v11.ErrorDetail {
 	if x != nil {
 		return x.Errors
 	}
@@ -1918,14 +2037,14 @@ func (x *AcknowledgeConfigRequest) GetFinishedAt() *timestamppb.Timestamp {
 type AcknowledgeConfigResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Accepted      bool                   `protobuf:"varint,1,opt,name=accepted,proto3" json:"accepted,omitempty"`
-	DeliveryState v1.DeliveryState       `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
+	DeliveryState v11.DeliveryState      `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AcknowledgeConfigResponse) Reset() {
 	*x = AcknowledgeConfigResponse{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[23]
+	mi := &file_komari_config_v1_config_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1937,7 +2056,7 @@ func (x *AcknowledgeConfigResponse) String() string {
 func (*AcknowledgeConfigResponse) ProtoMessage() {}
 
 func (x *AcknowledgeConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[23]
+	mi := &file_komari_config_v1_config_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1950,7 +2069,7 @@ func (x *AcknowledgeConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AcknowledgeConfigResponse.ProtoReflect.Descriptor instead.
 func (*AcknowledgeConfigResponse) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{23}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *AcknowledgeConfigResponse) GetAccepted() bool {
@@ -1960,11 +2079,11 @@ func (x *AcknowledgeConfigResponse) GetAccepted() bool {
 	return false
 }
 
-func (x *AcknowledgeConfigResponse) GetDeliveryState() v1.DeliveryState {
+func (x *AcknowledgeConfigResponse) GetDeliveryState() v11.DeliveryState {
 	if x != nil {
 		return x.DeliveryState
 	}
-	return v1.DeliveryState(0)
+	return v11.DeliveryState(0)
 }
 
 // UpdateDesiredConfigRequest creates a revision using optimistic concurrency.
@@ -1982,7 +2101,7 @@ type UpdateDesiredConfigRequest struct {
 
 func (x *UpdateDesiredConfigRequest) Reset() {
 	*x = UpdateDesiredConfigRequest{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[24]
+	mi := &file_komari_config_v1_config_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1994,7 +2113,7 @@ func (x *UpdateDesiredConfigRequest) String() string {
 func (*UpdateDesiredConfigRequest) ProtoMessage() {}
 
 func (x *UpdateDesiredConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[24]
+	mi := &file_komari_config_v1_config_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2007,7 +2126,7 @@ func (x *UpdateDesiredConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateDesiredConfigRequest.ProtoReflect.Descriptor instead.
 func (*UpdateDesiredConfigRequest) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{24}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *UpdateDesiredConfigRequest) GetAgentId() string {
@@ -2049,14 +2168,14 @@ func (x *UpdateDesiredConfigRequest) GetForceDispatch() bool {
 type UpdateDesiredConfigResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Desired       *DesiredConfig         `protobuf:"bytes,1,opt,name=desired,proto3" json:"desired,omitempty"`
-	DeliveryState v1.DeliveryState       `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
+	DeliveryState v11.DeliveryState      `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateDesiredConfigResponse) Reset() {
 	*x = UpdateDesiredConfigResponse{}
-	mi := &file_komari_config_v1_config_proto_msgTypes[25]
+	mi := &file_komari_config_v1_config_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2068,7 +2187,7 @@ func (x *UpdateDesiredConfigResponse) String() string {
 func (*UpdateDesiredConfigResponse) ProtoMessage() {}
 
 func (x *UpdateDesiredConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_config_v1_config_proto_msgTypes[25]
+	mi := &file_komari_config_v1_config_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2081,7 +2200,7 @@ func (x *UpdateDesiredConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateDesiredConfigResponse.ProtoReflect.Descriptor instead.
 func (*UpdateDesiredConfigResponse) Descriptor() ([]byte, []int) {
-	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{25}
+	return file_komari_config_v1_config_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *UpdateDesiredConfigResponse) GetDesired() *DesiredConfig {
@@ -2091,18 +2210,25 @@ func (x *UpdateDesiredConfigResponse) GetDesired() *DesiredConfig {
 	return nil
 }
 
-func (x *UpdateDesiredConfigResponse) GetDeliveryState() v1.DeliveryState {
+func (x *UpdateDesiredConfigResponse) GetDeliveryState() v11.DeliveryState {
 	if x != nil {
 		return x.DeliveryState
 	}
-	return v1.DeliveryState(0)
+	return v11.DeliveryState(0)
 }
 
 var File_komari_config_v1_config_proto protoreflect.FileDescriptor
 
 const file_komari_config_v1_config_proto_rawDesc = "" +
 	"\n" +
-	"\x1dkomari/config/v1/config.proto\x12\x10komari.config.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/report/v1/report.proto\x1a!komari/security/v1/security.proto\"d\n" +
+	"\x1dkomari/config/v1/config.proto\x12\x10komari.config.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x1dkomari/report/v1/report.proto\x1a!komari/security/v1/security.proto\"Q\n" +
+	"\x1eListPrivilegedRevisionsRequest\x12\x19\n" +
+	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\rR\x05limit\"\xeb\x01\n" +
+	"\x1fListPrivilegedRevisionsResponse\x12B\n" +
+	"\trevisions\x18\x01 \x03(\v2$.komari.config.v1.PrivilegedRevisionR\trevisions\x12)\n" +
+	"\x10applied_revision\x18\x02 \x01(\x04R\x0fappliedRevision\x12Y\n" +
+	"\x18installed_privilege_mode\x18\x03 \x01(\x0e2\x1f.komari.report.v1.PrivilegeModeR\x16installedPrivilegeMode\"d\n" +
 	"\x1cGetPrivilegedDeliveryRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12)\n" +
 	"\x10applied_revision\x18\x02 \x01(\x04R\x0fappliedRevision\"s\n" +
@@ -2312,14 +2438,15 @@ const file_komari_config_v1_config_proto_rawDesc = "" +
 	"\x10GetDesiredConfig\x12).komari.config.v1.GetDesiredConfigRequest\x1a*.komari.config.v1.GetDesiredConfigResponse\x12q\n" +
 	"\x12WatchDesiredConfig\x12+.komari.config.v1.WatchDesiredConfigRequest\x1a,.komari.config.v1.WatchDesiredConfigResponse0\x01\x12l\n" +
 	"\x11AcknowledgeConfig\x12*.komari.config.v1.AcknowledgeConfigRequest\x1a+.komari.config.v1.AcknowledgeConfigResponse\x12r\n" +
-	"\x13UpdateDesiredConfig\x12,.komari.config.v1.UpdateDesiredConfigRequest\x1a-.komari.config.v1.UpdateDesiredConfigResponse2\xa1\x06\n" +
+	"\x13UpdateDesiredConfig\x12,.komari.config.v1.UpdateDesiredConfigRequest\x1a-.komari.config.v1.UpdateDesiredConfigResponse2\xa1\a\n" +
 	"\x19PrivilegedDeliveryService\x12x\n" +
 	"\x15GetPrivilegedDelivery\x12..komari.config.v1.GetPrivilegedDeliveryRequest\x1a/.komari.config.v1.GetPrivilegedDeliveryResponse\x12\x80\x01\n" +
 	"\x17WatchPrivilegedDelivery\x120.komari.config.v1.WatchPrivilegedDeliveryRequest\x1a1.komari.config.v1.WatchPrivilegedDeliveryResponse0\x01\x12\x81\x01\n" +
 	"\x18UpdatePrivilegedDelivery\x121.komari.config.v1.UpdatePrivilegedDeliveryRequest\x1a2.komari.config.v1.UpdatePrivilegedDeliveryResponse\x12\x84\x01\n" +
 	"\x19ConfirmPrivilegedDelivery\x122.komari.config.v1.ConfirmPrivilegedDeliveryRequest\x1a3.komari.config.v1.ConfirmPrivilegedDeliveryResponse\x12\x81\x01\n" +
 	"\x18ReportPrivilegedDelivery\x121.komari.config.v1.ReportPrivilegedDeliveryRequest\x1a2.komari.config.v1.ReportPrivilegedDeliveryResponse\x12x\n" +
-	"\x15CompleteManualUpgrade\x12..komari.config.v1.CompleteManualUpgradeRequest\x1a/.komari.config.v1.CompleteManualUpgradeResponseB\xc9\x01\n" +
+	"\x15CompleteManualUpgrade\x12..komari.config.v1.CompleteManualUpgradeRequest\x1a/.komari.config.v1.CompleteManualUpgradeResponse\x12~\n" +
+	"\x17ListPrivilegedRevisions\x120.komari.config.v1.ListPrivilegedRevisionsRequest\x1a1.komari.config.v1.ListPrivilegedRevisionsResponseB\xc9\x01\n" +
 	"\x14com.komari.config.v1B\vConfigProtoP\x01ZBgithub.com/r11234567/komari-proto/gen/go/komari/config/v1;configv1\xa2\x02\x03KCX\xaa\x02\x10Komari.Config.V1\xca\x02\x10Komari\\Config\\V1\xe2\x02\x1cKomari\\Config\\V1\\GPBMetadata\xea\x02\x12Komari::Config::V1b\x06proto3"
 
 var (
@@ -2335,115 +2462,121 @@ func file_komari_config_v1_config_proto_rawDescGZIP() []byte {
 }
 
 var file_komari_config_v1_config_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_komari_config_v1_config_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
+var file_komari_config_v1_config_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_komari_config_v1_config_proto_goTypes = []any{
 	(PrivilegedDeliveryState)(0),              // 0: komari.config.v1.PrivilegedDeliveryState
 	(UpgradeClass)(0),                         // 1: komari.config.v1.UpgradeClass
 	(ConfigApplyStatus)(0),                    // 2: komari.config.v1.ConfigApplyStatus
-	(*GetPrivilegedDeliveryRequest)(nil),      // 3: komari.config.v1.GetPrivilegedDeliveryRequest
-	(*GetPrivilegedDeliveryResponse)(nil),     // 4: komari.config.v1.GetPrivilegedDeliveryResponse
-	(*WatchPrivilegedDeliveryRequest)(nil),    // 5: komari.config.v1.WatchPrivilegedDeliveryRequest
-	(*WatchPrivilegedDeliveryResponse)(nil),   // 6: komari.config.v1.WatchPrivilegedDeliveryResponse
-	(*UpdatePrivilegedDeliveryRequest)(nil),   // 7: komari.config.v1.UpdatePrivilegedDeliveryRequest
-	(*UpdatePrivilegedDeliveryResponse)(nil),  // 8: komari.config.v1.UpdatePrivilegedDeliveryResponse
-	(*ConfirmPrivilegedDeliveryRequest)(nil),  // 9: komari.config.v1.ConfirmPrivilegedDeliveryRequest
-	(*ConfirmPrivilegedDeliveryResponse)(nil), // 10: komari.config.v1.ConfirmPrivilegedDeliveryResponse
-	(*ReportPrivilegedDeliveryRequest)(nil),   // 11: komari.config.v1.ReportPrivilegedDeliveryRequest
-	(*ReportPrivilegedDeliveryResponse)(nil),  // 12: komari.config.v1.ReportPrivilegedDeliveryResponse
-	(*CompleteManualUpgradeRequest)(nil),      // 13: komari.config.v1.CompleteManualUpgradeRequest
-	(*CompleteManualUpgradeResponse)(nil),     // 14: komari.config.v1.CompleteManualUpgradeResponse
-	(*PrivilegedRevision)(nil),                // 15: komari.config.v1.PrivilegedRevision
-	(*RuntimeConfig)(nil),                     // 16: komari.config.v1.RuntimeConfig
-	(*PrivilegedConfig)(nil),                  // 17: komari.config.v1.PrivilegedConfig
-	(*UpgradePlan)(nil),                       // 18: komari.config.v1.UpgradePlan
-	(*ManualUpgradeTask)(nil),                 // 19: komari.config.v1.ManualUpgradeTask
-	(*DesiredConfig)(nil),                     // 20: komari.config.v1.DesiredConfig
-	(*GetDesiredConfigRequest)(nil),           // 21: komari.config.v1.GetDesiredConfigRequest
-	(*GetDesiredConfigResponse)(nil),          // 22: komari.config.v1.GetDesiredConfigResponse
-	(*WatchDesiredConfigRequest)(nil),         // 23: komari.config.v1.WatchDesiredConfigRequest
-	(*WatchDesiredConfigResponse)(nil),        // 24: komari.config.v1.WatchDesiredConfigResponse
-	(*AcknowledgeConfigRequest)(nil),          // 25: komari.config.v1.AcknowledgeConfigRequest
-	(*AcknowledgeConfigResponse)(nil),         // 26: komari.config.v1.AcknowledgeConfigResponse
-	(*UpdateDesiredConfigRequest)(nil),        // 27: komari.config.v1.UpdateDesiredConfigRequest
-	(*UpdateDesiredConfigResponse)(nil),       // 28: komari.config.v1.UpdateDesiredConfigResponse
-	(*v1.TwoFactorProof)(nil),                 // 29: komari.common.v1.TwoFactorProof
-	(*v1.ErrorDetail)(nil),                    // 30: komari.common.v1.ErrorDetail
-	(*timestamppb.Timestamp)(nil),             // 31: google.protobuf.Timestamp
-	(v11.PrivilegeMode)(0),                    // 32: komari.report.v1.PrivilegeMode
-	(*v12.SignedEnvelope)(nil),                // 33: komari.security.v1.SignedEnvelope
-	(*durationpb.Duration)(nil),               // 34: google.protobuf.Duration
-	(v1.DeliveryState)(0),                     // 35: komari.common.v1.DeliveryState
+	(*ListPrivilegedRevisionsRequest)(nil),    // 3: komari.config.v1.ListPrivilegedRevisionsRequest
+	(*ListPrivilegedRevisionsResponse)(nil),   // 4: komari.config.v1.ListPrivilegedRevisionsResponse
+	(*GetPrivilegedDeliveryRequest)(nil),      // 5: komari.config.v1.GetPrivilegedDeliveryRequest
+	(*GetPrivilegedDeliveryResponse)(nil),     // 6: komari.config.v1.GetPrivilegedDeliveryResponse
+	(*WatchPrivilegedDeliveryRequest)(nil),    // 7: komari.config.v1.WatchPrivilegedDeliveryRequest
+	(*WatchPrivilegedDeliveryResponse)(nil),   // 8: komari.config.v1.WatchPrivilegedDeliveryResponse
+	(*UpdatePrivilegedDeliveryRequest)(nil),   // 9: komari.config.v1.UpdatePrivilegedDeliveryRequest
+	(*UpdatePrivilegedDeliveryResponse)(nil),  // 10: komari.config.v1.UpdatePrivilegedDeliveryResponse
+	(*ConfirmPrivilegedDeliveryRequest)(nil),  // 11: komari.config.v1.ConfirmPrivilegedDeliveryRequest
+	(*ConfirmPrivilegedDeliveryResponse)(nil), // 12: komari.config.v1.ConfirmPrivilegedDeliveryResponse
+	(*ReportPrivilegedDeliveryRequest)(nil),   // 13: komari.config.v1.ReportPrivilegedDeliveryRequest
+	(*ReportPrivilegedDeliveryResponse)(nil),  // 14: komari.config.v1.ReportPrivilegedDeliveryResponse
+	(*CompleteManualUpgradeRequest)(nil),      // 15: komari.config.v1.CompleteManualUpgradeRequest
+	(*CompleteManualUpgradeResponse)(nil),     // 16: komari.config.v1.CompleteManualUpgradeResponse
+	(*PrivilegedRevision)(nil),                // 17: komari.config.v1.PrivilegedRevision
+	(*RuntimeConfig)(nil),                     // 18: komari.config.v1.RuntimeConfig
+	(*PrivilegedConfig)(nil),                  // 19: komari.config.v1.PrivilegedConfig
+	(*UpgradePlan)(nil),                       // 20: komari.config.v1.UpgradePlan
+	(*ManualUpgradeTask)(nil),                 // 21: komari.config.v1.ManualUpgradeTask
+	(*DesiredConfig)(nil),                     // 22: komari.config.v1.DesiredConfig
+	(*GetDesiredConfigRequest)(nil),           // 23: komari.config.v1.GetDesiredConfigRequest
+	(*GetDesiredConfigResponse)(nil),          // 24: komari.config.v1.GetDesiredConfigResponse
+	(*WatchDesiredConfigRequest)(nil),         // 25: komari.config.v1.WatchDesiredConfigRequest
+	(*WatchDesiredConfigResponse)(nil),        // 26: komari.config.v1.WatchDesiredConfigResponse
+	(*AcknowledgeConfigRequest)(nil),          // 27: komari.config.v1.AcknowledgeConfigRequest
+	(*AcknowledgeConfigResponse)(nil),         // 28: komari.config.v1.AcknowledgeConfigResponse
+	(*UpdateDesiredConfigRequest)(nil),        // 29: komari.config.v1.UpdateDesiredConfigRequest
+	(*UpdateDesiredConfigResponse)(nil),       // 30: komari.config.v1.UpdateDesiredConfigResponse
+	(v1.PrivilegeMode)(0),                     // 31: komari.report.v1.PrivilegeMode
+	(*v11.TwoFactorProof)(nil),                // 32: komari.common.v1.TwoFactorProof
+	(*v11.ErrorDetail)(nil),                   // 33: komari.common.v1.ErrorDetail
+	(*timestamppb.Timestamp)(nil),             // 34: google.protobuf.Timestamp
+	(*v12.SignedEnvelope)(nil),                // 35: komari.security.v1.SignedEnvelope
+	(*durationpb.Duration)(nil),               // 36: google.protobuf.Duration
+	(v11.DeliveryState)(0),                    // 37: komari.common.v1.DeliveryState
 }
 var file_komari_config_v1_config_proto_depIdxs = []int32{
-	15, // 0: komari.config.v1.GetPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	15, // 1: komari.config.v1.WatchPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	17, // 2: komari.config.v1.UpdatePrivilegedDeliveryRequest.privileged:type_name -> komari.config.v1.PrivilegedConfig
-	15, // 3: komari.config.v1.UpdatePrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	29, // 4: komari.config.v1.ConfirmPrivilegedDeliveryRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	15, // 5: komari.config.v1.ConfirmPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	0,  // 6: komari.config.v1.ReportPrivilegedDeliveryRequest.state:type_name -> komari.config.v1.PrivilegedDeliveryState
-	30, // 7: komari.config.v1.ReportPrivilegedDeliveryRequest.errors:type_name -> komari.common.v1.ErrorDetail
-	31, // 8: komari.config.v1.ReportPrivilegedDeliveryRequest.finished_at:type_name -> google.protobuf.Timestamp
-	32, // 9: komari.config.v1.ReportPrivilegedDeliveryRequest.active_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	15, // 10: komari.config.v1.ReportPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	32, // 11: komari.config.v1.CompleteManualUpgradeRequest.resulting_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	15, // 12: komari.config.v1.CompleteManualUpgradeResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	17, // 13: komari.config.v1.PrivilegedRevision.privileged:type_name -> komari.config.v1.PrivilegedConfig
-	18, // 14: komari.config.v1.PrivilegedRevision.plan:type_name -> komari.config.v1.UpgradePlan
-	0,  // 15: komari.config.v1.PrivilegedRevision.state:type_name -> komari.config.v1.PrivilegedDeliveryState
-	31, // 16: komari.config.v1.PrivilegedRevision.saved_at:type_name -> google.protobuf.Timestamp
-	31, // 17: komari.config.v1.PrivilegedRevision.confirmed_at:type_name -> google.protobuf.Timestamp
-	31, // 18: komari.config.v1.PrivilegedRevision.finished_at:type_name -> google.protobuf.Timestamp
-	30, // 19: komari.config.v1.PrivilegedRevision.errors:type_name -> komari.common.v1.ErrorDetail
-	33, // 20: komari.config.v1.PrivilegedRevision.signature:type_name -> komari.security.v1.SignedEnvelope
-	34, // 21: komari.config.v1.RuntimeConfig.report_interval:type_name -> google.protobuf.Duration
-	34, // 22: komari.config.v1.RuntimeConfig.info_report_interval:type_name -> google.protobuf.Duration
-	34, // 23: komari.config.v1.RuntimeConfig.reconnect_interval:type_name -> google.protobuf.Duration
-	32, // 24: komari.config.v1.PrivilegedConfig.required_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	1,  // 25: komari.config.v1.UpgradePlan.upgrade_class:type_name -> komari.config.v1.UpgradeClass
-	32, // 26: komari.config.v1.UpgradePlan.from_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	32, // 27: komari.config.v1.UpgradePlan.to_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	19, // 28: komari.config.v1.UpgradePlan.manual_task:type_name -> komari.config.v1.ManualUpgradeTask
-	31, // 29: komari.config.v1.ManualUpgradeTask.expires_at:type_name -> google.protobuf.Timestamp
-	16, // 30: komari.config.v1.DesiredConfig.runtime:type_name -> komari.config.v1.RuntimeConfig
-	31, // 31: komari.config.v1.DesiredConfig.saved_at:type_name -> google.protobuf.Timestamp
-	17, // 32: komari.config.v1.DesiredConfig.privileged:type_name -> komari.config.v1.PrivilegedConfig
-	18, // 33: komari.config.v1.DesiredConfig.plan:type_name -> komari.config.v1.UpgradePlan
-	20, // 34: komari.config.v1.GetDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
-	35, // 35: komari.config.v1.GetDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
-	20, // 36: komari.config.v1.WatchDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
-	2,  // 37: komari.config.v1.AcknowledgeConfigRequest.status:type_name -> komari.config.v1.ConfigApplyStatus
-	30, // 38: komari.config.v1.AcknowledgeConfigRequest.errors:type_name -> komari.common.v1.ErrorDetail
-	31, // 39: komari.config.v1.AcknowledgeConfigRequest.finished_at:type_name -> google.protobuf.Timestamp
-	35, // 40: komari.config.v1.AcknowledgeConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
-	16, // 41: komari.config.v1.UpdateDesiredConfigRequest.runtime:type_name -> komari.config.v1.RuntimeConfig
-	20, // 42: komari.config.v1.UpdateDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
-	35, // 43: komari.config.v1.UpdateDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
-	21, // 44: komari.config.v1.ConfigService.GetDesiredConfig:input_type -> komari.config.v1.GetDesiredConfigRequest
-	23, // 45: komari.config.v1.ConfigService.WatchDesiredConfig:input_type -> komari.config.v1.WatchDesiredConfigRequest
-	25, // 46: komari.config.v1.ConfigService.AcknowledgeConfig:input_type -> komari.config.v1.AcknowledgeConfigRequest
-	27, // 47: komari.config.v1.ConfigService.UpdateDesiredConfig:input_type -> komari.config.v1.UpdateDesiredConfigRequest
-	3,  // 48: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:input_type -> komari.config.v1.GetPrivilegedDeliveryRequest
-	5,  // 49: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:input_type -> komari.config.v1.WatchPrivilegedDeliveryRequest
-	7,  // 50: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:input_type -> komari.config.v1.UpdatePrivilegedDeliveryRequest
-	9,  // 51: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:input_type -> komari.config.v1.ConfirmPrivilegedDeliveryRequest
-	11, // 52: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:input_type -> komari.config.v1.ReportPrivilegedDeliveryRequest
-	13, // 53: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:input_type -> komari.config.v1.CompleteManualUpgradeRequest
-	22, // 54: komari.config.v1.ConfigService.GetDesiredConfig:output_type -> komari.config.v1.GetDesiredConfigResponse
-	24, // 55: komari.config.v1.ConfigService.WatchDesiredConfig:output_type -> komari.config.v1.WatchDesiredConfigResponse
-	26, // 56: komari.config.v1.ConfigService.AcknowledgeConfig:output_type -> komari.config.v1.AcknowledgeConfigResponse
-	28, // 57: komari.config.v1.ConfigService.UpdateDesiredConfig:output_type -> komari.config.v1.UpdateDesiredConfigResponse
-	4,  // 58: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:output_type -> komari.config.v1.GetPrivilegedDeliveryResponse
-	6,  // 59: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:output_type -> komari.config.v1.WatchPrivilegedDeliveryResponse
-	8,  // 60: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:output_type -> komari.config.v1.UpdatePrivilegedDeliveryResponse
-	10, // 61: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:output_type -> komari.config.v1.ConfirmPrivilegedDeliveryResponse
-	12, // 62: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:output_type -> komari.config.v1.ReportPrivilegedDeliveryResponse
-	14, // 63: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:output_type -> komari.config.v1.CompleteManualUpgradeResponse
-	54, // [54:64] is the sub-list for method output_type
-	44, // [44:54] is the sub-list for method input_type
-	44, // [44:44] is the sub-list for extension type_name
-	44, // [44:44] is the sub-list for extension extendee
-	0,  // [0:44] is the sub-list for field type_name
+	17, // 0: komari.config.v1.ListPrivilegedRevisionsResponse.revisions:type_name -> komari.config.v1.PrivilegedRevision
+	31, // 1: komari.config.v1.ListPrivilegedRevisionsResponse.installed_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	17, // 2: komari.config.v1.GetPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
+	17, // 3: komari.config.v1.WatchPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
+	19, // 4: komari.config.v1.UpdatePrivilegedDeliveryRequest.privileged:type_name -> komari.config.v1.PrivilegedConfig
+	17, // 5: komari.config.v1.UpdatePrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
+	32, // 6: komari.config.v1.ConfirmPrivilegedDeliveryRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	17, // 7: komari.config.v1.ConfirmPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
+	0,  // 8: komari.config.v1.ReportPrivilegedDeliveryRequest.state:type_name -> komari.config.v1.PrivilegedDeliveryState
+	33, // 9: komari.config.v1.ReportPrivilegedDeliveryRequest.errors:type_name -> komari.common.v1.ErrorDetail
+	34, // 10: komari.config.v1.ReportPrivilegedDeliveryRequest.finished_at:type_name -> google.protobuf.Timestamp
+	31, // 11: komari.config.v1.ReportPrivilegedDeliveryRequest.active_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	17, // 12: komari.config.v1.ReportPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
+	31, // 13: komari.config.v1.CompleteManualUpgradeRequest.resulting_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	17, // 14: komari.config.v1.CompleteManualUpgradeResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
+	19, // 15: komari.config.v1.PrivilegedRevision.privileged:type_name -> komari.config.v1.PrivilegedConfig
+	20, // 16: komari.config.v1.PrivilegedRevision.plan:type_name -> komari.config.v1.UpgradePlan
+	0,  // 17: komari.config.v1.PrivilegedRevision.state:type_name -> komari.config.v1.PrivilegedDeliveryState
+	34, // 18: komari.config.v1.PrivilegedRevision.saved_at:type_name -> google.protobuf.Timestamp
+	34, // 19: komari.config.v1.PrivilegedRevision.confirmed_at:type_name -> google.protobuf.Timestamp
+	34, // 20: komari.config.v1.PrivilegedRevision.finished_at:type_name -> google.protobuf.Timestamp
+	33, // 21: komari.config.v1.PrivilegedRevision.errors:type_name -> komari.common.v1.ErrorDetail
+	35, // 22: komari.config.v1.PrivilegedRevision.signature:type_name -> komari.security.v1.SignedEnvelope
+	36, // 23: komari.config.v1.RuntimeConfig.report_interval:type_name -> google.protobuf.Duration
+	36, // 24: komari.config.v1.RuntimeConfig.info_report_interval:type_name -> google.protobuf.Duration
+	36, // 25: komari.config.v1.RuntimeConfig.reconnect_interval:type_name -> google.protobuf.Duration
+	31, // 26: komari.config.v1.PrivilegedConfig.required_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	1,  // 27: komari.config.v1.UpgradePlan.upgrade_class:type_name -> komari.config.v1.UpgradeClass
+	31, // 28: komari.config.v1.UpgradePlan.from_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	31, // 29: komari.config.v1.UpgradePlan.to_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	21, // 30: komari.config.v1.UpgradePlan.manual_task:type_name -> komari.config.v1.ManualUpgradeTask
+	34, // 31: komari.config.v1.ManualUpgradeTask.expires_at:type_name -> google.protobuf.Timestamp
+	18, // 32: komari.config.v1.DesiredConfig.runtime:type_name -> komari.config.v1.RuntimeConfig
+	34, // 33: komari.config.v1.DesiredConfig.saved_at:type_name -> google.protobuf.Timestamp
+	19, // 34: komari.config.v1.DesiredConfig.privileged:type_name -> komari.config.v1.PrivilegedConfig
+	20, // 35: komari.config.v1.DesiredConfig.plan:type_name -> komari.config.v1.UpgradePlan
+	22, // 36: komari.config.v1.GetDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
+	37, // 37: komari.config.v1.GetDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
+	22, // 38: komari.config.v1.WatchDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
+	2,  // 39: komari.config.v1.AcknowledgeConfigRequest.status:type_name -> komari.config.v1.ConfigApplyStatus
+	33, // 40: komari.config.v1.AcknowledgeConfigRequest.errors:type_name -> komari.common.v1.ErrorDetail
+	34, // 41: komari.config.v1.AcknowledgeConfigRequest.finished_at:type_name -> google.protobuf.Timestamp
+	37, // 42: komari.config.v1.AcknowledgeConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
+	18, // 43: komari.config.v1.UpdateDesiredConfigRequest.runtime:type_name -> komari.config.v1.RuntimeConfig
+	22, // 44: komari.config.v1.UpdateDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
+	37, // 45: komari.config.v1.UpdateDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
+	23, // 46: komari.config.v1.ConfigService.GetDesiredConfig:input_type -> komari.config.v1.GetDesiredConfigRequest
+	25, // 47: komari.config.v1.ConfigService.WatchDesiredConfig:input_type -> komari.config.v1.WatchDesiredConfigRequest
+	27, // 48: komari.config.v1.ConfigService.AcknowledgeConfig:input_type -> komari.config.v1.AcknowledgeConfigRequest
+	29, // 49: komari.config.v1.ConfigService.UpdateDesiredConfig:input_type -> komari.config.v1.UpdateDesiredConfigRequest
+	5,  // 50: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:input_type -> komari.config.v1.GetPrivilegedDeliveryRequest
+	7,  // 51: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:input_type -> komari.config.v1.WatchPrivilegedDeliveryRequest
+	9,  // 52: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:input_type -> komari.config.v1.UpdatePrivilegedDeliveryRequest
+	11, // 53: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:input_type -> komari.config.v1.ConfirmPrivilegedDeliveryRequest
+	13, // 54: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:input_type -> komari.config.v1.ReportPrivilegedDeliveryRequest
+	15, // 55: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:input_type -> komari.config.v1.CompleteManualUpgradeRequest
+	3,  // 56: komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions:input_type -> komari.config.v1.ListPrivilegedRevisionsRequest
+	24, // 57: komari.config.v1.ConfigService.GetDesiredConfig:output_type -> komari.config.v1.GetDesiredConfigResponse
+	26, // 58: komari.config.v1.ConfigService.WatchDesiredConfig:output_type -> komari.config.v1.WatchDesiredConfigResponse
+	28, // 59: komari.config.v1.ConfigService.AcknowledgeConfig:output_type -> komari.config.v1.AcknowledgeConfigResponse
+	30, // 60: komari.config.v1.ConfigService.UpdateDesiredConfig:output_type -> komari.config.v1.UpdateDesiredConfigResponse
+	6,  // 61: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:output_type -> komari.config.v1.GetPrivilegedDeliveryResponse
+	8,  // 62: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:output_type -> komari.config.v1.WatchPrivilegedDeliveryResponse
+	10, // 63: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:output_type -> komari.config.v1.UpdatePrivilegedDeliveryResponse
+	12, // 64: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:output_type -> komari.config.v1.ConfirmPrivilegedDeliveryResponse
+	14, // 65: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:output_type -> komari.config.v1.ReportPrivilegedDeliveryResponse
+	16, // 66: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:output_type -> komari.config.v1.CompleteManualUpgradeResponse
+	4,  // 67: komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions:output_type -> komari.config.v1.ListPrivilegedRevisionsResponse
+	57, // [57:68] is the sub-list for method output_type
+	46, // [46:57] is the sub-list for method input_type
+	46, // [46:46] is the sub-list for extension type_name
+	46, // [46:46] is the sub-list for extension extendee
+	0,  // [0:46] is the sub-list for field type_name
 }
 
 func init() { file_komari_config_v1_config_proto_init() }
@@ -2451,20 +2584,20 @@ func file_komari_config_v1_config_proto_init() {
 	if File_komari_config_v1_config_proto != nil {
 		return
 	}
-	file_komari_config_v1_config_proto_msgTypes[1].OneofWrappers = []any{}
-	file_komari_config_v1_config_proto_msgTypes[12].OneofWrappers = []any{}
-	file_komari_config_v1_config_proto_msgTypes[13].OneofWrappers = []any{}
+	file_komari_config_v1_config_proto_msgTypes[3].OneofWrappers = []any{}
 	file_komari_config_v1_config_proto_msgTypes[14].OneofWrappers = []any{}
 	file_komari_config_v1_config_proto_msgTypes[15].OneofWrappers = []any{}
+	file_komari_config_v1_config_proto_msgTypes[16].OneofWrappers = []any{}
 	file_komari_config_v1_config_proto_msgTypes[17].OneofWrappers = []any{}
 	file_komari_config_v1_config_proto_msgTypes[19].OneofWrappers = []any{}
+	file_komari_config_v1_config_proto_msgTypes[21].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_config_v1_config_proto_rawDesc), len(file_komari_config_v1_config_proto_rawDesc)),
 			NumEnums:      3,
-			NumMessages:   26,
+			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

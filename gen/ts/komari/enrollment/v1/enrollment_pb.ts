@@ -16,7 +16,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file komari/enrollment/v1/enrollment.proto.
  */
 export const file_komari_enrollment_v1_enrollment: GenFile = /*@__PURE__*/
-  fileDesc("CiVrb21hcmkvZW5yb2xsbWVudC92MS9lbnJvbGxtZW50LnByb3RvEhRrb21hcmkuZW5yb2xsbWVudC52MSKhAQoWQmVnaW5FbnJvbGxtZW50UmVxdWVzdBI3ChBhZ2VudF9wdWJsaWNfa2V5GAEgASgLMh0ua29tYXJpLnNlY3VyaXR5LnYxLlB1YmxpY0tleRI0CgZkZXZpY2UYAiABKAsyJC5rb21hcmkuZW5yb2xsbWVudC52MS5EZXZpY2VJZGVudGl0eRIYChByZXF1ZXN0ZWRfc2NvcGVzGAMgAygJIuABChdCZWdpbkVucm9sbG1lbnRSZXNwb25zZRITCgtkZXZpY2VfY29kZRgBIAEoCRIRCgl1c2VyX2NvZGUYAiABKAkSGAoQdmVyaWZpY2F0aW9uX3VyaRgDIAEoCRIhChl2ZXJpZmljYXRpb25fdXJpX2NvbXBsZXRlGAQgASgJEi4KCmV4cGlyZXNfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjAKDXBvbGxfaW50ZXJ2YWwYBiABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24iLAoVUG9sbEVucm9sbG1lbnRSZXF1ZXN0EhMKC2RldmljZV9jb2RlGAEgASgJIo8CChZQb2xsRW5yb2xsbWVudFJlc3BvbnNlEjQKBXN0YXRlGAEgASgOMiUua29tYXJpLmVucm9sbG1lbnQudjEuRW5yb2xsbWVudFN0YXRlEkAKC2NyZWRlbnRpYWxzGAIgASgLMiYua29tYXJpLmVucm9sbG1lbnQudjEuQWdlbnRDcmVkZW50aWFsc0gAiAEBEjAKDXBvbGxfaW50ZXJ2YWwYAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24SMQoFZXJyb3IYBCABKAsyHS5rb21hcmkuY29tbW9uLnYxLkVycm9yRGV0YWlsSAGIAQFCDgoMX2NyZWRlbnRpYWxzQggKBl9lcnJvciJ0ChlSZWZyZXNoQ3JlZGVudGlhbHNSZXF1ZXN0EhUKDXJlZnJlc2hfdG9rZW4YASABKAkSNgoFcHJvb2YYAiABKAsyIi5rb21hcmkuc2VjdXJpdHkudjEuU2lnbmVkRW52ZWxvcGVIAIgBAUIICgZfcHJvb2YiWQoaUmVmcmVzaENyZWRlbnRpYWxzUmVzcG9uc2USOwoLY3JlZGVudGlhbHMYASABKAsyJi5rb21hcmkuZW5yb2xsbWVudC52MS5BZ2VudENyZWRlbnRpYWxzInIKGFJldm9rZUNyZWRlbnRpYWxzUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIOCgZyZWFzb24YAiABKAkSNAoKdHdvX2ZhY3RvchgDIAEoCzIgLmtvbWFyaS5jb21tb24udjEuVHdvRmFjdG9yUHJvb2YiLQoZUmV2b2tlQ3JlZGVudGlhbHNSZXNwb25zZRIQCghhY2NlcHRlZBgBIAEoCCIpChVHZXRUcnVzdEJ1bmRsZVJlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkitwEKFkdldFRydXN0QnVuZGxlUmVzcG9uc2USMwoMc2lnbmluZ19rZXlzGAEgAygLMh0ua29tYXJpLnNlY3VyaXR5LnYxLlB1YmxpY0tleRI2CgZwb2xpY3kYAiABKAsyJi5rb21hcmkuc2VjdXJpdHkudjEuVmVyaWZpY2F0aW9uUG9saWN5EjAKDXJlZnJlc2hfYWZ0ZXIYAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24ivgIKEEFnZW50Q3JlZGVudGlhbHMSEAoIYWdlbnRfaWQYASABKAkSFAoMYWNjZXNzX3Rva2VuGAIgASgJEjsKF2FjY2Vzc190b2tlbl9leHBpcmVzX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIVCg1yZWZyZXNoX3Rva2VuGAQgASgJEjwKGHJlZnJlc2hfdG9rZW5fZXhwaXJlc19hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASDgoGc2NvcGVzGAYgAygJEkIKGXByZXZpb3VzX3Rva2VuX2V4cGlyZXNfYXQYByABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSACIAQFCHAoaX3ByZXZpb3VzX3Rva2VuX2V4cGlyZXNfYXQipQEKDkRldmljZUlkZW50aXR5EhAKCGhvc3RuYW1lGAEgASgJEhgKEG9wZXJhdGluZ19zeXN0ZW0YAiABKAkSFAoMYXJjaGl0ZWN0dXJlGAMgASgJEhUKDWFnZW50X3ZlcnNpb24YBCABKAkSEwoLZmluZ2VycHJpbnQYBSABKAkSJQodY29udHJvbF9wbGFuZV9rZXlfZmluZ2VycHJpbnQYBiABKAkqywEKD0Vucm9sbG1lbnRTdGF0ZRIgChxFTlJPTExNRU5UX1NUQVRFX1VOU1BFQ0lGSUVEEAASHAoYRU5ST0xMTUVOVF9TVEFURV9QRU5ESU5HEAESHgoaRU5ST0xMTUVOVF9TVEFURV9TTE9XX0RPV04QAhIdChlFTlJPTExNRU5UX1NUQVRFX0FQUFJPVkVEEAMSGwoXRU5ST0xMTUVOVF9TVEFURV9ERU5JRUQQBBIcChhFTlJPTExNRU5UX1NUQVRFX0VYUElSRUQQBTLMBAoRRW5yb2xsbWVudFNlcnZpY2USbgoPQmVnaW5FbnJvbGxtZW50Eiwua29tYXJpLmVucm9sbG1lbnQudjEuQmVnaW5FbnJvbGxtZW50UmVxdWVzdBotLmtvbWFyaS5lbnJvbGxtZW50LnYxLkJlZ2luRW5yb2xsbWVudFJlc3BvbnNlEmsKDlBvbGxFbnJvbGxtZW50Eisua29tYXJpLmVucm9sbG1lbnQudjEuUG9sbEVucm9sbG1lbnRSZXF1ZXN0Giwua29tYXJpLmVucm9sbG1lbnQudjEuUG9sbEVucm9sbG1lbnRSZXNwb25zZRJ3ChJSZWZyZXNoQ3JlZGVudGlhbHMSLy5rb21hcmkuZW5yb2xsbWVudC52MS5SZWZyZXNoQ3JlZGVudGlhbHNSZXF1ZXN0GjAua29tYXJpLmVucm9sbG1lbnQudjEuUmVmcmVzaENyZWRlbnRpYWxzUmVzcG9uc2USdAoRUmV2b2tlQ3JlZGVudGlhbHMSLi5rb21hcmkuZW5yb2xsbWVudC52MS5SZXZva2VDcmVkZW50aWFsc1JlcXVlc3QaLy5rb21hcmkuZW5yb2xsbWVudC52MS5SZXZva2VDcmVkZW50aWFsc1Jlc3BvbnNlEmsKDkdldFRydXN0QnVuZGxlEisua29tYXJpLmVucm9sbG1lbnQudjEuR2V0VHJ1c3RCdW5kbGVSZXF1ZXN0Giwua29tYXJpLmVucm9sbG1lbnQudjEuR2V0VHJ1c3RCdW5kbGVSZXNwb25zZULpAQoYY29tLmtvbWFyaS5lbnJvbGxtZW50LnYxQg9FbnJvbGxtZW50UHJvdG9QAVpKZ2l0aHViLmNvbS9yMTEyMzQ1Njcva29tYXJpLXByb3RvL2dlbi9nby9rb21hcmkvZW5yb2xsbWVudC92MTtlbnJvbGxtZW50djGiAgNLRViqAhRLb21hcmkuRW5yb2xsbWVudC5WMcoCFEtvbWFyaVxFbnJvbGxtZW50XFYx4gIgS29tYXJpXEVucm9sbG1lbnRcVjFcR1BCTWV0YWRhdGHqAhZLb21hcmk6OkVucm9sbG1lbnQ6OlYxYgZwcm90bzM", [file_google_protobuf_duration, file_google_protobuf_timestamp, file_komari_common_v1_common, file_komari_security_v1_security]);
+  fileDesc("CiVrb21hcmkvZW5yb2xsbWVudC92MS9lbnJvbGxtZW50LnByb3RvEhRrb21hcmkuZW5yb2xsbWVudC52MSKhAQoWQmVnaW5FbnJvbGxtZW50UmVxdWVzdBI3ChBhZ2VudF9wdWJsaWNfa2V5GAEgASgLMh0ua29tYXJpLnNlY3VyaXR5LnYxLlB1YmxpY0tleRI0CgZkZXZpY2UYAiABKAsyJC5rb21hcmkuZW5yb2xsbWVudC52MS5EZXZpY2VJZGVudGl0eRIYChByZXF1ZXN0ZWRfc2NvcGVzGAMgAygJIuABChdCZWdpbkVucm9sbG1lbnRSZXNwb25zZRITCgtkZXZpY2VfY29kZRgBIAEoCRIRCgl1c2VyX2NvZGUYAiABKAkSGAoQdmVyaWZpY2F0aW9uX3VyaRgDIAEoCRIhChl2ZXJpZmljYXRpb25fdXJpX2NvbXBsZXRlGAQgASgJEi4KCmV4cGlyZXNfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjAKDXBvbGxfaW50ZXJ2YWwYBiABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24iLAoVUG9sbEVucm9sbG1lbnRSZXF1ZXN0EhMKC2RldmljZV9jb2RlGAEgASgJIo8CChZQb2xsRW5yb2xsbWVudFJlc3BvbnNlEjQKBXN0YXRlGAEgASgOMiUua29tYXJpLmVucm9sbG1lbnQudjEuRW5yb2xsbWVudFN0YXRlEkAKC2NyZWRlbnRpYWxzGAIgASgLMiYua29tYXJpLmVucm9sbG1lbnQudjEuQWdlbnRDcmVkZW50aWFsc0gAiAEBEjAKDXBvbGxfaW50ZXJ2YWwYAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24SMQoFZXJyb3IYBCABKAsyHS5rb21hcmkuY29tbW9uLnYxLkVycm9yRGV0YWlsSAGIAQFCDgoMX2NyZWRlbnRpYWxzQggKBl9lcnJvciJ0ChlSZWZyZXNoQ3JlZGVudGlhbHNSZXF1ZXN0EhUKDXJlZnJlc2hfdG9rZW4YASABKAkSNgoFcHJvb2YYAiABKAsyIi5rb21hcmkuc2VjdXJpdHkudjEuU2lnbmVkRW52ZWxvcGVIAIgBAUIICgZfcHJvb2YiWQoaUmVmcmVzaENyZWRlbnRpYWxzUmVzcG9uc2USOwoLY3JlZGVudGlhbHMYASABKAsyJi5rb21hcmkuZW5yb2xsbWVudC52MS5BZ2VudENyZWRlbnRpYWxzInIKGFJldm9rZUNyZWRlbnRpYWxzUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIOCgZyZWFzb24YAiABKAkSNAoKdHdvX2ZhY3RvchgDIAEoCzIgLmtvbWFyaS5jb21tb24udjEuVHdvRmFjdG9yUHJvb2YiLQoZUmV2b2tlQ3JlZGVudGlhbHNSZXNwb25zZRIQCghhY2NlcHRlZBgBIAEoCCIpChVHZXRUcnVzdEJ1bmRsZVJlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkitwEKFkdldFRydXN0QnVuZGxlUmVzcG9uc2USMwoMc2lnbmluZ19rZXlzGAEgAygLMh0ua29tYXJpLnNlY3VyaXR5LnYxLlB1YmxpY0tleRI2CgZwb2xpY3kYAiABKAsyJi5rb21hcmkuc2VjdXJpdHkudjEuVmVyaWZpY2F0aW9uUG9saWN5EjAKDXJlZnJlc2hfYWZ0ZXIYAyABKAsyGS5nb29nbGUucHJvdG9idWYuRHVyYXRpb24ivgIKEEFnZW50Q3JlZGVudGlhbHMSEAoIYWdlbnRfaWQYASABKAkSFAoMYWNjZXNzX3Rva2VuGAIgASgJEjsKF2FjY2Vzc190b2tlbl9leHBpcmVzX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIVCg1yZWZyZXNoX3Rva2VuGAQgASgJEjwKGHJlZnJlc2hfdG9rZW5fZXhwaXJlc19hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASDgoGc2NvcGVzGAYgAygJEkIKGXByZXZpb3VzX3Rva2VuX2V4cGlyZXNfYXQYByABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSACIAQFCHAoaX3ByZXZpb3VzX3Rva2VuX2V4cGlyZXNfYXQipQEKDkRldmljZUlkZW50aXR5EhAKCGhvc3RuYW1lGAEgASgJEhgKEG9wZXJhdGluZ19zeXN0ZW0YAiABKAkSFAoMYXJjaGl0ZWN0dXJlGAMgASgJEhUKDWFnZW50X3ZlcnNpb24YBCABKAkSEwoLZmluZ2VycHJpbnQYBSABKAkSJQodY29udHJvbF9wbGFuZV9rZXlfZmluZ2VycHJpbnQYBiABKAkiHwodTGlzdFBlbmRpbmdFbnJvbGxtZW50c1JlcXVlc3QiXgoeTGlzdFBlbmRpbmdFbnJvbGxtZW50c1Jlc3BvbnNlEjwKC2Vucm9sbG1lbnRzGAEgAygLMicua29tYXJpLmVucm9sbG1lbnQudjEuUGVuZGluZ0Vucm9sbG1lbnQiMAobR2V0UGVuZGluZ0Vucm9sbG1lbnRSZXF1ZXN0EhEKCXVzZXJfY29kZRgBIAEoCSKaAQocR2V0UGVuZGluZ0Vucm9sbG1lbnRSZXNwb25zZRI7CgplbnJvbGxtZW50GAEgASgLMicua29tYXJpLmVucm9sbG1lbnQudjEuUGVuZGluZ0Vucm9sbG1lbnQSPQoKY2FuZGlkYXRlcxgCIAMoCzIpLmtvbWFyaS5lbnJvbGxtZW50LnYxLkVucm9sbG1lbnRDYW5kaWRhdGUivwEKGEFwcHJvdmVFbnJvbGxtZW50UmVxdWVzdBIRCgl1c2VyX2NvZGUYASABKAkSGwoRZXhpc3RpbmdfYWdlbnRfaWQYAiABKAlIABIzCgluZXdfYWdlbnQYAyABKAsyHi5rb21hcmkuZW5yb2xsbWVudC52MS5OZXdBZ2VudEgAEjQKCnR3b19mYWN0b3IYBCABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mQggKBnRhcmdldCJ7ChlBcHByb3ZlRW5yb2xsbWVudFJlc3BvbnNlEhAKCGFnZW50X2lkGAEgASgJEjsKCmVucm9sbG1lbnQYAiABKAsyJy5rb21hcmkuZW5yb2xsbWVudC52MS5QZW5kaW5nRW5yb2xsbWVudBIPCgdjcmVhdGVkGAMgASgIIioKFURlbnlFbnJvbGxtZW50UmVxdWVzdBIRCgl1c2VyX2NvZGUYASABKAkiGAoWRGVueUVucm9sbG1lbnRSZXNwb25zZSJsCghOZXdBZ2VudBIMCgRuYW1lGAEgASgJEg0KBWdyb3VwGAIgASgJEg4KBnJlbWFyaxgDIAEoCRIVCg1wdWJsaWNfcmVtYXJrGAQgASgJEg4KBmhpZGRlbhgFIAEoCBIMCgR0YWdzGAYgAygJIrYCChFQZW5kaW5nRW5yb2xsbWVudBIRCgl1c2VyX2NvZGUYASABKAkSNAoFc3RhdGUYAiABKA4yJS5rb21hcmkuZW5yb2xsbWVudC52MS5FbnJvbGxtZW50U3RhdGUSNAoGZGV2aWNlGAMgASgLMiQua29tYXJpLmVucm9sbG1lbnQudjEuRGV2aWNlSWRlbnRpdHkSHQoVYWdlbnRfa2V5X2ZpbmdlcnByaW50GAQgASgJEhEKCXJlbW90ZV9pcBgFIAEoCRIuCgpjcmVhdGVkX2F0GAYgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgpleHBpcmVzX2F0GAcgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIQCghhZ2VudF9pZBgIIAEoCSJmChNFbnJvbGxtZW50Q2FuZGlkYXRlEhAKCGFnZW50X2lkGAEgASgJEgwKBG5hbWUYAiABKAkSFAoMbWF0Y2hfcmVhc29uGAMgASgJEhkKEWZpbmdlcnByaW50X21hdGNoGAQgASgIKssBCg9FbnJvbGxtZW50U3RhdGUSIAocRU5ST0xMTUVOVF9TVEFURV9VTlNQRUNJRklFRBAAEhwKGEVOUk9MTE1FTlRfU1RBVEVfUEVORElORxABEh4KGkVOUk9MTE1FTlRfU1RBVEVfU0xPV19ET1dOEAISHQoZRU5ST0xMTUVOVF9TVEFURV9BUFBST1ZFRBADEhsKF0VOUk9MTE1FTlRfU1RBVEVfREVOSUVEEAQSHAoYRU5ST0xMTUVOVF9TVEFURV9FWFBJUkVEEAUyzAQKEUVucm9sbG1lbnRTZXJ2aWNlEm4KD0JlZ2luRW5yb2xsbWVudBIsLmtvbWFyaS5lbnJvbGxtZW50LnYxLkJlZ2luRW5yb2xsbWVudFJlcXVlc3QaLS5rb21hcmkuZW5yb2xsbWVudC52MS5CZWdpbkVucm9sbG1lbnRSZXNwb25zZRJrCg5Qb2xsRW5yb2xsbWVudBIrLmtvbWFyaS5lbnJvbGxtZW50LnYxLlBvbGxFbnJvbGxtZW50UmVxdWVzdBosLmtvbWFyaS5lbnJvbGxtZW50LnYxLlBvbGxFbnJvbGxtZW50UmVzcG9uc2USdwoSUmVmcmVzaENyZWRlbnRpYWxzEi8ua29tYXJpLmVucm9sbG1lbnQudjEuUmVmcmVzaENyZWRlbnRpYWxzUmVxdWVzdBowLmtvbWFyaS5lbnJvbGxtZW50LnYxLlJlZnJlc2hDcmVkZW50aWFsc1Jlc3BvbnNlEnQKEVJldm9rZUNyZWRlbnRpYWxzEi4ua29tYXJpLmVucm9sbG1lbnQudjEuUmV2b2tlQ3JlZGVudGlhbHNSZXF1ZXN0Gi8ua29tYXJpLmVucm9sbG1lbnQudjEuUmV2b2tlQ3JlZGVudGlhbHNSZXNwb25zZRJrCg5HZXRUcnVzdEJ1bmRsZRIrLmtvbWFyaS5lbnJvbGxtZW50LnYxLkdldFRydXN0QnVuZGxlUmVxdWVzdBosLmtvbWFyaS5lbnJvbGxtZW50LnYxLkdldFRydXN0QnVuZGxlUmVzcG9uc2UygAQKFkVucm9sbG1lbnRBZG1pblNlcnZpY2USgwEKFkxpc3RQZW5kaW5nRW5yb2xsbWVudHMSMy5rb21hcmkuZW5yb2xsbWVudC52MS5MaXN0UGVuZGluZ0Vucm9sbG1lbnRzUmVxdWVzdBo0LmtvbWFyaS5lbnJvbGxtZW50LnYxLkxpc3RQZW5kaW5nRW5yb2xsbWVudHNSZXNwb25zZRJ9ChRHZXRQZW5kaW5nRW5yb2xsbWVudBIxLmtvbWFyaS5lbnJvbGxtZW50LnYxLkdldFBlbmRpbmdFbnJvbGxtZW50UmVxdWVzdBoyLmtvbWFyaS5lbnJvbGxtZW50LnYxLkdldFBlbmRpbmdFbnJvbGxtZW50UmVzcG9uc2USdAoRQXBwcm92ZUVucm9sbG1lbnQSLi5rb21hcmkuZW5yb2xsbWVudC52MS5BcHByb3ZlRW5yb2xsbWVudFJlcXVlc3QaLy5rb21hcmkuZW5yb2xsbWVudC52MS5BcHByb3ZlRW5yb2xsbWVudFJlc3BvbnNlEmsKDkRlbnlFbnJvbGxtZW50Eisua29tYXJpLmVucm9sbG1lbnQudjEuRGVueUVucm9sbG1lbnRSZXF1ZXN0Giwua29tYXJpLmVucm9sbG1lbnQudjEuRGVueUVucm9sbG1lbnRSZXNwb25zZULpAQoYY29tLmtvbWFyaS5lbnJvbGxtZW50LnYxQg9FbnJvbGxtZW50UHJvdG9QAVpKZ2l0aHViLmNvbS9yMTEyMzQ1Njcva29tYXJpLXByb3RvL2dlbi9nby9rb21hcmkvZW5yb2xsbWVudC92MTtlbnJvbGxtZW50djGiAgNLRViqAhRLb21hcmkuRW5yb2xsbWVudC5WMcoCFEtvbWFyaVxFbnJvbGxtZW50XFYx4gIgS29tYXJpXEVucm9sbG1lbnRcVjFcR1BCTWV0YWRhdGHqAhZLb21hcmk6OkVucm9sbG1lbnQ6OlYxYgZwcm90bzM", [file_google_protobuf_duration, file_google_protobuf_timestamp, file_komari_common_v1_common, file_komari_security_v1_security]);
 
 /**
  * @generated from message komari.enrollment.v1.BeginEnrollmentRequest
@@ -407,6 +407,330 @@ export const DeviceIdentitySchema: GenMessage<DeviceIdentity> = /*@__PURE__*/
   messageDesc(file_komari_enrollment_v1_enrollment, 11);
 
 /**
+ * @generated from message komari.enrollment.v1.ListPendingEnrollmentsRequest
+ */
+export type ListPendingEnrollmentsRequest = Message<"komari.enrollment.v1.ListPendingEnrollmentsRequest"> & {
+};
+
+/**
+ * Describes the message komari.enrollment.v1.ListPendingEnrollmentsRequest.
+ * Use `create(ListPendingEnrollmentsRequestSchema)` to create a new message.
+ */
+export const ListPendingEnrollmentsRequestSchema: GenMessage<ListPendingEnrollmentsRequest> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 12);
+
+/**
+ * @generated from message komari.enrollment.v1.ListPendingEnrollmentsResponse
+ */
+export type ListPendingEnrollmentsResponse = Message<"komari.enrollment.v1.ListPendingEnrollmentsResponse"> & {
+  /**
+   * @generated from field: repeated komari.enrollment.v1.PendingEnrollment enrollments = 1;
+   */
+  enrollments: PendingEnrollment[];
+};
+
+/**
+ * Describes the message komari.enrollment.v1.ListPendingEnrollmentsResponse.
+ * Use `create(ListPendingEnrollmentsResponseSchema)` to create a new message.
+ */
+export const ListPendingEnrollmentsResponseSchema: GenMessage<ListPendingEnrollmentsResponse> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 13);
+
+/**
+ * @generated from message komari.enrollment.v1.GetPendingEnrollmentRequest
+ */
+export type GetPendingEnrollmentRequest = Message<"komari.enrollment.v1.GetPendingEnrollmentRequest"> & {
+  /**
+   * @generated from field: string user_code = 1;
+   */
+  userCode: string;
+};
+
+/**
+ * Describes the message komari.enrollment.v1.GetPendingEnrollmentRequest.
+ * Use `create(GetPendingEnrollmentRequestSchema)` to create a new message.
+ */
+export const GetPendingEnrollmentRequestSchema: GenMessage<GetPendingEnrollmentRequest> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 14);
+
+/**
+ * @generated from message komari.enrollment.v1.GetPendingEnrollmentResponse
+ */
+export type GetPendingEnrollmentResponse = Message<"komari.enrollment.v1.GetPendingEnrollmentResponse"> & {
+  /**
+   * @generated from field: komari.enrollment.v1.PendingEnrollment enrollment = 1;
+   */
+  enrollment?: PendingEnrollment | undefined;
+
+  /**
+   * candidates are existing machines this request may be a re-enrollment of,
+   * strongest match first. They are suggestions: the administrator decides.
+   *
+   * @generated from field: repeated komari.enrollment.v1.EnrollmentCandidate candidates = 2;
+   */
+  candidates: EnrollmentCandidate[];
+};
+
+/**
+ * Describes the message komari.enrollment.v1.GetPendingEnrollmentResponse.
+ * Use `create(GetPendingEnrollmentResponseSchema)` to create a new message.
+ */
+export const GetPendingEnrollmentResponseSchema: GenMessage<GetPendingEnrollmentResponse> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 15);
+
+/**
+ * @generated from message komari.enrollment.v1.ApproveEnrollmentRequest
+ */
+export type ApproveEnrollmentRequest = Message<"komari.enrollment.v1.ApproveEnrollmentRequest"> & {
+  /**
+   * @generated from field: string user_code = 1;
+   */
+  userCode: string;
+
+  /**
+   * @generated from oneof komari.enrollment.v1.ApproveEnrollmentRequest.target
+   */
+  target: {
+    /**
+     * existing_agent_id re-enrolls a machine the panel already knows. The new
+     * key replaces the old one, so whoever holds it becomes that machine.
+     *
+     * @generated from field: string existing_agent_id = 2;
+     */
+    value: string;
+    case: "existingAgentId";
+  } | {
+    /**
+     * new_agent creates a machine from the basic information supplied.
+     *
+     * @generated from field: komari.enrollment.v1.NewAgent new_agent = 3;
+     */
+    value: NewAgent;
+    case: "newAgent";
+  } | { case: undefined; value?: undefined };
+
+  /**
+   * two_factor is required when binding to an existing machine. That path
+   * hands an existing identity, with its history and delivered configuration,
+   * to whichever host holds the new key, so it costs a second factor; creating
+   * a new machine grants nothing that did not exist before.
+   *
+   * @generated from field: komari.common.v1.TwoFactorProof two_factor = 4;
+   */
+  twoFactor?: TwoFactorProof | undefined;
+};
+
+/**
+ * Describes the message komari.enrollment.v1.ApproveEnrollmentRequest.
+ * Use `create(ApproveEnrollmentRequestSchema)` to create a new message.
+ */
+export const ApproveEnrollmentRequestSchema: GenMessage<ApproveEnrollmentRequest> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 16);
+
+/**
+ * @generated from message komari.enrollment.v1.ApproveEnrollmentResponse
+ */
+export type ApproveEnrollmentResponse = Message<"komari.enrollment.v1.ApproveEnrollmentResponse"> & {
+  /**
+   * @generated from field: string agent_id = 1;
+   */
+  agentId: string;
+
+  /**
+   * @generated from field: komari.enrollment.v1.PendingEnrollment enrollment = 2;
+   */
+  enrollment?: PendingEnrollment | undefined;
+
+  /**
+   * created reports whether a new machine was created rather than bound.
+   *
+   * @generated from field: bool created = 3;
+   */
+  created: boolean;
+};
+
+/**
+ * Describes the message komari.enrollment.v1.ApproveEnrollmentResponse.
+ * Use `create(ApproveEnrollmentResponseSchema)` to create a new message.
+ */
+export const ApproveEnrollmentResponseSchema: GenMessage<ApproveEnrollmentResponse> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 17);
+
+/**
+ * @generated from message komari.enrollment.v1.DenyEnrollmentRequest
+ */
+export type DenyEnrollmentRequest = Message<"komari.enrollment.v1.DenyEnrollmentRequest"> & {
+  /**
+   * @generated from field: string user_code = 1;
+   */
+  userCode: string;
+};
+
+/**
+ * Describes the message komari.enrollment.v1.DenyEnrollmentRequest.
+ * Use `create(DenyEnrollmentRequestSchema)` to create a new message.
+ */
+export const DenyEnrollmentRequestSchema: GenMessage<DenyEnrollmentRequest> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 18);
+
+/**
+ * @generated from message komari.enrollment.v1.DenyEnrollmentResponse
+ */
+export type DenyEnrollmentResponse = Message<"komari.enrollment.v1.DenyEnrollmentResponse"> & {
+};
+
+/**
+ * Describes the message komari.enrollment.v1.DenyEnrollmentResponse.
+ * Use `create(DenyEnrollmentResponseSchema)` to create a new message.
+ */
+export const DenyEnrollmentResponseSchema: GenMessage<DenyEnrollmentResponse> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 19);
+
+/**
+ * NewAgent is the basic information a new-machine wizard collects.
+ *
+ * @generated from message komari.enrollment.v1.NewAgent
+ */
+export type NewAgent = Message<"komari.enrollment.v1.NewAgent"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string group = 2;
+   */
+  group: string;
+
+  /**
+   * @generated from field: string remark = 3;
+   */
+  remark: string;
+
+  /**
+   * @generated from field: string public_remark = 4;
+   */
+  publicRemark: string;
+
+  /**
+   * @generated from field: bool hidden = 5;
+   */
+  hidden: boolean;
+
+  /**
+   * @generated from field: repeated string tags = 6;
+   */
+  tags: string[];
+};
+
+/**
+ * Describes the message komari.enrollment.v1.NewAgent.
+ * Use `create(NewAgentSchema)` to create a new message.
+ */
+export const NewAgentSchema: GenMessage<NewAgent> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 20);
+
+/**
+ * PendingEnrollment is what an administrator sees before approving.
+ *
+ * @generated from message komari.enrollment.v1.PendingEnrollment
+ */
+export type PendingEnrollment = Message<"komari.enrollment.v1.PendingEnrollment"> & {
+  /**
+   * @generated from field: string user_code = 1;
+   */
+  userCode: string;
+
+  /**
+   * @generated from field: komari.enrollment.v1.EnrollmentState state = 2;
+   */
+  state: EnrollmentState;
+
+  /**
+   * @generated from field: komari.enrollment.v1.DeviceIdentity device = 3;
+   */
+  device?: DeviceIdentity | undefined;
+
+  /**
+   * agent_key_fingerprint lets the administrator compare against what the
+   * machine printed, which is the only way to notice a request that is not
+   * from the machine they think it is.
+   *
+   * @generated from field: string agent_key_fingerprint = 4;
+   */
+  agentKeyFingerprint: string;
+
+  /**
+   * @generated from field: string remote_ip = 5;
+   */
+  remoteIp: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 6;
+   */
+  createdAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp expires_at = 7;
+   */
+  expiresAt?: Timestamp | undefined;
+
+  /**
+   * agent_id is set once the request is approved.
+   *
+   * @generated from field: string agent_id = 8;
+   */
+  agentId: string;
+};
+
+/**
+ * Describes the message komari.enrollment.v1.PendingEnrollment.
+ * Use `create(PendingEnrollmentSchema)` to create a new message.
+ */
+export const PendingEnrollmentSchema: GenMessage<PendingEnrollment> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 21);
+
+/**
+ * EnrollmentCandidate is one existing machine a request may belong to.
+ *
+ * @generated from message komari.enrollment.v1.EnrollmentCandidate
+ */
+export type EnrollmentCandidate = Message<"komari.enrollment.v1.EnrollmentCandidate"> & {
+  /**
+   * @generated from field: string agent_id = 1;
+   */
+  agentId: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * match_reason explains the suggestion, such as a matching host
+   * fingerprint or hostname.
+   *
+   * @generated from field: string match_reason = 3;
+   */
+  matchReason: string;
+
+  /**
+   * fingerprint_match is true when the host fingerprint is identical, which is
+   * much stronger evidence than a hostname.
+   *
+   * @generated from field: bool fingerprint_match = 4;
+   */
+  fingerprintMatch: boolean;
+};
+
+/**
+ * Describes the message komari.enrollment.v1.EnrollmentCandidate.
+ * Use `create(EnrollmentCandidateSchema)` to create a new message.
+ */
+export const EnrollmentCandidateSchema: GenMessage<EnrollmentCandidate> = /*@__PURE__*/
+  messageDesc(file_komari_enrollment_v1_enrollment, 22);
+
+/**
  * EnrollmentState is the state of one device authorization attempt.
  *
  * @generated from enum komari.enrollment.v1.EnrollmentState
@@ -522,4 +846,60 @@ export const EnrollmentService: GenService<{
   },
 }> = /*@__PURE__*/
   serviceDesc(file_komari_enrollment_v1_enrollment, 0);
+
+/**
+ * EnrollmentAdminService is the panel side of an enrollment: where a signed-in
+ * administrator sees a pending request and decides what it becomes.
+ *
+ * It is separate from EnrollmentService because the two have opposite callers.
+ * EnrollmentService is reached by machines that hold no credential yet; this
+ * service is reached only by an administrator session, and it is the step that
+ * actually grants anything.
+ *
+ * @generated from service komari.enrollment.v1.EnrollmentAdminService
+ */
+export const EnrollmentAdminService: GenService<{
+  /**
+   * ListPendingEnrollments returns requests awaiting a decision.
+   *
+   * @generated from rpc komari.enrollment.v1.EnrollmentAdminService.ListPendingEnrollments
+   */
+  listPendingEnrollments: {
+    methodKind: "unary";
+    input: typeof ListPendingEnrollmentsRequestSchema;
+    output: typeof ListPendingEnrollmentsResponseSchema;
+  },
+  /**
+   * GetPendingEnrollment looks a request up by the code shown on the machine,
+   * together with existing machines it plausibly belongs to.
+   *
+   * @generated from rpc komari.enrollment.v1.EnrollmentAdminService.GetPendingEnrollment
+   */
+  getPendingEnrollment: {
+    methodKind: "unary";
+    input: typeof GetPendingEnrollmentRequestSchema;
+    output: typeof GetPendingEnrollmentResponseSchema;
+  },
+  /**
+   * ApproveEnrollment binds a request to a new or an existing machine.
+   *
+   * @generated from rpc komari.enrollment.v1.EnrollmentAdminService.ApproveEnrollment
+   */
+  approveEnrollment: {
+    methodKind: "unary";
+    input: typeof ApproveEnrollmentRequestSchema;
+    output: typeof ApproveEnrollmentResponseSchema;
+  },
+  /**
+   * DenyEnrollment rejects a request.
+   *
+   * @generated from rpc komari.enrollment.v1.EnrollmentAdminService.DenyEnrollment
+   */
+  denyEnrollment: {
+    methodKind: "unary";
+    input: typeof DenyEnrollmentRequestSchema;
+    output: typeof DenyEnrollmentResponseSchema;
+  },
+}> = /*@__PURE__*/
+  serviceDesc(file_komari_enrollment_v1_enrollment, 1);
 

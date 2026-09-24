@@ -66,6 +66,9 @@ const (
 	// PrivilegedDeliveryServiceCompleteManualUpgradeProcedure is the fully-qualified name of the
 	// PrivilegedDeliveryService's CompleteManualUpgrade RPC.
 	PrivilegedDeliveryServiceCompleteManualUpgradeProcedure = "/komari.config.v1.PrivilegedDeliveryService/CompleteManualUpgrade"
+	// PrivilegedDeliveryServiceListPrivilegedRevisionsProcedure is the fully-qualified name of the
+	// PrivilegedDeliveryService's ListPrivilegedRevisions RPC.
+	PrivilegedDeliveryServiceListPrivilegedRevisionsProcedure = "/komari.config.v1.PrivilegedDeliveryService/ListPrivilegedRevisions"
 )
 
 // ConfigServiceClient is a client for the komari.config.v1.ConfigService service.
@@ -246,6 +249,9 @@ type PrivilegedDeliveryServiceClient interface {
 	// task nonce. It is the only way a privileged revision becomes active, and
 	// it proves the operator ran the upgrade on the machine itself.
 	CompleteManualUpgrade(context.Context, *connect.Request[v1.CompleteManualUpgradeRequest]) (*connect.Response[v1.CompleteManualUpgradeResponse], error)
+	// ListPrivilegedRevisions returns a machine's privileged history and which
+	// revision it is actually running, for the panel.
+	ListPrivilegedRevisions(context.Context, *connect.Request[v1.ListPrivilegedRevisionsRequest]) (*connect.Response[v1.ListPrivilegedRevisionsResponse], error)
 }
 
 // NewPrivilegedDeliveryServiceClient constructs a client for the
@@ -295,6 +301,12 @@ func NewPrivilegedDeliveryServiceClient(httpClient connect.HTTPClient, baseURL s
 			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("CompleteManualUpgrade")),
 			connect.WithClientOptions(opts...),
 		),
+		listPrivilegedRevisions: connect.NewClient[v1.ListPrivilegedRevisionsRequest, v1.ListPrivilegedRevisionsResponse](
+			httpClient,
+			baseURL+PrivilegedDeliveryServiceListPrivilegedRevisionsProcedure,
+			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("ListPrivilegedRevisions")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -306,6 +318,7 @@ type privilegedDeliveryServiceClient struct {
 	confirmPrivilegedDelivery *connect.Client[v1.ConfirmPrivilegedDeliveryRequest, v1.ConfirmPrivilegedDeliveryResponse]
 	reportPrivilegedDelivery  *connect.Client[v1.ReportPrivilegedDeliveryRequest, v1.ReportPrivilegedDeliveryResponse]
 	completeManualUpgrade     *connect.Client[v1.CompleteManualUpgradeRequest, v1.CompleteManualUpgradeResponse]
+	listPrivilegedRevisions   *connect.Client[v1.ListPrivilegedRevisionsRequest, v1.ListPrivilegedRevisionsResponse]
 }
 
 // GetPrivilegedDelivery calls komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery.
@@ -341,6 +354,11 @@ func (c *privilegedDeliveryServiceClient) CompleteManualUpgrade(ctx context.Cont
 	return c.completeManualUpgrade.CallUnary(ctx, req)
 }
 
+// ListPrivilegedRevisions calls komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions.
+func (c *privilegedDeliveryServiceClient) ListPrivilegedRevisions(ctx context.Context, req *connect.Request[v1.ListPrivilegedRevisionsRequest]) (*connect.Response[v1.ListPrivilegedRevisionsResponse], error) {
+	return c.listPrivilegedRevisions.CallUnary(ctx, req)
+}
+
 // PrivilegedDeliveryServiceHandler is an implementation of the
 // komari.config.v1.PrivilegedDeliveryService service.
 type PrivilegedDeliveryServiceHandler interface {
@@ -363,6 +381,9 @@ type PrivilegedDeliveryServiceHandler interface {
 	// task nonce. It is the only way a privileged revision becomes active, and
 	// it proves the operator ran the upgrade on the machine itself.
 	CompleteManualUpgrade(context.Context, *connect.Request[v1.CompleteManualUpgradeRequest]) (*connect.Response[v1.CompleteManualUpgradeResponse], error)
+	// ListPrivilegedRevisions returns a machine's privileged history and which
+	// revision it is actually running, for the panel.
+	ListPrivilegedRevisions(context.Context, *connect.Request[v1.ListPrivilegedRevisionsRequest]) (*connect.Response[v1.ListPrivilegedRevisionsResponse], error)
 }
 
 // NewPrivilegedDeliveryServiceHandler builds an HTTP handler from the service implementation. It
@@ -408,6 +429,12 @@ func NewPrivilegedDeliveryServiceHandler(svc PrivilegedDeliveryServiceHandler, o
 		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("CompleteManualUpgrade")),
 		connect.WithHandlerOptions(opts...),
 	)
+	privilegedDeliveryServiceListPrivilegedRevisionsHandler := connect.NewUnaryHandler(
+		PrivilegedDeliveryServiceListPrivilegedRevisionsProcedure,
+		svc.ListPrivilegedRevisions,
+		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("ListPrivilegedRevisions")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/komari.config.v1.PrivilegedDeliveryService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure:
@@ -422,6 +449,8 @@ func NewPrivilegedDeliveryServiceHandler(svc PrivilegedDeliveryServiceHandler, o
 			privilegedDeliveryServiceReportPrivilegedDeliveryHandler.ServeHTTP(w, r)
 		case PrivilegedDeliveryServiceCompleteManualUpgradeProcedure:
 			privilegedDeliveryServiceCompleteManualUpgradeHandler.ServeHTTP(w, r)
+		case PrivilegedDeliveryServiceListPrivilegedRevisionsProcedure:
+			privilegedDeliveryServiceListPrivilegedRevisionsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -453,4 +482,8 @@ func (UnimplementedPrivilegedDeliveryServiceHandler) ReportPrivilegedDelivery(co
 
 func (UnimplementedPrivilegedDeliveryServiceHandler) CompleteManualUpgrade(context.Context, *connect.Request[v1.CompleteManualUpgradeRequest]) (*connect.Response[v1.CompleteManualUpgradeResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade is not implemented"))
+}
+
+func (UnimplementedPrivilegedDeliveryServiceHandler) ListPrivilegedRevisions(context.Context, *connect.Request[v1.ListPrivilegedRevisionsRequest]) (*connect.Response[v1.ListPrivilegedRevisionsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions is not implemented"))
 }

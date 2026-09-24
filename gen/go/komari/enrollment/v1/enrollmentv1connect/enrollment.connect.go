@@ -23,6 +23,8 @@ const _ = connect.IsAtLeastVersion1_13_0
 const (
 	// EnrollmentServiceName is the fully-qualified name of the EnrollmentService service.
 	EnrollmentServiceName = "komari.enrollment.v1.EnrollmentService"
+	// EnrollmentAdminServiceName is the fully-qualified name of the EnrollmentAdminService service.
+	EnrollmentAdminServiceName = "komari.enrollment.v1.EnrollmentAdminService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -48,6 +50,18 @@ const (
 	// EnrollmentServiceGetTrustBundleProcedure is the fully-qualified name of the EnrollmentService's
 	// GetTrustBundle RPC.
 	EnrollmentServiceGetTrustBundleProcedure = "/komari.enrollment.v1.EnrollmentService/GetTrustBundle"
+	// EnrollmentAdminServiceListPendingEnrollmentsProcedure is the fully-qualified name of the
+	// EnrollmentAdminService's ListPendingEnrollments RPC.
+	EnrollmentAdminServiceListPendingEnrollmentsProcedure = "/komari.enrollment.v1.EnrollmentAdminService/ListPendingEnrollments"
+	// EnrollmentAdminServiceGetPendingEnrollmentProcedure is the fully-qualified name of the
+	// EnrollmentAdminService's GetPendingEnrollment RPC.
+	EnrollmentAdminServiceGetPendingEnrollmentProcedure = "/komari.enrollment.v1.EnrollmentAdminService/GetPendingEnrollment"
+	// EnrollmentAdminServiceApproveEnrollmentProcedure is the fully-qualified name of the
+	// EnrollmentAdminService's ApproveEnrollment RPC.
+	EnrollmentAdminServiceApproveEnrollmentProcedure = "/komari.enrollment.v1.EnrollmentAdminService/ApproveEnrollment"
+	// EnrollmentAdminServiceDenyEnrollmentProcedure is the fully-qualified name of the
+	// EnrollmentAdminService's DenyEnrollment RPC.
+	EnrollmentAdminServiceDenyEnrollmentProcedure = "/komari.enrollment.v1.EnrollmentAdminService/DenyEnrollment"
 )
 
 // EnrollmentServiceClient is a client for the komari.enrollment.v1.EnrollmentService service.
@@ -241,4 +255,165 @@ func (UnimplementedEnrollmentServiceHandler) RevokeCredentials(context.Context, 
 
 func (UnimplementedEnrollmentServiceHandler) GetTrustBundle(context.Context, *connect.Request[v1.GetTrustBundleRequest]) (*connect.Response[v1.GetTrustBundleResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.enrollment.v1.EnrollmentService.GetTrustBundle is not implemented"))
+}
+
+// EnrollmentAdminServiceClient is a client for the komari.enrollment.v1.EnrollmentAdminService
+// service.
+type EnrollmentAdminServiceClient interface {
+	// ListPendingEnrollments returns requests awaiting a decision.
+	ListPendingEnrollments(context.Context, *connect.Request[v1.ListPendingEnrollmentsRequest]) (*connect.Response[v1.ListPendingEnrollmentsResponse], error)
+	// GetPendingEnrollment looks a request up by the code shown on the machine,
+	// together with existing machines it plausibly belongs to.
+	GetPendingEnrollment(context.Context, *connect.Request[v1.GetPendingEnrollmentRequest]) (*connect.Response[v1.GetPendingEnrollmentResponse], error)
+	// ApproveEnrollment binds a request to a new or an existing machine.
+	ApproveEnrollment(context.Context, *connect.Request[v1.ApproveEnrollmentRequest]) (*connect.Response[v1.ApproveEnrollmentResponse], error)
+	// DenyEnrollment rejects a request.
+	DenyEnrollment(context.Context, *connect.Request[v1.DenyEnrollmentRequest]) (*connect.Response[v1.DenyEnrollmentResponse], error)
+}
+
+// NewEnrollmentAdminServiceClient constructs a client for the
+// komari.enrollment.v1.EnrollmentAdminService service. By default, it uses the Connect protocol
+// with the binary Protobuf Codec, asks for gzipped responses, and sends uncompressed requests. To
+// use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or connect.WithGRPCWeb()
+// options.
+//
+// The URL supplied here should be the base URL for the Connect or gRPC server (for example,
+// http://api.acme.com or https://acme.com/grpc).
+func NewEnrollmentAdminServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) EnrollmentAdminServiceClient {
+	baseURL = strings.TrimRight(baseURL, "/")
+	enrollmentAdminServiceMethods := v1.File_komari_enrollment_v1_enrollment_proto.Services().ByName("EnrollmentAdminService").Methods()
+	return &enrollmentAdminServiceClient{
+		listPendingEnrollments: connect.NewClient[v1.ListPendingEnrollmentsRequest, v1.ListPendingEnrollmentsResponse](
+			httpClient,
+			baseURL+EnrollmentAdminServiceListPendingEnrollmentsProcedure,
+			connect.WithSchema(enrollmentAdminServiceMethods.ByName("ListPendingEnrollments")),
+			connect.WithClientOptions(opts...),
+		),
+		getPendingEnrollment: connect.NewClient[v1.GetPendingEnrollmentRequest, v1.GetPendingEnrollmentResponse](
+			httpClient,
+			baseURL+EnrollmentAdminServiceGetPendingEnrollmentProcedure,
+			connect.WithSchema(enrollmentAdminServiceMethods.ByName("GetPendingEnrollment")),
+			connect.WithClientOptions(opts...),
+		),
+		approveEnrollment: connect.NewClient[v1.ApproveEnrollmentRequest, v1.ApproveEnrollmentResponse](
+			httpClient,
+			baseURL+EnrollmentAdminServiceApproveEnrollmentProcedure,
+			connect.WithSchema(enrollmentAdminServiceMethods.ByName("ApproveEnrollment")),
+			connect.WithClientOptions(opts...),
+		),
+		denyEnrollment: connect.NewClient[v1.DenyEnrollmentRequest, v1.DenyEnrollmentResponse](
+			httpClient,
+			baseURL+EnrollmentAdminServiceDenyEnrollmentProcedure,
+			connect.WithSchema(enrollmentAdminServiceMethods.ByName("DenyEnrollment")),
+			connect.WithClientOptions(opts...),
+		),
+	}
+}
+
+// enrollmentAdminServiceClient implements EnrollmentAdminServiceClient.
+type enrollmentAdminServiceClient struct {
+	listPendingEnrollments *connect.Client[v1.ListPendingEnrollmentsRequest, v1.ListPendingEnrollmentsResponse]
+	getPendingEnrollment   *connect.Client[v1.GetPendingEnrollmentRequest, v1.GetPendingEnrollmentResponse]
+	approveEnrollment      *connect.Client[v1.ApproveEnrollmentRequest, v1.ApproveEnrollmentResponse]
+	denyEnrollment         *connect.Client[v1.DenyEnrollmentRequest, v1.DenyEnrollmentResponse]
+}
+
+// ListPendingEnrollments calls komari.enrollment.v1.EnrollmentAdminService.ListPendingEnrollments.
+func (c *enrollmentAdminServiceClient) ListPendingEnrollments(ctx context.Context, req *connect.Request[v1.ListPendingEnrollmentsRequest]) (*connect.Response[v1.ListPendingEnrollmentsResponse], error) {
+	return c.listPendingEnrollments.CallUnary(ctx, req)
+}
+
+// GetPendingEnrollment calls komari.enrollment.v1.EnrollmentAdminService.GetPendingEnrollment.
+func (c *enrollmentAdminServiceClient) GetPendingEnrollment(ctx context.Context, req *connect.Request[v1.GetPendingEnrollmentRequest]) (*connect.Response[v1.GetPendingEnrollmentResponse], error) {
+	return c.getPendingEnrollment.CallUnary(ctx, req)
+}
+
+// ApproveEnrollment calls komari.enrollment.v1.EnrollmentAdminService.ApproveEnrollment.
+func (c *enrollmentAdminServiceClient) ApproveEnrollment(ctx context.Context, req *connect.Request[v1.ApproveEnrollmentRequest]) (*connect.Response[v1.ApproveEnrollmentResponse], error) {
+	return c.approveEnrollment.CallUnary(ctx, req)
+}
+
+// DenyEnrollment calls komari.enrollment.v1.EnrollmentAdminService.DenyEnrollment.
+func (c *enrollmentAdminServiceClient) DenyEnrollment(ctx context.Context, req *connect.Request[v1.DenyEnrollmentRequest]) (*connect.Response[v1.DenyEnrollmentResponse], error) {
+	return c.denyEnrollment.CallUnary(ctx, req)
+}
+
+// EnrollmentAdminServiceHandler is an implementation of the
+// komari.enrollment.v1.EnrollmentAdminService service.
+type EnrollmentAdminServiceHandler interface {
+	// ListPendingEnrollments returns requests awaiting a decision.
+	ListPendingEnrollments(context.Context, *connect.Request[v1.ListPendingEnrollmentsRequest]) (*connect.Response[v1.ListPendingEnrollmentsResponse], error)
+	// GetPendingEnrollment looks a request up by the code shown on the machine,
+	// together with existing machines it plausibly belongs to.
+	GetPendingEnrollment(context.Context, *connect.Request[v1.GetPendingEnrollmentRequest]) (*connect.Response[v1.GetPendingEnrollmentResponse], error)
+	// ApproveEnrollment binds a request to a new or an existing machine.
+	ApproveEnrollment(context.Context, *connect.Request[v1.ApproveEnrollmentRequest]) (*connect.Response[v1.ApproveEnrollmentResponse], error)
+	// DenyEnrollment rejects a request.
+	DenyEnrollment(context.Context, *connect.Request[v1.DenyEnrollmentRequest]) (*connect.Response[v1.DenyEnrollmentResponse], error)
+}
+
+// NewEnrollmentAdminServiceHandler builds an HTTP handler from the service implementation. It
+// returns the path on which to mount the handler and the handler itself.
+//
+// By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
+// and JSON codecs. They also support gzip compression.
+func NewEnrollmentAdminServiceHandler(svc EnrollmentAdminServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	enrollmentAdminServiceMethods := v1.File_komari_enrollment_v1_enrollment_proto.Services().ByName("EnrollmentAdminService").Methods()
+	enrollmentAdminServiceListPendingEnrollmentsHandler := connect.NewUnaryHandler(
+		EnrollmentAdminServiceListPendingEnrollmentsProcedure,
+		svc.ListPendingEnrollments,
+		connect.WithSchema(enrollmentAdminServiceMethods.ByName("ListPendingEnrollments")),
+		connect.WithHandlerOptions(opts...),
+	)
+	enrollmentAdminServiceGetPendingEnrollmentHandler := connect.NewUnaryHandler(
+		EnrollmentAdminServiceGetPendingEnrollmentProcedure,
+		svc.GetPendingEnrollment,
+		connect.WithSchema(enrollmentAdminServiceMethods.ByName("GetPendingEnrollment")),
+		connect.WithHandlerOptions(opts...),
+	)
+	enrollmentAdminServiceApproveEnrollmentHandler := connect.NewUnaryHandler(
+		EnrollmentAdminServiceApproveEnrollmentProcedure,
+		svc.ApproveEnrollment,
+		connect.WithSchema(enrollmentAdminServiceMethods.ByName("ApproveEnrollment")),
+		connect.WithHandlerOptions(opts...),
+	)
+	enrollmentAdminServiceDenyEnrollmentHandler := connect.NewUnaryHandler(
+		EnrollmentAdminServiceDenyEnrollmentProcedure,
+		svc.DenyEnrollment,
+		connect.WithSchema(enrollmentAdminServiceMethods.ByName("DenyEnrollment")),
+		connect.WithHandlerOptions(opts...),
+	)
+	return "/komari.enrollment.v1.EnrollmentAdminService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case EnrollmentAdminServiceListPendingEnrollmentsProcedure:
+			enrollmentAdminServiceListPendingEnrollmentsHandler.ServeHTTP(w, r)
+		case EnrollmentAdminServiceGetPendingEnrollmentProcedure:
+			enrollmentAdminServiceGetPendingEnrollmentHandler.ServeHTTP(w, r)
+		case EnrollmentAdminServiceApproveEnrollmentProcedure:
+			enrollmentAdminServiceApproveEnrollmentHandler.ServeHTTP(w, r)
+		case EnrollmentAdminServiceDenyEnrollmentProcedure:
+			enrollmentAdminServiceDenyEnrollmentHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
+}
+
+// UnimplementedEnrollmentAdminServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedEnrollmentAdminServiceHandler struct{}
+
+func (UnimplementedEnrollmentAdminServiceHandler) ListPendingEnrollments(context.Context, *connect.Request[v1.ListPendingEnrollmentsRequest]) (*connect.Response[v1.ListPendingEnrollmentsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.enrollment.v1.EnrollmentAdminService.ListPendingEnrollments is not implemented"))
+}
+
+func (UnimplementedEnrollmentAdminServiceHandler) GetPendingEnrollment(context.Context, *connect.Request[v1.GetPendingEnrollmentRequest]) (*connect.Response[v1.GetPendingEnrollmentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.enrollment.v1.EnrollmentAdminService.GetPendingEnrollment is not implemented"))
+}
+
+func (UnimplementedEnrollmentAdminServiceHandler) ApproveEnrollment(context.Context, *connect.Request[v1.ApproveEnrollmentRequest]) (*connect.Response[v1.ApproveEnrollmentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.enrollment.v1.EnrollmentAdminService.ApproveEnrollment is not implemented"))
+}
+
+func (UnimplementedEnrollmentAdminServiceHandler) DenyEnrollment(context.Context, *connect.Request[v1.DenyEnrollmentRequest]) (*connect.Response[v1.DenyEnrollmentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.enrollment.v1.EnrollmentAdminService.DenyEnrollment is not implemented"))
 }

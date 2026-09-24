@@ -857,6 +857,693 @@ func (x *DeviceIdentity) GetControlPlaneKeyFingerprint() string {
 	return ""
 }
 
+type ListPendingEnrollmentsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPendingEnrollmentsRequest) Reset() {
+	*x = ListPendingEnrollmentsRequest{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPendingEnrollmentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPendingEnrollmentsRequest) ProtoMessage() {}
+
+func (x *ListPendingEnrollmentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPendingEnrollmentsRequest.ProtoReflect.Descriptor instead.
+func (*ListPendingEnrollmentsRequest) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{12}
+}
+
+type ListPendingEnrollmentsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Enrollments   []*PendingEnrollment   `protobuf:"bytes,1,rep,name=enrollments,proto3" json:"enrollments,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPendingEnrollmentsResponse) Reset() {
+	*x = ListPendingEnrollmentsResponse{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPendingEnrollmentsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPendingEnrollmentsResponse) ProtoMessage() {}
+
+func (x *ListPendingEnrollmentsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPendingEnrollmentsResponse.ProtoReflect.Descriptor instead.
+func (*ListPendingEnrollmentsResponse) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ListPendingEnrollmentsResponse) GetEnrollments() []*PendingEnrollment {
+	if x != nil {
+		return x.Enrollments
+	}
+	return nil
+}
+
+type GetPendingEnrollmentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserCode      string                 `protobuf:"bytes,1,opt,name=user_code,json=userCode,proto3" json:"user_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPendingEnrollmentRequest) Reset() {
+	*x = GetPendingEnrollmentRequest{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPendingEnrollmentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPendingEnrollmentRequest) ProtoMessage() {}
+
+func (x *GetPendingEnrollmentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPendingEnrollmentRequest.ProtoReflect.Descriptor instead.
+func (*GetPendingEnrollmentRequest) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetPendingEnrollmentRequest) GetUserCode() string {
+	if x != nil {
+		return x.UserCode
+	}
+	return ""
+}
+
+type GetPendingEnrollmentResponse struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	Enrollment *PendingEnrollment     `protobuf:"bytes,1,opt,name=enrollment,proto3" json:"enrollment,omitempty"`
+	// candidates are existing machines this request may be a re-enrollment of,
+	// strongest match first. They are suggestions: the administrator decides.
+	Candidates    []*EnrollmentCandidate `protobuf:"bytes,2,rep,name=candidates,proto3" json:"candidates,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPendingEnrollmentResponse) Reset() {
+	*x = GetPendingEnrollmentResponse{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPendingEnrollmentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPendingEnrollmentResponse) ProtoMessage() {}
+
+func (x *GetPendingEnrollmentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPendingEnrollmentResponse.ProtoReflect.Descriptor instead.
+func (*GetPendingEnrollmentResponse) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GetPendingEnrollmentResponse) GetEnrollment() *PendingEnrollment {
+	if x != nil {
+		return x.Enrollment
+	}
+	return nil
+}
+
+func (x *GetPendingEnrollmentResponse) GetCandidates() []*EnrollmentCandidate {
+	if x != nil {
+		return x.Candidates
+	}
+	return nil
+}
+
+type ApproveEnrollmentRequest struct {
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	UserCode string                 `protobuf:"bytes,1,opt,name=user_code,json=userCode,proto3" json:"user_code,omitempty"`
+	// Types that are valid to be assigned to Target:
+	//
+	//	*ApproveEnrollmentRequest_ExistingAgentId
+	//	*ApproveEnrollmentRequest_NewAgent
+	Target isApproveEnrollmentRequest_Target `protobuf_oneof:"target"`
+	// two_factor is required when binding to an existing machine. That path
+	// hands an existing identity, with its history and delivered configuration,
+	// to whichever host holds the new key, so it costs a second factor; creating
+	// a new machine grants nothing that did not exist before.
+	TwoFactor     *v11.TwoFactorProof `protobuf:"bytes,4,opt,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ApproveEnrollmentRequest) Reset() {
+	*x = ApproveEnrollmentRequest{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ApproveEnrollmentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApproveEnrollmentRequest) ProtoMessage() {}
+
+func (x *ApproveEnrollmentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApproveEnrollmentRequest.ProtoReflect.Descriptor instead.
+func (*ApproveEnrollmentRequest) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ApproveEnrollmentRequest) GetUserCode() string {
+	if x != nil {
+		return x.UserCode
+	}
+	return ""
+}
+
+func (x *ApproveEnrollmentRequest) GetTarget() isApproveEnrollmentRequest_Target {
+	if x != nil {
+		return x.Target
+	}
+	return nil
+}
+
+func (x *ApproveEnrollmentRequest) GetExistingAgentId() string {
+	if x != nil {
+		if x, ok := x.Target.(*ApproveEnrollmentRequest_ExistingAgentId); ok {
+			return x.ExistingAgentId
+		}
+	}
+	return ""
+}
+
+func (x *ApproveEnrollmentRequest) GetNewAgent() *NewAgent {
+	if x != nil {
+		if x, ok := x.Target.(*ApproveEnrollmentRequest_NewAgent); ok {
+			return x.NewAgent
+		}
+	}
+	return nil
+}
+
+func (x *ApproveEnrollmentRequest) GetTwoFactor() *v11.TwoFactorProof {
+	if x != nil {
+		return x.TwoFactor
+	}
+	return nil
+}
+
+type isApproveEnrollmentRequest_Target interface {
+	isApproveEnrollmentRequest_Target()
+}
+
+type ApproveEnrollmentRequest_ExistingAgentId struct {
+	// existing_agent_id re-enrolls a machine the panel already knows. The new
+	// key replaces the old one, so whoever holds it becomes that machine.
+	ExistingAgentId string `protobuf:"bytes,2,opt,name=existing_agent_id,json=existingAgentId,proto3,oneof"`
+}
+
+type ApproveEnrollmentRequest_NewAgent struct {
+	// new_agent creates a machine from the basic information supplied.
+	NewAgent *NewAgent `protobuf:"bytes,3,opt,name=new_agent,json=newAgent,proto3,oneof"`
+}
+
+func (*ApproveEnrollmentRequest_ExistingAgentId) isApproveEnrollmentRequest_Target() {}
+
+func (*ApproveEnrollmentRequest_NewAgent) isApproveEnrollmentRequest_Target() {}
+
+type ApproveEnrollmentResponse struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	AgentId    string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	Enrollment *PendingEnrollment     `protobuf:"bytes,2,opt,name=enrollment,proto3" json:"enrollment,omitempty"`
+	// created reports whether a new machine was created rather than bound.
+	Created       bool `protobuf:"varint,3,opt,name=created,proto3" json:"created,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ApproveEnrollmentResponse) Reset() {
+	*x = ApproveEnrollmentResponse{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ApproveEnrollmentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApproveEnrollmentResponse) ProtoMessage() {}
+
+func (x *ApproveEnrollmentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApproveEnrollmentResponse.ProtoReflect.Descriptor instead.
+func (*ApproveEnrollmentResponse) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *ApproveEnrollmentResponse) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+func (x *ApproveEnrollmentResponse) GetEnrollment() *PendingEnrollment {
+	if x != nil {
+		return x.Enrollment
+	}
+	return nil
+}
+
+func (x *ApproveEnrollmentResponse) GetCreated() bool {
+	if x != nil {
+		return x.Created
+	}
+	return false
+}
+
+type DenyEnrollmentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserCode      string                 `protobuf:"bytes,1,opt,name=user_code,json=userCode,proto3" json:"user_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DenyEnrollmentRequest) Reset() {
+	*x = DenyEnrollmentRequest{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DenyEnrollmentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DenyEnrollmentRequest) ProtoMessage() {}
+
+func (x *DenyEnrollmentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DenyEnrollmentRequest.ProtoReflect.Descriptor instead.
+func (*DenyEnrollmentRequest) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *DenyEnrollmentRequest) GetUserCode() string {
+	if x != nil {
+		return x.UserCode
+	}
+	return ""
+}
+
+type DenyEnrollmentResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DenyEnrollmentResponse) Reset() {
+	*x = DenyEnrollmentResponse{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DenyEnrollmentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DenyEnrollmentResponse) ProtoMessage() {}
+
+func (x *DenyEnrollmentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DenyEnrollmentResponse.ProtoReflect.Descriptor instead.
+func (*DenyEnrollmentResponse) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{19}
+}
+
+// NewAgent is the basic information a new-machine wizard collects.
+type NewAgent struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Group         string                 `protobuf:"bytes,2,opt,name=group,proto3" json:"group,omitempty"`
+	Remark        string                 `protobuf:"bytes,3,opt,name=remark,proto3" json:"remark,omitempty"`
+	PublicRemark  string                 `protobuf:"bytes,4,opt,name=public_remark,json=publicRemark,proto3" json:"public_remark,omitempty"`
+	Hidden        bool                   `protobuf:"varint,5,opt,name=hidden,proto3" json:"hidden,omitempty"`
+	Tags          []string               `protobuf:"bytes,6,rep,name=tags,proto3" json:"tags,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *NewAgent) Reset() {
+	*x = NewAgent{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *NewAgent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NewAgent) ProtoMessage() {}
+
+func (x *NewAgent) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NewAgent.ProtoReflect.Descriptor instead.
+func (*NewAgent) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *NewAgent) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *NewAgent) GetGroup() string {
+	if x != nil {
+		return x.Group
+	}
+	return ""
+}
+
+func (x *NewAgent) GetRemark() string {
+	if x != nil {
+		return x.Remark
+	}
+	return ""
+}
+
+func (x *NewAgent) GetPublicRemark() string {
+	if x != nil {
+		return x.PublicRemark
+	}
+	return ""
+}
+
+func (x *NewAgent) GetHidden() bool {
+	if x != nil {
+		return x.Hidden
+	}
+	return false
+}
+
+func (x *NewAgent) GetTags() []string {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
+// PendingEnrollment is what an administrator sees before approving.
+type PendingEnrollment struct {
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	UserCode string                 `protobuf:"bytes,1,opt,name=user_code,json=userCode,proto3" json:"user_code,omitempty"`
+	State    EnrollmentState        `protobuf:"varint,2,opt,name=state,proto3,enum=komari.enrollment.v1.EnrollmentState" json:"state,omitempty"`
+	Device   *DeviceIdentity        `protobuf:"bytes,3,opt,name=device,proto3" json:"device,omitempty"`
+	// agent_key_fingerprint lets the administrator compare against what the
+	// machine printed, which is the only way to notice a request that is not
+	// from the machine they think it is.
+	AgentKeyFingerprint string                 `protobuf:"bytes,4,opt,name=agent_key_fingerprint,json=agentKeyFingerprint,proto3" json:"agent_key_fingerprint,omitempty"`
+	RemoteIp            string                 `protobuf:"bytes,5,opt,name=remote_ip,json=remoteIp,proto3" json:"remote_ip,omitempty"`
+	CreatedAt           *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	ExpiresAt           *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	// agent_id is set once the request is approved.
+	AgentId       string `protobuf:"bytes,8,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PendingEnrollment) Reset() {
+	*x = PendingEnrollment{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PendingEnrollment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PendingEnrollment) ProtoMessage() {}
+
+func (x *PendingEnrollment) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PendingEnrollment.ProtoReflect.Descriptor instead.
+func (*PendingEnrollment) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *PendingEnrollment) GetUserCode() string {
+	if x != nil {
+		return x.UserCode
+	}
+	return ""
+}
+
+func (x *PendingEnrollment) GetState() EnrollmentState {
+	if x != nil {
+		return x.State
+	}
+	return EnrollmentState_ENROLLMENT_STATE_UNSPECIFIED
+}
+
+func (x *PendingEnrollment) GetDevice() *DeviceIdentity {
+	if x != nil {
+		return x.Device
+	}
+	return nil
+}
+
+func (x *PendingEnrollment) GetAgentKeyFingerprint() string {
+	if x != nil {
+		return x.AgentKeyFingerprint
+	}
+	return ""
+}
+
+func (x *PendingEnrollment) GetRemoteIp() string {
+	if x != nil {
+		return x.RemoteIp
+	}
+	return ""
+}
+
+func (x *PendingEnrollment) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *PendingEnrollment) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return nil
+}
+
+func (x *PendingEnrollment) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+// EnrollmentCandidate is one existing machine a request may belong to.
+type EnrollmentCandidate struct {
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	AgentId string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	Name    string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// match_reason explains the suggestion, such as a matching host
+	// fingerprint or hostname.
+	MatchReason string `protobuf:"bytes,3,opt,name=match_reason,json=matchReason,proto3" json:"match_reason,omitempty"`
+	// fingerprint_match is true when the host fingerprint is identical, which is
+	// much stronger evidence than a hostname.
+	FingerprintMatch bool `protobuf:"varint,4,opt,name=fingerprint_match,json=fingerprintMatch,proto3" json:"fingerprint_match,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *EnrollmentCandidate) Reset() {
+	*x = EnrollmentCandidate{}
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EnrollmentCandidate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnrollmentCandidate) ProtoMessage() {}
+
+func (x *EnrollmentCandidate) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_enrollment_v1_enrollment_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnrollmentCandidate.ProtoReflect.Descriptor instead.
+func (*EnrollmentCandidate) Descriptor() ([]byte, []int) {
+	return file_komari_enrollment_v1_enrollment_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *EnrollmentCandidate) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+func (x *EnrollmentCandidate) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *EnrollmentCandidate) GetMatchReason() string {
+	if x != nil {
+		return x.MatchReason
+	}
+	return ""
+}
+
+func (x *EnrollmentCandidate) GetFingerprintMatch() bool {
+	if x != nil {
+		return x.FingerprintMatch
+	}
+	return false
+}
+
 var File_komari_enrollment_v1_enrollment_proto protoreflect.FileDescriptor
 
 const file_komari_enrollment_v1_enrollment_proto_rawDesc = "" +
@@ -919,7 +1606,58 @@ const file_komari_enrollment_v1_enrollment_proto_rawDesc = "" +
 	"\farchitecture\x18\x03 \x01(\tR\farchitecture\x12#\n" +
 	"\ragent_version\x18\x04 \x01(\tR\fagentVersion\x12 \n" +
 	"\vfingerprint\x18\x05 \x01(\tR\vfingerprint\x12A\n" +
-	"\x1dcontrol_plane_key_fingerprint\x18\x06 \x01(\tR\x1acontrolPlaneKeyFingerprint*\xcb\x01\n" +
+	"\x1dcontrol_plane_key_fingerprint\x18\x06 \x01(\tR\x1acontrolPlaneKeyFingerprint\"\x1f\n" +
+	"\x1dListPendingEnrollmentsRequest\"k\n" +
+	"\x1eListPendingEnrollmentsResponse\x12I\n" +
+	"\venrollments\x18\x01 \x03(\v2'.komari.enrollment.v1.PendingEnrollmentR\venrollments\":\n" +
+	"\x1bGetPendingEnrollmentRequest\x12\x1b\n" +
+	"\tuser_code\x18\x01 \x01(\tR\buserCode\"\xb2\x01\n" +
+	"\x1cGetPendingEnrollmentResponse\x12G\n" +
+	"\n" +
+	"enrollment\x18\x01 \x01(\v2'.komari.enrollment.v1.PendingEnrollmentR\n" +
+	"enrollment\x12I\n" +
+	"\n" +
+	"candidates\x18\x02 \x03(\v2).komari.enrollment.v1.EnrollmentCandidateR\n" +
+	"candidates\"\xef\x01\n" +
+	"\x18ApproveEnrollmentRequest\x12\x1b\n" +
+	"\tuser_code\x18\x01 \x01(\tR\buserCode\x12,\n" +
+	"\x11existing_agent_id\x18\x02 \x01(\tH\x00R\x0fexistingAgentId\x12=\n" +
+	"\tnew_agent\x18\x03 \x01(\v2\x1e.komari.enrollment.v1.NewAgentH\x00R\bnewAgent\x12?\n" +
+	"\n" +
+	"two_factor\x18\x04 \x01(\v2 .komari.common.v1.TwoFactorProofR\ttwoFactorB\b\n" +
+	"\x06target\"\x99\x01\n" +
+	"\x19ApproveEnrollmentResponse\x12\x19\n" +
+	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12G\n" +
+	"\n" +
+	"enrollment\x18\x02 \x01(\v2'.komari.enrollment.v1.PendingEnrollmentR\n" +
+	"enrollment\x12\x18\n" +
+	"\acreated\x18\x03 \x01(\bR\acreated\"4\n" +
+	"\x15DenyEnrollmentRequest\x12\x1b\n" +
+	"\tuser_code\x18\x01 \x01(\tR\buserCode\"\x18\n" +
+	"\x16DenyEnrollmentResponse\"\x9d\x01\n" +
+	"\bNewAgent\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
+	"\x05group\x18\x02 \x01(\tR\x05group\x12\x16\n" +
+	"\x06remark\x18\x03 \x01(\tR\x06remark\x12#\n" +
+	"\rpublic_remark\x18\x04 \x01(\tR\fpublicRemark\x12\x16\n" +
+	"\x06hidden\x18\x05 \x01(\bR\x06hidden\x12\x12\n" +
+	"\x04tags\x18\x06 \x03(\tR\x04tags\"\x8d\x03\n" +
+	"\x11PendingEnrollment\x12\x1b\n" +
+	"\tuser_code\x18\x01 \x01(\tR\buserCode\x12;\n" +
+	"\x05state\x18\x02 \x01(\x0e2%.komari.enrollment.v1.EnrollmentStateR\x05state\x12<\n" +
+	"\x06device\x18\x03 \x01(\v2$.komari.enrollment.v1.DeviceIdentityR\x06device\x122\n" +
+	"\x15agent_key_fingerprint\x18\x04 \x01(\tR\x13agentKeyFingerprint\x12\x1b\n" +
+	"\tremote_ip\x18\x05 \x01(\tR\bremoteIp\x129\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"expires_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12\x19\n" +
+	"\bagent_id\x18\b \x01(\tR\aagentId\"\x94\x01\n" +
+	"\x13EnrollmentCandidate\x12\x19\n" +
+	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12!\n" +
+	"\fmatch_reason\x18\x03 \x01(\tR\vmatchReason\x12+\n" +
+	"\x11fingerprint_match\x18\x04 \x01(\bR\x10fingerprintMatch*\xcb\x01\n" +
 	"\x0fEnrollmentState\x12 \n" +
 	"\x1cENROLLMENT_STATE_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18ENROLLMENT_STATE_PENDING\x10\x01\x12\x1e\n" +
@@ -932,7 +1670,12 @@ const file_komari_enrollment_v1_enrollment_proto_rawDesc = "" +
 	"\x0ePollEnrollment\x12+.komari.enrollment.v1.PollEnrollmentRequest\x1a,.komari.enrollment.v1.PollEnrollmentResponse\x12w\n" +
 	"\x12RefreshCredentials\x12/.komari.enrollment.v1.RefreshCredentialsRequest\x1a0.komari.enrollment.v1.RefreshCredentialsResponse\x12t\n" +
 	"\x11RevokeCredentials\x12..komari.enrollment.v1.RevokeCredentialsRequest\x1a/.komari.enrollment.v1.RevokeCredentialsResponse\x12k\n" +
-	"\x0eGetTrustBundle\x12+.komari.enrollment.v1.GetTrustBundleRequest\x1a,.komari.enrollment.v1.GetTrustBundleResponseB\xe9\x01\n" +
+	"\x0eGetTrustBundle\x12+.komari.enrollment.v1.GetTrustBundleRequest\x1a,.komari.enrollment.v1.GetTrustBundleResponse2\x80\x04\n" +
+	"\x16EnrollmentAdminService\x12\x83\x01\n" +
+	"\x16ListPendingEnrollments\x123.komari.enrollment.v1.ListPendingEnrollmentsRequest\x1a4.komari.enrollment.v1.ListPendingEnrollmentsResponse\x12}\n" +
+	"\x14GetPendingEnrollment\x121.komari.enrollment.v1.GetPendingEnrollmentRequest\x1a2.komari.enrollment.v1.GetPendingEnrollmentResponse\x12t\n" +
+	"\x11ApproveEnrollment\x12..komari.enrollment.v1.ApproveEnrollmentRequest\x1a/.komari.enrollment.v1.ApproveEnrollmentResponse\x12k\n" +
+	"\x0eDenyEnrollment\x12+.komari.enrollment.v1.DenyEnrollmentRequest\x1a,.komari.enrollment.v1.DenyEnrollmentResponseB\xe9\x01\n" +
 	"\x18com.komari.enrollment.v1B\x0fEnrollmentProtoP\x01ZJgithub.com/r11234567/komari-proto/gen/go/komari/enrollment/v1;enrollmentv1\xa2\x02\x03KEX\xaa\x02\x14Komari.Enrollment.V1\xca\x02\x14Komari\\Enrollment\\V1\xe2\x02 Komari\\Enrollment\\V1\\GPBMetadata\xea\x02\x16Komari::Enrollment::V1b\x06proto3"
 
 var (
@@ -948,62 +1691,91 @@ func file_komari_enrollment_v1_enrollment_proto_rawDescGZIP() []byte {
 }
 
 var file_komari_enrollment_v1_enrollment_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_komari_enrollment_v1_enrollment_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_komari_enrollment_v1_enrollment_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_komari_enrollment_v1_enrollment_proto_goTypes = []any{
-	(EnrollmentState)(0),               // 0: komari.enrollment.v1.EnrollmentState
-	(*BeginEnrollmentRequest)(nil),     // 1: komari.enrollment.v1.BeginEnrollmentRequest
-	(*BeginEnrollmentResponse)(nil),    // 2: komari.enrollment.v1.BeginEnrollmentResponse
-	(*PollEnrollmentRequest)(nil),      // 3: komari.enrollment.v1.PollEnrollmentRequest
-	(*PollEnrollmentResponse)(nil),     // 4: komari.enrollment.v1.PollEnrollmentResponse
-	(*RefreshCredentialsRequest)(nil),  // 5: komari.enrollment.v1.RefreshCredentialsRequest
-	(*RefreshCredentialsResponse)(nil), // 6: komari.enrollment.v1.RefreshCredentialsResponse
-	(*RevokeCredentialsRequest)(nil),   // 7: komari.enrollment.v1.RevokeCredentialsRequest
-	(*RevokeCredentialsResponse)(nil),  // 8: komari.enrollment.v1.RevokeCredentialsResponse
-	(*GetTrustBundleRequest)(nil),      // 9: komari.enrollment.v1.GetTrustBundleRequest
-	(*GetTrustBundleResponse)(nil),     // 10: komari.enrollment.v1.GetTrustBundleResponse
-	(*AgentCredentials)(nil),           // 11: komari.enrollment.v1.AgentCredentials
-	(*DeviceIdentity)(nil),             // 12: komari.enrollment.v1.DeviceIdentity
-	(*v1.PublicKey)(nil),               // 13: komari.security.v1.PublicKey
-	(*timestamppb.Timestamp)(nil),      // 14: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),        // 15: google.protobuf.Duration
-	(*v11.ErrorDetail)(nil),            // 16: komari.common.v1.ErrorDetail
-	(*v1.SignedEnvelope)(nil),          // 17: komari.security.v1.SignedEnvelope
-	(*v11.TwoFactorProof)(nil),         // 18: komari.common.v1.TwoFactorProof
-	(*v1.VerificationPolicy)(nil),      // 19: komari.security.v1.VerificationPolicy
+	(EnrollmentState)(0),                   // 0: komari.enrollment.v1.EnrollmentState
+	(*BeginEnrollmentRequest)(nil),         // 1: komari.enrollment.v1.BeginEnrollmentRequest
+	(*BeginEnrollmentResponse)(nil),        // 2: komari.enrollment.v1.BeginEnrollmentResponse
+	(*PollEnrollmentRequest)(nil),          // 3: komari.enrollment.v1.PollEnrollmentRequest
+	(*PollEnrollmentResponse)(nil),         // 4: komari.enrollment.v1.PollEnrollmentResponse
+	(*RefreshCredentialsRequest)(nil),      // 5: komari.enrollment.v1.RefreshCredentialsRequest
+	(*RefreshCredentialsResponse)(nil),     // 6: komari.enrollment.v1.RefreshCredentialsResponse
+	(*RevokeCredentialsRequest)(nil),       // 7: komari.enrollment.v1.RevokeCredentialsRequest
+	(*RevokeCredentialsResponse)(nil),      // 8: komari.enrollment.v1.RevokeCredentialsResponse
+	(*GetTrustBundleRequest)(nil),          // 9: komari.enrollment.v1.GetTrustBundleRequest
+	(*GetTrustBundleResponse)(nil),         // 10: komari.enrollment.v1.GetTrustBundleResponse
+	(*AgentCredentials)(nil),               // 11: komari.enrollment.v1.AgentCredentials
+	(*DeviceIdentity)(nil),                 // 12: komari.enrollment.v1.DeviceIdentity
+	(*ListPendingEnrollmentsRequest)(nil),  // 13: komari.enrollment.v1.ListPendingEnrollmentsRequest
+	(*ListPendingEnrollmentsResponse)(nil), // 14: komari.enrollment.v1.ListPendingEnrollmentsResponse
+	(*GetPendingEnrollmentRequest)(nil),    // 15: komari.enrollment.v1.GetPendingEnrollmentRequest
+	(*GetPendingEnrollmentResponse)(nil),   // 16: komari.enrollment.v1.GetPendingEnrollmentResponse
+	(*ApproveEnrollmentRequest)(nil),       // 17: komari.enrollment.v1.ApproveEnrollmentRequest
+	(*ApproveEnrollmentResponse)(nil),      // 18: komari.enrollment.v1.ApproveEnrollmentResponse
+	(*DenyEnrollmentRequest)(nil),          // 19: komari.enrollment.v1.DenyEnrollmentRequest
+	(*DenyEnrollmentResponse)(nil),         // 20: komari.enrollment.v1.DenyEnrollmentResponse
+	(*NewAgent)(nil),                       // 21: komari.enrollment.v1.NewAgent
+	(*PendingEnrollment)(nil),              // 22: komari.enrollment.v1.PendingEnrollment
+	(*EnrollmentCandidate)(nil),            // 23: komari.enrollment.v1.EnrollmentCandidate
+	(*v1.PublicKey)(nil),                   // 24: komari.security.v1.PublicKey
+	(*timestamppb.Timestamp)(nil),          // 25: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),            // 26: google.protobuf.Duration
+	(*v11.ErrorDetail)(nil),                // 27: komari.common.v1.ErrorDetail
+	(*v1.SignedEnvelope)(nil),              // 28: komari.security.v1.SignedEnvelope
+	(*v11.TwoFactorProof)(nil),             // 29: komari.common.v1.TwoFactorProof
+	(*v1.VerificationPolicy)(nil),          // 30: komari.security.v1.VerificationPolicy
 }
 var file_komari_enrollment_v1_enrollment_proto_depIdxs = []int32{
-	13, // 0: komari.enrollment.v1.BeginEnrollmentRequest.agent_public_key:type_name -> komari.security.v1.PublicKey
+	24, // 0: komari.enrollment.v1.BeginEnrollmentRequest.agent_public_key:type_name -> komari.security.v1.PublicKey
 	12, // 1: komari.enrollment.v1.BeginEnrollmentRequest.device:type_name -> komari.enrollment.v1.DeviceIdentity
-	14, // 2: komari.enrollment.v1.BeginEnrollmentResponse.expires_at:type_name -> google.protobuf.Timestamp
-	15, // 3: komari.enrollment.v1.BeginEnrollmentResponse.poll_interval:type_name -> google.protobuf.Duration
+	25, // 2: komari.enrollment.v1.BeginEnrollmentResponse.expires_at:type_name -> google.protobuf.Timestamp
+	26, // 3: komari.enrollment.v1.BeginEnrollmentResponse.poll_interval:type_name -> google.protobuf.Duration
 	0,  // 4: komari.enrollment.v1.PollEnrollmentResponse.state:type_name -> komari.enrollment.v1.EnrollmentState
 	11, // 5: komari.enrollment.v1.PollEnrollmentResponse.credentials:type_name -> komari.enrollment.v1.AgentCredentials
-	15, // 6: komari.enrollment.v1.PollEnrollmentResponse.poll_interval:type_name -> google.protobuf.Duration
-	16, // 7: komari.enrollment.v1.PollEnrollmentResponse.error:type_name -> komari.common.v1.ErrorDetail
-	17, // 8: komari.enrollment.v1.RefreshCredentialsRequest.proof:type_name -> komari.security.v1.SignedEnvelope
+	26, // 6: komari.enrollment.v1.PollEnrollmentResponse.poll_interval:type_name -> google.protobuf.Duration
+	27, // 7: komari.enrollment.v1.PollEnrollmentResponse.error:type_name -> komari.common.v1.ErrorDetail
+	28, // 8: komari.enrollment.v1.RefreshCredentialsRequest.proof:type_name -> komari.security.v1.SignedEnvelope
 	11, // 9: komari.enrollment.v1.RefreshCredentialsResponse.credentials:type_name -> komari.enrollment.v1.AgentCredentials
-	18, // 10: komari.enrollment.v1.RevokeCredentialsRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	13, // 11: komari.enrollment.v1.GetTrustBundleResponse.signing_keys:type_name -> komari.security.v1.PublicKey
-	19, // 12: komari.enrollment.v1.GetTrustBundleResponse.policy:type_name -> komari.security.v1.VerificationPolicy
-	15, // 13: komari.enrollment.v1.GetTrustBundleResponse.refresh_after:type_name -> google.protobuf.Duration
-	14, // 14: komari.enrollment.v1.AgentCredentials.access_token_expires_at:type_name -> google.protobuf.Timestamp
-	14, // 15: komari.enrollment.v1.AgentCredentials.refresh_token_expires_at:type_name -> google.protobuf.Timestamp
-	14, // 16: komari.enrollment.v1.AgentCredentials.previous_token_expires_at:type_name -> google.protobuf.Timestamp
-	1,  // 17: komari.enrollment.v1.EnrollmentService.BeginEnrollment:input_type -> komari.enrollment.v1.BeginEnrollmentRequest
-	3,  // 18: komari.enrollment.v1.EnrollmentService.PollEnrollment:input_type -> komari.enrollment.v1.PollEnrollmentRequest
-	5,  // 19: komari.enrollment.v1.EnrollmentService.RefreshCredentials:input_type -> komari.enrollment.v1.RefreshCredentialsRequest
-	7,  // 20: komari.enrollment.v1.EnrollmentService.RevokeCredentials:input_type -> komari.enrollment.v1.RevokeCredentialsRequest
-	9,  // 21: komari.enrollment.v1.EnrollmentService.GetTrustBundle:input_type -> komari.enrollment.v1.GetTrustBundleRequest
-	2,  // 22: komari.enrollment.v1.EnrollmentService.BeginEnrollment:output_type -> komari.enrollment.v1.BeginEnrollmentResponse
-	4,  // 23: komari.enrollment.v1.EnrollmentService.PollEnrollment:output_type -> komari.enrollment.v1.PollEnrollmentResponse
-	6,  // 24: komari.enrollment.v1.EnrollmentService.RefreshCredentials:output_type -> komari.enrollment.v1.RefreshCredentialsResponse
-	8,  // 25: komari.enrollment.v1.EnrollmentService.RevokeCredentials:output_type -> komari.enrollment.v1.RevokeCredentialsResponse
-	10, // 26: komari.enrollment.v1.EnrollmentService.GetTrustBundle:output_type -> komari.enrollment.v1.GetTrustBundleResponse
-	22, // [22:27] is the sub-list for method output_type
-	17, // [17:22] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	29, // 10: komari.enrollment.v1.RevokeCredentialsRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	24, // 11: komari.enrollment.v1.GetTrustBundleResponse.signing_keys:type_name -> komari.security.v1.PublicKey
+	30, // 12: komari.enrollment.v1.GetTrustBundleResponse.policy:type_name -> komari.security.v1.VerificationPolicy
+	26, // 13: komari.enrollment.v1.GetTrustBundleResponse.refresh_after:type_name -> google.protobuf.Duration
+	25, // 14: komari.enrollment.v1.AgentCredentials.access_token_expires_at:type_name -> google.protobuf.Timestamp
+	25, // 15: komari.enrollment.v1.AgentCredentials.refresh_token_expires_at:type_name -> google.protobuf.Timestamp
+	25, // 16: komari.enrollment.v1.AgentCredentials.previous_token_expires_at:type_name -> google.protobuf.Timestamp
+	22, // 17: komari.enrollment.v1.ListPendingEnrollmentsResponse.enrollments:type_name -> komari.enrollment.v1.PendingEnrollment
+	22, // 18: komari.enrollment.v1.GetPendingEnrollmentResponse.enrollment:type_name -> komari.enrollment.v1.PendingEnrollment
+	23, // 19: komari.enrollment.v1.GetPendingEnrollmentResponse.candidates:type_name -> komari.enrollment.v1.EnrollmentCandidate
+	21, // 20: komari.enrollment.v1.ApproveEnrollmentRequest.new_agent:type_name -> komari.enrollment.v1.NewAgent
+	29, // 21: komari.enrollment.v1.ApproveEnrollmentRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	22, // 22: komari.enrollment.v1.ApproveEnrollmentResponse.enrollment:type_name -> komari.enrollment.v1.PendingEnrollment
+	0,  // 23: komari.enrollment.v1.PendingEnrollment.state:type_name -> komari.enrollment.v1.EnrollmentState
+	12, // 24: komari.enrollment.v1.PendingEnrollment.device:type_name -> komari.enrollment.v1.DeviceIdentity
+	25, // 25: komari.enrollment.v1.PendingEnrollment.created_at:type_name -> google.protobuf.Timestamp
+	25, // 26: komari.enrollment.v1.PendingEnrollment.expires_at:type_name -> google.protobuf.Timestamp
+	1,  // 27: komari.enrollment.v1.EnrollmentService.BeginEnrollment:input_type -> komari.enrollment.v1.BeginEnrollmentRequest
+	3,  // 28: komari.enrollment.v1.EnrollmentService.PollEnrollment:input_type -> komari.enrollment.v1.PollEnrollmentRequest
+	5,  // 29: komari.enrollment.v1.EnrollmentService.RefreshCredentials:input_type -> komari.enrollment.v1.RefreshCredentialsRequest
+	7,  // 30: komari.enrollment.v1.EnrollmentService.RevokeCredentials:input_type -> komari.enrollment.v1.RevokeCredentialsRequest
+	9,  // 31: komari.enrollment.v1.EnrollmentService.GetTrustBundle:input_type -> komari.enrollment.v1.GetTrustBundleRequest
+	13, // 32: komari.enrollment.v1.EnrollmentAdminService.ListPendingEnrollments:input_type -> komari.enrollment.v1.ListPendingEnrollmentsRequest
+	15, // 33: komari.enrollment.v1.EnrollmentAdminService.GetPendingEnrollment:input_type -> komari.enrollment.v1.GetPendingEnrollmentRequest
+	17, // 34: komari.enrollment.v1.EnrollmentAdminService.ApproveEnrollment:input_type -> komari.enrollment.v1.ApproveEnrollmentRequest
+	19, // 35: komari.enrollment.v1.EnrollmentAdminService.DenyEnrollment:input_type -> komari.enrollment.v1.DenyEnrollmentRequest
+	2,  // 36: komari.enrollment.v1.EnrollmentService.BeginEnrollment:output_type -> komari.enrollment.v1.BeginEnrollmentResponse
+	4,  // 37: komari.enrollment.v1.EnrollmentService.PollEnrollment:output_type -> komari.enrollment.v1.PollEnrollmentResponse
+	6,  // 38: komari.enrollment.v1.EnrollmentService.RefreshCredentials:output_type -> komari.enrollment.v1.RefreshCredentialsResponse
+	8,  // 39: komari.enrollment.v1.EnrollmentService.RevokeCredentials:output_type -> komari.enrollment.v1.RevokeCredentialsResponse
+	10, // 40: komari.enrollment.v1.EnrollmentService.GetTrustBundle:output_type -> komari.enrollment.v1.GetTrustBundleResponse
+	14, // 41: komari.enrollment.v1.EnrollmentAdminService.ListPendingEnrollments:output_type -> komari.enrollment.v1.ListPendingEnrollmentsResponse
+	16, // 42: komari.enrollment.v1.EnrollmentAdminService.GetPendingEnrollment:output_type -> komari.enrollment.v1.GetPendingEnrollmentResponse
+	18, // 43: komari.enrollment.v1.EnrollmentAdminService.ApproveEnrollment:output_type -> komari.enrollment.v1.ApproveEnrollmentResponse
+	20, // 44: komari.enrollment.v1.EnrollmentAdminService.DenyEnrollment:output_type -> komari.enrollment.v1.DenyEnrollmentResponse
+	36, // [36:45] is the sub-list for method output_type
+	27, // [27:36] is the sub-list for method input_type
+	27, // [27:27] is the sub-list for extension type_name
+	27, // [27:27] is the sub-list for extension extendee
+	0,  // [0:27] is the sub-list for field type_name
 }
 
 func init() { file_komari_enrollment_v1_enrollment_proto_init() }
@@ -1014,15 +1786,19 @@ func file_komari_enrollment_v1_enrollment_proto_init() {
 	file_komari_enrollment_v1_enrollment_proto_msgTypes[3].OneofWrappers = []any{}
 	file_komari_enrollment_v1_enrollment_proto_msgTypes[4].OneofWrappers = []any{}
 	file_komari_enrollment_v1_enrollment_proto_msgTypes[10].OneofWrappers = []any{}
+	file_komari_enrollment_v1_enrollment_proto_msgTypes[16].OneofWrappers = []any{
+		(*ApproveEnrollmentRequest_ExistingAgentId)(nil),
+		(*ApproveEnrollmentRequest_NewAgent)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_enrollment_v1_enrollment_proto_rawDesc), len(file_komari_enrollment_v1_enrollment_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   12,
+			NumMessages:   23,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_komari_enrollment_v1_enrollment_proto_goTypes,
 		DependencyIndexes: file_komari_enrollment_v1_enrollment_proto_depIdxs,
