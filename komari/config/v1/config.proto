@@ -53,6 +53,27 @@ service PrivilegedDeliveryService {
   // task nonce. It is the only way a privileged revision becomes active, and
   // it proves the operator ran the upgrade on the machine itself.
   rpc CompleteManualUpgrade(CompleteManualUpgradeRequest) returns (CompleteManualUpgradeResponse);
+  // ListPrivilegedRevisions returns a machine's privileged history and which
+  // revision it is actually running, for the panel.
+  rpc ListPrivilegedRevisions(ListPrivilegedRevisionsRequest) returns (ListPrivilegedRevisionsResponse);
+}
+
+message ListPrivilegedRevisionsRequest {
+  string agent_id = 1;
+  // limit bounds the history returned; zero means a server default.
+  uint32 limit = 2;
+}
+
+message ListPrivilegedRevisionsResponse {
+  // revisions are newest first.
+  repeated PrivilegedRevision revisions = 1;
+  // applied_revision is the newest revision the host reported as delivered,
+  // which is what the machine is running, as opposed to the newest one saved.
+  uint64 applied_revision = 2;
+  // installed_privilege_mode is what the agent service is installed as, which
+  // decides whether a widening change can be confirmed in the panel or has to
+  // be upgraded on the host.
+  komari.report.v1.PrivilegeMode installed_privilege_mode = 3;
 }
 
 message GetPrivilegedDeliveryRequest {

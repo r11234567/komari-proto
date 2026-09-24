@@ -154,3 +154,106 @@ enum EnrollmentState {
   ENROLLMENT_STATE_DENIED = 4;
   ENROLLMENT_STATE_EXPIRED = 5;
 }
+
+// EnrollmentAdminService is the panel side of an enrollment: where a signed-in
+// administrator sees a pending request and decides what it becomes.
+//
+// It is separate from EnrollmentService because the two have opposite callers.
+// EnrollmentService is reached by machines that hold no credential yet; this
+// service is reached only by an administrator session, and it is the step that
+// actually grants anything.
+service EnrollmentAdminService {
+  // ListPendingEnrollments returns requests awaiting a decision.
+  rpc ListPendingEnrollments(ListPendingEnrollmentsRequest) returns (ListPendingEnrollmentsResponse);
+  // GetPendingEnrollment looks a request up by the code shown on the machine,
+  // together with existing machines it plausibly belongs to.
+  rpc GetPendingEnrollment(GetPendingEnrollmentRequest) returns (GetPendingEnrollmentResponse);
+  // ApproveEnrollment binds a request to a new or an existing machine.
+  rpc ApproveEnrollment(ApproveEnrollmentRequest) returns (ApproveEnrollmentResponse);
+  // DenyEnrollment rejects a request.
+  rpc DenyEnrollment(DenyEnrollmentRequest) returns (DenyEnrollmentResponse);
+}
+
+message ListPendingEnrollmentsRequest {}
+
+message ListPendingEnrollmentsResponse {
+  repeated PendingEnrollment enrollments = 1;
+}
+
+message GetPendingEnrollmentRequest {
+  string user_code = 1;
+}
+
+message GetPendingEnrollmentResponse {
+  PendingEnrollment enrollment = 1;
+  // candidates are existing machines this request may be a re-enrollment of,
+  // strongest match first. They are suggestions: the administrator decides.
+  repeated EnrollmentCandidate candidates = 2;
+}
+
+message ApproveEnrollmentRequest {
+  string user_code = 1;
+  oneof target {
+    // existing_agent_id re-enrolls a machine the panel already knows. The new
+    // key replaces the old one, so whoever holds it becomes that machine.
+    string existing_agent_id = 2;
+    // new_agent creates a machine from the basic information supplied.
+    NewAgent new_agent = 3;
+  }
+  // two_factor is required when binding to an existing machine. That path
+  // hands an existing identity, with its history and delivered configuration,
+  // to whichever host holds the new key, so it costs a second factor; creating
+  // a new machine grants nothing that did not exist before.
+  komari.common.v1.TwoFactorProof two_factor = 4;
+}
+
+message ApproveEnrollmentResponse {
+  string agent_id = 1;
+  PendingEnrollment enrollment = 2;
+  // created reports whether a new machine was created rather than bound.
+  bool created = 3;
+}
+
+message DenyEnrollmentRequest {
+  string user_code = 1;
+}
+
+message DenyEnrollmentResponse {}
+
+// NewAgent is the basic information a new-machine wizard collects.
+message NewAgent {
+  string name = 1;
+  string group = 2;
+  string remark = 3;
+  string public_remark = 4;
+  bool hidden = 5;
+  repeated string tags = 6;
+}
+
+// PendingEnrollment is what an administrator sees before approving.
+message PendingEnrollment {
+  string user_code = 1;
+  EnrollmentState state = 2;
+  DeviceIdentity device = 3;
+  // agent_key_fingerprint lets the administrator compare against what the
+  // machine printed, which is the only way to notice a request that is not
+  // from the machine they think it is.
+  string agent_key_fingerprint = 4;
+  string remote_ip = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp expires_at = 7;
+  // agent_id is set once the request is approved.
+  string agent_id = 8;
+}
+
+// EnrollmentCandidate is one existing machine a request may belong to.
+message EnrollmentCandidate {
+  string agent_id = 1;
+  string name = 2;
+  // match_reason explains the suggestion, such as a matching host
+  // fingerprint or hostname.
+  string match_reason = 3;
+  // fingerprint_match is true when the host fingerprint is identical, which is
+  // much stronger evidence than a hostname.
+  bool fingerprint_match = 4;
+}
