@@ -42,6 +42,12 @@ message BeginEnrollmentRequest {
   DeviceIdentity device = 2;
   // requested_scopes is advisory; the server decides what is granted.
   repeated string requested_scopes = 3;
+  // existing_agent_id is set when an already-registered agent needs to
+  // re-authenticate (e.g. its refresh token expired). The panel uses it to
+  // present the approval as a re-authorization of a known machine rather than
+  // a brand-new enrollment, and binds the issued credentials to that agent.
+  // When absent, the approval creates a new agent.
+  optional string existing_agent_id = 4;
 }
 
 message BeginEnrollmentResponse {

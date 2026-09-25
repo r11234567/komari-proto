@@ -95,6 +95,12 @@ type BeginEnrollmentRequest struct {
 	Device         *DeviceIdentity `protobuf:"bytes,2,opt,name=device,proto3" json:"device,omitempty"`
 	// requested_scopes is advisory; the server decides what is granted.
 	RequestedScopes []string `protobuf:"bytes,3,rep,name=requested_scopes,json=requestedScopes,proto3" json:"requested_scopes,omitempty"`
+	// existing_agent_id is set when an already-registered agent needs to
+	// re-authenticate (e.g. its refresh token expired). The panel uses it to
+	// present the approval as a re-authorization of a known machine rather than
+	// a brand-new enrollment, and binds the issued credentials to that agent.
+	// When absent, the approval creates a new agent.
+	ExistingAgentId *string `protobuf:"bytes,4,opt,name=existing_agent_id,json=existingAgentId,proto3,oneof" json:"existing_agent_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -148,6 +154,13 @@ func (x *BeginEnrollmentRequest) GetRequestedScopes() []string {
 		return x.RequestedScopes
 	}
 	return nil
+}
+
+func (x *BeginEnrollmentRequest) GetExistingAgentId() string {
+	if x != nil && x.ExistingAgentId != nil {
+		return *x.ExistingAgentId
+	}
+	return ""
 }
 
 type BeginEnrollmentResponse struct {
@@ -1559,11 +1572,13 @@ var File_komari_enrollment_v1_enrollment_proto protoreflect.FileDescriptor
 
 const file_komari_enrollment_v1_enrollment_proto_rawDesc = "" +
 	"\n" +
-	"%komari/enrollment/v1/enrollment.proto\x12\x14komari.enrollment.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a!komari/security/v1/security.proto\"\xca\x01\n" +
+	"%komari/enrollment/v1/enrollment.proto\x12\x14komari.enrollment.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a!komari/security/v1/security.proto\"\x91\x02\n" +
 	"\x16BeginEnrollmentRequest\x12G\n" +
 	"\x10agent_public_key\x18\x01 \x01(\v2\x1d.komari.security.v1.PublicKeyR\x0eagentPublicKey\x12<\n" +
 	"\x06device\x18\x02 \x01(\v2$.komari.enrollment.v1.DeviceIdentityR\x06device\x12)\n" +
-	"\x10requested_scopes\x18\x03 \x03(\tR\x0frequestedScopes\"\xb9\x02\n" +
+	"\x10requested_scopes\x18\x03 \x03(\tR\x0frequestedScopes\x12/\n" +
+	"\x11existing_agent_id\x18\x04 \x01(\tH\x00R\x0fexistingAgentId\x88\x01\x01B\x14\n" +
+	"\x12_existing_agent_id\"\xb9\x02\n" +
 	"\x17BeginEnrollmentResponse\x12\x1f\n" +
 	"\vdevice_code\x18\x01 \x01(\tR\n" +
 	"deviceCode\x12\x1b\n" +
@@ -1797,6 +1812,7 @@ func file_komari_enrollment_v1_enrollment_proto_init() {
 	if File_komari_enrollment_v1_enrollment_proto != nil {
 		return
 	}
+	file_komari_enrollment_v1_enrollment_proto_msgTypes[0].OneofWrappers = []any{}
 	file_komari_enrollment_v1_enrollment_proto_msgTypes[3].OneofWrappers = []any{}
 	file_komari_enrollment_v1_enrollment_proto_msgTypes[4].OneofWrappers = []any{}
 	file_komari_enrollment_v1_enrollment_proto_msgTypes[5].OneofWrappers = []any{}
