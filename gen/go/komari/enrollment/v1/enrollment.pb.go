@@ -410,8 +410,12 @@ func (x *RefreshCredentialsRequest) GetProof() *v1.SignedEnvelope {
 }
 
 type RefreshCredentialsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Credentials   *AgentCredentials      `protobuf:"bytes,1,opt,name=credentials,proto3" json:"credentials,omitempty"`
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	Credentials *AgentCredentials      `protobuf:"bytes,1,opt,name=credentials,proto3" json:"credentials,omitempty"`
+	// proof is the control-plane's signature over the new credentials, so the
+	// agent can verify the response really came from the panel it enrolled with
+	// rather than from something positioned between them.
+	Proof         *v1.SignedEnvelope `protobuf:"bytes,2,opt,name=proof,proto3,oneof" json:"proof,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -449,6 +453,13 @@ func (*RefreshCredentialsResponse) Descriptor() ([]byte, []int) {
 func (x *RefreshCredentialsResponse) GetCredentials() *AgentCredentials {
 	if x != nil {
 		return x.Credentials
+	}
+	return nil
+}
+
+func (x *RefreshCredentialsResponse) GetProof() *v1.SignedEnvelope {
+	if x != nil {
+		return x.Proof
 	}
 	return nil
 }
@@ -1575,9 +1586,11 @@ const file_komari_enrollment_v1_enrollment_proto_rawDesc = "" +
 	"\x19RefreshCredentialsRequest\x12#\n" +
 	"\rrefresh_token\x18\x01 \x01(\tR\frefreshToken\x12=\n" +
 	"\x05proof\x18\x02 \x01(\v2\".komari.security.v1.SignedEnvelopeH\x00R\x05proof\x88\x01\x01B\b\n" +
-	"\x06_proof\"f\n" +
+	"\x06_proof\"\xaf\x01\n" +
 	"\x1aRefreshCredentialsResponse\x12H\n" +
-	"\vcredentials\x18\x01 \x01(\v2&.komari.enrollment.v1.AgentCredentialsR\vcredentials\"\x8e\x01\n" +
+	"\vcredentials\x18\x01 \x01(\v2&.komari.enrollment.v1.AgentCredentialsR\vcredentials\x12=\n" +
+	"\x05proof\x18\x02 \x01(\v2\".komari.security.v1.SignedEnvelopeH\x00R\x05proof\x88\x01\x01B\b\n" +
+	"\x06_proof\"\x8e\x01\n" +
 	"\x18RevokeCredentialsRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x16\n" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\x12?\n" +
@@ -1736,46 +1749,47 @@ var file_komari_enrollment_v1_enrollment_proto_depIdxs = []int32{
 	27, // 7: komari.enrollment.v1.PollEnrollmentResponse.error:type_name -> komari.common.v1.ErrorDetail
 	28, // 8: komari.enrollment.v1.RefreshCredentialsRequest.proof:type_name -> komari.security.v1.SignedEnvelope
 	11, // 9: komari.enrollment.v1.RefreshCredentialsResponse.credentials:type_name -> komari.enrollment.v1.AgentCredentials
-	29, // 10: komari.enrollment.v1.RevokeCredentialsRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	24, // 11: komari.enrollment.v1.GetTrustBundleResponse.signing_keys:type_name -> komari.security.v1.PublicKey
-	30, // 12: komari.enrollment.v1.GetTrustBundleResponse.policy:type_name -> komari.security.v1.VerificationPolicy
-	26, // 13: komari.enrollment.v1.GetTrustBundleResponse.refresh_after:type_name -> google.protobuf.Duration
-	25, // 14: komari.enrollment.v1.AgentCredentials.access_token_expires_at:type_name -> google.protobuf.Timestamp
-	25, // 15: komari.enrollment.v1.AgentCredentials.refresh_token_expires_at:type_name -> google.protobuf.Timestamp
-	25, // 16: komari.enrollment.v1.AgentCredentials.previous_token_expires_at:type_name -> google.protobuf.Timestamp
-	22, // 17: komari.enrollment.v1.ListPendingEnrollmentsResponse.enrollments:type_name -> komari.enrollment.v1.PendingEnrollment
-	22, // 18: komari.enrollment.v1.GetPendingEnrollmentResponse.enrollment:type_name -> komari.enrollment.v1.PendingEnrollment
-	23, // 19: komari.enrollment.v1.GetPendingEnrollmentResponse.candidates:type_name -> komari.enrollment.v1.EnrollmentCandidate
-	21, // 20: komari.enrollment.v1.ApproveEnrollmentRequest.new_agent:type_name -> komari.enrollment.v1.NewAgent
-	29, // 21: komari.enrollment.v1.ApproveEnrollmentRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	22, // 22: komari.enrollment.v1.ApproveEnrollmentResponse.enrollment:type_name -> komari.enrollment.v1.PendingEnrollment
-	0,  // 23: komari.enrollment.v1.PendingEnrollment.state:type_name -> komari.enrollment.v1.EnrollmentState
-	12, // 24: komari.enrollment.v1.PendingEnrollment.device:type_name -> komari.enrollment.v1.DeviceIdentity
-	25, // 25: komari.enrollment.v1.PendingEnrollment.created_at:type_name -> google.protobuf.Timestamp
-	25, // 26: komari.enrollment.v1.PendingEnrollment.expires_at:type_name -> google.protobuf.Timestamp
-	1,  // 27: komari.enrollment.v1.EnrollmentService.BeginEnrollment:input_type -> komari.enrollment.v1.BeginEnrollmentRequest
-	3,  // 28: komari.enrollment.v1.EnrollmentService.PollEnrollment:input_type -> komari.enrollment.v1.PollEnrollmentRequest
-	5,  // 29: komari.enrollment.v1.EnrollmentService.RefreshCredentials:input_type -> komari.enrollment.v1.RefreshCredentialsRequest
-	7,  // 30: komari.enrollment.v1.EnrollmentService.RevokeCredentials:input_type -> komari.enrollment.v1.RevokeCredentialsRequest
-	9,  // 31: komari.enrollment.v1.EnrollmentService.GetTrustBundle:input_type -> komari.enrollment.v1.GetTrustBundleRequest
-	13, // 32: komari.enrollment.v1.EnrollmentAdminService.ListPendingEnrollments:input_type -> komari.enrollment.v1.ListPendingEnrollmentsRequest
-	15, // 33: komari.enrollment.v1.EnrollmentAdminService.GetPendingEnrollment:input_type -> komari.enrollment.v1.GetPendingEnrollmentRequest
-	17, // 34: komari.enrollment.v1.EnrollmentAdminService.ApproveEnrollment:input_type -> komari.enrollment.v1.ApproveEnrollmentRequest
-	19, // 35: komari.enrollment.v1.EnrollmentAdminService.DenyEnrollment:input_type -> komari.enrollment.v1.DenyEnrollmentRequest
-	2,  // 36: komari.enrollment.v1.EnrollmentService.BeginEnrollment:output_type -> komari.enrollment.v1.BeginEnrollmentResponse
-	4,  // 37: komari.enrollment.v1.EnrollmentService.PollEnrollment:output_type -> komari.enrollment.v1.PollEnrollmentResponse
-	6,  // 38: komari.enrollment.v1.EnrollmentService.RefreshCredentials:output_type -> komari.enrollment.v1.RefreshCredentialsResponse
-	8,  // 39: komari.enrollment.v1.EnrollmentService.RevokeCredentials:output_type -> komari.enrollment.v1.RevokeCredentialsResponse
-	10, // 40: komari.enrollment.v1.EnrollmentService.GetTrustBundle:output_type -> komari.enrollment.v1.GetTrustBundleResponse
-	14, // 41: komari.enrollment.v1.EnrollmentAdminService.ListPendingEnrollments:output_type -> komari.enrollment.v1.ListPendingEnrollmentsResponse
-	16, // 42: komari.enrollment.v1.EnrollmentAdminService.GetPendingEnrollment:output_type -> komari.enrollment.v1.GetPendingEnrollmentResponse
-	18, // 43: komari.enrollment.v1.EnrollmentAdminService.ApproveEnrollment:output_type -> komari.enrollment.v1.ApproveEnrollmentResponse
-	20, // 44: komari.enrollment.v1.EnrollmentAdminService.DenyEnrollment:output_type -> komari.enrollment.v1.DenyEnrollmentResponse
-	36, // [36:45] is the sub-list for method output_type
-	27, // [27:36] is the sub-list for method input_type
-	27, // [27:27] is the sub-list for extension type_name
-	27, // [27:27] is the sub-list for extension extendee
-	0,  // [0:27] is the sub-list for field type_name
+	28, // 10: komari.enrollment.v1.RefreshCredentialsResponse.proof:type_name -> komari.security.v1.SignedEnvelope
+	29, // 11: komari.enrollment.v1.RevokeCredentialsRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	24, // 12: komari.enrollment.v1.GetTrustBundleResponse.signing_keys:type_name -> komari.security.v1.PublicKey
+	30, // 13: komari.enrollment.v1.GetTrustBundleResponse.policy:type_name -> komari.security.v1.VerificationPolicy
+	26, // 14: komari.enrollment.v1.GetTrustBundleResponse.refresh_after:type_name -> google.protobuf.Duration
+	25, // 15: komari.enrollment.v1.AgentCredentials.access_token_expires_at:type_name -> google.protobuf.Timestamp
+	25, // 16: komari.enrollment.v1.AgentCredentials.refresh_token_expires_at:type_name -> google.protobuf.Timestamp
+	25, // 17: komari.enrollment.v1.AgentCredentials.previous_token_expires_at:type_name -> google.protobuf.Timestamp
+	22, // 18: komari.enrollment.v1.ListPendingEnrollmentsResponse.enrollments:type_name -> komari.enrollment.v1.PendingEnrollment
+	22, // 19: komari.enrollment.v1.GetPendingEnrollmentResponse.enrollment:type_name -> komari.enrollment.v1.PendingEnrollment
+	23, // 20: komari.enrollment.v1.GetPendingEnrollmentResponse.candidates:type_name -> komari.enrollment.v1.EnrollmentCandidate
+	21, // 21: komari.enrollment.v1.ApproveEnrollmentRequest.new_agent:type_name -> komari.enrollment.v1.NewAgent
+	29, // 22: komari.enrollment.v1.ApproveEnrollmentRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	22, // 23: komari.enrollment.v1.ApproveEnrollmentResponse.enrollment:type_name -> komari.enrollment.v1.PendingEnrollment
+	0,  // 24: komari.enrollment.v1.PendingEnrollment.state:type_name -> komari.enrollment.v1.EnrollmentState
+	12, // 25: komari.enrollment.v1.PendingEnrollment.device:type_name -> komari.enrollment.v1.DeviceIdentity
+	25, // 26: komari.enrollment.v1.PendingEnrollment.created_at:type_name -> google.protobuf.Timestamp
+	25, // 27: komari.enrollment.v1.PendingEnrollment.expires_at:type_name -> google.protobuf.Timestamp
+	1,  // 28: komari.enrollment.v1.EnrollmentService.BeginEnrollment:input_type -> komari.enrollment.v1.BeginEnrollmentRequest
+	3,  // 29: komari.enrollment.v1.EnrollmentService.PollEnrollment:input_type -> komari.enrollment.v1.PollEnrollmentRequest
+	5,  // 30: komari.enrollment.v1.EnrollmentService.RefreshCredentials:input_type -> komari.enrollment.v1.RefreshCredentialsRequest
+	7,  // 31: komari.enrollment.v1.EnrollmentService.RevokeCredentials:input_type -> komari.enrollment.v1.RevokeCredentialsRequest
+	9,  // 32: komari.enrollment.v1.EnrollmentService.GetTrustBundle:input_type -> komari.enrollment.v1.GetTrustBundleRequest
+	13, // 33: komari.enrollment.v1.EnrollmentAdminService.ListPendingEnrollments:input_type -> komari.enrollment.v1.ListPendingEnrollmentsRequest
+	15, // 34: komari.enrollment.v1.EnrollmentAdminService.GetPendingEnrollment:input_type -> komari.enrollment.v1.GetPendingEnrollmentRequest
+	17, // 35: komari.enrollment.v1.EnrollmentAdminService.ApproveEnrollment:input_type -> komari.enrollment.v1.ApproveEnrollmentRequest
+	19, // 36: komari.enrollment.v1.EnrollmentAdminService.DenyEnrollment:input_type -> komari.enrollment.v1.DenyEnrollmentRequest
+	2,  // 37: komari.enrollment.v1.EnrollmentService.BeginEnrollment:output_type -> komari.enrollment.v1.BeginEnrollmentResponse
+	4,  // 38: komari.enrollment.v1.EnrollmentService.PollEnrollment:output_type -> komari.enrollment.v1.PollEnrollmentResponse
+	6,  // 39: komari.enrollment.v1.EnrollmentService.RefreshCredentials:output_type -> komari.enrollment.v1.RefreshCredentialsResponse
+	8,  // 40: komari.enrollment.v1.EnrollmentService.RevokeCredentials:output_type -> komari.enrollment.v1.RevokeCredentialsResponse
+	10, // 41: komari.enrollment.v1.EnrollmentService.GetTrustBundle:output_type -> komari.enrollment.v1.GetTrustBundleResponse
+	14, // 42: komari.enrollment.v1.EnrollmentAdminService.ListPendingEnrollments:output_type -> komari.enrollment.v1.ListPendingEnrollmentsResponse
+	16, // 43: komari.enrollment.v1.EnrollmentAdminService.GetPendingEnrollment:output_type -> komari.enrollment.v1.GetPendingEnrollmentResponse
+	18, // 44: komari.enrollment.v1.EnrollmentAdminService.ApproveEnrollment:output_type -> komari.enrollment.v1.ApproveEnrollmentResponse
+	20, // 45: komari.enrollment.v1.EnrollmentAdminService.DenyEnrollment:output_type -> komari.enrollment.v1.DenyEnrollmentResponse
+	37, // [37:46] is the sub-list for method output_type
+	28, // [28:37] is the sub-list for method input_type
+	28, // [28:28] is the sub-list for extension type_name
+	28, // [28:28] is the sub-list for extension extendee
+	0,  // [0:28] is the sub-list for field type_name
 }
 
 func init() { file_komari_enrollment_v1_enrollment_proto_init() }
@@ -1785,6 +1799,7 @@ func file_komari_enrollment_v1_enrollment_proto_init() {
 	}
 	file_komari_enrollment_v1_enrollment_proto_msgTypes[3].OneofWrappers = []any{}
 	file_komari_enrollment_v1_enrollment_proto_msgTypes[4].OneofWrappers = []any{}
+	file_komari_enrollment_v1_enrollment_proto_msgTypes[5].OneofWrappers = []any{}
 	file_komari_enrollment_v1_enrollment_proto_msgTypes[10].OneofWrappers = []any{}
 	file_komari_enrollment_v1_enrollment_proto_msgTypes[16].OneofWrappers = []any{
 		(*ApproveEnrollmentRequest_ExistingAgentId)(nil),

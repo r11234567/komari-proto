@@ -82,6 +82,10 @@ message RefreshCredentialsRequest {
 
 message RefreshCredentialsResponse {
   AgentCredentials credentials = 1;
+  // proof is the control-plane's signature over the new credentials, so the
+  // agent can verify the response really came from the panel it enrolled with
+  // rather than from something positioned between them.
+  optional komari.security.v1.SignedEnvelope proof = 2;
 }
 
 message RevokeCredentialsRequest {
