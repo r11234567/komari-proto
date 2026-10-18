@@ -301,6 +301,8 @@ type PollEnrollmentResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	State EnrollmentState        `protobuf:"varint,1,opt,name=state,proto3,enum=komari.enrollment.v1.EnrollmentState" json:"state,omitempty"`
 	// credentials is set only when state is APPROVED.
+	// When credentials are issued, the device code is single-use and must be invalidated
+	// immediately by the server to prevent replay or credential hijacking.
 	Credentials *AgentCredentials `protobuf:"bytes,2,opt,name=credentials,proto3,oneof" json:"credentials,omitempty"`
 	// poll_interval is re-sent so the server can slow a client down.
 	PollInterval  *durationpb.Duration `protobuf:"bytes,3,opt,name=poll_interval,json=pollInterval,proto3" json:"poll_interval,omitempty"`

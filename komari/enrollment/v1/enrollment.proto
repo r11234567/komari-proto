@@ -72,6 +72,8 @@ message PollEnrollmentRequest {
 message PollEnrollmentResponse {
   EnrollmentState state = 1;
   // credentials is set only when state is APPROVED.
+  // When credentials are issued, the device code is single-use and must be invalidated
+  // immediately by the server to prevent replay or credential hijacking.
   optional AgentCredentials credentials = 2;
   // poll_interval is re-sent so the server can slow a client down.
   google.protobuf.Duration poll_interval = 3;

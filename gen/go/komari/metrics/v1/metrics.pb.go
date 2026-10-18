@@ -2630,11 +2630,11 @@ const file_komari_metrics_v1_metrics_proto_rawDesc = "" +
 	"\x1eMETRIC_MIGRATION_STATE_RUNNING\x10\x02\x12$\n" +
 	" METRIC_MIGRATION_STATE_COMPLETED\x10\x03\x12!\n" +
 	"\x1dMETRIC_MIGRATION_STATE_FAILED\x10\x04\x12#\n" +
-	"\x1fMETRIC_MIGRATION_STATE_CANCELED\x10\x052\xb9\f\n" +
+	"\x1fMETRIC_MIGRATION_STATE_CANCELED\x10\x052\xc3\f\n" +
 	"\x0eMetricsService\x12b\n" +
-	"\rSubmitMetrics\x12'.komari.metrics.v1.SubmitMetricsRequest\x1a(.komari.metrics.v1.SubmitMetricsResponse\x12d\n" +
-	"\rUploadMetrics\x12'.komari.metrics.v1.UploadMetricsRequest\x1a(.komari.metrics.v1.UploadMetricsResponse(\x01\x12f\n" +
-	"\rStreamMetrics\x12'.komari.metrics.v1.StreamMetricsRequest\x1a(.komari.metrics.v1.StreamMetricsResponse(\x010\x01\x12_\n" +
+	"\rSubmitMetrics\x12'.komari.metrics.v1.SubmitMetricsRequest\x1a(.komari.metrics.v1.SubmitMetricsResponse\x12i\n" +
+	"\rUploadMetrics\x12'.komari.metrics.v1.UploadMetricsRequest\x1a(.komari.metrics.v1.UploadMetricsResponse\"\x03\x88\x02\x01(\x01\x12k\n" +
+	"\rStreamMetrics\x12'.komari.metrics.v1.StreamMetricsRequest\x1a(.komari.metrics.v1.StreamMetricsResponse\"\x03\x88\x02\x01(\x010\x01\x12_\n" +
 	"\fQueryMetrics\x12&.komari.metrics.v1.QueryMetricsRequest\x1a'.komari.metrics.v1.QueryMetricsResponse\x12z\n" +
 	"\x15ListMetricDefinitions\x12/.komari.metrics.v1.ListMetricDefinitionsRequest\x1a0.komari.metrics.v1.ListMetricDefinitionsResponse\x12b\n" +
 	"\rListPingTasks\x12'.komari.metrics.v1.ListPingTasksRequest\x1a(.komari.metrics.v1.ListPingTasksResponse\x12_\n" +

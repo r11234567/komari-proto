@@ -79,11 +79,15 @@ const (
 
 // MetricsServiceClient is a client for the komari.metrics.v1.MetricsService service.
 type MetricsServiceClient interface {
-	// SubmitMetrics stores one idempotent batch.
+	// SubmitMetrics stores one idempotent batch. This is the primary metric ingestion path.
 	SubmitMetrics(context.Context, *connect.Request[v1.SubmitMetricsRequest]) (*connect.Response[v1.SubmitMetricsResponse], error)
-	// UploadMetrics stores a bounded client stream without sharing other lifecycles.
+	// UploadMetrics is deprecated. Use unary SubmitMetrics instead.
+	//
+	// Deprecated: do not use.
 	UploadMetrics(context.Context) *connect.ClientStreamForClient[v1.UploadMetricsRequest, v1.UploadMetricsResponse]
-	// StreamMetrics continuously uploads sequenced batches and acknowledges each batch.
+	// StreamMetrics is deprecated. Use unary SubmitMetrics instead.
+	//
+	// Deprecated: do not use.
 	StreamMetrics(context.Context) *connect.BidiStreamForClient[v1.StreamMetricsRequest, v1.StreamMetricsResponse]
 	// QueryMetrics retrieves a bounded time window.
 	QueryMetrics(context.Context, *connect.Request[v1.QueryMetricsRequest]) (*connect.Response[v1.QueryMetricsResponse], error)
@@ -226,11 +230,15 @@ func (c *metricsServiceClient) SubmitMetrics(ctx context.Context, req *connect.R
 }
 
 // UploadMetrics calls komari.metrics.v1.MetricsService.UploadMetrics.
+//
+// Deprecated: do not use.
 func (c *metricsServiceClient) UploadMetrics(ctx context.Context) *connect.ClientStreamForClient[v1.UploadMetricsRequest, v1.UploadMetricsResponse] {
 	return c.uploadMetrics.CallClientStream(ctx)
 }
 
 // StreamMetrics calls komari.metrics.v1.MetricsService.StreamMetrics.
+//
+// Deprecated: do not use.
 func (c *metricsServiceClient) StreamMetrics(ctx context.Context) *connect.BidiStreamForClient[v1.StreamMetricsRequest, v1.StreamMetricsResponse] {
 	return c.streamMetrics.CallBidiStream(ctx)
 }
@@ -292,11 +300,15 @@ func (c *metricsServiceClient) CancelMetricMigration(ctx context.Context, req *c
 
 // MetricsServiceHandler is an implementation of the komari.metrics.v1.MetricsService service.
 type MetricsServiceHandler interface {
-	// SubmitMetrics stores one idempotent batch.
+	// SubmitMetrics stores one idempotent batch. This is the primary metric ingestion path.
 	SubmitMetrics(context.Context, *connect.Request[v1.SubmitMetricsRequest]) (*connect.Response[v1.SubmitMetricsResponse], error)
-	// UploadMetrics stores a bounded client stream without sharing other lifecycles.
+	// UploadMetrics is deprecated. Use unary SubmitMetrics instead.
+	//
+	// Deprecated: do not use.
 	UploadMetrics(context.Context, *connect.ClientStream[v1.UploadMetricsRequest]) (*connect.Response[v1.UploadMetricsResponse], error)
-	// StreamMetrics continuously uploads sequenced batches and acknowledges each batch.
+	// StreamMetrics is deprecated. Use unary SubmitMetrics instead.
+	//
+	// Deprecated: do not use.
 	StreamMetrics(context.Context, *connect.BidiStream[v1.StreamMetricsRequest, v1.StreamMetricsResponse]) error
 	// QueryMetrics retrieves a bounded time window.
 	QueryMetrics(context.Context, *connect.Request[v1.QueryMetricsRequest]) (*connect.Response[v1.QueryMetricsResponse], error)
