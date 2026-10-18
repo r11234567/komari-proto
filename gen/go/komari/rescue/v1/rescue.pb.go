@@ -8,7 +8,8 @@ package rescuev1
 
 import (
 	v1 "github.com/r11234567/komari-proto/gen/go/komari/common/v1"
-	v11 "github.com/r11234567/komari-proto/gen/go/komari/diag/v1"
+	v12 "github.com/r11234567/komari-proto/gen/go/komari/diag/v1"
+	v11 "github.com/r11234567/komari-proto/gen/go/komari/security/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
@@ -859,8 +860,11 @@ type RescueAssignment struct {
 	AssignmentId   string                 `protobuf:"bytes,1,opt,name=assignment_id,json=assignmentId,proto3" json:"assignment_id,omitempty"`
 	Session        *RescueSession         `protobuf:"bytes,2,opt,name=session,proto3" json:"session,omitempty"`
 	LeaseExpiresAt *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=lease_expires_at,json=leaseExpiresAt,proto3" json:"lease_expires_at,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// envelope carries the control plane's cryptographically signed instruction.
+	// The privileged rescue daemon must verify the signature before acting on host rules.
+	Envelope      *v11.SignedEnvelope `protobuf:"bytes,4,opt,name=envelope,proto3,oneof" json:"envelope,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *RescueAssignment) Reset() {
@@ -910,6 +914,13 @@ func (x *RescueAssignment) GetSession() *RescueSession {
 func (x *RescueAssignment) GetLeaseExpiresAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.LeaseExpiresAt
+	}
+	return nil
+}
+
+func (x *RescueAssignment) GetEnvelope() *v11.SignedEnvelope {
+	if x != nil {
+		return x.Envelope
 	}
 	return nil
 }
@@ -1386,7 +1397,7 @@ type RescueEvent struct {
 	Error      *v1.ErrorDetail        `protobuf:"bytes,7,opt,name=error,proto3,oneof" json:"error,omitempty"`
 	// diagnostics is set instead of output for the performance diagnostic
 	// actions, so a panel renders typed fields rather than parsing text.
-	Diagnostics *v11.DiagnosticsReport `protobuf:"bytes,8,opt,name=diagnostics,proto3,oneof" json:"diagnostics,omitempty"`
+	Diagnostics *v12.DiagnosticsReport `protobuf:"bytes,8,opt,name=diagnostics,proto3,oneof" json:"diagnostics,omitempty"`
 	// ssh_access is set by the temporary SSH actions and reports the state the
 	// helper actually reached, including why it may be unreachable anyway.
 	SshAccess     *TemporarySSHAccess `protobuf:"bytes,9,opt,name=ssh_access,json=sshAccess,proto3,oneof" json:"ssh_access,omitempty"`
@@ -1473,7 +1484,7 @@ func (x *RescueEvent) GetError() *v1.ErrorDetail {
 	return nil
 }
 
-func (x *RescueEvent) GetDiagnostics() *v11.DiagnosticsReport {
+func (x *RescueEvent) GetDiagnostics() *v12.DiagnosticsReport {
 	if x != nil {
 		return x.Diagnostics
 	}
@@ -1666,7 +1677,7 @@ var File_komari_rescue_v1_rescue_proto protoreflect.FileDescriptor
 
 const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\n" +
-	"\x1dkomari/rescue/v1/rescue.proto\x12\x10komari.rescue.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x19komari/diag/v1/diag.proto\"3\n" +
+	"\x1dkomari/rescue/v1/rescue.proto\x12\x10komari.rescue.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a\x19komari/diag/v1/diag.proto\x1a!komari/security/v1/security.proto\"3\n" +
 	"\x16GetRescueStatusRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\"W\n" +
 	"\x17GetRescueStatusResponse\x12<\n" +
@@ -1706,11 +1717,13 @@ const file_komari_rescue_v1_rescue_proto_rawDesc = "" +
 	"\x1bLeaseRescueSessionsResponse\x12B\n" +
 	"\n" +
 	"assignment\x18\x01 \x01(\v2\".komari.rescue.v1.RescueAssignmentR\n" +
-	"assignment\"\xb8\x01\n" +
+	"assignment\"\x8a\x02\n" +
 	"\x10RescueAssignment\x12#\n" +
 	"\rassignment_id\x18\x01 \x01(\tR\fassignmentId\x129\n" +
 	"\asession\x18\x02 \x01(\v2\x1f.komari.rescue.v1.RescueSessionR\asession\x12D\n" +
-	"\x10lease_expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x0eleaseExpiresAt\"\x98\x01\n" +
+	"\x10lease_expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x0eleaseExpiresAt\x12C\n" +
+	"\benvelope\x18\x04 \x01(\v2\".komari.security.v1.SignedEnvelopeH\x00R\benvelope\x88\x01\x01B\v\n" +
+	"\t_envelope\"\x98\x01\n" +
 	"\x18ReportRescueEventRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12,\n" +
 	"\x12helper_instance_id\x18\x02 \x01(\tR\x10helperInstanceId\x123\n" +
@@ -1883,9 +1896,10 @@ var file_komari_rescue_v1_rescue_proto_goTypes = []any{
 	(*durationpb.Duration)(nil),         // 24: google.protobuf.Duration
 	(*v1.TwoFactorProof)(nil),           // 25: komari.common.v1.TwoFactorProof
 	(*timestamppb.Timestamp)(nil),       // 26: google.protobuf.Timestamp
-	(*v1.ErrorDetail)(nil),              // 27: komari.common.v1.ErrorDetail
-	(v1.OperationState)(0),              // 28: komari.common.v1.OperationState
-	(*v11.DiagnosticsReport)(nil),       // 29: komari.diag.v1.DiagnosticsReport
+	(*v11.SignedEnvelope)(nil),          // 27: komari.security.v1.SignedEnvelope
+	(*v1.ErrorDetail)(nil),              // 28: komari.common.v1.ErrorDetail
+	(v1.OperationState)(0),              // 29: komari.common.v1.OperationState
+	(*v12.DiagnosticsReport)(nil),       // 30: komari.diag.v1.DiagnosticsReport
 }
 var file_komari_rescue_v1_rescue_proto_depIdxs = []int32{
 	19, // 0: komari.rescue.v1.GetRescueStatusResponse.status:type_name -> komari.rescue.v1.RescueHelperStatus
@@ -1900,47 +1914,48 @@ var file_komari_rescue_v1_rescue_proto_depIdxs = []int32{
 	14, // 9: komari.rescue.v1.LeaseRescueSessionsResponse.assignment:type_name -> komari.rescue.v1.RescueAssignment
 	20, // 10: komari.rescue.v1.RescueAssignment.session:type_name -> komari.rescue.v1.RescueSession
 	26, // 11: komari.rescue.v1.RescueAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
-	21, // 12: komari.rescue.v1.ReportRescueEventRequest.event:type_name -> komari.rescue.v1.RescueEvent
-	19, // 13: komari.rescue.v1.ReportRescueStatusRequest.status:type_name -> komari.rescue.v1.RescueHelperStatus
-	27, // 14: komari.rescue.v1.RescueHelperStatus.error:type_name -> komari.common.v1.ErrorDetail
-	26, // 15: komari.rescue.v1.RescueHelperStatus.observed_at:type_name -> google.protobuf.Timestamp
-	2,  // 16: komari.rescue.v1.RescueHelperStatus.network_isolation:type_name -> komari.rescue.v1.NetworkIsolationMode
-	1,  // 17: komari.rescue.v1.RescueSession.action:type_name -> komari.rescue.v1.RescueAction
-	28, // 18: komari.rescue.v1.RescueSession.state:type_name -> komari.common.v1.OperationState
-	26, // 19: komari.rescue.v1.RescueSession.created_at:type_name -> google.protobuf.Timestamp
-	26, // 20: komari.rescue.v1.RescueSession.started_at:type_name -> google.protobuf.Timestamp
-	26, // 21: komari.rescue.v1.RescueSession.finished_at:type_name -> google.protobuf.Timestamp
-	27, // 22: komari.rescue.v1.RescueSession.error:type_name -> komari.common.v1.ErrorDetail
-	26, // 23: komari.rescue.v1.RescueSession.deadline_at:type_name -> google.protobuf.Timestamp
-	26, // 24: komari.rescue.v1.RescueEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	28, // 25: komari.rescue.v1.RescueEvent.state:type_name -> komari.common.v1.OperationState
-	3,  // 26: komari.rescue.v1.RescueEvent.stream:type_name -> komari.rescue.v1.RescueOutputStream
-	27, // 27: komari.rescue.v1.RescueEvent.error:type_name -> komari.common.v1.ErrorDetail
-	29, // 28: komari.rescue.v1.RescueEvent.diagnostics:type_name -> komari.diag.v1.DiagnosticsReport
-	22, // 29: komari.rescue.v1.RescueEvent.ssh_access:type_name -> komari.rescue.v1.TemporarySSHAccess
-	26, // 30: komari.rescue.v1.TemporarySSHAccess.granted_at:type_name -> google.protobuf.Timestamp
-	26, // 31: komari.rescue.v1.TemporarySSHAccess.expires_at:type_name -> google.protobuf.Timestamp
-	0,  // 32: komari.rescue.v1.TemporarySSHAccess.expiry_mechanism:type_name -> komari.rescue.v1.ExpiryMechanism
-	23, // 33: komari.rescue.v1.TemporarySSHAccess.sshd_state:type_name -> komari.rescue.v1.SSHDaemonState
-	4,  // 34: komari.rescue.v1.RescueService.GetRescueStatus:input_type -> komari.rescue.v1.GetRescueStatusRequest
-	6,  // 35: komari.rescue.v1.RescueService.CreateRescueSession:input_type -> komari.rescue.v1.CreateRescueSessionRequest
-	8,  // 36: komari.rescue.v1.RescueService.WatchRescueSession:input_type -> komari.rescue.v1.WatchRescueSessionRequest
-	10, // 37: komari.rescue.v1.RescueService.CancelRescueSession:input_type -> komari.rescue.v1.CancelRescueSessionRequest
-	12, // 38: komari.rescue.v1.RescueService.LeaseRescueSessions:input_type -> komari.rescue.v1.LeaseRescueSessionsRequest
-	15, // 39: komari.rescue.v1.RescueService.ReportRescueEvent:input_type -> komari.rescue.v1.ReportRescueEventRequest
-	17, // 40: komari.rescue.v1.RescueService.ReportRescueStatus:input_type -> komari.rescue.v1.ReportRescueStatusRequest
-	5,  // 41: komari.rescue.v1.RescueService.GetRescueStatus:output_type -> komari.rescue.v1.GetRescueStatusResponse
-	7,  // 42: komari.rescue.v1.RescueService.CreateRescueSession:output_type -> komari.rescue.v1.CreateRescueSessionResponse
-	9,  // 43: komari.rescue.v1.RescueService.WatchRescueSession:output_type -> komari.rescue.v1.WatchRescueSessionResponse
-	11, // 44: komari.rescue.v1.RescueService.CancelRescueSession:output_type -> komari.rescue.v1.CancelRescueSessionResponse
-	13, // 45: komari.rescue.v1.RescueService.LeaseRescueSessions:output_type -> komari.rescue.v1.LeaseRescueSessionsResponse
-	16, // 46: komari.rescue.v1.RescueService.ReportRescueEvent:output_type -> komari.rescue.v1.ReportRescueEventResponse
-	18, // 47: komari.rescue.v1.RescueService.ReportRescueStatus:output_type -> komari.rescue.v1.ReportRescueStatusResponse
-	41, // [41:48] is the sub-list for method output_type
-	34, // [34:41] is the sub-list for method input_type
-	34, // [34:34] is the sub-list for extension type_name
-	34, // [34:34] is the sub-list for extension extendee
-	0,  // [0:34] is the sub-list for field type_name
+	27, // 12: komari.rescue.v1.RescueAssignment.envelope:type_name -> komari.security.v1.SignedEnvelope
+	21, // 13: komari.rescue.v1.ReportRescueEventRequest.event:type_name -> komari.rescue.v1.RescueEvent
+	19, // 14: komari.rescue.v1.ReportRescueStatusRequest.status:type_name -> komari.rescue.v1.RescueHelperStatus
+	28, // 15: komari.rescue.v1.RescueHelperStatus.error:type_name -> komari.common.v1.ErrorDetail
+	26, // 16: komari.rescue.v1.RescueHelperStatus.observed_at:type_name -> google.protobuf.Timestamp
+	2,  // 17: komari.rescue.v1.RescueHelperStatus.network_isolation:type_name -> komari.rescue.v1.NetworkIsolationMode
+	1,  // 18: komari.rescue.v1.RescueSession.action:type_name -> komari.rescue.v1.RescueAction
+	29, // 19: komari.rescue.v1.RescueSession.state:type_name -> komari.common.v1.OperationState
+	26, // 20: komari.rescue.v1.RescueSession.created_at:type_name -> google.protobuf.Timestamp
+	26, // 21: komari.rescue.v1.RescueSession.started_at:type_name -> google.protobuf.Timestamp
+	26, // 22: komari.rescue.v1.RescueSession.finished_at:type_name -> google.protobuf.Timestamp
+	28, // 23: komari.rescue.v1.RescueSession.error:type_name -> komari.common.v1.ErrorDetail
+	26, // 24: komari.rescue.v1.RescueSession.deadline_at:type_name -> google.protobuf.Timestamp
+	26, // 25: komari.rescue.v1.RescueEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	29, // 26: komari.rescue.v1.RescueEvent.state:type_name -> komari.common.v1.OperationState
+	3,  // 27: komari.rescue.v1.RescueEvent.stream:type_name -> komari.rescue.v1.RescueOutputStream
+	28, // 28: komari.rescue.v1.RescueEvent.error:type_name -> komari.common.v1.ErrorDetail
+	30, // 29: komari.rescue.v1.RescueEvent.diagnostics:type_name -> komari.diag.v1.DiagnosticsReport
+	22, // 30: komari.rescue.v1.RescueEvent.ssh_access:type_name -> komari.rescue.v1.TemporarySSHAccess
+	26, // 31: komari.rescue.v1.TemporarySSHAccess.granted_at:type_name -> google.protobuf.Timestamp
+	26, // 32: komari.rescue.v1.TemporarySSHAccess.expires_at:type_name -> google.protobuf.Timestamp
+	0,  // 33: komari.rescue.v1.TemporarySSHAccess.expiry_mechanism:type_name -> komari.rescue.v1.ExpiryMechanism
+	23, // 34: komari.rescue.v1.TemporarySSHAccess.sshd_state:type_name -> komari.rescue.v1.SSHDaemonState
+	4,  // 35: komari.rescue.v1.RescueService.GetRescueStatus:input_type -> komari.rescue.v1.GetRescueStatusRequest
+	6,  // 36: komari.rescue.v1.RescueService.CreateRescueSession:input_type -> komari.rescue.v1.CreateRescueSessionRequest
+	8,  // 37: komari.rescue.v1.RescueService.WatchRescueSession:input_type -> komari.rescue.v1.WatchRescueSessionRequest
+	10, // 38: komari.rescue.v1.RescueService.CancelRescueSession:input_type -> komari.rescue.v1.CancelRescueSessionRequest
+	12, // 39: komari.rescue.v1.RescueService.LeaseRescueSessions:input_type -> komari.rescue.v1.LeaseRescueSessionsRequest
+	15, // 40: komari.rescue.v1.RescueService.ReportRescueEvent:input_type -> komari.rescue.v1.ReportRescueEventRequest
+	17, // 41: komari.rescue.v1.RescueService.ReportRescueStatus:input_type -> komari.rescue.v1.ReportRescueStatusRequest
+	5,  // 42: komari.rescue.v1.RescueService.GetRescueStatus:output_type -> komari.rescue.v1.GetRescueStatusResponse
+	7,  // 43: komari.rescue.v1.RescueService.CreateRescueSession:output_type -> komari.rescue.v1.CreateRescueSessionResponse
+	9,  // 44: komari.rescue.v1.RescueService.WatchRescueSession:output_type -> komari.rescue.v1.WatchRescueSessionResponse
+	11, // 45: komari.rescue.v1.RescueService.CancelRescueSession:output_type -> komari.rescue.v1.CancelRescueSessionResponse
+	13, // 46: komari.rescue.v1.RescueService.LeaseRescueSessions:output_type -> komari.rescue.v1.LeaseRescueSessionsResponse
+	16, // 47: komari.rescue.v1.RescueService.ReportRescueEvent:output_type -> komari.rescue.v1.ReportRescueEventResponse
+	18, // 48: komari.rescue.v1.RescueService.ReportRescueStatus:output_type -> komari.rescue.v1.ReportRescueStatusResponse
+	42, // [42:49] is the sub-list for method output_type
+	35, // [35:42] is the sub-list for method input_type
+	35, // [35:35] is the sub-list for extension type_name
+	35, // [35:35] is the sub-list for extension extendee
+	0,  // [0:35] is the sub-list for field type_name
 }
 
 func init() { file_komari_rescue_v1_rescue_proto_init() }
@@ -1949,6 +1964,7 @@ func file_komari_rescue_v1_rescue_proto_init() {
 		return
 	}
 	file_komari_rescue_v1_rescue_proto_msgTypes[2].OneofWrappers = []any{}
+	file_komari_rescue_v1_rescue_proto_msgTypes[10].OneofWrappers = []any{}
 	file_komari_rescue_v1_rescue_proto_msgTypes[15].OneofWrappers = []any{}
 	file_komari_rescue_v1_rescue_proto_msgTypes[16].OneofWrappers = []any{}
 	file_komari_rescue_v1_rescue_proto_msgTypes[17].OneofWrappers = []any{}

@@ -8,6 +8,7 @@ package execv1
 
 import (
 	v1 "github.com/r11234567/komari-proto/gen/go/komari/common/v1"
+	v11 "github.com/r11234567/komari-proto/gen/go/komari/security/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
@@ -652,9 +653,12 @@ type ExecutionAssignment struct {
 	AssignmentId   string                 `protobuf:"bytes,1,opt,name=assignment_id,json=assignmentId,proto3" json:"assignment_id,omitempty"`
 	Execution      *Execution             `protobuf:"bytes,2,opt,name=execution,proto3" json:"execution,omitempty"`
 	LeaseExpiresAt *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=lease_expires_at,json=leaseExpiresAt,proto3" json:"lease_expires_at,omitempty"`
-	Spec           *ExecutionSpec         `protobuf:"bytes,4,opt,name=spec,proto3" json:"spec,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// envelope carries the cryptographically signed instruction (SignedEnvelope).
+	// The agent must verify the Ed25519 signature before unmarshaling ExecutionSpec
+	// from envelope.payload.
+	Envelope      *v11.SignedEnvelope `protobuf:"bytes,4,opt,name=envelope,proto3" json:"envelope,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ExecutionAssignment) Reset() {
@@ -708,9 +712,9 @@ func (x *ExecutionAssignment) GetLeaseExpiresAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *ExecutionAssignment) GetSpec() *ExecutionSpec {
+func (x *ExecutionAssignment) GetEnvelope() *v11.SignedEnvelope {
 	if x != nil {
-		return x.Spec
+		return x.Envelope
 	}
 	return nil
 }
@@ -1165,7 +1169,7 @@ var File_komari_exec_v1_exec_proto protoreflect.FileDescriptor
 
 const file_komari_exec_v1_exec_proto_rawDesc = "" +
 	"\n" +
-	"\x19komari/exec/v1/exec.proto\x12\x0ekomari.exec.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\"\x99\x04\n" +
+	"\x19komari/exec/v1/exec.proto\x12\x0ekomari.exec.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dkomari/common/v1/common.proto\x1a!komari/security/v1/security.proto\"\x99\x04\n" +
 	"\x16CreateExecutionRequest\x12\x19\n" +
 	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x18\n" +
 	"\acommand\x18\x02 \x01(\tR\acommand\x12\x1c\n" +
@@ -1210,12 +1214,12 @@ const file_komari_exec_v1_exec_proto_rawDesc = "" +
 	"\n" +
 	"assignment\x18\x01 \x01(\v2#.komari.exec.v1.ExecutionAssignmentR\n" +
 	"assignment\x12I\n" +
-	"\fcancellation\x18\x02 \x01(\v2%.komari.exec.v1.ExecutionCancellationR\fcancellation\"\xec\x01\n" +
+	"\fcancellation\x18\x02 \x01(\v2%.komari.exec.v1.ExecutionCancellationR\fcancellation\"\xf9\x01\n" +
 	"\x13ExecutionAssignment\x12#\n" +
 	"\rassignment_id\x18\x01 \x01(\tR\fassignmentId\x127\n" +
 	"\texecution\x18\x02 \x01(\v2\x19.komari.exec.v1.ExecutionR\texecution\x12D\n" +
-	"\x10lease_expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x0eleaseExpiresAt\x121\n" +
-	"\x04spec\x18\x04 \x01(\v2\x1d.komari.exec.v1.ExecutionSpecR\x04spec\"\xe5\x02\n" +
+	"\x10lease_expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x0eleaseExpiresAt\x12>\n" +
+	"\benvelope\x18\x04 \x01(\v2\".komari.security.v1.SignedEnvelopeR\benvelope\"\xe5\x02\n" +
 	"\rExecutionSpec\x12\x18\n" +
 	"\acommand\x18\x01 \x01(\tR\acommand\x12\x1c\n" +
 	"\targuments\x18\x02 \x03(\tR\targuments\x12P\n" +
@@ -1315,8 +1319,9 @@ var file_komari_exec_v1_exec_proto_goTypes = []any{
 	(*durationpb.Duration)(nil),          // 20: google.protobuf.Duration
 	(*v1.TwoFactorProof)(nil),            // 21: komari.common.v1.TwoFactorProof
 	(*timestamppb.Timestamp)(nil),        // 22: google.protobuf.Timestamp
-	(v1.OperationState)(0),               // 23: komari.common.v1.OperationState
-	(*v1.ErrorDetail)(nil),               // 24: komari.common.v1.ErrorDetail
+	(*v11.SignedEnvelope)(nil),           // 23: komari.security.v1.SignedEnvelope
+	(v1.OperationState)(0),               // 24: komari.common.v1.OperationState
+	(*v1.ErrorDetail)(nil),               // 25: komari.common.v1.ErrorDetail
 }
 var file_komari_exec_v1_exec_proto_depIdxs = []int32{
 	18, // 0: komari.exec.v1.CreateExecutionRequest.environment:type_name -> komari.exec.v1.CreateExecutionRequest.EnvironmentEntry
@@ -1332,19 +1337,19 @@ var file_komari_exec_v1_exec_proto_depIdxs = []int32{
 	13, // 10: komari.exec.v1.LeaseExecutionResponse.cancellation:type_name -> komari.exec.v1.ExecutionCancellation
 	16, // 11: komari.exec.v1.ExecutionAssignment.execution:type_name -> komari.exec.v1.Execution
 	22, // 12: komari.exec.v1.ExecutionAssignment.lease_expires_at:type_name -> google.protobuf.Timestamp
-	12, // 13: komari.exec.v1.ExecutionAssignment.spec:type_name -> komari.exec.v1.ExecutionSpec
+	23, // 13: komari.exec.v1.ExecutionAssignment.envelope:type_name -> komari.security.v1.SignedEnvelope
 	19, // 14: komari.exec.v1.ExecutionSpec.environment:type_name -> komari.exec.v1.ExecutionSpec.EnvironmentEntry
 	20, // 15: komari.exec.v1.ExecutionSpec.timeout:type_name -> google.protobuf.Duration
 	22, // 16: komari.exec.v1.ExecutionCancellation.requested_at:type_name -> google.protobuf.Timestamp
 	17, // 17: komari.exec.v1.ReportExecutionEventRequest.event:type_name -> komari.exec.v1.ExecutionEvent
-	23, // 18: komari.exec.v1.Execution.state:type_name -> komari.common.v1.OperationState
+	24, // 18: komari.exec.v1.Execution.state:type_name -> komari.common.v1.OperationState
 	22, // 19: komari.exec.v1.Execution.created_at:type_name -> google.protobuf.Timestamp
 	22, // 20: komari.exec.v1.Execution.started_at:type_name -> google.protobuf.Timestamp
 	22, // 21: komari.exec.v1.Execution.finished_at:type_name -> google.protobuf.Timestamp
 	22, // 22: komari.exec.v1.ExecutionEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 23: komari.exec.v1.ExecutionEvent.state:type_name -> komari.common.v1.OperationState
+	24, // 23: komari.exec.v1.ExecutionEvent.state:type_name -> komari.common.v1.OperationState
 	0,  // 24: komari.exec.v1.ExecutionEvent.stream:type_name -> komari.exec.v1.OutputStream
-	24, // 25: komari.exec.v1.ExecutionEvent.error:type_name -> komari.common.v1.ErrorDetail
+	25, // 25: komari.exec.v1.ExecutionEvent.error:type_name -> komari.common.v1.ErrorDetail
 	1,  // 26: komari.exec.v1.ExecutionService.CreateExecution:input_type -> komari.exec.v1.CreateExecutionRequest
 	3,  // 27: komari.exec.v1.ExecutionService.WatchExecution:input_type -> komari.exec.v1.WatchExecutionRequest
 	5,  // 28: komari.exec.v1.ExecutionService.CancelExecution:input_type -> komari.exec.v1.CancelExecutionRequest

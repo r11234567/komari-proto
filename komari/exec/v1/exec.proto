@@ -5,6 +5,7 @@ package komari.exec.v1;
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
+import "komari/security/v1/security.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/exec/v1;execv1";
 
@@ -96,7 +97,10 @@ message ExecutionAssignment {
   string assignment_id = 1;
   Execution execution = 2;
   google.protobuf.Timestamp lease_expires_at = 3;
-  ExecutionSpec spec = 4;
+  // envelope carries the cryptographically signed instruction (SignedEnvelope).
+  // The agent must verify the Ed25519 signature before unmarshaling ExecutionSpec
+  // from envelope.payload.
+  komari.security.v1.SignedEnvelope envelope = 4;
 }
 
 // ExecutionSpec is the bounded immutable command accepted by the controller.

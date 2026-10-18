@@ -6,6 +6,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
 import "komari/diag/v1/diag.proto";
+import "komari/security/v1/security.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/rescue/v1;rescuev1";
 
@@ -92,6 +93,9 @@ message RescueAssignment {
   string assignment_id = 1;
   RescueSession session = 2;
   google.protobuf.Timestamp lease_expires_at = 3;
+  // envelope carries the control plane's cryptographically signed instruction.
+  // The privileged rescue daemon must verify the signature before acting on host rules.
+  optional komari.security.v1.SignedEnvelope envelope = 4;
 }
 
 message ReportRescueEventRequest {
