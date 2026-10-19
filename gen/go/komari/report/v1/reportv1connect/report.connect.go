@@ -41,6 +41,9 @@ const (
 // AgentReportServiceClient is a client for the komari.report.v1.AgentReportService service.
 type AgentReportServiceClient interface {
 	// SubmitReport stores one idempotent report.
+	// Deprecated: migrate to MetricsService.SubmitMetrics or SubmitMetricStream.
+	//
+	// Deprecated: do not use.
 	SubmitReport(context.Context, *connect.Request[v1.SubmitReportRequest]) (*connect.Response[v1.SubmitReportResponse], error)
 }
 
@@ -70,6 +73,8 @@ type agentReportServiceClient struct {
 }
 
 // SubmitReport calls komari.report.v1.AgentReportService.SubmitReport.
+//
+// Deprecated: do not use.
 func (c *agentReportServiceClient) SubmitReport(ctx context.Context, req *connect.Request[v1.SubmitReportRequest]) (*connect.Response[v1.SubmitReportResponse], error) {
 	return c.submitReport.CallUnary(ctx, req)
 }
@@ -78,6 +83,9 @@ func (c *agentReportServiceClient) SubmitReport(ctx context.Context, req *connec
 // service.
 type AgentReportServiceHandler interface {
 	// SubmitReport stores one idempotent report.
+	// Deprecated: migrate to MetricsService.SubmitMetrics or SubmitMetricStream.
+	//
+	// Deprecated: do not use.
 	SubmitReport(context.Context, *connect.Request[v1.SubmitReportRequest]) (*connect.Response[v1.SubmitReportResponse], error)
 }
 

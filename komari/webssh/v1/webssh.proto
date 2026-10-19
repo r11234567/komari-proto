@@ -12,15 +12,30 @@ service WebSSHService {
   // OpenSession is retained for native clients that support bidi streams.
   rpc OpenSession(stream OpenSessionRequest) returns (stream OpenSessionResponse);
   // CreateSession opens a browser-compatible remote-management session.
-  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
+  // Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse) {
+    option deprecated = true;
+  }
   // SendSessionCommand carries terminal input, resize, and typed file operations.
-  rpc SendSessionCommand(SendSessionCommandRequest) returns (SendSessionCommandResponse);
+  // Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+  rpc SendSessionCommand(SendSessionCommandRequest) returns (SendSessionCommandResponse) {
+    option deprecated = true;
+  }
   // WatchSession streams terminal and file events to browser clients.
-  rpc WatchSession(WatchSessionRequest) returns (stream WatchSessionResponse);
+  // Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+  rpc WatchSession(WatchSessionRequest) returns (stream WatchSessionResponse) {
+    option deprecated = true;
+  }
   // AcknowledgeSessionEvents releases replay buffers consumed by the browser.
-  rpc AcknowledgeSessionEvents(AcknowledgeSessionEventsRequest) returns (AcknowledgeSessionEventsResponse);
+  // Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+  rpc AcknowledgeSessionEvents(AcknowledgeSessionEventsRequest) returns (AcknowledgeSessionEventsResponse) {
+    option deprecated = true;
+  }
   // CloseSession records explicit cleanup with a short independent deadline.
-  rpc CloseSession(CloseSessionRequest) returns (CloseSessionResponse);
+  // Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+  rpc CloseSession(CloseSessionRequest) returns (CloseSessionResponse) {
+    option deprecated = true;
+  }
   // LeaseSessions assigns pending sessions to an authenticated Agent.
   rpc LeaseSessions(LeaseSessionsRequest) returns (stream LeaseSessionsResponse);
   // AttachSession is the Agent-side bidirectional terminal/file channel.

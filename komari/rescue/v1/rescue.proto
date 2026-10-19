@@ -91,7 +91,8 @@ message LeaseRescueSessionsResponse {
 
 message RescueAssignment {
   string assignment_id = 1;
-  RescueSession session = 2;
+  // session is deprecated in favor of envelope to enforce cryptographic instruction verification.
+  RescueSession session = 2 [deprecated = true];
   google.protobuf.Timestamp lease_expires_at = 3;
   // envelope carries the control plane's cryptographically signed instruction.
   // The privileged rescue daemon must verify the signature before acting on host rules.

@@ -9,9 +9,13 @@ import "komari/rescue/v1/rescue.proto";
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/report/v1;reportv1";
 
 // AgentReportService accepts transport-neutral agent identity and health reports.
+// Deprecated: use komari.metrics.v1.MetricsService for telemetry and metrics reporting.
 service AgentReportService {
   // SubmitReport stores one idempotent report.
-  rpc SubmitReport(SubmitReportRequest) returns (SubmitReportResponse);
+  // Deprecated: migrate to MetricsService.SubmitMetrics or SubmitMetricStream.
+  rpc SubmitReport(SubmitReportRequest) returns (SubmitReportResponse) {
+    option deprecated = true;
+  }
 }
 
 // SubmitReportRequest contains one sequenced agent report.

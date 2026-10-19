@@ -45,11 +45,20 @@ jobs:
         env:
           BASE_REF: ${{ github.base_ref }}
         run: git fetch --no-tags origin "+refs/heads/${BASE_REF}:refs/heads/${BASE_REF}"
+      - name: Fetch previous commit for push
+        if: github.event_name == 'push' && github.ref_name == 'main'
+        run: git fetch --no-tags --depth=2 origin main
       - name: Breaking
-        if: github.event_name == 'pull_request'
         env:
           BASE_REF: ${{ github.base_ref }}
-        run: buf breaking --against ".git#branch=${BASE_REF}"
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            buf breaking --against ".git#branch=${BASE_REF}"
+          elif [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref_name }}" = "main" ]; then
+            if git rev-parse HEAD~1 >/dev/null 2>&1; then
+              buf breaking --against ".git#ref=HEAD~1"
+            fi
+          fi
       - name: Generate
         run: buf generate
       # Pushed with [skip ci] so this does not retrigger itself; the steps

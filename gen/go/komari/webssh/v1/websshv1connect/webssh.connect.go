@@ -64,14 +64,29 @@ type WebSSHServiceClient interface {
 	// OpenSession is retained for native clients that support bidi streams.
 	OpenSession(context.Context) *connect.BidiStreamForClient[v1.OpenSessionRequest, v1.OpenSessionResponse]
 	// CreateSession opens a browser-compatible remote-management session.
+	// Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+	//
+	// Deprecated: do not use.
 	CreateSession(context.Context, *connect.Request[v1.CreateSessionRequest]) (*connect.Response[v1.CreateSessionResponse], error)
 	// SendSessionCommand carries terminal input, resize, and typed file operations.
+	// Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+	//
+	// Deprecated: do not use.
 	SendSessionCommand(context.Context, *connect.Request[v1.SendSessionCommandRequest]) (*connect.Response[v1.SendSessionCommandResponse], error)
 	// WatchSession streams terminal and file events to browser clients.
+	// Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+	//
+	// Deprecated: do not use.
 	WatchSession(context.Context, *connect.Request[v1.WatchSessionRequest]) (*connect.ServerStreamForClient[v1.WatchSessionResponse], error)
 	// AcknowledgeSessionEvents releases replay buffers consumed by the browser.
+	// Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+	//
+	// Deprecated: do not use.
 	AcknowledgeSessionEvents(context.Context, *connect.Request[v1.AcknowledgeSessionEventsRequest]) (*connect.Response[v1.AcknowledgeSessionEventsResponse], error)
 	// CloseSession records explicit cleanup with a short independent deadline.
+	// Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+	//
+	// Deprecated: do not use.
 	CloseSession(context.Context, *connect.Request[v1.CloseSessionRequest]) (*connect.Response[v1.CloseSessionResponse], error)
 	// LeaseSessions assigns pending sessions to an authenticated Agent.
 	LeaseSessions(context.Context, *connect.Request[v1.LeaseSessionsRequest]) (*connect.ServerStreamForClient[v1.LeaseSessionsResponse], error)
@@ -159,26 +174,36 @@ func (c *webSSHServiceClient) OpenSession(ctx context.Context) *connect.BidiStre
 }
 
 // CreateSession calls komari.webssh.v1.WebSSHService.CreateSession.
+//
+// Deprecated: do not use.
 func (c *webSSHServiceClient) CreateSession(ctx context.Context, req *connect.Request[v1.CreateSessionRequest]) (*connect.Response[v1.CreateSessionResponse], error) {
 	return c.createSession.CallUnary(ctx, req)
 }
 
 // SendSessionCommand calls komari.webssh.v1.WebSSHService.SendSessionCommand.
+//
+// Deprecated: do not use.
 func (c *webSSHServiceClient) SendSessionCommand(ctx context.Context, req *connect.Request[v1.SendSessionCommandRequest]) (*connect.Response[v1.SendSessionCommandResponse], error) {
 	return c.sendSessionCommand.CallUnary(ctx, req)
 }
 
 // WatchSession calls komari.webssh.v1.WebSSHService.WatchSession.
+//
+// Deprecated: do not use.
 func (c *webSSHServiceClient) WatchSession(ctx context.Context, req *connect.Request[v1.WatchSessionRequest]) (*connect.ServerStreamForClient[v1.WatchSessionResponse], error) {
 	return c.watchSession.CallServerStream(ctx, req)
 }
 
 // AcknowledgeSessionEvents calls komari.webssh.v1.WebSSHService.AcknowledgeSessionEvents.
+//
+// Deprecated: do not use.
 func (c *webSSHServiceClient) AcknowledgeSessionEvents(ctx context.Context, req *connect.Request[v1.AcknowledgeSessionEventsRequest]) (*connect.Response[v1.AcknowledgeSessionEventsResponse], error) {
 	return c.acknowledgeSessionEvents.CallUnary(ctx, req)
 }
 
 // CloseSession calls komari.webssh.v1.WebSSHService.CloseSession.
+//
+// Deprecated: do not use.
 func (c *webSSHServiceClient) CloseSession(ctx context.Context, req *connect.Request[v1.CloseSessionRequest]) (*connect.Response[v1.CloseSessionResponse], error) {
 	return c.closeSession.CallUnary(ctx, req)
 }
@@ -198,14 +223,29 @@ type WebSSHServiceHandler interface {
 	// OpenSession is retained for native clients that support bidi streams.
 	OpenSession(context.Context, *connect.BidiStream[v1.OpenSessionRequest, v1.OpenSessionResponse]) error
 	// CreateSession opens a browser-compatible remote-management session.
+	// Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+	//
+	// Deprecated: do not use.
 	CreateSession(context.Context, *connect.Request[v1.CreateSessionRequest]) (*connect.Response[v1.CreateSessionResponse], error)
 	// SendSessionCommand carries terminal input, resize, and typed file operations.
+	// Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+	//
+	// Deprecated: do not use.
 	SendSessionCommand(context.Context, *connect.Request[v1.SendSessionCommandRequest]) (*connect.Response[v1.SendSessionCommandResponse], error)
 	// WatchSession streams terminal and file events to browser clients.
+	// Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+	//
+	// Deprecated: do not use.
 	WatchSession(context.Context, *connect.Request[v1.WatchSessionRequest], *connect.ServerStream[v1.WatchSessionResponse]) error
 	// AcknowledgeSessionEvents releases replay buffers consumed by the browser.
+	// Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+	//
+	// Deprecated: do not use.
 	AcknowledgeSessionEvents(context.Context, *connect.Request[v1.AcknowledgeSessionEventsRequest]) (*connect.Response[v1.AcknowledgeSessionEventsResponse], error)
 	// CloseSession records explicit cleanup with a short independent deadline.
+	// Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+	//
+	// Deprecated: do not use.
 	CloseSession(context.Context, *connect.Request[v1.CloseSessionRequest]) (*connect.Response[v1.CloseSessionResponse], error)
 	// LeaseSessions assigns pending sessions to an authenticated Agent.
 	LeaseSessions(context.Context, *connect.Request[v1.LeaseSessionsRequest], *connect.ServerStream[v1.LeaseSessionsResponse]) error

@@ -97,10 +97,13 @@ message ExecutionAssignment {
   string assignment_id = 1;
   Execution execution = 2;
   google.protobuf.Timestamp lease_expires_at = 3;
+  // spec is deprecated in favor of envelope to maintain protobuf wire compatibility.
+  // Older agents consume spec directly; newer agents verify and unpack envelope.
+  ExecutionSpec spec = 4 [deprecated = true];
   // envelope carries the cryptographically signed instruction (SignedEnvelope).
   // The agent must verify the Ed25519 signature before unmarshaling ExecutionSpec
   // from envelope.payload.
-  komari.security.v1.SignedEnvelope envelope = 4;
+  komari.security.v1.SignedEnvelope envelope = 5;
 }
 
 // ExecutionSpec is the bounded immutable command accepted by the controller.
