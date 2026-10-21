@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+package komari.host.v1;
+
+import "google/protobuf/timestamp.proto";
+import "komari/report/v1/report.proto";
+import "komari/security/v1/security.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/host/v1;hostv1";
+
+// HostService handles bounded host administration, never arbitrary commands.
+service HostService {
+  // NegotiateHostProtocol advertises installed support; it grants no permission.
+  rpc NegotiateHostProtocol(NegotiateHostProtocolRequest) returns (NegotiateHostProtocolResponse);
+  // PrepareHostOperation checks a current approval and claims one execution lease.
+  rpc PrepareHostOperation(PrepareHostOperationRequest) returns (PrepareHostOperationResponse);
+  // ReportHostOperation records host progress, never the daemon applied pointer.
+  rpc ReportHostOperation(ReportHostOperationRequest) returns (ReportHostOperationResponse);
+  // GetHostOperation recovers an operation after interruption.
+  rpc GetHostOperation(GetHostOperationRequest) returns (GetHostOperationResponse);
+}
+
+// HostAction enumerates the only permitted installation actions.
+enum HostAction {
+  HOST_ACTION_UNSPECIFIED = 0;
+  HOST_ACTION_SET_SERVICE_IDENTITY = 1;
+  HOST_ACTION_INSTALL_RESCUE_HELPER = 2;
+  HOST_ACTION_REMOVE_RESCUE_HELPER = 3;
+}
+
+// HostOperationPhase is host progress, independent of panel approval.
+enum HostOperationPhase {
+  HOST_OPERATION_PHASE_UNSPECIFIED = 0;
+  HOST_OPERATION_PHASE_PREPARED = 1;
+  HOST_OPERATION_PHASE_APPLYING = 2;
+  HOST_OPERATION_PHASE_LOCAL_APPLIED = 3;
+  HOST_OPERATION_PHASE_RESTORED = 4;
+  HOST_OPERATION_PHASE_FAILED = 5;
+}
+
+// HostAuthorization is the complete signed approval body. No field is advisory.
+// The SignedInstruction type is komari.host.v1.HostAuthorization. Its body is
+// deterministic protobuf encoding of this message, with no maps or unknown
+// fields. config_hash uses the documented privileged-settings-v1 encoding.
+message HostAuthorization {
+  string agent_id = 1;
+  uint64 revision = 2;
+  string config_hash = 3;
+  uint64 approval_generation = 4;
+  string service_id = 5;
+  repeated HostAction actions = 6;
+  komari.report.v1.PrivilegeMode target_privilege_mode = 7;
+  string nonce = 8;
+  google.protobuf.Timestamp issued_at = 9;
+  google.protobuf.Timestamp expires_at = 10;
+  string approved_by = 11;
+}
+
+// DaemonObservation comes from the running daemon after it loads the snapshot.
+// Metadata is an authenticated report, not remote attestation of the kernel.
+message DaemonObservation {
+  uint64 revision = 1;
+  string config_hash = 2;
+  uint64 approval_generation = 3;
+  string service_id = 4;
+  string startup_id = 5;
+  komari.report.v1.PrivilegeMode privilege_mode = 6;
+  komari.report.v1.AgentCapabilities effective_capabilities = 7;
+  google.protobuf.Timestamp observed_at = 8;
+  string operation_id = 9;
+  bool helper_installed = 10;
+  bool helper_running = 11;
+  bool helper_authorized = 12;
+}
+
+// HostOperation is the durable record of one bounded host transaction.
+message HostOperation {
+  string operation_id = 1;
+  HostAuthorization authorization = 2;
+  HostOperationPhase phase = 3;
+  google.protobuf.Timestamp lease_expires_at = 4;
+  string error = 5;
+  optional komari.security.v1.SignedEnvelope signature = 6;
+}
+
+// NegotiateHostProtocolRequest describes installed platform support.
+message NegotiateHostProtocolRequest {
+  string agent_id = 1;
+  uint32 protocol_version = 2;
+  string service_id = 3;
+  repeated HostAction supported_actions = 4;
+  komari.report.v1.PrivilegeMode privilege_mode = 5;
+  string startup_id = 6;
+  repeated uint32 supported_runtime_fields = 7;
+  string host_tool_version = 8;
+}
+
+// NegotiateHostProtocolResponse acknowledges the negotiated protocol.
+message NegotiateHostProtocolResponse {
+  uint32 protocol_version = 1;
+  uint64 update_sequence = 2;
+}
+
+// PrepareHostOperationRequest is idempotent for one operation_id.
+message PrepareHostOperationRequest {
+  string agent_id = 1;
+  string operation_id = 2;
+  uint64 revision = 3;
+  uint64 approval_generation = 4;
+  string config_hash = 5;
+  string nonce = 6;
+}
+
+// PrepareHostOperationResponse returns only the currently authorized action.
+message PrepareHostOperationResponse {
+  HostOperation operation = 1;
+}
+
+// ReportHostOperationRequest carries no credential. local_authentication names
+// the OS mechanism for audit only; it is not proof of authentication.
+message ReportHostOperationRequest {
+  string agent_id = 1;
+  string operation_id = 2;
+  string receipt_id = 3;
+  HostOperationPhase phase = 4;
+  string error = 5;
+  string local_authentication = 6;
+  string operator = 7;
+}
+
+// ReportHostOperationResponse confirms durable receipt.
+message ReportHostOperationResponse {
+  HostOperation operation = 1;
+  bool accepted = 2;
+}
+
+// GetHostOperationRequest reads an operation belonging to this agent.
+message GetHostOperationRequest {
+  string agent_id = 1;
+  string operation_id = 2;
+}
+
+// GetHostOperationResponse returns the durable operation.
+message GetHostOperationResponse {
+  HostOperation operation = 1;
+}

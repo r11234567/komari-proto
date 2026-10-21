@@ -48,6 +48,9 @@ const (
 	// ConfigServiceUpdateDesiredConfigProcedure is the fully-qualified name of the ConfigService's
 	// UpdateDesiredConfig RPC.
 	ConfigServiceUpdateDesiredConfigProcedure = "/komari.config.v1.ConfigService/UpdateDesiredConfig"
+	// PrivilegedDeliveryServiceGetNodeConfigStateProcedure is the fully-qualified name of the
+	// PrivilegedDeliveryService's GetNodeConfigState RPC.
+	PrivilegedDeliveryServiceGetNodeConfigStateProcedure = "/komari.config.v1.PrivilegedDeliveryService/GetNodeConfigState"
 	// PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure is the fully-qualified name of the
 	// PrivilegedDeliveryService's GetPrivilegedDelivery RPC.
 	PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure = "/komari.config.v1.PrivilegedDeliveryService/GetPrivilegedDelivery"
@@ -230,6 +233,8 @@ func (UnimplementedConfigServiceHandler) UpdateDesiredConfig(context.Context, *c
 // PrivilegedDeliveryServiceClient is a client for the komari.config.v1.PrivilegedDeliveryService
 // service.
 type PrivilegedDeliveryServiceClient interface {
+	// GetNodeConfigState returns authoritative desired and applied snapshots.
+	GetNodeConfigState(context.Context, *connect.Request[v1.GetNodeConfigStateRequest]) (*connect.Response[v1.GetNodeConfigStateResponse], error)
 	// GetPrivilegedDelivery returns the current privileged revision and its
 	// state. Suitable for reconnect recovery.
 	GetPrivilegedDelivery(context.Context, *connect.Request[v1.GetPrivilegedDeliveryRequest]) (*connect.Response[v1.GetPrivilegedDeliveryResponse], error)
@@ -246,8 +251,8 @@ type PrivilegedDeliveryServiceClient interface {
 	// on the host, reports the outcome including a local rollback.
 	ReportPrivilegedDelivery(context.Context, *connect.Request[v1.ReportPrivilegedDeliveryRequest]) (*connect.Response[v1.ReportPrivilegedDeliveryResponse], error)
 	// CompleteManualUpgrade is called by the host-side upgrade script with the
-	// task nonce. It is the only way a privileged revision becomes active, and
-	// it proves the operator ran the upgrade on the machine itself.
+	// task nonce. Deprecated for v2: nonce possession does not prove OS
+	// authentication or daemon conversion. V2 rejects this completion path.
 	CompleteManualUpgrade(context.Context, *connect.Request[v1.CompleteManualUpgradeRequest]) (*connect.Response[v1.CompleteManualUpgradeResponse], error)
 	// ListPrivilegedRevisions returns a machine's privileged history and which
 	// revision it is actually running, for the panel.
@@ -265,6 +270,12 @@ func NewPrivilegedDeliveryServiceClient(httpClient connect.HTTPClient, baseURL s
 	baseURL = strings.TrimRight(baseURL, "/")
 	privilegedDeliveryServiceMethods := v1.File_komari_config_v1_config_proto.Services().ByName("PrivilegedDeliveryService").Methods()
 	return &privilegedDeliveryServiceClient{
+		getNodeConfigState: connect.NewClient[v1.GetNodeConfigStateRequest, v1.GetNodeConfigStateResponse](
+			httpClient,
+			baseURL+PrivilegedDeliveryServiceGetNodeConfigStateProcedure,
+			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("GetNodeConfigState")),
+			connect.WithClientOptions(opts...),
+		),
 		getPrivilegedDelivery: connect.NewClient[v1.GetPrivilegedDeliveryRequest, v1.GetPrivilegedDeliveryResponse](
 			httpClient,
 			baseURL+PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure,
@@ -312,6 +323,7 @@ func NewPrivilegedDeliveryServiceClient(httpClient connect.HTTPClient, baseURL s
 
 // privilegedDeliveryServiceClient implements PrivilegedDeliveryServiceClient.
 type privilegedDeliveryServiceClient struct {
+	getNodeConfigState        *connect.Client[v1.GetNodeConfigStateRequest, v1.GetNodeConfigStateResponse]
 	getPrivilegedDelivery     *connect.Client[v1.GetPrivilegedDeliveryRequest, v1.GetPrivilegedDeliveryResponse]
 	watchPrivilegedDelivery   *connect.Client[v1.WatchPrivilegedDeliveryRequest, v1.WatchPrivilegedDeliveryResponse]
 	updatePrivilegedDelivery  *connect.Client[v1.UpdatePrivilegedDeliveryRequest, v1.UpdatePrivilegedDeliveryResponse]
@@ -319,6 +331,11 @@ type privilegedDeliveryServiceClient struct {
 	reportPrivilegedDelivery  *connect.Client[v1.ReportPrivilegedDeliveryRequest, v1.ReportPrivilegedDeliveryResponse]
 	completeManualUpgrade     *connect.Client[v1.CompleteManualUpgradeRequest, v1.CompleteManualUpgradeResponse]
 	listPrivilegedRevisions   *connect.Client[v1.ListPrivilegedRevisionsRequest, v1.ListPrivilegedRevisionsResponse]
+}
+
+// GetNodeConfigState calls komari.config.v1.PrivilegedDeliveryService.GetNodeConfigState.
+func (c *privilegedDeliveryServiceClient) GetNodeConfigState(ctx context.Context, req *connect.Request[v1.GetNodeConfigStateRequest]) (*connect.Response[v1.GetNodeConfigStateResponse], error) {
+	return c.getNodeConfigState.CallUnary(ctx, req)
 }
 
 // GetPrivilegedDelivery calls komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery.
@@ -362,6 +379,8 @@ func (c *privilegedDeliveryServiceClient) ListPrivilegedRevisions(ctx context.Co
 // PrivilegedDeliveryServiceHandler is an implementation of the
 // komari.config.v1.PrivilegedDeliveryService service.
 type PrivilegedDeliveryServiceHandler interface {
+	// GetNodeConfigState returns authoritative desired and applied snapshots.
+	GetNodeConfigState(context.Context, *connect.Request[v1.GetNodeConfigStateRequest]) (*connect.Response[v1.GetNodeConfigStateResponse], error)
 	// GetPrivilegedDelivery returns the current privileged revision and its
 	// state. Suitable for reconnect recovery.
 	GetPrivilegedDelivery(context.Context, *connect.Request[v1.GetPrivilegedDeliveryRequest]) (*connect.Response[v1.GetPrivilegedDeliveryResponse], error)
@@ -378,8 +397,8 @@ type PrivilegedDeliveryServiceHandler interface {
 	// on the host, reports the outcome including a local rollback.
 	ReportPrivilegedDelivery(context.Context, *connect.Request[v1.ReportPrivilegedDeliveryRequest]) (*connect.Response[v1.ReportPrivilegedDeliveryResponse], error)
 	// CompleteManualUpgrade is called by the host-side upgrade script with the
-	// task nonce. It is the only way a privileged revision becomes active, and
-	// it proves the operator ran the upgrade on the machine itself.
+	// task nonce. Deprecated for v2: nonce possession does not prove OS
+	// authentication or daemon conversion. V2 rejects this completion path.
 	CompleteManualUpgrade(context.Context, *connect.Request[v1.CompleteManualUpgradeRequest]) (*connect.Response[v1.CompleteManualUpgradeResponse], error)
 	// ListPrivilegedRevisions returns a machine's privileged history and which
 	// revision it is actually running, for the panel.
@@ -393,6 +412,12 @@ type PrivilegedDeliveryServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewPrivilegedDeliveryServiceHandler(svc PrivilegedDeliveryServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	privilegedDeliveryServiceMethods := v1.File_komari_config_v1_config_proto.Services().ByName("PrivilegedDeliveryService").Methods()
+	privilegedDeliveryServiceGetNodeConfigStateHandler := connect.NewUnaryHandler(
+		PrivilegedDeliveryServiceGetNodeConfigStateProcedure,
+		svc.GetNodeConfigState,
+		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("GetNodeConfigState")),
+		connect.WithHandlerOptions(opts...),
+	)
 	privilegedDeliveryServiceGetPrivilegedDeliveryHandler := connect.NewUnaryHandler(
 		PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure,
 		svc.GetPrivilegedDelivery,
@@ -437,6 +462,8 @@ func NewPrivilegedDeliveryServiceHandler(svc PrivilegedDeliveryServiceHandler, o
 	)
 	return "/komari.config.v1.PrivilegedDeliveryService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case PrivilegedDeliveryServiceGetNodeConfigStateProcedure:
+			privilegedDeliveryServiceGetNodeConfigStateHandler.ServeHTTP(w, r)
 		case PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure:
 			privilegedDeliveryServiceGetPrivilegedDeliveryHandler.ServeHTTP(w, r)
 		case PrivilegedDeliveryServiceWatchPrivilegedDeliveryProcedure:
@@ -459,6 +486,10 @@ func NewPrivilegedDeliveryServiceHandler(svc PrivilegedDeliveryServiceHandler, o
 
 // UnimplementedPrivilegedDeliveryServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedPrivilegedDeliveryServiceHandler struct{}
+
+func (UnimplementedPrivilegedDeliveryServiceHandler) GetNodeConfigState(context.Context, *connect.Request[v1.GetNodeConfigStateRequest]) (*connect.Response[v1.GetNodeConfigStateResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.PrivilegedDeliveryService.GetNodeConfigState is not implemented"))
+}
 
 func (UnimplementedPrivilegedDeliveryServiceHandler) GetPrivilegedDelivery(context.Context, *connect.Request[v1.GetPrivilegedDeliveryRequest]) (*connect.Response[v1.GetPrivilegedDeliveryResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery is not implemented"))

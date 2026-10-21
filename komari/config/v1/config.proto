@@ -5,6 +5,7 @@ package komari.config.v1;
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
+import "komari/host/v1/host.proto";
 import "komari/report/v1/report.proto";
 import "komari/security/v1/security.proto";
 
@@ -23,7 +24,7 @@ service ConfigService {
 }
 
 // PrivilegedDeliveryService owns the separate delivery track for settings a
-// running agent never applies on its own.
+// adoption requires an explicit signed approval.
 //
 // It is deliberately a second track rather than an extension of ConfigService.
 // The ordinary track is a convergence loop: the panel names a desired state
@@ -34,6 +35,8 @@ service ConfigService {
 // track carries an explicit human decision, and the ordinary track keeps its
 // existing behaviour untouched.
 service PrivilegedDeliveryService {
+  // GetNodeConfigState returns authoritative desired and applied snapshots.
+  rpc GetNodeConfigState(GetNodeConfigStateRequest) returns (GetNodeConfigStateResponse);
   // GetPrivilegedDelivery returns the current privileged revision and its
   // state. Suitable for reconnect recovery.
   rpc GetPrivilegedDelivery(GetPrivilegedDeliveryRequest) returns (GetPrivilegedDeliveryResponse);
@@ -50,8 +53,8 @@ service PrivilegedDeliveryService {
   // on the host, reports the outcome including a local rollback.
   rpc ReportPrivilegedDelivery(ReportPrivilegedDeliveryRequest) returns (ReportPrivilegedDeliveryResponse);
   // CompleteManualUpgrade is called by the host-side upgrade script with the
-  // task nonce. It is the only way a privileged revision becomes active, and
-  // it proves the operator ran the upgrade on the machine itself.
+  // task nonce. Deprecated for v2: nonce possession does not prove OS
+  // authentication or daemon conversion. V2 rejects this completion path.
   rpc CompleteManualUpgrade(CompleteManualUpgradeRequest) returns (CompleteManualUpgradeResponse);
   // ListPrivilegedRevisions returns a machine's privileged history and which
   // revision it is actually running, for the panel.
@@ -74,6 +77,8 @@ message ListPrivilegedRevisionsResponse {
   // decides whether a widening change can be confirmed in the panel or has to
   // be upgraded on the host.
   komari.report.v1.PrivilegeMode installed_privilege_mode = 3;
+  optional PrivilegedRevision applied = 4;
+  uint64 update_sequence = 5;
 }
 
 message GetPrivilegedDeliveryRequest {
@@ -88,10 +93,14 @@ message GetPrivilegedDeliveryResponse {
 message WatchPrivilegedDeliveryRequest {
   string agent_id = 1;
   uint64 after_revision = 2;
+  // When protocol_version is 2, sequence includes approval and receipt changes.
+  uint64 after_sequence = 3;
+  uint32 protocol_version = 4;
 }
 
 message WatchPrivilegedDeliveryResponse {
   PrivilegedRevision revision = 1;
+  uint64 update_sequence = 2;
 }
 
 message UpdatePrivilegedDeliveryRequest {
@@ -99,6 +108,7 @@ message UpdatePrivilegedDeliveryRequest {
   PrivilegedConfig privileged = 2;
   uint64 expected_revision = 3;
   string reason = 4;
+  uint32 protocol_version = 5;
 }
 
 message UpdatePrivilegedDeliveryResponse {
@@ -127,6 +137,10 @@ message ReportPrivilegedDeliveryRequest {
   // transition, which the panel checks against what the revision assumed
   // rather than trusting the reported state alone.
   komari.report.v1.PrivilegeMode active_privilege_mode = 6;
+  // Legacy reports can record receipt only. V2 terminal reports require observation.
+  uint32 protocol_version = 7;
+  optional komari.host.v1.DaemonObservation observation = 8;
+  string receipt_id = 9;
 }
 
 message ReportPrivilegedDeliveryResponse {
@@ -179,6 +193,13 @@ message PrivilegedRevision {
   // refusal rather than failing to parse. An agent that has pinned keys must
   // never act on a revision without one.
   optional komari.security.v1.SignedEnvelope signature = 11;
+  string config_hash = 12;
+  uint64 approval_generation = 13;
+  uint64 update_sequence = 14;
+  optional google.protobuf.Timestamp received_at = 15;
+  string confirmed_by = 16;
+  optional komari.host.v1.HostAuthorization authorization = 17;
+  uint32 protocol_version = 18;
 }
 
 // PrivilegedDeliveryState is the state of one privileged revision.
@@ -203,6 +224,10 @@ enum PrivilegedDeliveryState {
   PRIVILEGED_DELIVERY_STATE_ROLLED_BACK = 4;
   // The transition was attempted and failed; errors carries why.
   PRIVILEGED_DELIVERY_STATE_FAILED = 5;
+  PRIVILEGED_DELIVERY_STATE_AWAITING_AGENT = 6;
+  PRIVILEGED_DELIVERY_STATE_APPLYING = 7;
+  PRIVILEGED_DELIVERY_STATE_SUPERSEDED = 8;
+  PRIVILEGED_DELIVERY_STATE_EXPIRED = 9;
 }
 
 // RuntimeConfig contains settings that can be atomically applied without reinstalling.
@@ -395,4 +420,19 @@ enum ConfigApplyStatus {
   CONFIG_APPLY_STATUS_APPLIED = 1;
   CONFIG_APPLY_STATUS_REJECTED = 2;
   CONFIG_APPLY_STATUS_UPGRADE_REQUIRED = 3;
+}
+
+// GetNodeConfigStateRequest reads one node without scanning history.
+message GetNodeConfigStateRequest {
+  string agent_id = 1;
+}
+
+// GetNodeConfigStateResponse separates intent from actual daemon observation.
+message GetNodeConfigStateResponse {
+  optional PrivilegedRevision desired = 1;
+  optional PrivilegedRevision applied = 2;
+  uint64 applied_revision = 3;
+  uint64 update_sequence = 4;
+  uint32 protocol_version = 5;
+  optional komari.host.v1.DaemonObservation observation = 6;
 }
