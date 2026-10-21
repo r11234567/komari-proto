@@ -130,6 +130,10 @@ message AgentCapabilities {
   CapabilityState webssh = 9;
   CapabilityState rescue_helper = 10;
   CapabilityState return_route_probe = 11;
+  // Advertising support grants no permission; HostService binds the service.
+  uint32 privileged_delivery_protocol_version = 12;
+  string host_tool_version = 13;
+  repeated uint32 supported_runtime_fields = 14;
 }
 
 // CapabilityState describes whether a feature is available and why it is limited.

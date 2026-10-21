@@ -1,89 +1,60 @@
 name: Protocol
-
 on:
   pull_request:
   push:
-    branches: [main]
-    tags: ["v*"]
-
+    branches: [main, 'fix/privileged-delivery-v2']
+    tags: ['v*']
+  workflow_dispatch:
 permissions:
   contents: read
-
 jobs:
   lint-generate:
     runs-on: ubuntu-latest
-    # Generated clients are committed, but they are produced by CI rather than
-    # by hand: the development host cannot run buf. This job therefore formats,
-    # regenerates and commits the result back to the branch under test, then
-    # validates what it produced in the same run.
-    permissions:
-      contents: write
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Check out the real branch rather than a detached merge commit, so
-          # regenerated output can be committed back to it.
-          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
       - uses: bufbuild/buf-setup-action@v1
         with:
-          version: "1.57.0"
-      # Formatting and generation are applied rather than asserted. The source
-      # of truth for generated clients is this job, not a developer's shell,
-      # because the development host cannot run buf at all. Applying before
-      # validating means one run both fixes the tree and proves the result
-      # compiles, instead of reporting a staleness the author cannot resolve.
-      - name: Format
-        run: buf format --write
-      - name: Lint
-        run: buf lint
-      # Checking out the head branch by name means only that ref is fetched, so
-      # the base branch has to be brought in explicitly before it can be used
-      # as a comparison point.
-      - name: Fetch base branch
-        if: github.event_name == 'pull_request'
-        env:
-          BASE_REF: ${{ github.base_ref }}
-        run: git fetch --no-tags origin "+refs/heads/${BASE_REF}:refs/heads/${BASE_REF}"
-      - name: Breaking
-        env:
-          BASE_REF: ${{ github.base_ref }}
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            buf breaking --against ".git#branch=${BASE_REF}"
-          elif [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref_name }}" = "main" ]; then
-            buf breaking --against ".git#tag=v0.1.35"
-          fi
-      - name: Generate
-        run: buf generate
-      # Pushed with [skip ci] so this does not retrigger itself; the steps
-      # after this one validate the regenerated output in this same run.
-      - name: Commit regenerated clients
-        env:
-          TARGET_BRANCH: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
-        run: |
-          if git diff --quiet ; then
-            echo "Formatted sources and generated clients already current."
-            exit 0
-          fi
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "chore(proto): regenerate clients [skip ci]"
-          git push origin "HEAD:${TARGET_BRANCH}"
+          version: '1.57.0'
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-      - name: Compile generated Go
-        run: go test ./...
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Validate npm package
-        run: npm pack --dry-run
-      - name: Package generated clients
-        run: tar -czf komari-proto-generated-${GITHUB_SHA}.tar.gz gen
+          node-version: 22
+      - name: Format, lint, breaking and generated client consistency
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || 'v0.1.37' }}
+        run: |
+          set -euo pipefail
+          mkdir -p ci-artifacts
+          buf format --diff --exit-code 2>&1 | tee ci-artifacts/format.log
+          buf lint 2>&1 | tee ci-artifacts/lint.log
+          buf breaking --against ".git#ref=${BASE_SHA}" 2>&1 | tee ci-artifacts/breaking.log
+          buf generate 2>&1 | tee ci-artifacts/generate.log
+          git diff --exit-code -- gen 2>&1 | tee ci-artifacts/generated-diff.log
+      - name: Go protocol compatibility tests
+        if: success() || failure()
+        run: scripts/ci/run-go-tests.sh ./...
+      - name: TypeScript clients and hash vectors
+        if: success() || failure()
+        run: |
+          set -euo pipefail
+          mkdir -p ci-artifacts
+          npm install --ignore-scripts --no-save --package-lock=false typescript@5.8.3 @bufbuild/protobuf@2.10.0 2>&1 | tee ci-artifacts/npm-install.log
+          npx tsc --noEmit --module esnext --moduleResolution bundler --target es2022 --skipLibCheck $(find gen/ts -name '*.ts') 2>&1 | tee ci-artifacts/typescript.log
+          node --test tests/privileged-hash.test.mjs 2>&1 | tee ci-artifacts/hash-ts.log
+          npm pack --dry-run 2>&1 | tee ci-artifacts/npm-pack.log
+      - name: Package generated clients even on failure
+        if: always()
+        run: |
+          mkdir -p ci-artifacts
+          tar -czf ci-artifacts/generated-clients.tar.gz gen
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: komari-proto-generated-${{ github.sha }}
-          path: komari-proto-generated-${{ github.sha }}.tar.gz
+          name: protocol-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ci-artifacts/
+          retention-days: 30
