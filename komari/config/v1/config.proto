@@ -141,6 +141,9 @@ message ReportPrivilegedDeliveryRequest {
   uint32 protocol_version = 7;
   optional komari.host.v1.DaemonObservation observation = 8;
   string receipt_id = 9;
+  // Binds a v2 FAILED report to the attempted approval, without claiming apply.
+  string config_hash = 10;
+  uint64 approval_generation = 11;
 }
 
 message ReportPrivilegedDeliveryResponse {

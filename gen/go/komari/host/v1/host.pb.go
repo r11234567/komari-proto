@@ -137,9 +137,9 @@ func (HostOperationPhase) EnumDescriptor() ([]byte, []int) {
 }
 
 // HostAuthorization is the complete signed approval body. No field is advisory.
-// The SignedInstruction type is komari.host.v1.HostAuthorization. Its body is
-// deterministic protobuf encoding of this message, with no maps or unknown
-// fields. config_hash uses the documented privileged-settings-v1 encoding.
+// It is embedded in signed PrivilegedRevision and HostOperation bodies.
+// No maps or unknown fields are permitted in the authorization. config_hash
+// uses the documented privileged-settings-v1 encoding.
 type HostAuthorization struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	AgentId             string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
