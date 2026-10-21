@@ -64,3 +64,18 @@ Initial baseline creation/ACK is implemented in the later enrollment stage;
 protocol negotiation alone must not fabricate r1/applied=1. Clients advertise
 supported runtime field numbers and host tool version. Unsupported runtime
 fields are rejected explicitly, never ignored while advancing applied.
+
+## Installation baseline
+
+`ConfigService.InitializeNodeConfig` creates runtime r1 and privileged baseline r1
+in one transaction only for server-marked newly created nodes without history.
+The request hash (including policy hash) binds retries. Old nodes, existing
+runtime history and existing privilege history cannot use it to reset versions.
+`PrivilegedRevision.installation_baseline` is inside the v2 signed body. An
+agent accepts it only at revision 1 and only when it exactly matches its protected
+local installation policy and current OS identity, with no host actions/helper.
+It never authorizes a new identity or new installation. Both applied pointers
+remain zero until their respective daemon acknowledgements. Baseline acceptance
+uses local preexisting authorization rather than a panel 2FA approval and cannot
+be reused for future revisions. Retrying the initial immutable request never
+creates a new revision or extends a human approval deadline.

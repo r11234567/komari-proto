@@ -13,6 +13,9 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/config/v1;c
 
 // ConfigService owns desired runtime configuration and revision acknowledgements.
 service ConfigService {
+  // InitializeNodeConfig records an existing installation baseline once, only
+  // for newly-created eligible nodes without configuration history.
+  rpc InitializeNodeConfig(InitializeNodeConfigRequest) returns (InitializeNodeConfigResponse);
   // GetDesiredConfig returns immediately and is suitable for reconnect recovery.
   rpc GetDesiredConfig(GetDesiredConfigRequest) returns (GetDesiredConfigResponse);
   // WatchDesiredConfig streams only configuration revisions.
@@ -203,6 +206,9 @@ message PrivilegedRevision {
   string confirmed_by = 16;
   optional komari.host.v1.HostAuthorization authorization = 17;
   uint32 protocol_version = 18;
+  // Installation baseline can only match root-owned local install policy. It
+  // cannot authorize an identity change or install a helper.
+  bool installation_baseline = 19;
 }
 
 // PrivilegedDeliveryState is the state of one privileged revision.
@@ -438,4 +444,22 @@ message GetNodeConfigStateResponse {
   uint64 update_sequence = 4;
   uint32 protocol_version = 5;
   optional komari.host.v1.DaemonObservation observation = 6;
+}
+
+// InitializeNodeConfigRequest reports the installation's already-authorized
+// settings. policy_hash binds retries; it is not proof of OS authorization.
+message InitializeNodeConfigRequest {
+  string agent_id = 1;
+  string service_id = 2;
+  string policy_hash = 3;
+  RuntimeConfig runtime = 4;
+  PrivilegedConfig privileged = 5;
+}
+
+// InitializeNodeConfigResponse never claims either baseline is applied. Agents
+// persist and load each before sending the existing acknowledgement messages.
+message InitializeNodeConfigResponse {
+  bool initialized = 1;
+  optional DesiredConfig runtime = 2;
+  optional PrivilegedRevision privileged = 3;
 }
