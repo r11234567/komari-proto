@@ -444,6 +444,8 @@ message GetNodeConfigStateResponse {
   uint64 update_sequence = 4;
   uint32 protocol_version = 5;
   optional komari.host.v1.DaemonObservation observation = 6;
+  optional komari.host.v1.HostOperation host_operation = 7;
+  repeated komari.host.v1.HostAction supported_host_actions = 8;
 }
 
 // InitializeNodeConfigRequest reports the installation's already-authorized

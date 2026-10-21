@@ -71,6 +71,8 @@ message DaemonObservation {
   bool helper_installed = 10;
   bool helper_running = 11;
   bool helper_authorized = 12;
+  // Connected and ready to request signed leases, independently of installation.
+  bool helper_lease_ready = 13;
 }
 
 // HostOperation is the durable record of one bounded host transaction.

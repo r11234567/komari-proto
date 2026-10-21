@@ -2434,15 +2434,17 @@ func (x *GetNodeConfigStateRequest) GetAgentId() string {
 
 // GetNodeConfigStateResponse separates intent from actual daemon observation.
 type GetNodeConfigStateResponse struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Desired         *PrivilegedRevision    `protobuf:"bytes,1,opt,name=desired,proto3,oneof" json:"desired,omitempty"`
-	Applied         *PrivilegedRevision    `protobuf:"bytes,2,opt,name=applied,proto3,oneof" json:"applied,omitempty"`
-	AppliedRevision uint64                 `protobuf:"varint,3,opt,name=applied_revision,json=appliedRevision,proto3" json:"applied_revision,omitempty"`
-	UpdateSequence  uint64                 `protobuf:"varint,4,opt,name=update_sequence,json=updateSequence,proto3" json:"update_sequence,omitempty"`
-	ProtocolVersion uint32                 `protobuf:"varint,5,opt,name=protocol_version,json=protocolVersion,proto3" json:"protocol_version,omitempty"`
-	Observation     *v12.DaemonObservation `protobuf:"bytes,6,opt,name=observation,proto3,oneof" json:"observation,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Desired              *PrivilegedRevision    `protobuf:"bytes,1,opt,name=desired,proto3,oneof" json:"desired,omitempty"`
+	Applied              *PrivilegedRevision    `protobuf:"bytes,2,opt,name=applied,proto3,oneof" json:"applied,omitempty"`
+	AppliedRevision      uint64                 `protobuf:"varint,3,opt,name=applied_revision,json=appliedRevision,proto3" json:"applied_revision,omitempty"`
+	UpdateSequence       uint64                 `protobuf:"varint,4,opt,name=update_sequence,json=updateSequence,proto3" json:"update_sequence,omitempty"`
+	ProtocolVersion      uint32                 `protobuf:"varint,5,opt,name=protocol_version,json=protocolVersion,proto3" json:"protocol_version,omitempty"`
+	Observation          *v12.DaemonObservation `protobuf:"bytes,6,opt,name=observation,proto3,oneof" json:"observation,omitempty"`
+	HostOperation        *v12.HostOperation     `protobuf:"bytes,7,opt,name=host_operation,json=hostOperation,proto3,oneof" json:"host_operation,omitempty"`
+	SupportedHostActions []v12.HostAction       `protobuf:"varint,8,rep,packed,name=supported_host_actions,json=supportedHostActions,proto3,enum=komari.host.v1.HostAction" json:"supported_host_actions,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *GetNodeConfigStateResponse) Reset() {
@@ -2513,6 +2515,20 @@ func (x *GetNodeConfigStateResponse) GetProtocolVersion() uint32 {
 func (x *GetNodeConfigStateResponse) GetObservation() *v12.DaemonObservation {
 	if x != nil {
 		return x.Observation
+	}
+	return nil
+}
+
+func (x *GetNodeConfigStateResponse) GetHostOperation() *v12.HostOperation {
+	if x != nil {
+		return x.HostOperation
+	}
+	return nil
+}
+
+func (x *GetNodeConfigStateResponse) GetSupportedHostActions() []v12.HostAction {
+	if x != nil {
+		return x.SupportedHostActions
 	}
 	return nil
 }
@@ -3178,7 +3194,7 @@ var file_komari_config_v1_config_proto_rawDesc = string([]byte{
 	0x22, 0x36, 0x0a, 0x19, 0x47, 0x65, 0x74, 0x4e, 0x6f, 0x64, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69,
 	0x67, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a,
 	0x08, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x07, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x22, 0x97, 0x03, 0x0a, 0x1a, 0x47, 0x65, 0x74,
+	0x07, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x22, 0xc7, 0x04, 0x0a, 0x1a, 0x47, 0x65, 0x74,
 	0x4e, 0x6f, 0x64, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52,
 	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x43, 0x0a, 0x07, 0x64, 0x65, 0x73, 0x69, 0x72,
 	0x65, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72,
@@ -3201,9 +3217,20 @@ var file_komari_config_v1_config_proto_rawDesc = string([]byte{
 	0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x68,
 	0x6f, 0x73, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x61, 0x65, 0x6d, 0x6f, 0x6e, 0x4f, 0x62, 0x73,
 	0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x48, 0x02, 0x52, 0x0b, 0x6f, 0x62, 0x73, 0x65,
-	0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x88, 0x01, 0x01, 0x42, 0x0a, 0x0a, 0x08, 0x5f, 0x64,
-	0x65, 0x73, 0x69, 0x72, 0x65, 0x64, 0x42, 0x0a, 0x0a, 0x08, 0x5f, 0x61, 0x70, 0x70, 0x6c, 0x69,
-	0x65, 0x64, 0x42, 0x0e, 0x0a, 0x0c, 0x5f, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69,
+	0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x88, 0x01, 0x01, 0x12, 0x49, 0x0a, 0x0e, 0x68, 0x6f,
+	0x73, 0x74, 0x5f, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x07, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x68, 0x6f, 0x73, 0x74,
+	0x2e, 0x76, 0x31, 0x2e, 0x48, 0x6f, 0x73, 0x74, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x48, 0x03, 0x52, 0x0d, 0x68, 0x6f, 0x73, 0x74, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x88, 0x01, 0x01, 0x12, 0x50, 0x0a, 0x16, 0x73, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74,
+	0x65, 0x64, 0x5f, 0x68, 0x6f, 0x73, 0x74, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18,
+	0x08, 0x20, 0x03, 0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x68,
+	0x6f, 0x73, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x48, 0x6f, 0x73, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x52, 0x14, 0x73, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x65, 0x64, 0x48, 0x6f, 0x73, 0x74,
+	0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x42, 0x0a, 0x0a, 0x08, 0x5f, 0x64, 0x65, 0x73, 0x69,
+	0x72, 0x65, 0x64, 0x42, 0x0a, 0x0a, 0x08, 0x5f, 0x61, 0x70, 0x70, 0x6c, 0x69, 0x65, 0x64, 0x42,
+	0x0e, 0x0a, 0x0c, 0x5f, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42,
+	0x11, 0x0a, 0x0f, 0x5f, 0x68, 0x6f, 0x73, 0x74, 0x5f, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69,
 	0x6f, 0x6e, 0x22, 0xf7, 0x01, 0x0a, 0x1b, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a,
 	0x65, 0x4e, 0x6f, 0x64, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01,
@@ -3460,6 +3487,8 @@ var file_komari_config_v1_config_proto_goTypes = []any{
 	(*v12.HostAuthorization)(nil),             // 41: komari.host.v1.HostAuthorization
 	(*durationpb.Duration)(nil),               // 42: google.protobuf.Duration
 	(v11.DeliveryState)(0),                    // 43: komari.common.v1.DeliveryState
+	(*v12.HostOperation)(nil),                 // 44: komari.host.v1.HostOperation
+	(v12.HostAction)(0),                       // 45: komari.host.v1.HostAction
 }
 var file_komari_config_v1_config_proto_depIdxs = []int32{
 	17, // 0: komari.config.v1.ListPrivilegedRevisionsResponse.revisions:type_name -> komari.config.v1.PrivilegedRevision
@@ -3515,41 +3544,43 @@ var file_komari_config_v1_config_proto_depIdxs = []int32{
 	17, // 50: komari.config.v1.GetNodeConfigStateResponse.desired:type_name -> komari.config.v1.PrivilegedRevision
 	17, // 51: komari.config.v1.GetNodeConfigStateResponse.applied:type_name -> komari.config.v1.PrivilegedRevision
 	39, // 52: komari.config.v1.GetNodeConfigStateResponse.observation:type_name -> komari.host.v1.DaemonObservation
-	18, // 53: komari.config.v1.InitializeNodeConfigRequest.runtime:type_name -> komari.config.v1.RuntimeConfig
-	19, // 54: komari.config.v1.InitializeNodeConfigRequest.privileged:type_name -> komari.config.v1.PrivilegedConfig
-	22, // 55: komari.config.v1.InitializeNodeConfigResponse.runtime:type_name -> komari.config.v1.DesiredConfig
-	17, // 56: komari.config.v1.InitializeNodeConfigResponse.privileged:type_name -> komari.config.v1.PrivilegedRevision
-	33, // 57: komari.config.v1.ConfigService.InitializeNodeConfig:input_type -> komari.config.v1.InitializeNodeConfigRequest
-	23, // 58: komari.config.v1.ConfigService.GetDesiredConfig:input_type -> komari.config.v1.GetDesiredConfigRequest
-	25, // 59: komari.config.v1.ConfigService.WatchDesiredConfig:input_type -> komari.config.v1.WatchDesiredConfigRequest
-	27, // 60: komari.config.v1.ConfigService.AcknowledgeConfig:input_type -> komari.config.v1.AcknowledgeConfigRequest
-	29, // 61: komari.config.v1.ConfigService.UpdateDesiredConfig:input_type -> komari.config.v1.UpdateDesiredConfigRequest
-	31, // 62: komari.config.v1.PrivilegedDeliveryService.GetNodeConfigState:input_type -> komari.config.v1.GetNodeConfigStateRequest
-	5,  // 63: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:input_type -> komari.config.v1.GetPrivilegedDeliveryRequest
-	7,  // 64: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:input_type -> komari.config.v1.WatchPrivilegedDeliveryRequest
-	9,  // 65: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:input_type -> komari.config.v1.UpdatePrivilegedDeliveryRequest
-	11, // 66: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:input_type -> komari.config.v1.ConfirmPrivilegedDeliveryRequest
-	13, // 67: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:input_type -> komari.config.v1.ReportPrivilegedDeliveryRequest
-	15, // 68: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:input_type -> komari.config.v1.CompleteManualUpgradeRequest
-	3,  // 69: komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions:input_type -> komari.config.v1.ListPrivilegedRevisionsRequest
-	34, // 70: komari.config.v1.ConfigService.InitializeNodeConfig:output_type -> komari.config.v1.InitializeNodeConfigResponse
-	24, // 71: komari.config.v1.ConfigService.GetDesiredConfig:output_type -> komari.config.v1.GetDesiredConfigResponse
-	26, // 72: komari.config.v1.ConfigService.WatchDesiredConfig:output_type -> komari.config.v1.WatchDesiredConfigResponse
-	28, // 73: komari.config.v1.ConfigService.AcknowledgeConfig:output_type -> komari.config.v1.AcknowledgeConfigResponse
-	30, // 74: komari.config.v1.ConfigService.UpdateDesiredConfig:output_type -> komari.config.v1.UpdateDesiredConfigResponse
-	32, // 75: komari.config.v1.PrivilegedDeliveryService.GetNodeConfigState:output_type -> komari.config.v1.GetNodeConfigStateResponse
-	6,  // 76: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:output_type -> komari.config.v1.GetPrivilegedDeliveryResponse
-	8,  // 77: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:output_type -> komari.config.v1.WatchPrivilegedDeliveryResponse
-	10, // 78: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:output_type -> komari.config.v1.UpdatePrivilegedDeliveryResponse
-	12, // 79: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:output_type -> komari.config.v1.ConfirmPrivilegedDeliveryResponse
-	14, // 80: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:output_type -> komari.config.v1.ReportPrivilegedDeliveryResponse
-	16, // 81: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:output_type -> komari.config.v1.CompleteManualUpgradeResponse
-	4,  // 82: komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions:output_type -> komari.config.v1.ListPrivilegedRevisionsResponse
-	70, // [70:83] is the sub-list for method output_type
-	57, // [57:70] is the sub-list for method input_type
-	57, // [57:57] is the sub-list for extension type_name
-	57, // [57:57] is the sub-list for extension extendee
-	0,  // [0:57] is the sub-list for field type_name
+	44, // 53: komari.config.v1.GetNodeConfigStateResponse.host_operation:type_name -> komari.host.v1.HostOperation
+	45, // 54: komari.config.v1.GetNodeConfigStateResponse.supported_host_actions:type_name -> komari.host.v1.HostAction
+	18, // 55: komari.config.v1.InitializeNodeConfigRequest.runtime:type_name -> komari.config.v1.RuntimeConfig
+	19, // 56: komari.config.v1.InitializeNodeConfigRequest.privileged:type_name -> komari.config.v1.PrivilegedConfig
+	22, // 57: komari.config.v1.InitializeNodeConfigResponse.runtime:type_name -> komari.config.v1.DesiredConfig
+	17, // 58: komari.config.v1.InitializeNodeConfigResponse.privileged:type_name -> komari.config.v1.PrivilegedRevision
+	33, // 59: komari.config.v1.ConfigService.InitializeNodeConfig:input_type -> komari.config.v1.InitializeNodeConfigRequest
+	23, // 60: komari.config.v1.ConfigService.GetDesiredConfig:input_type -> komari.config.v1.GetDesiredConfigRequest
+	25, // 61: komari.config.v1.ConfigService.WatchDesiredConfig:input_type -> komari.config.v1.WatchDesiredConfigRequest
+	27, // 62: komari.config.v1.ConfigService.AcknowledgeConfig:input_type -> komari.config.v1.AcknowledgeConfigRequest
+	29, // 63: komari.config.v1.ConfigService.UpdateDesiredConfig:input_type -> komari.config.v1.UpdateDesiredConfigRequest
+	31, // 64: komari.config.v1.PrivilegedDeliveryService.GetNodeConfigState:input_type -> komari.config.v1.GetNodeConfigStateRequest
+	5,  // 65: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:input_type -> komari.config.v1.GetPrivilegedDeliveryRequest
+	7,  // 66: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:input_type -> komari.config.v1.WatchPrivilegedDeliveryRequest
+	9,  // 67: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:input_type -> komari.config.v1.UpdatePrivilegedDeliveryRequest
+	11, // 68: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:input_type -> komari.config.v1.ConfirmPrivilegedDeliveryRequest
+	13, // 69: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:input_type -> komari.config.v1.ReportPrivilegedDeliveryRequest
+	15, // 70: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:input_type -> komari.config.v1.CompleteManualUpgradeRequest
+	3,  // 71: komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions:input_type -> komari.config.v1.ListPrivilegedRevisionsRequest
+	34, // 72: komari.config.v1.ConfigService.InitializeNodeConfig:output_type -> komari.config.v1.InitializeNodeConfigResponse
+	24, // 73: komari.config.v1.ConfigService.GetDesiredConfig:output_type -> komari.config.v1.GetDesiredConfigResponse
+	26, // 74: komari.config.v1.ConfigService.WatchDesiredConfig:output_type -> komari.config.v1.WatchDesiredConfigResponse
+	28, // 75: komari.config.v1.ConfigService.AcknowledgeConfig:output_type -> komari.config.v1.AcknowledgeConfigResponse
+	30, // 76: komari.config.v1.ConfigService.UpdateDesiredConfig:output_type -> komari.config.v1.UpdateDesiredConfigResponse
+	32, // 77: komari.config.v1.PrivilegedDeliveryService.GetNodeConfigState:output_type -> komari.config.v1.GetNodeConfigStateResponse
+	6,  // 78: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:output_type -> komari.config.v1.GetPrivilegedDeliveryResponse
+	8,  // 79: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:output_type -> komari.config.v1.WatchPrivilegedDeliveryResponse
+	10, // 80: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:output_type -> komari.config.v1.UpdatePrivilegedDeliveryResponse
+	12, // 81: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:output_type -> komari.config.v1.ConfirmPrivilegedDeliveryResponse
+	14, // 82: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:output_type -> komari.config.v1.ReportPrivilegedDeliveryResponse
+	16, // 83: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:output_type -> komari.config.v1.CompleteManualUpgradeResponse
+	4,  // 84: komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions:output_type -> komari.config.v1.ListPrivilegedRevisionsResponse
+	72, // [72:85] is the sub-list for method output_type
+	59, // [59:72] is the sub-list for method input_type
+	59, // [59:59] is the sub-list for extension type_name
+	59, // [59:59] is the sub-list for extension extendee
+	0,  // [0:59] is the sub-list for field type_name
 }
 
 func init() { file_komari_config_v1_config_proto_init() }
