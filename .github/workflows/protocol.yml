@@ -44,7 +44,7 @@ jobs:
           set -euo pipefail
           mkdir -p ci-artifacts
           npm install --ignore-scripts --no-save --package-lock=false typescript@5.8.3 @bufbuild/protobuf@2.10.0 2>&1 | tee ci-artifacts/npm-install.log
-          npx tsc --noEmit --module nodenext --target es2022 --skipLibCheck $(find gen/ts -name '*.ts') 2>&1 | tee ci-artifacts/typescript.log
+          npx tsc --noEmit --module esnext --moduleResolution bundler --target es2022 --skipLibCheck $(find gen/ts -name '*.ts') 2>&1 | tee ci-artifacts/typescript.log
           node --test tests/privileged-hash.test.mjs 2>&1 | tee ci-artifacts/hash-ts.log
           npm pack --dry-run 2>&1 | tee ci-artifacts/npm-pack.log
       - name: Package generated clients even on failure
