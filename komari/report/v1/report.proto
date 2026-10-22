@@ -115,6 +115,33 @@ message AgentMetadata {
   AgentCapabilities capabilities = 4;
   uint64 applied_config_revision = 5;
   komari.rescue.v1.RescueHelperStatus rescue_helper = 6;
+  // Administrator-only process observation, never an installation template or
+  // permission grant. Servers must not expose this to public browser clients.
+  InstallationObservation installation = 7;
+}
+
+// InstallationObservation describes the reporting daemon, not a CLI caller.
+// Missing fields are unknown. No credentials, environment or config contents
+// may be included. This is an authenticated report, not kernel attestation.
+message InstallationObservation {
+  google.protobuf.Timestamp observed_at = 1;
+  string startup_id = 2;
+  string operating_system = 3;
+  string executable = 4;
+  string service_name = 5;
+  string init_system = 6;
+  string service_manifest = 7;
+  string config_file = 8;
+  string process_user = 9;
+  string process_user_id = 10;
+  PrivilegeMode privilege_mode = 11;
+  optional bool disable_auto_update = 12;
+  optional bool ignore_unsafe_certificate = 13;
+  optional bool disable_remote_control = 14;
+  optional bool daemon_self_update_supported = 15;
+  string runtime_state_file = 16;
+  string privileged_state_file = 17;
+  string transport = 18;
 }
 
 // AgentCapabilities declares independently degradable runtime features.
