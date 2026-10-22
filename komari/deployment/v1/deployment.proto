@@ -31,6 +31,11 @@ message GetDeploymentResponse {
   ConfigDelivery delivery = 2;
   komari.report.v1.AgentCapabilities capabilities = 3;
   komari.rescue.v1.RescueHelperStatus rescue_helper = 4;
+  // Latest authenticated daemon report; absent for older Agents or after a
+  // server restart until a fresh report arrives. Never inferred from profile.
+  komari.report.v1.InstallationObservation installation = 5;
+  // Server receipt time, independent of the Agent's wall clock.
+  google.protobuf.Timestamp installation_received_at = 6;
 }
 
 // SaveDeploymentProfileRequest uses optimistic concurrency for runtime settings.
