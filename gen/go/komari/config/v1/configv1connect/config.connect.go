@@ -80,7 +80,8 @@ const (
 // ConfigServiceClient is a client for the komari.config.v1.ConfigService service.
 type ConfigServiceClient interface {
 	// InitializeNodeConfig records an existing installation baseline once, only
-	// for newly-created eligible nodes without configuration history.
+	// for new installations, or a deny-only privileged baseline on migrated
+	// nodes. Migration never rewrites ordinary configuration or privilege history.
 	InitializeNodeConfig(context.Context, *connect.Request[v1.InitializeNodeConfigRequest]) (*connect.Response[v1.InitializeNodeConfigResponse], error)
 	// GetDesiredConfig returns immediately and is suitable for reconnect recovery.
 	GetDesiredConfig(context.Context, *connect.Request[v1.GetDesiredConfigRequest]) (*connect.Response[v1.GetDesiredConfigResponse], error)
@@ -173,7 +174,8 @@ func (c *configServiceClient) UpdateDesiredConfig(ctx context.Context, req *conn
 // ConfigServiceHandler is an implementation of the komari.config.v1.ConfigService service.
 type ConfigServiceHandler interface {
 	// InitializeNodeConfig records an existing installation baseline once, only
-	// for newly-created eligible nodes without configuration history.
+	// for new installations, or a deny-only privileged baseline on migrated
+	// nodes. Migration never rewrites ordinary configuration or privilege history.
 	InitializeNodeConfig(context.Context, *connect.Request[v1.InitializeNodeConfigRequest]) (*connect.Response[v1.InitializeNodeConfigResponse], error)
 	// GetDesiredConfig returns immediately and is suitable for reconnect recovery.
 	GetDesiredConfig(context.Context, *connect.Request[v1.GetDesiredConfigRequest]) (*connect.Response[v1.GetDesiredConfigResponse], error)

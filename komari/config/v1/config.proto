@@ -14,7 +14,8 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/config/v1;c
 // ConfigService owns desired runtime configuration and revision acknowledgements.
 service ConfigService {
   // InitializeNodeConfig records an existing installation baseline once, only
-  // for newly-created eligible nodes without configuration history.
+  // for new installations, or a deny-only privileged baseline on migrated
+  // nodes. Migration never rewrites ordinary configuration or privilege history.
   rpc InitializeNodeConfig(InitializeNodeConfigRequest) returns (InitializeNodeConfigResponse);
   // GetDesiredConfig returns immediately and is suitable for reconnect recovery.
   rpc GetDesiredConfig(GetDesiredConfigRequest) returns (GetDesiredConfigResponse);
@@ -456,6 +457,10 @@ message InitializeNodeConfigRequest {
   string policy_hash = 3;
   RuntimeConfig runtime = 4;
   PrivilegedConfig privileged = 5;
+  // Preserve the ordinary configuration and its history. Only a missing
+  // privileged baseline may be created, with every optional capability off
+  // and the already-negotiated OS identity unchanged.
+  bool preserve_runtime = 6;
 }
 
 // InitializeNodeConfigResponse never claims either baseline is applied. Agents
@@ -464,4 +469,6 @@ message InitializeNodeConfigResponse {
   bool initialized = 1;
   optional DesiredConfig runtime = 2;
   optional PrivilegedRevision privileged = 3;
+  // Explains initialized=false; callers must not silently treat it as success.
+  string skipped_reason = 4;
 }
