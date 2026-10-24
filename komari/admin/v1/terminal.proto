@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package komari.admin.v1;
+
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/admin/v1;adminv1";
+
+// TerminalSettingsService owns the administrator's terminal appearance.
+//
+// Settings are deployment-wide rather than per-session: the web terminal reads
+// them before opening any terminal and applies the same appearance to every
+// session. They are not theme settings and are not available over the legacy
+// JSON-RPC transport.
+service TerminalSettingsService {
+  // GetTerminalSettings returns the stored terminal appearance.
+  rpc GetTerminalSettings(GetTerminalSettingsRequest) returns (GetTerminalSettingsResponse);
+  // SetTerminalSettings replaces the stored terminal appearance.
+  rpc SetTerminalSettings(SetTerminalSettingsRequest) returns (SetTerminalSettingsResponse);
+}
+
+// TerminalSettings is the complete terminal appearance.
+message TerminalSettings {
+  // cursor_blink enables cursor blinking.
+  bool cursor_blink = 1;
+  // convert_eol converts a bare line feed into a carriage return.
+  bool convert_eol = 2;
+  // font_family is the CSS font family list.
+  string font_family = 3;
+  // font_size is the terminal font size in pixels.
+  uint32 font_size = 4;
+  // mac_option_is_meta treats the macOS Option key as Meta.
+  bool mac_option_is_meta = 5;
+  // scrollback is the retained line count.
+  uint32 scrollback = 6;
+  // padding is the terminal padding in pixels.
+  uint32 padding = 7;
+  // transparent_background allows the page background to show through.
+  bool transparent_background = 8;
+  // custom_css is administrator-supplied terminal CSS.
+  string custom_css = 9;
+  // theme is the xterm color theme as an arbitrary JSON object.
+  google.protobuf.Struct theme = 10;
+}
+
+// GetTerminalSettingsRequest is intentionally empty.
+message GetTerminalSettingsRequest {}
+
+// GetTerminalSettingsResponse returns the stored settings.
+message GetTerminalSettingsResponse {
+  // settings is the complete stored appearance.
+  TerminalSettings settings = 1;
+}
+
+// SetTerminalSettingsRequest replaces the stored settings.
+message SetTerminalSettingsRequest {
+  // settings is the complete replacement appearance.
+  TerminalSettings settings = 1;
+}
+
+// SetTerminalSettingsResponse returns the applied settings.
+message SetTerminalSettingsResponse {
+  // settings is the complete applied appearance.
+  TerminalSettings settings = 1;
+}

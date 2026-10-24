@@ -1,0 +1,426 @@
+syntax = "proto3";
+
+package komari.file.v1;
+
+import "google/protobuf/timestamp.proto";
+import "komari/common/v1/common.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/file/v1;filev1";
+
+// FileService owns administrator-facing remote file management for one agent.
+//
+// The control plane carries metadata and mutations. File contents are not
+// carried here: downloads, uploads, and previews travel over the binary HTTP
+// data plane so browsers can use ordinary URLs and streaming transfers.
+service FileService {
+  // ListDirectory returns the entries of one directory.
+  rpc ListDirectory(ListDirectoryRequest) returns (ListDirectoryResponse);
+  // ListRoots returns the filesystem roots exposed by one agent.
+  rpc ListRoots(ListRootsRequest) returns (ListRootsResponse);
+  // StatFile returns metadata for one path.
+  rpc StatFile(StatFileRequest) returns (StatFileResponse);
+  // CreateEntry creates one empty file or one directory.
+  rpc CreateEntry(CreateEntryRequest) returns (CreateEntryResponse);
+  // DeleteEntry removes one file or directory.
+  rpc DeleteEntry(DeleteEntryRequest) returns (DeleteEntryResponse);
+  // MoveEntry renames or moves one path.
+  rpc MoveEntry(MoveEntryRequest) returns (MoveEntryResponse);
+  // CopyEntry copies one file or directory.
+  rpc CopyEntry(CopyEntryRequest) returns (CopyEntryResponse);
+  // ChmodEntry changes Unix permission bits.
+  rpc ChmodEntry(ChmodEntryRequest) returns (ChmodEntryResponse);
+  // ChownEntry changes Unix ownership.
+  rpc ChownEntry(ChownEntryRequest) returns (ChownEntryResponse);
+  // SearchFiles searches names or file contents below one directory.
+  rpc SearchFiles(SearchFilesRequest) returns (SearchFilesResponse);
+  // LeaseFileOperations assigns pending operations to one authenticated agent.
+  rpc LeaseFileOperations(LeaseFileOperationsRequest) returns (stream LeaseFileOperationsResponse);
+  // AttachFileOperations is the agent-side bidirectional operation channel.
+  rpc AttachFileOperations(stream AttachFileOperationsRequest) returns (stream AttachFileOperationsResponse);
+}
+
+// EntryKind distinguishes the two creatable entry kinds.
+enum EntryKind {
+  // ENTRY_KIND_UNSPECIFIED is the zero value and is never sent.
+  ENTRY_KIND_UNSPECIFIED = 0;
+  // ENTRY_KIND_FILE creates an empty regular file.
+  ENTRY_KIND_FILE = 1;
+  // ENTRY_KIND_DIRECTORY creates one directory.
+  ENTRY_KIND_DIRECTORY = 2;
+}
+
+// FileOperation enumerates bounded remote file operations.
+enum FileOperation {
+  // FILE_OPERATION_UNSPECIFIED is the zero value and is never sent.
+  FILE_OPERATION_UNSPECIFIED = 0;
+  // FILE_OPERATION_LIST lists one directory.
+  FILE_OPERATION_LIST = 1;
+  // FILE_OPERATION_LIST_ROOTS lists filesystem roots.
+  FILE_OPERATION_LIST_ROOTS = 2;
+  // FILE_OPERATION_STAT reads one path's metadata.
+  FILE_OPERATION_STAT = 3;
+  // FILE_OPERATION_CREATE creates an empty file.
+  FILE_OPERATION_CREATE = 4;
+  // FILE_OPERATION_MKDIR creates one directory.
+  FILE_OPERATION_MKDIR = 5;
+  // FILE_OPERATION_DELETE removes one path.
+  FILE_OPERATION_DELETE = 6;
+  // FILE_OPERATION_MOVE renames or moves one path.
+  FILE_OPERATION_MOVE = 7;
+  // FILE_OPERATION_COPY copies one path.
+  FILE_OPERATION_COPY = 8;
+  // FILE_OPERATION_CHMOD changes permission bits.
+  FILE_OPERATION_CHMOD = 9;
+  // FILE_OPERATION_CHOWN changes ownership.
+  FILE_OPERATION_CHOWN = 10;
+  // FILE_OPERATION_SEARCH searches names or contents.
+  FILE_OPERATION_SEARCH = 11;
+}
+
+// FileEntry is one directory entry or path metadata record.
+message FileEntry {
+  // name is the final path component.
+  string name = 1;
+  // path is the absolute path as reported by the agent.
+  string path = 2;
+  // directory reports whether the entry is a directory.
+  bool directory = 3;
+  // symlink reports whether the entry itself is a symbolic link.
+  bool symlink = 4;
+  // size is the entry size in bytes.
+  uint64 size = 5;
+  // mode is the human-readable mode, for example "-rw-r--r--".
+  string mode = 6;
+  // mode_octal is the octal permission string, for example "0644".
+  string mode_octal = 7;
+  // uid is the numeric owner identifier on Unix agents.
+  int32 uid = 8;
+  // gid is the numeric group identifier on Unix agents.
+  int32 gid = 9;
+  // owner is the resolved owner name when the agent can resolve it.
+  string owner = 10;
+  // group is the resolved group name when the agent can resolve it.
+  string group = 11;
+  // modified_at is the last modification time.
+  google.protobuf.Timestamp modified_at = 12;
+  // target is the link target for symbolic links.
+  string target = 13;
+}
+
+// DirectoryListing is one directory response.
+message DirectoryListing {
+  // entries are sorted by directories first and then by name.
+  repeated FileEntry entries = 1;
+  // path is the listed absolute path.
+  string path = 2;
+  // parent is the parent path, or an empty string at a root.
+  string parent = 3;
+  // truncated reports that the agent omitted entries beyond its limit.
+  bool truncated = 4;
+}
+
+// ListDirectoryRequest identifies one directory.
+message ListDirectoryRequest {
+  // agent_id selects the agent.
+  string agent_id = 1;
+  // path is the absolute directory path; empty asks for the agent default.
+  string path = 2;
+}
+
+// ListDirectoryResponse returns one directory listing.
+message ListDirectoryResponse {
+  // listing is the directory result.
+  DirectoryListing listing = 1;
+}
+
+// ListRootsRequest identifies one agent.
+message ListRootsRequest {
+  // agent_id selects the agent.
+  string agent_id = 1;
+}
+
+// ListRootsResponse returns the agent's filesystem roots.
+message ListRootsResponse {
+  // roots are the filesystem roots exposed by the agent.
+  repeated FileEntry roots = 1;
+}
+
+// StatFileRequest identifies one path.
+message StatFileRequest {
+  // agent_id selects the agent.
+  string agent_id = 1;
+  // path is the absolute path to inspect.
+  string path = 2;
+}
+
+// StatFileResponse returns one path's metadata.
+message StatFileResponse {
+  // entry is the path metadata.
+  FileEntry entry = 1;
+}
+
+// CreateEntryRequest creates one file or directory.
+message CreateEntryRequest {
+  // agent_id selects the agent.
+  string agent_id = 1;
+  // path is the absolute path to create.
+  string path = 2;
+  // kind selects an empty file or a directory.
+  EntryKind kind = 3;
+  // mode is the octal permission string; empty uses the agent default.
+  string mode = 4;
+  // two_factor proves a fresh sensitive operation.
+  komari.common.v1.TwoFactorProof two_factor = 5;
+}
+
+// CreateEntryResponse returns the created entry.
+message CreateEntryResponse {
+  // entry is the created path metadata.
+  FileEntry entry = 1;
+}
+
+// DeleteEntryRequest removes one path.
+message DeleteEntryRequest {
+  // agent_id selects the agent.
+  string agent_id = 1;
+  // path is the absolute path to remove.
+  string path = 2;
+  // recursive permits deleting a non-empty directory.
+  bool recursive = 3;
+  // two_factor proves a fresh sensitive operation.
+  komari.common.v1.TwoFactorProof two_factor = 4;
+}
+
+// DeleteEntryResponse confirms one deletion.
+message DeleteEntryResponse {
+  // path is the removed absolute path.
+  string path = 1;
+  // deleted reports a successful removal.
+  bool deleted = 2;
+}
+
+// MoveEntryRequest renames or moves one path.
+message MoveEntryRequest {
+  // agent_id selects the agent.
+  string agent_id = 1;
+  // source is the existing absolute path.
+  string source = 2;
+  // destination is the target absolute path.
+  string destination = 3;
+  // overwrite permits replacing an existing destination.
+  bool overwrite = 4;
+  // two_factor proves a fresh sensitive operation.
+  komari.common.v1.TwoFactorProof two_factor = 5;
+}
+
+// MoveEntryResponse returns the moved entry.
+message MoveEntryResponse {
+  // entry is the destination path metadata.
+  FileEntry entry = 1;
+}
+
+// CopyEntryRequest copies one path.
+message CopyEntryRequest {
+  // agent_id selects the agent.
+  string agent_id = 1;
+  // source is the existing absolute path.
+  string source = 2;
+  // destination is the target absolute path.
+  string destination = 3;
+  // recursive permits copying a directory tree.
+  bool recursive = 4;
+  // overwrite permits replacing an existing destination.
+  bool overwrite = 5;
+  // two_factor proves a fresh sensitive operation.
+  komari.common.v1.TwoFactorProof two_factor = 6;
+}
+
+// CopyEntryResponse returns the copied entry.
+message CopyEntryResponse {
+  // entry is the destination path metadata.
+  FileEntry entry = 1;
+}
+
+// ChmodEntryRequest changes permission bits.
+message ChmodEntryRequest {
+  // agent_id selects the agent.
+  string agent_id = 1;
+  // path is the absolute path to change.
+  string path = 2;
+  // mode is the octal permission string, for example "0644".
+  string mode = 3;
+  // two_factor proves a fresh sensitive operation.
+  komari.common.v1.TwoFactorProof two_factor = 4;
+}
+
+// ChmodEntryResponse returns the changed entry.
+message ChmodEntryResponse {
+  // entry is the changed path metadata.
+  FileEntry entry = 1;
+}
+
+// ChownEntryRequest changes Unix ownership.
+message ChownEntryRequest {
+  // agent_id selects the agent.
+  string agent_id = 1;
+  // path is the absolute path to change.
+  string path = 2;
+  // uid replaces the numeric owner when present.
+  optional int32 uid = 3;
+  // gid replaces the numeric group when present.
+  optional int32 gid = 4;
+  // owner replaces the owner by name when non-empty.
+  string owner = 5;
+  // group replaces the group by name when non-empty.
+  string group = 6;
+  // two_factor proves a fresh sensitive operation.
+  komari.common.v1.TwoFactorProof two_factor = 7;
+}
+
+// ChownEntryResponse returns the changed entry.
+message ChownEntryResponse {
+  // entry is the changed path metadata.
+  FileEntry entry = 1;
+}
+
+// SearchFilesRequest searches names or contents below one directory.
+message SearchFilesRequest {
+  // agent_id selects the agent.
+  string agent_id = 1;
+  // path is the absolute directory to search below.
+  string path = 2;
+  // query is the literal search text.
+  string query = 3;
+  // content searches file contents instead of names.
+  bool content = 4;
+  // max_results bounds the returned match count.
+  uint32 max_results = 5;
+}
+
+// SearchMatch is one name or content match.
+message SearchMatch {
+  // path is the matched absolute path.
+  string path = 1;
+  // line is the one-based content line, or zero for a name match.
+  uint32 line = 2;
+  // text is the matching line excerpt for content searches.
+  string text = 3;
+  // directory reports whether the match is a directory.
+  bool directory = 4;
+}
+
+// SearchFilesResponse returns bounded search results.
+message SearchFilesResponse {
+  // matches are ordered by path and line.
+  repeated SearchMatch matches = 1;
+  // limited reports that the agent stopped at max_results.
+  bool limited = 2;
+  // path is the searched absolute directory.
+  string path = 3;
+}
+
+// LeaseFileOperationsRequest opens the agent assignment stream.
+message LeaseFileOperationsRequest {
+  // agent_id identifies the authenticated agent.
+  string agent_id = 1;
+  // after_assignment_id resumes after one immutable assignment.
+  string after_assignment_id = 2;
+}
+
+// LeaseFileOperationsResponse wraps one immutable assignment.
+message LeaseFileOperationsResponse {
+  // assignment is the next operation to execute.
+  FileAssignment assignment = 1;
+}
+
+// FileAssignment describes one operation that an agent must execute.
+message FileAssignment {
+  // assignment_id is stable for the lifetime of one request.
+  string assignment_id = 1;
+  // request_id correlates the result with the caller.
+  string request_id = 2;
+  // operation selects the filesystem action.
+  FileOperation operation = 3;
+  // path is the primary absolute path.
+  string path = 4;
+  // destination is the target path for move and copy.
+  string destination = 5;
+  // mode is the octal permission string for create, mkdir, and chmod.
+  string mode = 6;
+  // uid replaces the numeric owner when present.
+  optional int32 uid = 7;
+  // gid replaces the numeric group when present.
+  optional int32 gid = 8;
+  // owner is the owner name for chown when non-empty.
+  string owner = 9;
+  // group is the group name for chown when non-empty.
+  string group = 10;
+  // query is the literal search text.
+  string query = 11;
+  // content_search searches file contents instead of names.
+  bool content_search = 12;
+  // max_results bounds the returned match count.
+  uint32 max_results = 13;
+  // recursive permits directory tree operations.
+  bool recursive = 14;
+  // overwrite permits replacing an existing destination.
+  bool overwrite = 15;
+  // timeout_seconds bounds one operation; zero uses the server default.
+  uint32 timeout_seconds = 16;
+  // lease_expires_at bounds how long the assignment stays valid.
+  google.protobuf.Timestamp lease_expires_at = 17;
+}
+
+// AttachFileOperationsRequest carries the agent handshake or one result.
+message AttachFileOperationsRequest {
+  // message is either the handshake or one result event.
+  oneof message {
+    // attach binds the agent to one leased assignment.
+    AgentFileAttach attach = 1;
+    // event reports the result of one operation.
+    AgentFileEvent event = 2;
+  }
+}
+
+// AgentFileAttach binds an authenticated agent to one leased assignment.
+message AgentFileAttach {
+  // agent_id identifies the authenticated agent.
+  string agent_id = 1;
+  // assignment_id is the leased assignment to execute.
+  string assignment_id = 2;
+  // request_id echoes the caller's request identifier.
+  string request_id = 3;
+}
+
+// AgentFileEvent reports one operation result or error.
+message AgentFileEvent {
+  // request_id correlates the result with the assignment.
+  string request_id = 1;
+  // operation echoes the executed operation.
+  FileOperation operation = 2;
+  // success reports whether the operation completed.
+  bool success = 3;
+  // error is the agent's human-readable failure text.
+  string error = 4;
+  // entries carries path metadata for list, stat, and mutations.
+  repeated FileEntry entries = 5;
+  // matches carries search results.
+  repeated SearchMatch matches = 6;
+  // limited reports that a search stopped at max_results.
+  bool limited = 7;
+  // path is the operation's resulting path.
+  string path = 8;
+  // truncated reports that a directory listing omitted entries.
+  bool truncated = 9;
+}
+
+// AttachFileOperationsResponse carries one assignment or a close request.
+message AttachFileOperationsResponse {
+  // command is either the assignment to execute or a close request.
+  oneof command {
+    // assignment is the operation the agent must execute.
+    FileAssignment assignment = 1;
+    // close_reason asks the agent to end the attach stream.
+    string close_reason = 2;
+  }
+}
