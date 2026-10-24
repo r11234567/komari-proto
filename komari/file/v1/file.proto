@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package komari.file.v1;
 
+import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
 
@@ -75,6 +76,12 @@ enum FileOperation {
   FILE_OPERATION_CHOWN = 10;
   // FILE_OPERATION_SEARCH searches names or contents.
   FILE_OPERATION_SEARCH = 11;
+  // FILE_OPERATION_DOWNLOAD_STREAM pushes a file range to the control plane
+  // over the one-shot transfer endpoint.
+  FILE_OPERATION_DOWNLOAD_STREAM = 12;
+  // FILE_OPERATION_UPLOAD_STREAM pulls one uploaded chunk from the control
+  // plane over the one-shot transfer endpoint.
+  FILE_OPERATION_UPLOAD_STREAM = 13;
 }
 
 // FileEntry is one directory entry or path metadata record.
@@ -369,6 +376,10 @@ message FileAssignment {
   uint32 timeout_seconds = 16;
   // lease_expires_at bounds how long the assignment stays valid.
   google.protobuf.Timestamp lease_expires_at = 17;
+  // arguments carries the operation-specific stream parameters. Control
+  // operations use the typed fields above; the transfer operations use this
+  // map so the wire shape matches the agent's existing file stream code.
+  google.protobuf.Struct arguments = 18;
 }
 
 // AttachFileOperationsRequest carries the agent handshake or one result.
