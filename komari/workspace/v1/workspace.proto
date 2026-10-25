@@ -10,13 +10,13 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/workspace/v
 // WorkspaceService is an interactive cookie-session gate, never an RPC2 gateway.
 service WorkspaceService {
   // UnlockWorkspace consumes fresh 2FA and binds a grant to an OS account.
-  rpc UnlockWorkspace(UnlockWorkspaceRequest) returns (WorkspaceResponse);
+  rpc UnlockWorkspace(UnlockWorkspaceRequest) returns (UnlockWorkspaceResponse);
   // GetWorkspace checks a grant without extending its inactivity deadline.
-  rpc GetWorkspace(WorkspaceRequest) returns (WorkspaceResponse);
+  rpc GetWorkspace(GetWorkspaceRequest) returns (GetWorkspaceResponse);
   // TouchWorkspace records foreground user activity, never background polling.
-  rpc TouchWorkspace(WorkspaceRequest) returns (WorkspaceResponse);
+  rpc TouchWorkspace(TouchWorkspaceRequest) returns (TouchWorkspaceResponse);
   // LockWorkspace revokes a grant and its active remote operations.
-  rpc LockWorkspace(WorkspaceRequest) returns (LockWorkspaceResponse);
+  rpc LockWorkspace(LockWorkspaceRequest) returns (LockWorkspaceResponse);
 }
 
 // UnlockWorkspaceRequest requires an explicit target identity.
@@ -29,14 +29,14 @@ message UnlockWorkspaceRequest {
   komari.common.v1.TwoFactorProof two_factor = 3;
 }
 
-// WorkspaceRequest carries a memory-only, opaque grant bound to the cookie session.
-message WorkspaceRequest {
+// GetWorkspaceRequest checks a memory-only grant bound to the cookie session.
+message GetWorkspaceRequest {
   // grant_token must not be placed in URLs, persisted, or sent to plugins.
   string grant_token = 1;
 }
 
-// WorkspaceResponse describes one currently valid scoped authorization.
-message WorkspaceResponse {
+// WorkspaceAuthorization describes one currently valid scoped authorization.
+message WorkspaceAuthorization {
   // grant_token is the opaque workspace credential.
   string grant_token = 1;
   // agent_id is the only authorized target machine.
@@ -53,4 +53,34 @@ message WorkspaceResponse {
 message LockWorkspaceResponse {
   // locked reports that the supplied grant is no longer usable.
   bool locked = 1;
+}
+
+// TouchWorkspaceRequest carries the grant to update after foreground activity.
+message TouchWorkspaceRequest {
+  // grant_token identifies the existing grant.
+  string grant_token = 1;
+}
+
+// LockWorkspaceRequest carries the grant to revoke.
+message LockWorkspaceRequest {
+  // grant_token identifies the existing grant.
+  string grant_token = 1;
+}
+
+// UnlockWorkspaceResponse returns the new scoped grant.
+message UnlockWorkspaceResponse {
+  // authorization describes the grant.
+  WorkspaceAuthorization authorization = 1;
+}
+
+// GetWorkspaceResponse returns the current grant without renewing it.
+message GetWorkspaceResponse {
+  // authorization describes the grant.
+  WorkspaceAuthorization authorization = 1;
+}
+
+// TouchWorkspaceResponse returns the grant after recording foreground activity.
+message TouchWorkspaceResponse {
+  // authorization describes the grant.
+  WorkspaceAuthorization authorization = 1;
 }
