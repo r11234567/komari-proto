@@ -1,0 +1,87 @@
+name: Feature audit - protocol
+on:
+  pull_request:
+  push:
+    branches: [main, 'ci/feature-audit-*']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: feature-audit-protocol-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audit:
+    name: Protocol / ${{ matrix.check }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        check: [contracts, go, typescript]
+    env:
+      BASE_SHA: ${{ github.event.pull_request.base.sha || 'v0.1.37' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        if: matrix.check == 'go'
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@v4
+        if: matrix.check == 'typescript'
+        with:
+          node-version: '24'
+      - uses: bufbuild/buf-setup-action@v1
+        if: matrix.check == 'contracts'
+        with:
+          version: '1.57.0'
+      - name: Protocol formatting
+        if: ${{ !cancelled() && matrix.check == 'contracts' }}
+        run: bash scripts/ci/run-audit-check.sh format buf format --diff --exit-code
+      - name: Protocol lint
+        if: ${{ !cancelled() && matrix.check == 'contracts' }}
+        run: bash scripts/ci/run-audit-check.sh lint buf lint
+      - name: Backward compatibility against the base contract
+        if: ${{ !cancelled() && matrix.check == 'contracts' }}
+        run: bash scripts/ci/run-audit-check.sh breaking buf breaking --against ".git#ref=$BASE_SHA"
+      - name: Regenerate Go and TypeScript clients
+        id: generate
+        if: ${{ !cancelled() && matrix.check == 'contracts' }}
+        run: bash scripts/ci/run-audit-check.sh generate buf generate
+      - name: Reject stale generated clients
+        if: ${{ !cancelled() && matrix.check == 'contracts' && steps.generate.outcome == 'success' }}
+        run: bash scripts/ci/run-audit-check.sh generated-diff git diff --exit-code -- gen
+      - name: Go wire and protocol compatibility tests
+        if: ${{ !cancelled() && matrix.check == 'go' }}
+        run: bash scripts/ci/run-audit-check.sh go bash scripts/ci/run-go-tests.sh ./...
+      - name: Install TypeScript verification tools on the runner
+        id: ts_install
+        if: ${{ !cancelled() && matrix.check == 'typescript' }}
+        run: bash scripts/ci/run-audit-check.sh install npm install --ignore-scripts --no-save --package-lock=false typescript@5.8.3 @bufbuild/protobuf@2.10.0
+      - name: Check all generated TypeScript clients
+        if: ${{ !cancelled() && matrix.check == 'typescript' && steps.ts_install.outcome == 'success' }}
+        shell: bash
+        run: |
+          mapfile -d '' -t sources < <(find gen/ts -type f -name '*.ts' -print0)
+          if (( ${#sources[@]} == 0 )); then
+            echo '::error::No generated TypeScript clients found in gen/ts'
+            exit 1
+          fi
+          bash scripts/ci/run-audit-check.sh typescript node node_modules/typescript/bin/tsc --noEmit --module esnext --moduleResolution bundler --target es2022 --skipLibCheck "${sources[@]}"
+      - name: TypeScript wire hash vectors
+        if: ${{ !cancelled() && matrix.check == 'typescript' && steps.ts_install.outcome == 'success' }}
+        run: bash scripts/ci/run-audit-check.sh hash node --test tests/privileged-hash.test.mjs
+      - name: Verify npm package contents
+        if: ${{ !cancelled() && matrix.check == 'typescript' && steps.ts_install.outcome == 'success' }}
+        run: bash scripts/ci/run-audit-check.sh package npm pack --dry-run
+      - name: Retain all logs, exit codes and generated clients
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: feature-audit-protocol-${{ matrix.check }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ci-artifacts/
+            gen/
+          if-no-files-found: warn
+          retention-days: 30

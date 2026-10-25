@@ -189,6 +189,8 @@ message SessionAssignment {
   TerminalSize size = 5;
   string working_directory = 6;
   google.protobuf.Timestamp lease_expires_at = 7;
+  // system_user is mandatory for account-aware Agents; never fall back to root.
+  string system_user = 8;
 }
 
 // AttachSessionRequest carries the Agent handshake or an ordered event.

@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package komari.workspace.v1;
+
+import "google/protobuf/timestamp.proto";
+import "komari/common/v1/common.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/workspace/v1;workspacev1";
+
+// WorkspaceService is an interactive cookie-session gate, never an RPC2 gateway.
+service WorkspaceService {
+  // UnlockWorkspace consumes fresh 2FA and binds a grant to an OS account.
+  rpc UnlockWorkspace(UnlockWorkspaceRequest) returns (UnlockWorkspaceResponse);
+  // GetWorkspace checks a grant without extending its inactivity deadline.
+  rpc GetWorkspace(GetWorkspaceRequest) returns (GetWorkspaceResponse);
+  // TouchWorkspace records foreground user activity, never background polling.
+  rpc TouchWorkspace(TouchWorkspaceRequest) returns (TouchWorkspaceResponse);
+  // LockWorkspace revokes a grant and its active remote operations.
+  rpc LockWorkspace(LockWorkspaceRequest) returns (LockWorkspaceResponse);
+}
+
+// UnlockWorkspaceRequest requires an explicit target identity.
+message UnlockWorkspaceRequest {
+  // agent_id selects the target machine.
+  string agent_id = 1;
+  // system_user is the target machine's OS username, never an implicit root.
+  string system_user = 2;
+  // two_factor must be fresh, not the login or account-page verification code.
+  komari.common.v1.TwoFactorProof two_factor = 3;
+}
+
+// GetWorkspaceRequest checks a memory-only grant bound to the cookie session.
+message GetWorkspaceRequest {
+  // grant_token must not be placed in URLs, persisted, or sent to plugins.
+  string grant_token = 1;
+}
+
+// WorkspaceAuthorization describes one currently valid scoped authorization.
+message WorkspaceAuthorization {
+  // grant_token is the opaque workspace credential.
+  string grant_token = 1;
+  // agent_id is the only authorized target machine.
+  string agent_id = 2;
+  // system_user is the only authorized OS account.
+  string system_user = 3;
+  // expires_at is the fixed deadline, 30 minutes after fresh 2FA.
+  google.protobuf.Timestamp expires_at = 4;
+  // idle_expires_at is the deadline after 3 minutes without foreground activity.
+  google.protobuf.Timestamp idle_expires_at = 5;
+}
+
+// LockWorkspaceResponse confirms revocation; locking is idempotent.
+message LockWorkspaceResponse {
+  // locked reports that the supplied grant is no longer usable.
+  bool locked = 1;
+}
+
+// TouchWorkspaceRequest carries the grant to update after foreground activity.
+message TouchWorkspaceRequest {
+  // grant_token identifies the existing grant.
+  string grant_token = 1;
+}
+
+// LockWorkspaceRequest carries the grant to revoke.
+message LockWorkspaceRequest {
+  // grant_token identifies the existing grant.
+  string grant_token = 1;
+}
+
+// UnlockWorkspaceResponse returns the new scoped grant.
+message UnlockWorkspaceResponse {
+  // authorization describes the grant.
+  WorkspaceAuthorization authorization = 1;
+}
+
+// GetWorkspaceResponse returns the current grant without renewing it.
+message GetWorkspaceResponse {
+  // authorization describes the grant.
+  WorkspaceAuthorization authorization = 1;
+}
+
+// TouchWorkspaceResponse returns the grant after recording foreground activity.
+message TouchWorkspaceResponse {
+  // authorization describes the grant.
+  WorkspaceAuthorization authorization = 1;
+}
