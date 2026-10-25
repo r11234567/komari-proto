@@ -383,6 +383,8 @@ message FileAssignment {
   // system_user executes the entire operation, including transfers, as this OS user.
   // Account-aware Agents must reject an empty or unavailable identity.
   string system_user = 19;
+  // workspace_id isolates stateful upload workers between authorizations.
+  string workspace_id = 20;
 }
 
 // AttachFileOperationsRequest carries the agent handshake or one result.
