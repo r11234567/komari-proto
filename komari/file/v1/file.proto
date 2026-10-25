@@ -380,6 +380,9 @@ message FileAssignment {
   // operations use the typed fields above; the transfer operations use this
   // map so the wire shape matches the agent's existing file stream code.
   google.protobuf.Struct arguments = 18;
+  // system_user executes the entire operation, including transfers, as this OS user.
+  // Account-aware Agents must reject an empty or unavailable identity.
+  string system_user = 19;
 }
 
 // AttachFileOperationsRequest carries the agent handshake or one result.
