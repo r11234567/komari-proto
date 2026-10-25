@@ -63,7 +63,11 @@ jobs:
         if: ${{ !cancelled() && matrix.check == 'typescript' && steps.ts_install.outcome == 'success' }}
         shell: bash
         run: |
-          mapfile -t sources < <(rg --files gen/ts -g '*.ts')
+          mapfile -d '' -t sources < <(find gen/ts -type f -name '*.ts' -print0)
+          if (( ${#sources[@]} == 0 )); then
+            echo '::error::No generated TypeScript clients found in gen/ts'
+            exit 1
+          fi
           bash scripts/ci/run-audit-check.sh typescript node node_modules/typescript/bin/tsc --noEmit --module esnext --moduleResolution bundler --target es2022 --skipLibCheck "${sources[@]}"
       - name: TypeScript wire hash vectors
         if: ${{ !cancelled() && matrix.check == 'typescript' && steps.ts_install.outcome == 'success' }}
