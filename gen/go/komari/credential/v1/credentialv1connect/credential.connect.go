@@ -45,6 +45,18 @@ const (
 	// TrustedCredentialServiceCancelVerificationProcedure is the fully-qualified name of the
 	// TrustedCredentialService's CancelVerification RPC.
 	TrustedCredentialServiceCancelVerificationProcedure = "/komari.credential.v1.TrustedCredentialService/CancelVerification"
+	// TrustedCredentialServiceGetCredentialContactsProcedure is the fully-qualified name of the
+	// TrustedCredentialService's GetCredentialContacts RPC.
+	TrustedCredentialServiceGetCredentialContactsProcedure = "/komari.credential.v1.TrustedCredentialService/GetCredentialContacts"
+	// TrustedCredentialServiceBeginContactBindingProcedure is the fully-qualified name of the
+	// TrustedCredentialService's BeginContactBinding RPC.
+	TrustedCredentialServiceBeginContactBindingProcedure = "/komari.credential.v1.TrustedCredentialService/BeginContactBinding"
+	// TrustedCredentialServiceSaveCredentialContactProcedure is the fully-qualified name of the
+	// TrustedCredentialService's SaveCredentialContact RPC.
+	TrustedCredentialServiceSaveCredentialContactProcedure = "/komari.credential.v1.TrustedCredentialService/SaveCredentialContact"
+	// TrustedCredentialServiceDeleteCredentialContactProcedure is the fully-qualified name of the
+	// TrustedCredentialService's DeleteCredentialContact RPC.
+	TrustedCredentialServiceDeleteCredentialContactProcedure = "/komari.credential.v1.TrustedCredentialService/DeleteCredentialContact"
 )
 
 // TrustedCredentialServiceClient is a client for the komari.credential.v1.TrustedCredentialService
@@ -54,6 +66,10 @@ type TrustedCredentialServiceClient interface {
 	BeginVerification(context.Context, *connect.Request[v1.BeginVerificationRequest]) (*connect.Response[v1.BeginVerificationResponse], error)
 	CompleteVerification(context.Context, *connect.Request[v1.CompleteVerificationRequest]) (*connect.Response[v1.CompleteVerificationResponse], error)
 	CancelVerification(context.Context, *connect.Request[v1.CancelVerificationRequest]) (*connect.Response[v1.CancelVerificationResponse], error)
+	GetCredentialContacts(context.Context, *connect.Request[v1.GetCredentialContactsRequest]) (*connect.Response[v1.GetCredentialContactsResponse], error)
+	BeginContactBinding(context.Context, *connect.Request[v1.BeginContactBindingRequest]) (*connect.Response[v1.BeginContactBindingResponse], error)
+	SaveCredentialContact(context.Context, *connect.Request[v1.SaveCredentialContactRequest]) (*connect.Response[v1.SaveCredentialContactResponse], error)
+	DeleteCredentialContact(context.Context, *connect.Request[v1.DeleteCredentialContactRequest]) (*connect.Response[v1.DeleteCredentialContactResponse], error)
 }
 
 // NewTrustedCredentialServiceClient constructs a client for the
@@ -92,6 +108,30 @@ func NewTrustedCredentialServiceClient(httpClient connect.HTTPClient, baseURL st
 			connect.WithSchema(trustedCredentialServiceMethods.ByName("CancelVerification")),
 			connect.WithClientOptions(opts...),
 		),
+		getCredentialContacts: connect.NewClient[v1.GetCredentialContactsRequest, v1.GetCredentialContactsResponse](
+			httpClient,
+			baseURL+TrustedCredentialServiceGetCredentialContactsProcedure,
+			connect.WithSchema(trustedCredentialServiceMethods.ByName("GetCredentialContacts")),
+			connect.WithClientOptions(opts...),
+		),
+		beginContactBinding: connect.NewClient[v1.BeginContactBindingRequest, v1.BeginContactBindingResponse](
+			httpClient,
+			baseURL+TrustedCredentialServiceBeginContactBindingProcedure,
+			connect.WithSchema(trustedCredentialServiceMethods.ByName("BeginContactBinding")),
+			connect.WithClientOptions(opts...),
+		),
+		saveCredentialContact: connect.NewClient[v1.SaveCredentialContactRequest, v1.SaveCredentialContactResponse](
+			httpClient,
+			baseURL+TrustedCredentialServiceSaveCredentialContactProcedure,
+			connect.WithSchema(trustedCredentialServiceMethods.ByName("SaveCredentialContact")),
+			connect.WithClientOptions(opts...),
+		),
+		deleteCredentialContact: connect.NewClient[v1.DeleteCredentialContactRequest, v1.DeleteCredentialContactResponse](
+			httpClient,
+			baseURL+TrustedCredentialServiceDeleteCredentialContactProcedure,
+			connect.WithSchema(trustedCredentialServiceMethods.ByName("DeleteCredentialContact")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -101,6 +141,10 @@ type trustedCredentialServiceClient struct {
 	beginVerification              *connect.Client[v1.BeginVerificationRequest, v1.BeginVerificationResponse]
 	completeVerification           *connect.Client[v1.CompleteVerificationRequest, v1.CompleteVerificationResponse]
 	cancelVerification             *connect.Client[v1.CancelVerificationRequest, v1.CancelVerificationResponse]
+	getCredentialContacts          *connect.Client[v1.GetCredentialContactsRequest, v1.GetCredentialContactsResponse]
+	beginContactBinding            *connect.Client[v1.BeginContactBindingRequest, v1.BeginContactBindingResponse]
+	saveCredentialContact          *connect.Client[v1.SaveCredentialContactRequest, v1.SaveCredentialContactResponse]
+	deleteCredentialContact        *connect.Client[v1.DeleteCredentialContactRequest, v1.DeleteCredentialContactResponse]
 }
 
 // ListTrustedCredentialProviders calls
@@ -124,6 +168,27 @@ func (c *trustedCredentialServiceClient) CancelVerification(ctx context.Context,
 	return c.cancelVerification.CallUnary(ctx, req)
 }
 
+// GetCredentialContacts calls komari.credential.v1.TrustedCredentialService.GetCredentialContacts.
+func (c *trustedCredentialServiceClient) GetCredentialContacts(ctx context.Context, req *connect.Request[v1.GetCredentialContactsRequest]) (*connect.Response[v1.GetCredentialContactsResponse], error) {
+	return c.getCredentialContacts.CallUnary(ctx, req)
+}
+
+// BeginContactBinding calls komari.credential.v1.TrustedCredentialService.BeginContactBinding.
+func (c *trustedCredentialServiceClient) BeginContactBinding(ctx context.Context, req *connect.Request[v1.BeginContactBindingRequest]) (*connect.Response[v1.BeginContactBindingResponse], error) {
+	return c.beginContactBinding.CallUnary(ctx, req)
+}
+
+// SaveCredentialContact calls komari.credential.v1.TrustedCredentialService.SaveCredentialContact.
+func (c *trustedCredentialServiceClient) SaveCredentialContact(ctx context.Context, req *connect.Request[v1.SaveCredentialContactRequest]) (*connect.Response[v1.SaveCredentialContactResponse], error) {
+	return c.saveCredentialContact.CallUnary(ctx, req)
+}
+
+// DeleteCredentialContact calls
+// komari.credential.v1.TrustedCredentialService.DeleteCredentialContact.
+func (c *trustedCredentialServiceClient) DeleteCredentialContact(ctx context.Context, req *connect.Request[v1.DeleteCredentialContactRequest]) (*connect.Response[v1.DeleteCredentialContactResponse], error) {
+	return c.deleteCredentialContact.CallUnary(ctx, req)
+}
+
 // TrustedCredentialServiceHandler is an implementation of the
 // komari.credential.v1.TrustedCredentialService service.
 type TrustedCredentialServiceHandler interface {
@@ -131,6 +196,10 @@ type TrustedCredentialServiceHandler interface {
 	BeginVerification(context.Context, *connect.Request[v1.BeginVerificationRequest]) (*connect.Response[v1.BeginVerificationResponse], error)
 	CompleteVerification(context.Context, *connect.Request[v1.CompleteVerificationRequest]) (*connect.Response[v1.CompleteVerificationResponse], error)
 	CancelVerification(context.Context, *connect.Request[v1.CancelVerificationRequest]) (*connect.Response[v1.CancelVerificationResponse], error)
+	GetCredentialContacts(context.Context, *connect.Request[v1.GetCredentialContactsRequest]) (*connect.Response[v1.GetCredentialContactsResponse], error)
+	BeginContactBinding(context.Context, *connect.Request[v1.BeginContactBindingRequest]) (*connect.Response[v1.BeginContactBindingResponse], error)
+	SaveCredentialContact(context.Context, *connect.Request[v1.SaveCredentialContactRequest]) (*connect.Response[v1.SaveCredentialContactResponse], error)
+	DeleteCredentialContact(context.Context, *connect.Request[v1.DeleteCredentialContactRequest]) (*connect.Response[v1.DeleteCredentialContactResponse], error)
 }
 
 // NewTrustedCredentialServiceHandler builds an HTTP handler from the service implementation. It
@@ -164,6 +233,30 @@ func NewTrustedCredentialServiceHandler(svc TrustedCredentialServiceHandler, opt
 		connect.WithSchema(trustedCredentialServiceMethods.ByName("CancelVerification")),
 		connect.WithHandlerOptions(opts...),
 	)
+	trustedCredentialServiceGetCredentialContactsHandler := connect.NewUnaryHandler(
+		TrustedCredentialServiceGetCredentialContactsProcedure,
+		svc.GetCredentialContacts,
+		connect.WithSchema(trustedCredentialServiceMethods.ByName("GetCredentialContacts")),
+		connect.WithHandlerOptions(opts...),
+	)
+	trustedCredentialServiceBeginContactBindingHandler := connect.NewUnaryHandler(
+		TrustedCredentialServiceBeginContactBindingProcedure,
+		svc.BeginContactBinding,
+		connect.WithSchema(trustedCredentialServiceMethods.ByName("BeginContactBinding")),
+		connect.WithHandlerOptions(opts...),
+	)
+	trustedCredentialServiceSaveCredentialContactHandler := connect.NewUnaryHandler(
+		TrustedCredentialServiceSaveCredentialContactProcedure,
+		svc.SaveCredentialContact,
+		connect.WithSchema(trustedCredentialServiceMethods.ByName("SaveCredentialContact")),
+		connect.WithHandlerOptions(opts...),
+	)
+	trustedCredentialServiceDeleteCredentialContactHandler := connect.NewUnaryHandler(
+		TrustedCredentialServiceDeleteCredentialContactProcedure,
+		svc.DeleteCredentialContact,
+		connect.WithSchema(trustedCredentialServiceMethods.ByName("DeleteCredentialContact")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/komari.credential.v1.TrustedCredentialService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TrustedCredentialServiceListTrustedCredentialProvidersProcedure:
@@ -174,6 +267,14 @@ func NewTrustedCredentialServiceHandler(svc TrustedCredentialServiceHandler, opt
 			trustedCredentialServiceCompleteVerificationHandler.ServeHTTP(w, r)
 		case TrustedCredentialServiceCancelVerificationProcedure:
 			trustedCredentialServiceCancelVerificationHandler.ServeHTTP(w, r)
+		case TrustedCredentialServiceGetCredentialContactsProcedure:
+			trustedCredentialServiceGetCredentialContactsHandler.ServeHTTP(w, r)
+		case TrustedCredentialServiceBeginContactBindingProcedure:
+			trustedCredentialServiceBeginContactBindingHandler.ServeHTTP(w, r)
+		case TrustedCredentialServiceSaveCredentialContactProcedure:
+			trustedCredentialServiceSaveCredentialContactHandler.ServeHTTP(w, r)
+		case TrustedCredentialServiceDeleteCredentialContactProcedure:
+			trustedCredentialServiceDeleteCredentialContactHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -197,4 +298,20 @@ func (UnimplementedTrustedCredentialServiceHandler) CompleteVerification(context
 
 func (UnimplementedTrustedCredentialServiceHandler) CancelVerification(context.Context, *connect.Request[v1.CancelVerificationRequest]) (*connect.Response[v1.CancelVerificationResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.credential.v1.TrustedCredentialService.CancelVerification is not implemented"))
+}
+
+func (UnimplementedTrustedCredentialServiceHandler) GetCredentialContacts(context.Context, *connect.Request[v1.GetCredentialContactsRequest]) (*connect.Response[v1.GetCredentialContactsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.credential.v1.TrustedCredentialService.GetCredentialContacts is not implemented"))
+}
+
+func (UnimplementedTrustedCredentialServiceHandler) BeginContactBinding(context.Context, *connect.Request[v1.BeginContactBindingRequest]) (*connect.Response[v1.BeginContactBindingResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.credential.v1.TrustedCredentialService.BeginContactBinding is not implemented"))
+}
+
+func (UnimplementedTrustedCredentialServiceHandler) SaveCredentialContact(context.Context, *connect.Request[v1.SaveCredentialContactRequest]) (*connect.Response[v1.SaveCredentialContactResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.credential.v1.TrustedCredentialService.SaveCredentialContact is not implemented"))
+}
+
+func (UnimplementedTrustedCredentialServiceHandler) DeleteCredentialContact(context.Context, *connect.Request[v1.DeleteCredentialContactRequest]) (*connect.Response[v1.DeleteCredentialContactResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.credential.v1.TrustedCredentialService.DeleteCredentialContact is not implemented"))
 }
