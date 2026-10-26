@@ -12,7 +12,7 @@ import type { JsonObject, Message } from "@bufbuild/protobuf";
  * Describes the file komari/credential/v1/credential.proto.
  */
 export const file_komari_credential_v1_credential: GenFile = /*@__PURE__*/
-  fileDesc("CiVrb21hcmkvY3JlZGVudGlhbC92MS9jcmVkZW50aWFsLnByb3RvEhRrb21hcmkuY3JlZGVudGlhbC52MSK0AQoZVHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlchIKCgJpZBgBIAEoCRIUCgxkaXNwbGF5X25hbWUYAiABKAkSOgoEa2luZBgDIAEoDjIsLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxQcm92aWRlcktpbmQSOQoIcHVycG9zZXMYBCADKA4yJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsUHVycG9zZSJhCiVMaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXF1ZXN0EjgKB3B1cnBvc2UYASABKA4yJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsUHVycG9zZSJsCiZMaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXNwb25zZRJCCglwcm92aWRlcnMYASADKAsyLy5rb21hcmkuY3JlZGVudGlhbC52MS5UcnVzdGVkQ3JlZGVudGlhbFByb3ZpZGVyIqgBChhCZWdpblZlcmlmaWNhdGlvblJlcXVlc3QSEwoLcHJvdmlkZXJfaWQYASABKAkSOAoHcHVycG9zZRgCIAEoDjInLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxQdXJwb3NlEhAKCHJlc291cmNlGAMgASgJEisKCnBhcmFtZXRlcnMYBCABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0Ip8BChlCZWdpblZlcmlmaWNhdGlvblJlc3BvbnNlEhQKDGNoYWxsZW5nZV9pZBgBIAEoCRIuCgpleHBpcmVzX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBITCgtwcm9tcHRfdHlwZRgDIAEoCRInCgZwcm9tcHQYBCABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0IlsKG0NvbXBsZXRlVmVyaWZpY2F0aW9uUmVxdWVzdBIUCgxjaGFsbGVuZ2VfaWQYASABKAkSJgoFcHJvb2YYAiABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0ImQKHENvbXBsZXRlVmVyaWZpY2F0aW9uUmVzcG9uc2USRAoNYXV0aG9yaXphdGlvbhgBIAEoCzItLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxBdXRob3JpemF0aW9uIr8BChdDcmVkZW50aWFsQXV0aG9yaXphdGlvbhITCgtncmFudF90b2tlbhgBIAEoCRITCgtwcm92aWRlcl9pZBgCIAEoCRI4CgdwdXJwb3NlGAMgASgOMicua29tYXJpLmNyZWRlbnRpYWwudjEuQ3JlZGVudGlhbFB1cnBvc2USEAoIcmVzb3VyY2UYBCABKAkSLgoKZXhwaXJlc19hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiMQoZQ2FuY2VsVmVyaWZpY2F0aW9uUmVxdWVzdBIUCgxjaGFsbGVuZ2VfaWQYASABKAkiLwoaQ2FuY2VsVmVyaWZpY2F0aW9uUmVzcG9uc2USEQoJY2FuY2VsbGVkGAEgASgIIn0KEUNyZWRlbnRpYWxDb250YWN0EgwKBGtpbmQYASABKAkSFgoObWFza2VkX2FkZHJlc3MYAiABKAkSEQoJdHJhbnNwb3J0GAMgASgJEi8KC3ZlcmlmaWVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCIwChNDcmVkZW50aWFsVHJhbnNwb3J0EgoKAmlkGAEgASgJEg0KBWtpbmRzGAIgAygJIh4KHEdldENyZWRlbnRpYWxDb250YWN0c1JlcXVlc3QivQEKHUdldENyZWRlbnRpYWxDb250YWN0c1Jlc3BvbnNlEjkKCGNvbnRhY3RzGAEgAygLMicua29tYXJpLmNyZWRlbnRpYWwudjEuQ3JlZGVudGlhbENvbnRhY3QSPQoKdHJhbnNwb3J0cxgCIAMoCzIpLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxUcmFuc3BvcnQSIgoacGFzc3dvcmRfYm9vdHN0cmFwX2FsbG93ZWQYAyABKAgifQoaQmVnaW5Db250YWN0QmluZGluZ1JlcXVlc3QSDAoEa2luZBgBIAEoCRIPCgdhZGRyZXNzGAIgASgJEhEKCXRyYW5zcG9ydBgDIAEoCRIbChNhdXRob3JpemF0aW9uX3Rva2VuGAQgASgJEhAKCHBhc3N3b3JkGAUgASgJIqEBChtCZWdpbkNvbnRhY3RCaW5kaW5nUmVzcG9uc2USFAoMY2hhbGxlbmdlX2lkGAEgASgJEi4KCmV4cGlyZXNfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhMKC3Byb21wdF90eXBlGAMgASgJEicKBnByb21wdBgEIAEoCzIXLmdvb2dsZS5wcm90b2J1Zi5TdHJ1Y3QiZQocU2F2ZUNyZWRlbnRpYWxDb250YWN0UmVxdWVzdBIMCgRraW5kGAEgASgJEg8KB2FkZHJlc3MYAiABKAkSEQoJdHJhbnNwb3J0GAMgASgJEhMKC2dyYW50X3Rva2VuGAQgASgJIlkKHVNhdmVDcmVkZW50aWFsQ29udGFjdFJlc3BvbnNlEjgKB2NvbnRhY3QYASABKAsyJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsQ29udGFjdCJDCh5EZWxldGVDcmVkZW50aWFsQ29udGFjdFJlcXVlc3QSDAoEa2luZBgBIAEoCRITCgtncmFudF90b2tlbhgCIAEoCSIyCh9EZWxldGVDcmVkZW50aWFsQ29udGFjdFJlc3BvbnNlEg8KB2RlbGV0ZWQYASABKAgqgwIKEUNyZWRlbnRpYWxQdXJwb3NlEiIKHkNSRURFTlRJQUxfUFVSUE9TRV9VTlNQRUNJRklFRBAAEiMKH0NSRURFTlRJQUxfUFVSUE9TRV9CSU5EX0NPTlRBQ1QQARIpCiVDUkVERU5USUFMX1BVUlBPU0VfTUFOQUdFX0NSRURFTlRJQUxTEAISJwojQ1JFREVOVElBTF9QVVJQT1NFX1VOTE9DS19XT1JLU1BBQ0UQAxIlCiFDUkVERU5USUFMX1BVUlBPU0VfTE9HSU5fU0VUVElOR1MQBBIqCiZDUkVERU5USUFMX1BVUlBPU0VfU0VOU0lUSVZFX09QRVJBVElPThAFKuQBChZDcmVkZW50aWFsUHJvdmlkZXJLaW5kEigKJENSRURFTlRJQUxfUFJPVklERVJfS0lORF9VTlNQRUNJRklFRBAAEigKJENSRURFTlRJQUxfUFJPVklERVJfS0lORF9MRUdBQ1lfVE9UUBABEiYKIkNSRURFTlRJQUxfUFJPVklERVJfS0lORF9FTUFJTF9PVFAQAhIpCiVDUkVERU5USUFMX1BST1ZJREVSX0tJTkRfVEVMRUdSQU1fT1RQEAMSIwofQ1JFREVOVElBTF9QUk9WSURFUl9LSU5EX1BMVUdJThAEMrEIChhUcnVzdGVkQ3JlZGVudGlhbFNlcnZpY2USmwEKHkxpc3RUcnVzdGVkQ3JlZGVudGlhbFByb3ZpZGVycxI7LmtvbWFyaS5jcmVkZW50aWFsLnYxLkxpc3RUcnVzdGVkQ3JlZGVudGlhbFByb3ZpZGVyc1JlcXVlc3QaPC5rb21hcmkuY3JlZGVudGlhbC52MS5MaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXNwb25zZRJ0ChFCZWdpblZlcmlmaWNhdGlvbhIuLmtvbWFyaS5jcmVkZW50aWFsLnYxLkJlZ2luVmVyaWZpY2F0aW9uUmVxdWVzdBovLmtvbWFyaS5jcmVkZW50aWFsLnYxLkJlZ2luVmVyaWZpY2F0aW9uUmVzcG9uc2USfQoUQ29tcGxldGVWZXJpZmljYXRpb24SMS5rb21hcmkuY3JlZGVudGlhbC52MS5Db21wbGV0ZVZlcmlmaWNhdGlvblJlcXVlc3QaMi5rb21hcmkuY3JlZGVudGlhbC52MS5Db21wbGV0ZVZlcmlmaWNhdGlvblJlc3BvbnNlEncKEkNhbmNlbFZlcmlmaWNhdGlvbhIvLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNhbmNlbFZlcmlmaWNhdGlvblJlcXVlc3QaMC5rb21hcmkuY3JlZGVudGlhbC52MS5DYW5jZWxWZXJpZmljYXRpb25SZXNwb25zZRKAAQoVR2V0Q3JlZGVudGlhbENvbnRhY3RzEjIua29tYXJpLmNyZWRlbnRpYWwudjEuR2V0Q3JlZGVudGlhbENvbnRhY3RzUmVxdWVzdBozLmtvbWFyaS5jcmVkZW50aWFsLnYxLkdldENyZWRlbnRpYWxDb250YWN0c1Jlc3BvbnNlEnoKE0JlZ2luQ29udGFjdEJpbmRpbmcSMC5rb21hcmkuY3JlZGVudGlhbC52MS5CZWdpbkNvbnRhY3RCaW5kaW5nUmVxdWVzdBoxLmtvbWFyaS5jcmVkZW50aWFsLnYxLkJlZ2luQ29udGFjdEJpbmRpbmdSZXNwb25zZRKAAQoVU2F2ZUNyZWRlbnRpYWxDb250YWN0EjIua29tYXJpLmNyZWRlbnRpYWwudjEuU2F2ZUNyZWRlbnRpYWxDb250YWN0UmVxdWVzdBozLmtvbWFyaS5jcmVkZW50aWFsLnYxLlNhdmVDcmVkZW50aWFsQ29udGFjdFJlc3BvbnNlEoYBChdEZWxldGVDcmVkZW50aWFsQ29udGFjdBI0LmtvbWFyaS5jcmVkZW50aWFsLnYxLkRlbGV0ZUNyZWRlbnRpYWxDb250YWN0UmVxdWVzdBo1LmtvbWFyaS5jcmVkZW50aWFsLnYxLkRlbGV0ZUNyZWRlbnRpYWxDb250YWN0UmVzcG9uc2VC6QEKGGNvbS5rb21hcmkuY3JlZGVudGlhbC52MUIPQ3JlZGVudGlhbFByb3RvUAFaSmdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL2NyZWRlbnRpYWwvdjE7Y3JlZGVudGlhbHYxogIDS0NYqgIUS29tYXJpLkNyZWRlbnRpYWwuVjHKAhRLb21hcmlcQ3JlZGVudGlhbFxWMeICIEtvbWFyaVxDcmVkZW50aWFsXFYxXEdQQk1ldGFkYXRh6gIWS29tYXJpOjpDcmVkZW50aWFsOjpWMWIGcHJvdG8z", [file_google_protobuf_struct, file_google_protobuf_timestamp]);
+  fileDesc("CiVrb21hcmkvY3JlZGVudGlhbC92MS9jcmVkZW50aWFsLnByb3RvEhRrb21hcmkuY3JlZGVudGlhbC52MSK0AQoZVHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlchIKCgJpZBgBIAEoCRIUCgxkaXNwbGF5X25hbWUYAiABKAkSOgoEa2luZBgDIAEoDjIsLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxQcm92aWRlcktpbmQSOQoIcHVycG9zZXMYBCADKA4yJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsUHVycG9zZSJhCiVMaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXF1ZXN0EjgKB3B1cnBvc2UYASABKA4yJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsUHVycG9zZSJsCiZMaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXNwb25zZRJCCglwcm92aWRlcnMYASADKAsyLy5rb21hcmkuY3JlZGVudGlhbC52MS5UcnVzdGVkQ3JlZGVudGlhbFByb3ZpZGVyIqgBChhCZWdpblZlcmlmaWNhdGlvblJlcXVlc3QSEwoLcHJvdmlkZXJfaWQYASABKAkSOAoHcHVycG9zZRgCIAEoDjInLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxQdXJwb3NlEhAKCHJlc291cmNlGAMgASgJEisKCnBhcmFtZXRlcnMYBCABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0Ip8BChlCZWdpblZlcmlmaWNhdGlvblJlc3BvbnNlEhQKDGNoYWxsZW5nZV9pZBgBIAEoCRIuCgpleHBpcmVzX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBITCgtwcm9tcHRfdHlwZRgDIAEoCRInCgZwcm9tcHQYBCABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0IlsKG0NvbXBsZXRlVmVyaWZpY2F0aW9uUmVxdWVzdBIUCgxjaGFsbGVuZ2VfaWQYASABKAkSJgoFcHJvb2YYAiABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0ImQKHENvbXBsZXRlVmVyaWZpY2F0aW9uUmVzcG9uc2USRAoNYXV0aG9yaXphdGlvbhgBIAEoCzItLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxBdXRob3JpemF0aW9uIr8BChdDcmVkZW50aWFsQXV0aG9yaXphdGlvbhITCgtncmFudF90b2tlbhgBIAEoCRITCgtwcm92aWRlcl9pZBgCIAEoCRI4CgdwdXJwb3NlGAMgASgOMicua29tYXJpLmNyZWRlbnRpYWwudjEuQ3JlZGVudGlhbFB1cnBvc2USEAoIcmVzb3VyY2UYBCABKAkSLgoKZXhwaXJlc19hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiMQoZQ2FuY2VsVmVyaWZpY2F0aW9uUmVxdWVzdBIUCgxjaGFsbGVuZ2VfaWQYASABKAkiLwoaQ2FuY2VsVmVyaWZpY2F0aW9uUmVzcG9uc2USEQoJY2FuY2VsbGVkGAEgASgIIn0KEUNyZWRlbnRpYWxDb250YWN0EgwKBGtpbmQYASABKAkSFgoObWFza2VkX2FkZHJlc3MYAiABKAkSEQoJdHJhbnNwb3J0GAMgASgJEi8KC3ZlcmlmaWVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCIwChNDcmVkZW50aWFsVHJhbnNwb3J0EgoKAmlkGAEgASgJEg0KBWtpbmRzGAIgAygJIh4KHEdldENyZWRlbnRpYWxDb250YWN0c1JlcXVlc3QivQEKHUdldENyZWRlbnRpYWxDb250YWN0c1Jlc3BvbnNlEjkKCGNvbnRhY3RzGAEgAygLMicua29tYXJpLmNyZWRlbnRpYWwudjEuQ3JlZGVudGlhbENvbnRhY3QSPQoKdHJhbnNwb3J0cxgCIAMoCzIpLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxUcmFuc3BvcnQSIgoacGFzc3dvcmRfYm9vdHN0cmFwX2FsbG93ZWQYAyABKAgifQoaQmVnaW5Db250YWN0QmluZGluZ1JlcXVlc3QSDAoEa2luZBgBIAEoCRIPCgdhZGRyZXNzGAIgASgJEhEKCXRyYW5zcG9ydBgDIAEoCRIbChNhdXRob3JpemF0aW9uX3Rva2VuGAQgASgJEhAKCHBhc3N3b3JkGAUgASgJIqEBChtCZWdpbkNvbnRhY3RCaW5kaW5nUmVzcG9uc2USFAoMY2hhbGxlbmdlX2lkGAEgASgJEi4KCmV4cGlyZXNfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhMKC3Byb21wdF90eXBlGAMgASgJEicKBnByb21wdBgEIAEoCzIXLmdvb2dsZS5wcm90b2J1Zi5TdHJ1Y3QiZQocU2F2ZUNyZWRlbnRpYWxDb250YWN0UmVxdWVzdBIMCgRraW5kGAEgASgJEg8KB2FkZHJlc3MYAiABKAkSEQoJdHJhbnNwb3J0GAMgASgJEhMKC2dyYW50X3Rva2VuGAQgASgJIlkKHVNhdmVDcmVkZW50aWFsQ29udGFjdFJlc3BvbnNlEjgKB2NvbnRhY3QYASABKAsyJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsQ29udGFjdCJDCh5EZWxldGVDcmVkZW50aWFsQ29udGFjdFJlcXVlc3QSDAoEa2luZBgBIAEoCRITCgtncmFudF90b2tlbhgCIAEoCSIyCh9EZWxldGVDcmVkZW50aWFsQ29udGFjdFJlc3BvbnNlEg8KB2RlbGV0ZWQYASABKAgiPwoZQmVnaW5QYXNzd29yZExvZ2luUmVxdWVzdBIQCgh1c2VybmFtZRgBIAEoCRIQCghwYXNzd29yZBgCIAEoCSKnAQoaQmVnaW5QYXNzd29yZExvZ2luUmVzcG9uc2USFQoNYXV0aGVudGljYXRlZBgBIAEoCBJCCglwcm92aWRlcnMYAiADKAsyLy5rb21hcmkuY3JlZGVudGlhbC52MS5UcnVzdGVkQ3JlZGVudGlhbFByb3ZpZGVyEi4KCmV4cGlyZXNfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIjQKHUJlZ2luTG9naW5WZXJpZmljYXRpb25SZXF1ZXN0EhMKC3Byb3ZpZGVyX2lkGAEgASgJIqQBCh5CZWdpbkxvZ2luVmVyaWZpY2F0aW9uUmVzcG9uc2USFAoMY2hhbGxlbmdlX2lkGAEgASgJEi4KCmV4cGlyZXNfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhMKC3Byb21wdF90eXBlGAMgASgJEicKBnByb21wdBgEIAEoCzIXLmdvb2dsZS5wcm90b2J1Zi5TdHJ1Y3QiXAocQ29tcGxldGVQYXNzd29yZExvZ2luUmVxdWVzdBIUCgxjaGFsbGVuZ2VfaWQYASABKAkSJgoFcHJvb2YYAiABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0IjYKHUNvbXBsZXRlUGFzc3dvcmRMb2dpblJlc3BvbnNlEhUKDWF1dGhlbnRpY2F0ZWQYASABKAgiHAoaQ2FuY2VsUGFzc3dvcmRMb2dpblJlcXVlc3QiMAobQ2FuY2VsUGFzc3dvcmRMb2dpblJlc3BvbnNlEhEKCWNhbmNlbGxlZBgBIAEoCCqqAgoRQ3JlZGVudGlhbFB1cnBvc2USIgoeQ1JFREVOVElBTF9QVVJQT1NFX1VOU1BFQ0lGSUVEEAASIwofQ1JFREVOVElBTF9QVVJQT1NFX0JJTkRfQ09OVEFDVBABEikKJUNSRURFTlRJQUxfUFVSUE9TRV9NQU5BR0VfQ1JFREVOVElBTFMQAhInCiNDUkVERU5USUFMX1BVUlBPU0VfVU5MT0NLX1dPUktTUEFDRRADEiUKIUNSRURFTlRJQUxfUFVSUE9TRV9MT0dJTl9TRVRUSU5HUxAEEioKJkNSRURFTlRJQUxfUFVSUE9TRV9TRU5TSVRJVkVfT1BFUkFUSU9OEAUSJQohQ1JFREVOVElBTF9QVVJQT1NFX1BBU1NXT1JEX0xPR0lOEAYq5AEKFkNyZWRlbnRpYWxQcm92aWRlcktpbmQSKAokQ1JFREVOVElBTF9QUk9WSURFUl9LSU5EX1VOU1BFQ0lGSUVEEAASKAokQ1JFREVOVElBTF9QUk9WSURFUl9LSU5EX0xFR0FDWV9UT1RQEAESJgoiQ1JFREVOVElBTF9QUk9WSURFUl9LSU5EX0VNQUlMX09UUBACEikKJUNSRURFTlRJQUxfUFJPVklERVJfS0lORF9URUxFR1JBTV9PVFAQAxIjCh9DUkVERU5USUFMX1BST1ZJREVSX0tJTkRfUExVR0lOEAQysQgKGFRydXN0ZWRDcmVkZW50aWFsU2VydmljZRKbAQoeTGlzdFRydXN0ZWRDcmVkZW50aWFsUHJvdmlkZXJzEjsua29tYXJpLmNyZWRlbnRpYWwudjEuTGlzdFRydXN0ZWRDcmVkZW50aWFsUHJvdmlkZXJzUmVxdWVzdBo8LmtvbWFyaS5jcmVkZW50aWFsLnYxLkxpc3RUcnVzdGVkQ3JlZGVudGlhbFByb3ZpZGVyc1Jlc3BvbnNlEnQKEUJlZ2luVmVyaWZpY2F0aW9uEi4ua29tYXJpLmNyZWRlbnRpYWwudjEuQmVnaW5WZXJpZmljYXRpb25SZXF1ZXN0Gi8ua29tYXJpLmNyZWRlbnRpYWwudjEuQmVnaW5WZXJpZmljYXRpb25SZXNwb25zZRJ9ChRDb21wbGV0ZVZlcmlmaWNhdGlvbhIxLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNvbXBsZXRlVmVyaWZpY2F0aW9uUmVxdWVzdBoyLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNvbXBsZXRlVmVyaWZpY2F0aW9uUmVzcG9uc2USdwoSQ2FuY2VsVmVyaWZpY2F0aW9uEi8ua29tYXJpLmNyZWRlbnRpYWwudjEuQ2FuY2VsVmVyaWZpY2F0aW9uUmVxdWVzdBowLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNhbmNlbFZlcmlmaWNhdGlvblJlc3BvbnNlEoABChVHZXRDcmVkZW50aWFsQ29udGFjdHMSMi5rb21hcmkuY3JlZGVudGlhbC52MS5HZXRDcmVkZW50aWFsQ29udGFjdHNSZXF1ZXN0GjMua29tYXJpLmNyZWRlbnRpYWwudjEuR2V0Q3JlZGVudGlhbENvbnRhY3RzUmVzcG9uc2USegoTQmVnaW5Db250YWN0QmluZGluZxIwLmtvbWFyaS5jcmVkZW50aWFsLnYxLkJlZ2luQ29udGFjdEJpbmRpbmdSZXF1ZXN0GjEua29tYXJpLmNyZWRlbnRpYWwudjEuQmVnaW5Db250YWN0QmluZGluZ1Jlc3BvbnNlEoABChVTYXZlQ3JlZGVudGlhbENvbnRhY3QSMi5rb21hcmkuY3JlZGVudGlhbC52MS5TYXZlQ3JlZGVudGlhbENvbnRhY3RSZXF1ZXN0GjMua29tYXJpLmNyZWRlbnRpYWwudjEuU2F2ZUNyZWRlbnRpYWxDb250YWN0UmVzcG9uc2UShgEKF0RlbGV0ZUNyZWRlbnRpYWxDb250YWN0EjQua29tYXJpLmNyZWRlbnRpYWwudjEuRGVsZXRlQ3JlZGVudGlhbENvbnRhY3RSZXF1ZXN0GjUua29tYXJpLmNyZWRlbnRpYWwudjEuRGVsZXRlQ3JlZGVudGlhbENvbnRhY3RSZXNwb25zZTKUBAoUUGFzc3dvcmRMb2dpblNlcnZpY2USdwoSQmVnaW5QYXNzd29yZExvZ2luEi8ua29tYXJpLmNyZWRlbnRpYWwudjEuQmVnaW5QYXNzd29yZExvZ2luUmVxdWVzdBowLmtvbWFyaS5jcmVkZW50aWFsLnYxLkJlZ2luUGFzc3dvcmRMb2dpblJlc3BvbnNlEoMBChZCZWdpbkxvZ2luVmVyaWZpY2F0aW9uEjMua29tYXJpLmNyZWRlbnRpYWwudjEuQmVnaW5Mb2dpblZlcmlmaWNhdGlvblJlcXVlc3QaNC5rb21hcmkuY3JlZGVudGlhbC52MS5CZWdpbkxvZ2luVmVyaWZpY2F0aW9uUmVzcG9uc2USgAEKFUNvbXBsZXRlUGFzc3dvcmRMb2dpbhIyLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNvbXBsZXRlUGFzc3dvcmRMb2dpblJlcXVlc3QaMy5rb21hcmkuY3JlZGVudGlhbC52MS5Db21wbGV0ZVBhc3N3b3JkTG9naW5SZXNwb25zZRJ6ChNDYW5jZWxQYXNzd29yZExvZ2luEjAua29tYXJpLmNyZWRlbnRpYWwudjEuQ2FuY2VsUGFzc3dvcmRMb2dpblJlcXVlc3QaMS5rb21hcmkuY3JlZGVudGlhbC52MS5DYW5jZWxQYXNzd29yZExvZ2luUmVzcG9uc2VC6QEKGGNvbS5rb21hcmkuY3JlZGVudGlhbC52MUIPQ3JlZGVudGlhbFByb3RvUAFaSmdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL2NyZWRlbnRpYWwvdjE7Y3JlZGVudGlhbHYxogIDS0NYqgIUS29tYXJpLkNyZWRlbnRpYWwuVjHKAhRLb21hcmlcQ3JlZGVudGlhbFxWMeICIEtvbWFyaVxDcmVkZW50aWFsXFYxXEdQQk1ldGFkYXRh6gIWS29tYXJpOjpDcmVkZW50aWFsOjpWMWIGcHJvdG8z", [file_google_protobuf_struct, file_google_protobuf_timestamp]);
 
 /**
  * TrustedCredentialProvider contains public metadata only.
@@ -531,6 +531,176 @@ export const DeleteCredentialContactResponseSchema: GenMessage<DeleteCredentialC
   messageDesc(file_komari_credential_v1_credential, 19);
 
 /**
+ * @generated from message komari.credential.v1.BeginPasswordLoginRequest
+ */
+export type BeginPasswordLoginRequest = Message<"komari.credential.v1.BeginPasswordLoginRequest"> & {
+  /**
+   * @generated from field: string username = 1;
+   */
+  username: string;
+
+  /**
+   * @generated from field: string password = 2;
+   */
+  password: string;
+};
+
+/**
+ * Describes the message komari.credential.v1.BeginPasswordLoginRequest.
+ * Use `create(BeginPasswordLoginRequestSchema)` to create a new message.
+ */
+export const BeginPasswordLoginRequestSchema: GenMessage<BeginPasswordLoginRequest> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 20);
+
+/**
+ * @generated from message komari.credential.v1.BeginPasswordLoginResponse
+ */
+export type BeginPasswordLoginResponse = Message<"komari.credential.v1.BeginPasswordLoginResponse"> & {
+  /**
+   * True only after a real session has been created. Existing installations
+   * without any configured second factor retain password-only compatibility.
+   *
+   * @generated from field: bool authenticated = 1;
+   */
+  authenticated: boolean;
+
+  /**
+   * @generated from field: repeated komari.credential.v1.TrustedCredentialProvider providers = 2;
+   */
+  providers: TrustedCredentialProvider[];
+
+  /**
+   * @generated from field: google.protobuf.Timestamp expires_at = 3;
+   */
+  expiresAt?: Timestamp | undefined;
+};
+
+/**
+ * Describes the message komari.credential.v1.BeginPasswordLoginResponse.
+ * Use `create(BeginPasswordLoginResponseSchema)` to create a new message.
+ */
+export const BeginPasswordLoginResponseSchema: GenMessage<BeginPasswordLoginResponse> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 21);
+
+/**
+ * @generated from message komari.credential.v1.BeginLoginVerificationRequest
+ */
+export type BeginLoginVerificationRequest = Message<"komari.credential.v1.BeginLoginVerificationRequest"> & {
+  /**
+   * @generated from field: string provider_id = 1;
+   */
+  providerId: string;
+};
+
+/**
+ * Describes the message komari.credential.v1.BeginLoginVerificationRequest.
+ * Use `create(BeginLoginVerificationRequestSchema)` to create a new message.
+ */
+export const BeginLoginVerificationRequestSchema: GenMessage<BeginLoginVerificationRequest> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 22);
+
+/**
+ * @generated from message komari.credential.v1.BeginLoginVerificationResponse
+ */
+export type BeginLoginVerificationResponse = Message<"komari.credential.v1.BeginLoginVerificationResponse"> & {
+  /**
+   * @generated from field: string challenge_id = 1;
+   */
+  challengeId: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp expires_at = 2;
+   */
+  expiresAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: string prompt_type = 3;
+   */
+  promptType: string;
+
+  /**
+   * @generated from field: google.protobuf.Struct prompt = 4;
+   */
+  prompt?: JsonObject | undefined;
+};
+
+/**
+ * Describes the message komari.credential.v1.BeginLoginVerificationResponse.
+ * Use `create(BeginLoginVerificationResponseSchema)` to create a new message.
+ */
+export const BeginLoginVerificationResponseSchema: GenMessage<BeginLoginVerificationResponse> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 23);
+
+/**
+ * @generated from message komari.credential.v1.CompletePasswordLoginRequest
+ */
+export type CompletePasswordLoginRequest = Message<"komari.credential.v1.CompletePasswordLoginRequest"> & {
+  /**
+   * @generated from field: string challenge_id = 1;
+   */
+  challengeId: string;
+
+  /**
+   * @generated from field: google.protobuf.Struct proof = 2;
+   */
+  proof?: JsonObject | undefined;
+};
+
+/**
+ * Describes the message komari.credential.v1.CompletePasswordLoginRequest.
+ * Use `create(CompletePasswordLoginRequestSchema)` to create a new message.
+ */
+export const CompletePasswordLoginRequestSchema: GenMessage<CompletePasswordLoginRequest> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 24);
+
+/**
+ * @generated from message komari.credential.v1.CompletePasswordLoginResponse
+ */
+export type CompletePasswordLoginResponse = Message<"komari.credential.v1.CompletePasswordLoginResponse"> & {
+  /**
+   * @generated from field: bool authenticated = 1;
+   */
+  authenticated: boolean;
+};
+
+/**
+ * Describes the message komari.credential.v1.CompletePasswordLoginResponse.
+ * Use `create(CompletePasswordLoginResponseSchema)` to create a new message.
+ */
+export const CompletePasswordLoginResponseSchema: GenMessage<CompletePasswordLoginResponse> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 25);
+
+/**
+ * @generated from message komari.credential.v1.CancelPasswordLoginRequest
+ */
+export type CancelPasswordLoginRequest = Message<"komari.credential.v1.CancelPasswordLoginRequest"> & {
+};
+
+/**
+ * Describes the message komari.credential.v1.CancelPasswordLoginRequest.
+ * Use `create(CancelPasswordLoginRequestSchema)` to create a new message.
+ */
+export const CancelPasswordLoginRequestSchema: GenMessage<CancelPasswordLoginRequest> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 26);
+
+/**
+ * @generated from message komari.credential.v1.CancelPasswordLoginResponse
+ */
+export type CancelPasswordLoginResponse = Message<"komari.credential.v1.CancelPasswordLoginResponse"> & {
+  /**
+   * @generated from field: bool cancelled = 1;
+   */
+  cancelled: boolean;
+};
+
+/**
+ * Describes the message komari.credential.v1.CancelPasswordLoginResponse.
+ * Use `create(CancelPasswordLoginResponseSchema)` to create a new message.
+ */
+export const CancelPasswordLoginResponseSchema: GenMessage<CancelPasswordLoginResponse> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 27);
+
+/**
  * CredentialPurpose prevents a proof for one operation authorizing another.
  *
  * @generated from enum komari.credential.v1.CredentialPurpose
@@ -565,6 +735,11 @@ export enum CredentialPurpose {
    * @generated from enum value: CREDENTIAL_PURPOSE_SENSITIVE_OPERATION = 5;
    */
   SENSITIVE_OPERATION = 5,
+
+  /**
+   * @generated from enum value: CREDENTIAL_PURPOSE_PASSWORD_LOGIN = 6;
+   */
+  PASSWORD_LOGIN = 6,
 }
 
 /**
@@ -684,4 +859,46 @@ export const TrustedCredentialService: GenService<{
   },
 }> = /*@__PURE__*/
   serviceDesc(file_komari_credential_v1_credential, 0);
+
+/**
+ * PasswordLoginService isolates password-confirmed preauthentication from live
+ * user sessions. Its short-lived HttpOnly cookie cannot authorize admin RPCs.
+ *
+ * @generated from service komari.credential.v1.PasswordLoginService
+ */
+export const PasswordLoginService: GenService<{
+  /**
+   * @generated from rpc komari.credential.v1.PasswordLoginService.BeginPasswordLogin
+   */
+  beginPasswordLogin: {
+    methodKind: "unary";
+    input: typeof BeginPasswordLoginRequestSchema;
+    output: typeof BeginPasswordLoginResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.credential.v1.PasswordLoginService.BeginLoginVerification
+   */
+  beginLoginVerification: {
+    methodKind: "unary";
+    input: typeof BeginLoginVerificationRequestSchema;
+    output: typeof BeginLoginVerificationResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.credential.v1.PasswordLoginService.CompletePasswordLogin
+   */
+  completePasswordLogin: {
+    methodKind: "unary";
+    input: typeof CompletePasswordLoginRequestSchema;
+    output: typeof CompletePasswordLoginResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.credential.v1.PasswordLoginService.CancelPasswordLogin
+   */
+  cancelPasswordLogin: {
+    methodKind: "unary";
+    input: typeof CancelPasswordLoginRequestSchema;
+    output: typeof CancelPasswordLoginResponseSchema;
+  },
+}> = /*@__PURE__*/
+  serviceDesc(file_komari_credential_v1_credential, 1);
 
