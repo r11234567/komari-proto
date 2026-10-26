@@ -29,6 +29,9 @@ message PageResponse {
 message TwoFactorProof {
   string code = 1;
   string challenge_id = 2;
+  // A single-use trusted-credential authorization bound to the action's
+  // purpose, target and live browser session. Legacy TOTP remains supported.
+  string authorization_token = 3;
 }
 
 // Actor identifies the authenticated caller for auditing.
