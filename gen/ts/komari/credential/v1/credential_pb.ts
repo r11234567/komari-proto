@@ -12,7 +12,7 @@ import type { JsonObject, Message } from "@bufbuild/protobuf";
  * Describes the file komari/credential/v1/credential.proto.
  */
 export const file_komari_credential_v1_credential: GenFile = /*@__PURE__*/
-  fileDesc("CiVrb21hcmkvY3JlZGVudGlhbC92MS9jcmVkZW50aWFsLnByb3RvEhRrb21hcmkuY3JlZGVudGlhbC52MSK0AQoZVHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlchIKCgJpZBgBIAEoCRIUCgxkaXNwbGF5X25hbWUYAiABKAkSOgoEa2luZBgDIAEoDjIsLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxQcm92aWRlcktpbmQSOQoIcHVycG9zZXMYBCADKA4yJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsUHVycG9zZSJhCiVMaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXF1ZXN0EjgKB3B1cnBvc2UYASABKA4yJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsUHVycG9zZSJsCiZMaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXNwb25zZRJCCglwcm92aWRlcnMYASADKAsyLy5rb21hcmkuY3JlZGVudGlhbC52MS5UcnVzdGVkQ3JlZGVudGlhbFByb3ZpZGVyIqgBChhCZWdpblZlcmlmaWNhdGlvblJlcXVlc3QSEwoLcHJvdmlkZXJfaWQYASABKAkSOAoHcHVycG9zZRgCIAEoDjInLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxQdXJwb3NlEhAKCHJlc291cmNlGAMgASgJEisKCnBhcmFtZXRlcnMYBCABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0Ip8BChlCZWdpblZlcmlmaWNhdGlvblJlc3BvbnNlEhQKDGNoYWxsZW5nZV9pZBgBIAEoCRIuCgpleHBpcmVzX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBITCgtwcm9tcHRfdHlwZRgDIAEoCRInCgZwcm9tcHQYBCABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0IlsKG0NvbXBsZXRlVmVyaWZpY2F0aW9uUmVxdWVzdBIUCgxjaGFsbGVuZ2VfaWQYASABKAkSJgoFcHJvb2YYAiABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0ImQKHENvbXBsZXRlVmVyaWZpY2F0aW9uUmVzcG9uc2USRAoNYXV0aG9yaXphdGlvbhgBIAEoCzItLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxBdXRob3JpemF0aW9uIr8BChdDcmVkZW50aWFsQXV0aG9yaXphdGlvbhITCgtncmFudF90b2tlbhgBIAEoCRITCgtwcm92aWRlcl9pZBgCIAEoCRI4CgdwdXJwb3NlGAMgASgOMicua29tYXJpLmNyZWRlbnRpYWwudjEuQ3JlZGVudGlhbFB1cnBvc2USEAoIcmVzb3VyY2UYBCABKAkSLgoKZXhwaXJlc19hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiMQoZQ2FuY2VsVmVyaWZpY2F0aW9uUmVxdWVzdBIUCgxjaGFsbGVuZ2VfaWQYASABKAkiLwoaQ2FuY2VsVmVyaWZpY2F0aW9uUmVzcG9uc2USEQoJY2FuY2VsbGVkGAEgASgIKoMCChFDcmVkZW50aWFsUHVycG9zZRIiCh5DUkVERU5USUFMX1BVUlBPU0VfVU5TUEVDSUZJRUQQABIjCh9DUkVERU5USUFMX1BVUlBPU0VfQklORF9DT05UQUNUEAESKQolQ1JFREVOVElBTF9QVVJQT1NFX01BTkFHRV9DUkVERU5USUFMUxACEicKI0NSRURFTlRJQUxfUFVSUE9TRV9VTkxPQ0tfV09SS1NQQUNFEAMSJQohQ1JFREVOVElBTF9QVVJQT1NFX0xPR0lOX1NFVFRJTkdTEAQSKgomQ1JFREVOVElBTF9QVVJQT1NFX1NFTlNJVElWRV9PUEVSQVRJT04QBSrkAQoWQ3JlZGVudGlhbFByb3ZpZGVyS2luZBIoCiRDUkVERU5USUFMX1BST1ZJREVSX0tJTkRfVU5TUEVDSUZJRUQQABIoCiRDUkVERU5USUFMX1BST1ZJREVSX0tJTkRfTEVHQUNZX1RPVFAQARImCiJDUkVERU5USUFMX1BST1ZJREVSX0tJTkRfRU1BSUxfT1RQEAISKQolQ1JFREVOVElBTF9QUk9WSURFUl9LSU5EX1RFTEVHUkFNX09UUBADEiMKH0NSRURFTlRJQUxfUFJPVklERVJfS0lORF9QTFVHSU4QBDKmBAoYVHJ1c3RlZENyZWRlbnRpYWxTZXJ2aWNlEpsBCh5MaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnMSOy5rb21hcmkuY3JlZGVudGlhbC52MS5MaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXF1ZXN0Gjwua29tYXJpLmNyZWRlbnRpYWwudjEuTGlzdFRydXN0ZWRDcmVkZW50aWFsUHJvdmlkZXJzUmVzcG9uc2USdAoRQmVnaW5WZXJpZmljYXRpb24SLi5rb21hcmkuY3JlZGVudGlhbC52MS5CZWdpblZlcmlmaWNhdGlvblJlcXVlc3QaLy5rb21hcmkuY3JlZGVudGlhbC52MS5CZWdpblZlcmlmaWNhdGlvblJlc3BvbnNlEn0KFENvbXBsZXRlVmVyaWZpY2F0aW9uEjEua29tYXJpLmNyZWRlbnRpYWwudjEuQ29tcGxldGVWZXJpZmljYXRpb25SZXF1ZXN0GjIua29tYXJpLmNyZWRlbnRpYWwudjEuQ29tcGxldGVWZXJpZmljYXRpb25SZXNwb25zZRJ3ChJDYW5jZWxWZXJpZmljYXRpb24SLy5rb21hcmkuY3JlZGVudGlhbC52MS5DYW5jZWxWZXJpZmljYXRpb25SZXF1ZXN0GjAua29tYXJpLmNyZWRlbnRpYWwudjEuQ2FuY2VsVmVyaWZpY2F0aW9uUmVzcG9uc2VC6QEKGGNvbS5rb21hcmkuY3JlZGVudGlhbC52MUIPQ3JlZGVudGlhbFByb3RvUAFaSmdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL2NyZWRlbnRpYWwvdjE7Y3JlZGVudGlhbHYxogIDS0NYqgIUS29tYXJpLkNyZWRlbnRpYWwuVjHKAhRLb21hcmlcQ3JlZGVudGlhbFxWMeICIEtvbWFyaVxDcmVkZW50aWFsXFYxXEdQQk1ldGFkYXRh6gIWS29tYXJpOjpDcmVkZW50aWFsOjpWMWIGcHJvdG8z", [file_google_protobuf_struct, file_google_protobuf_timestamp]);
+  fileDesc("CiVrb21hcmkvY3JlZGVudGlhbC92MS9jcmVkZW50aWFsLnByb3RvEhRrb21hcmkuY3JlZGVudGlhbC52MSK0AQoZVHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlchIKCgJpZBgBIAEoCRIUCgxkaXNwbGF5X25hbWUYAiABKAkSOgoEa2luZBgDIAEoDjIsLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxQcm92aWRlcktpbmQSOQoIcHVycG9zZXMYBCADKA4yJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsUHVycG9zZSJhCiVMaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXF1ZXN0EjgKB3B1cnBvc2UYASABKA4yJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsUHVycG9zZSJsCiZMaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXNwb25zZRJCCglwcm92aWRlcnMYASADKAsyLy5rb21hcmkuY3JlZGVudGlhbC52MS5UcnVzdGVkQ3JlZGVudGlhbFByb3ZpZGVyIqgBChhCZWdpblZlcmlmaWNhdGlvblJlcXVlc3QSEwoLcHJvdmlkZXJfaWQYASABKAkSOAoHcHVycG9zZRgCIAEoDjInLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxQdXJwb3NlEhAKCHJlc291cmNlGAMgASgJEisKCnBhcmFtZXRlcnMYBCABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0Ip8BChlCZWdpblZlcmlmaWNhdGlvblJlc3BvbnNlEhQKDGNoYWxsZW5nZV9pZBgBIAEoCRIuCgpleHBpcmVzX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBITCgtwcm9tcHRfdHlwZRgDIAEoCRInCgZwcm9tcHQYBCABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0IlsKG0NvbXBsZXRlVmVyaWZpY2F0aW9uUmVxdWVzdBIUCgxjaGFsbGVuZ2VfaWQYASABKAkSJgoFcHJvb2YYAiABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0ImQKHENvbXBsZXRlVmVyaWZpY2F0aW9uUmVzcG9uc2USRAoNYXV0aG9yaXphdGlvbhgBIAEoCzItLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxBdXRob3JpemF0aW9uIr8BChdDcmVkZW50aWFsQXV0aG9yaXphdGlvbhITCgtncmFudF90b2tlbhgBIAEoCRITCgtwcm92aWRlcl9pZBgCIAEoCRI4CgdwdXJwb3NlGAMgASgOMicua29tYXJpLmNyZWRlbnRpYWwudjEuQ3JlZGVudGlhbFB1cnBvc2USEAoIcmVzb3VyY2UYBCABKAkSLgoKZXhwaXJlc19hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiMQoZQ2FuY2VsVmVyaWZpY2F0aW9uUmVxdWVzdBIUCgxjaGFsbGVuZ2VfaWQYASABKAkiLwoaQ2FuY2VsVmVyaWZpY2F0aW9uUmVzcG9uc2USEQoJY2FuY2VsbGVkGAEgASgIIn0KEUNyZWRlbnRpYWxDb250YWN0EgwKBGtpbmQYASABKAkSFgoObWFza2VkX2FkZHJlc3MYAiABKAkSEQoJdHJhbnNwb3J0GAMgASgJEi8KC3ZlcmlmaWVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCIwChNDcmVkZW50aWFsVHJhbnNwb3J0EgoKAmlkGAEgASgJEg0KBWtpbmRzGAIgAygJIh4KHEdldENyZWRlbnRpYWxDb250YWN0c1JlcXVlc3QivQEKHUdldENyZWRlbnRpYWxDb250YWN0c1Jlc3BvbnNlEjkKCGNvbnRhY3RzGAEgAygLMicua29tYXJpLmNyZWRlbnRpYWwudjEuQ3JlZGVudGlhbENvbnRhY3QSPQoKdHJhbnNwb3J0cxgCIAMoCzIpLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNyZWRlbnRpYWxUcmFuc3BvcnQSIgoacGFzc3dvcmRfYm9vdHN0cmFwX2FsbG93ZWQYAyABKAgifQoaQmVnaW5Db250YWN0QmluZGluZ1JlcXVlc3QSDAoEa2luZBgBIAEoCRIPCgdhZGRyZXNzGAIgASgJEhEKCXRyYW5zcG9ydBgDIAEoCRIbChNhdXRob3JpemF0aW9uX3Rva2VuGAQgASgJEhAKCHBhc3N3b3JkGAUgASgJIqEBChtCZWdpbkNvbnRhY3RCaW5kaW5nUmVzcG9uc2USFAoMY2hhbGxlbmdlX2lkGAEgASgJEi4KCmV4cGlyZXNfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhMKC3Byb21wdF90eXBlGAMgASgJEicKBnByb21wdBgEIAEoCzIXLmdvb2dsZS5wcm90b2J1Zi5TdHJ1Y3QiZQocU2F2ZUNyZWRlbnRpYWxDb250YWN0UmVxdWVzdBIMCgRraW5kGAEgASgJEg8KB2FkZHJlc3MYAiABKAkSEQoJdHJhbnNwb3J0GAMgASgJEhMKC2dyYW50X3Rva2VuGAQgASgJIlkKHVNhdmVDcmVkZW50aWFsQ29udGFjdFJlc3BvbnNlEjgKB2NvbnRhY3QYASABKAsyJy5rb21hcmkuY3JlZGVudGlhbC52MS5DcmVkZW50aWFsQ29udGFjdCJDCh5EZWxldGVDcmVkZW50aWFsQ29udGFjdFJlcXVlc3QSDAoEa2luZBgBIAEoCRITCgtncmFudF90b2tlbhgCIAEoCSIyCh9EZWxldGVDcmVkZW50aWFsQ29udGFjdFJlc3BvbnNlEg8KB2RlbGV0ZWQYASABKAgqgwIKEUNyZWRlbnRpYWxQdXJwb3NlEiIKHkNSRURFTlRJQUxfUFVSUE9TRV9VTlNQRUNJRklFRBAAEiMKH0NSRURFTlRJQUxfUFVSUE9TRV9CSU5EX0NPTlRBQ1QQARIpCiVDUkVERU5USUFMX1BVUlBPU0VfTUFOQUdFX0NSRURFTlRJQUxTEAISJwojQ1JFREVOVElBTF9QVVJQT1NFX1VOTE9DS19XT1JLU1BBQ0UQAxIlCiFDUkVERU5USUFMX1BVUlBPU0VfTE9HSU5fU0VUVElOR1MQBBIqCiZDUkVERU5USUFMX1BVUlBPU0VfU0VOU0lUSVZFX09QRVJBVElPThAFKuQBChZDcmVkZW50aWFsUHJvdmlkZXJLaW5kEigKJENSRURFTlRJQUxfUFJPVklERVJfS0lORF9VTlNQRUNJRklFRBAAEigKJENSRURFTlRJQUxfUFJPVklERVJfS0lORF9MRUdBQ1lfVE9UUBABEiYKIkNSRURFTlRJQUxfUFJPVklERVJfS0lORF9FTUFJTF9PVFAQAhIpCiVDUkVERU5USUFMX1BST1ZJREVSX0tJTkRfVEVMRUdSQU1fT1RQEAMSIwofQ1JFREVOVElBTF9QUk9WSURFUl9LSU5EX1BMVUdJThAEMrEIChhUcnVzdGVkQ3JlZGVudGlhbFNlcnZpY2USmwEKHkxpc3RUcnVzdGVkQ3JlZGVudGlhbFByb3ZpZGVycxI7LmtvbWFyaS5jcmVkZW50aWFsLnYxLkxpc3RUcnVzdGVkQ3JlZGVudGlhbFByb3ZpZGVyc1JlcXVlc3QaPC5rb21hcmkuY3JlZGVudGlhbC52MS5MaXN0VHJ1c3RlZENyZWRlbnRpYWxQcm92aWRlcnNSZXNwb25zZRJ0ChFCZWdpblZlcmlmaWNhdGlvbhIuLmtvbWFyaS5jcmVkZW50aWFsLnYxLkJlZ2luVmVyaWZpY2F0aW9uUmVxdWVzdBovLmtvbWFyaS5jcmVkZW50aWFsLnYxLkJlZ2luVmVyaWZpY2F0aW9uUmVzcG9uc2USfQoUQ29tcGxldGVWZXJpZmljYXRpb24SMS5rb21hcmkuY3JlZGVudGlhbC52MS5Db21wbGV0ZVZlcmlmaWNhdGlvblJlcXVlc3QaMi5rb21hcmkuY3JlZGVudGlhbC52MS5Db21wbGV0ZVZlcmlmaWNhdGlvblJlc3BvbnNlEncKEkNhbmNlbFZlcmlmaWNhdGlvbhIvLmtvbWFyaS5jcmVkZW50aWFsLnYxLkNhbmNlbFZlcmlmaWNhdGlvblJlcXVlc3QaMC5rb21hcmkuY3JlZGVudGlhbC52MS5DYW5jZWxWZXJpZmljYXRpb25SZXNwb25zZRKAAQoVR2V0Q3JlZGVudGlhbENvbnRhY3RzEjIua29tYXJpLmNyZWRlbnRpYWwudjEuR2V0Q3JlZGVudGlhbENvbnRhY3RzUmVxdWVzdBozLmtvbWFyaS5jcmVkZW50aWFsLnYxLkdldENyZWRlbnRpYWxDb250YWN0c1Jlc3BvbnNlEnoKE0JlZ2luQ29udGFjdEJpbmRpbmcSMC5rb21hcmkuY3JlZGVudGlhbC52MS5CZWdpbkNvbnRhY3RCaW5kaW5nUmVxdWVzdBoxLmtvbWFyaS5jcmVkZW50aWFsLnYxLkJlZ2luQ29udGFjdEJpbmRpbmdSZXNwb25zZRKAAQoVU2F2ZUNyZWRlbnRpYWxDb250YWN0EjIua29tYXJpLmNyZWRlbnRpYWwudjEuU2F2ZUNyZWRlbnRpYWxDb250YWN0UmVxdWVzdBozLmtvbWFyaS5jcmVkZW50aWFsLnYxLlNhdmVDcmVkZW50aWFsQ29udGFjdFJlc3BvbnNlEoYBChdEZWxldGVDcmVkZW50aWFsQ29udGFjdBI0LmtvbWFyaS5jcmVkZW50aWFsLnYxLkRlbGV0ZUNyZWRlbnRpYWxDb250YWN0UmVxdWVzdBo1LmtvbWFyaS5jcmVkZW50aWFsLnYxLkRlbGV0ZUNyZWRlbnRpYWxDb250YWN0UmVzcG9uc2VC6QEKGGNvbS5rb21hcmkuY3JlZGVudGlhbC52MUIPQ3JlZGVudGlhbFByb3RvUAFaSmdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL2NyZWRlbnRpYWwvdjE7Y3JlZGVudGlhbHYxogIDS0NYqgIUS29tYXJpLkNyZWRlbnRpYWwuVjHKAhRLb21hcmlcQ3JlZGVudGlhbFxWMeICIEtvbWFyaVxDcmVkZW50aWFsXFYxXEdQQk1ldGFkYXRh6gIWS29tYXJpOjpDcmVkZW50aWFsOjpWMWIGcHJvdG8z", [file_google_protobuf_struct, file_google_protobuf_timestamp]);
 
 /**
  * TrustedCredentialProvider contains public metadata only.
@@ -268,6 +268,269 @@ export const CancelVerificationResponseSchema: GenMessage<CancelVerificationResp
   messageDesc(file_komari_credential_v1_credential, 9);
 
 /**
+ * Contact addresses are masked in read responses. Only verified private user
+ * contacts are usable for OTP; alert/group recipients are never imported.
+ *
+ * @generated from message komari.credential.v1.CredentialContact
+ */
+export type CredentialContact = Message<"komari.credential.v1.CredentialContact"> & {
+  /**
+   * @generated from field: string kind = 1;
+   */
+  kind: string;
+
+  /**
+   * @generated from field: string masked_address = 2;
+   */
+  maskedAddress: string;
+
+  /**
+   * @generated from field: string transport = 3;
+   */
+  transport: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp verified_at = 4;
+   */
+  verifiedAt?: Timestamp | undefined;
+};
+
+/**
+ * Describes the message komari.credential.v1.CredentialContact.
+ * Use `create(CredentialContactSchema)` to create a new message.
+ */
+export const CredentialContactSchema: GenMessage<CredentialContact> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 10);
+
+/**
+ * CredentialTransport contains capability metadata, never sender credentials.
+ *
+ * @generated from message komari.credential.v1.CredentialTransport
+ */
+export type CredentialTransport = Message<"komari.credential.v1.CredentialTransport"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: repeated string kinds = 2;
+   */
+  kinds: string[];
+};
+
+/**
+ * Describes the message komari.credential.v1.CredentialTransport.
+ * Use `create(CredentialTransportSchema)` to create a new message.
+ */
+export const CredentialTransportSchema: GenMessage<CredentialTransport> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 11);
+
+/**
+ * @generated from message komari.credential.v1.GetCredentialContactsRequest
+ */
+export type GetCredentialContactsRequest = Message<"komari.credential.v1.GetCredentialContactsRequest"> & {
+};
+
+/**
+ * Describes the message komari.credential.v1.GetCredentialContactsRequest.
+ * Use `create(GetCredentialContactsRequestSchema)` to create a new message.
+ */
+export const GetCredentialContactsRequestSchema: GenMessage<GetCredentialContactsRequest> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 12);
+
+/**
+ * @generated from message komari.credential.v1.GetCredentialContactsResponse
+ */
+export type GetCredentialContactsResponse = Message<"komari.credential.v1.GetCredentialContactsResponse"> & {
+  /**
+   * @generated from field: repeated komari.credential.v1.CredentialContact contacts = 1;
+   */
+  contacts: CredentialContact[];
+
+  /**
+   * @generated from field: repeated komari.credential.v1.CredentialTransport transports = 2;
+   */
+  transports: CredentialTransport[];
+
+  /**
+   * @generated from field: bool password_bootstrap_allowed = 3;
+   */
+  passwordBootstrapAllowed: boolean;
+};
+
+/**
+ * Describes the message komari.credential.v1.GetCredentialContactsResponse.
+ * Use `create(GetCredentialContactsResponseSchema)` to create a new message.
+ */
+export const GetCredentialContactsResponseSchema: GenMessage<GetCredentialContactsResponse> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 13);
+
+/**
+ * @generated from message komari.credential.v1.BeginContactBindingRequest
+ */
+export type BeginContactBindingRequest = Message<"komari.credential.v1.BeginContactBindingRequest"> & {
+  /**
+   * @generated from field: string kind = 1;
+   */
+  kind: string;
+
+  /**
+   * @generated from field: string address = 2;
+   */
+  address: string;
+
+  /**
+   * @generated from field: string transport = 3;
+   */
+  transport: string;
+
+  /**
+   * A ManageCredentials authorization bound to the canonical new contact.
+   *
+   * @generated from field: string authorization_token = 4;
+   */
+  authorizationToken: string;
+
+  /**
+   * Used only for initial enrollment when no second factor is configured.
+   *
+   * @generated from field: string password = 5;
+   */
+  password: string;
+};
+
+/**
+ * Describes the message komari.credential.v1.BeginContactBindingRequest.
+ * Use `create(BeginContactBindingRequestSchema)` to create a new message.
+ */
+export const BeginContactBindingRequestSchema: GenMessage<BeginContactBindingRequest> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 14);
+
+/**
+ * @generated from message komari.credential.v1.BeginContactBindingResponse
+ */
+export type BeginContactBindingResponse = Message<"komari.credential.v1.BeginContactBindingResponse"> & {
+  /**
+   * @generated from field: string challenge_id = 1;
+   */
+  challengeId: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp expires_at = 2;
+   */
+  expiresAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: string prompt_type = 3;
+   */
+  promptType: string;
+
+  /**
+   * @generated from field: google.protobuf.Struct prompt = 4;
+   */
+  prompt?: JsonObject | undefined;
+};
+
+/**
+ * Describes the message komari.credential.v1.BeginContactBindingResponse.
+ * Use `create(BeginContactBindingResponseSchema)` to create a new message.
+ */
+export const BeginContactBindingResponseSchema: GenMessage<BeginContactBindingResponse> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 15);
+
+/**
+ * CompleteVerification supplies the new destination's OTP and yields the
+ * BindContact authorization consumed here. The target must exactly match.
+ *
+ * @generated from message komari.credential.v1.SaveCredentialContactRequest
+ */
+export type SaveCredentialContactRequest = Message<"komari.credential.v1.SaveCredentialContactRequest"> & {
+  /**
+   * @generated from field: string kind = 1;
+   */
+  kind: string;
+
+  /**
+   * @generated from field: string address = 2;
+   */
+  address: string;
+
+  /**
+   * @generated from field: string transport = 3;
+   */
+  transport: string;
+
+  /**
+   * @generated from field: string grant_token = 4;
+   */
+  grantToken: string;
+};
+
+/**
+ * Describes the message komari.credential.v1.SaveCredentialContactRequest.
+ * Use `create(SaveCredentialContactRequestSchema)` to create a new message.
+ */
+export const SaveCredentialContactRequestSchema: GenMessage<SaveCredentialContactRequest> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 16);
+
+/**
+ * @generated from message komari.credential.v1.SaveCredentialContactResponse
+ */
+export type SaveCredentialContactResponse = Message<"komari.credential.v1.SaveCredentialContactResponse"> & {
+  /**
+   * @generated from field: komari.credential.v1.CredentialContact contact = 1;
+   */
+  contact?: CredentialContact | undefined;
+};
+
+/**
+ * Describes the message komari.credential.v1.SaveCredentialContactResponse.
+ * Use `create(SaveCredentialContactResponseSchema)` to create a new message.
+ */
+export const SaveCredentialContactResponseSchema: GenMessage<SaveCredentialContactResponse> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 17);
+
+/**
+ * @generated from message komari.credential.v1.DeleteCredentialContactRequest
+ */
+export type DeleteCredentialContactRequest = Message<"komari.credential.v1.DeleteCredentialContactRequest"> & {
+  /**
+   * @generated from field: string kind = 1;
+   */
+  kind: string;
+
+  /**
+   * @generated from field: string grant_token = 2;
+   */
+  grantToken: string;
+};
+
+/**
+ * Describes the message komari.credential.v1.DeleteCredentialContactRequest.
+ * Use `create(DeleteCredentialContactRequestSchema)` to create a new message.
+ */
+export const DeleteCredentialContactRequestSchema: GenMessage<DeleteCredentialContactRequest> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 18);
+
+/**
+ * @generated from message komari.credential.v1.DeleteCredentialContactResponse
+ */
+export type DeleteCredentialContactResponse = Message<"komari.credential.v1.DeleteCredentialContactResponse"> & {
+  /**
+   * @generated from field: bool deleted = 1;
+   */
+  deleted: boolean;
+};
+
+/**
+ * Describes the message komari.credential.v1.DeleteCredentialContactResponse.
+ * Use `create(DeleteCredentialContactResponseSchema)` to create a new message.
+ */
+export const DeleteCredentialContactResponseSchema: GenMessage<DeleteCredentialContactResponse> = /*@__PURE__*/
+  messageDesc(file_komari_credential_v1_credential, 19);
+
+/**
  * CredentialPurpose prevents a proof for one operation authorizing another.
  *
  * @generated from enum komari.credential.v1.CredentialPurpose
@@ -386,6 +649,38 @@ export const TrustedCredentialService: GenService<{
     methodKind: "unary";
     input: typeof CancelVerificationRequestSchema;
     output: typeof CancelVerificationResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.credential.v1.TrustedCredentialService.GetCredentialContacts
+   */
+  getCredentialContacts: {
+    methodKind: "unary";
+    input: typeof GetCredentialContactsRequestSchema;
+    output: typeof GetCredentialContactsResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.credential.v1.TrustedCredentialService.BeginContactBinding
+   */
+  beginContactBinding: {
+    methodKind: "unary";
+    input: typeof BeginContactBindingRequestSchema;
+    output: typeof BeginContactBindingResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.credential.v1.TrustedCredentialService.SaveCredentialContact
+   */
+  saveCredentialContact: {
+    methodKind: "unary";
+    input: typeof SaveCredentialContactRequestSchema;
+    output: typeof SaveCredentialContactResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.credential.v1.TrustedCredentialService.DeleteCredentialContact
+   */
+  deleteCredentialContact: {
+    methodKind: "unary";
+    input: typeof DeleteCredentialContactRequestSchema;
+    output: typeof DeleteCredentialContactResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_komari_credential_v1_credential, 0);
