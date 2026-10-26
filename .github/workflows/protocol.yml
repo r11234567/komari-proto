@@ -34,6 +34,7 @@ jobs:
           buf lint 2>&1 | tee ci-artifacts/lint.log
           buf breaking --against ".git#ref=${BASE_SHA}" 2>&1 | tee ci-artifacts/breaking.log
           buf generate 2>&1 | tee ci-artifacts/generate.log
+          git add --intent-to-add -- gen
           git diff --exit-code -- gen 2>&1 | tee ci-artifacts/generated-diff.log
       - name: Go protocol compatibility tests
         if: success() || failure()

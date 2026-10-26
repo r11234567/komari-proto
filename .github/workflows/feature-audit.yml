@@ -51,7 +51,9 @@ jobs:
         run: bash scripts/ci/run-audit-check.sh generate buf generate
       - name: Reject stale generated clients
         if: ${{ !cancelled() && matrix.check == 'contracts' && steps.generate.outcome == 'success' }}
-        run: bash scripts/ci/run-audit-check.sh generated-diff git diff --exit-code -- gen
+        run: |
+          git add --intent-to-add -- gen
+          bash scripts/ci/run-audit-check.sh generated-diff git diff --exit-code -- gen
       - name: Go wire and protocol compatibility tests
         if: ${{ !cancelled() && matrix.check == 'go' }}
         run: bash scripts/ci/run-audit-check.sh go bash scripts/ci/run-go-tests.sh ./...
