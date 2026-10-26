@@ -23,6 +23,8 @@ const _ = connect.IsAtLeastVersion1_13_0
 const (
 	// TrustedCredentialServiceName is the fully-qualified name of the TrustedCredentialService service.
 	TrustedCredentialServiceName = "komari.credential.v1.TrustedCredentialService"
+	// PasswordLoginServiceName is the fully-qualified name of the PasswordLoginService service.
+	PasswordLoginServiceName = "komari.credential.v1.PasswordLoginService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -57,6 +59,18 @@ const (
 	// TrustedCredentialServiceDeleteCredentialContactProcedure is the fully-qualified name of the
 	// TrustedCredentialService's DeleteCredentialContact RPC.
 	TrustedCredentialServiceDeleteCredentialContactProcedure = "/komari.credential.v1.TrustedCredentialService/DeleteCredentialContact"
+	// PasswordLoginServiceBeginPasswordLoginProcedure is the fully-qualified name of the
+	// PasswordLoginService's BeginPasswordLogin RPC.
+	PasswordLoginServiceBeginPasswordLoginProcedure = "/komari.credential.v1.PasswordLoginService/BeginPasswordLogin"
+	// PasswordLoginServiceBeginLoginVerificationProcedure is the fully-qualified name of the
+	// PasswordLoginService's BeginLoginVerification RPC.
+	PasswordLoginServiceBeginLoginVerificationProcedure = "/komari.credential.v1.PasswordLoginService/BeginLoginVerification"
+	// PasswordLoginServiceCompletePasswordLoginProcedure is the fully-qualified name of the
+	// PasswordLoginService's CompletePasswordLogin RPC.
+	PasswordLoginServiceCompletePasswordLoginProcedure = "/komari.credential.v1.PasswordLoginService/CompletePasswordLogin"
+	// PasswordLoginServiceCancelPasswordLoginProcedure is the fully-qualified name of the
+	// PasswordLoginService's CancelPasswordLogin RPC.
+	PasswordLoginServiceCancelPasswordLoginProcedure = "/komari.credential.v1.PasswordLoginService/CancelPasswordLogin"
 )
 
 // TrustedCredentialServiceClient is a client for the komari.credential.v1.TrustedCredentialService
@@ -314,4 +328,153 @@ func (UnimplementedTrustedCredentialServiceHandler) SaveCredentialContact(contex
 
 func (UnimplementedTrustedCredentialServiceHandler) DeleteCredentialContact(context.Context, *connect.Request[v1.DeleteCredentialContactRequest]) (*connect.Response[v1.DeleteCredentialContactResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.credential.v1.TrustedCredentialService.DeleteCredentialContact is not implemented"))
+}
+
+// PasswordLoginServiceClient is a client for the komari.credential.v1.PasswordLoginService service.
+type PasswordLoginServiceClient interface {
+	BeginPasswordLogin(context.Context, *connect.Request[v1.BeginPasswordLoginRequest]) (*connect.Response[v1.BeginPasswordLoginResponse], error)
+	BeginLoginVerification(context.Context, *connect.Request[v1.BeginLoginVerificationRequest]) (*connect.Response[v1.BeginLoginVerificationResponse], error)
+	CompletePasswordLogin(context.Context, *connect.Request[v1.CompletePasswordLoginRequest]) (*connect.Response[v1.CompletePasswordLoginResponse], error)
+	CancelPasswordLogin(context.Context, *connect.Request[v1.CancelPasswordLoginRequest]) (*connect.Response[v1.CancelPasswordLoginResponse], error)
+}
+
+// NewPasswordLoginServiceClient constructs a client for the
+// komari.credential.v1.PasswordLoginService service. By default, it uses the Connect protocol with
+// the binary Protobuf Codec, asks for gzipped responses, and sends uncompressed requests. To use
+// the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or connect.WithGRPCWeb() options.
+//
+// The URL supplied here should be the base URL for the Connect or gRPC server (for example,
+// http://api.acme.com or https://acme.com/grpc).
+func NewPasswordLoginServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) PasswordLoginServiceClient {
+	baseURL = strings.TrimRight(baseURL, "/")
+	passwordLoginServiceMethods := v1.File_komari_credential_v1_credential_proto.Services().ByName("PasswordLoginService").Methods()
+	return &passwordLoginServiceClient{
+		beginPasswordLogin: connect.NewClient[v1.BeginPasswordLoginRequest, v1.BeginPasswordLoginResponse](
+			httpClient,
+			baseURL+PasswordLoginServiceBeginPasswordLoginProcedure,
+			connect.WithSchema(passwordLoginServiceMethods.ByName("BeginPasswordLogin")),
+			connect.WithClientOptions(opts...),
+		),
+		beginLoginVerification: connect.NewClient[v1.BeginLoginVerificationRequest, v1.BeginLoginVerificationResponse](
+			httpClient,
+			baseURL+PasswordLoginServiceBeginLoginVerificationProcedure,
+			connect.WithSchema(passwordLoginServiceMethods.ByName("BeginLoginVerification")),
+			connect.WithClientOptions(opts...),
+		),
+		completePasswordLogin: connect.NewClient[v1.CompletePasswordLoginRequest, v1.CompletePasswordLoginResponse](
+			httpClient,
+			baseURL+PasswordLoginServiceCompletePasswordLoginProcedure,
+			connect.WithSchema(passwordLoginServiceMethods.ByName("CompletePasswordLogin")),
+			connect.WithClientOptions(opts...),
+		),
+		cancelPasswordLogin: connect.NewClient[v1.CancelPasswordLoginRequest, v1.CancelPasswordLoginResponse](
+			httpClient,
+			baseURL+PasswordLoginServiceCancelPasswordLoginProcedure,
+			connect.WithSchema(passwordLoginServiceMethods.ByName("CancelPasswordLogin")),
+			connect.WithClientOptions(opts...),
+		),
+	}
+}
+
+// passwordLoginServiceClient implements PasswordLoginServiceClient.
+type passwordLoginServiceClient struct {
+	beginPasswordLogin     *connect.Client[v1.BeginPasswordLoginRequest, v1.BeginPasswordLoginResponse]
+	beginLoginVerification *connect.Client[v1.BeginLoginVerificationRequest, v1.BeginLoginVerificationResponse]
+	completePasswordLogin  *connect.Client[v1.CompletePasswordLoginRequest, v1.CompletePasswordLoginResponse]
+	cancelPasswordLogin    *connect.Client[v1.CancelPasswordLoginRequest, v1.CancelPasswordLoginResponse]
+}
+
+// BeginPasswordLogin calls komari.credential.v1.PasswordLoginService.BeginPasswordLogin.
+func (c *passwordLoginServiceClient) BeginPasswordLogin(ctx context.Context, req *connect.Request[v1.BeginPasswordLoginRequest]) (*connect.Response[v1.BeginPasswordLoginResponse], error) {
+	return c.beginPasswordLogin.CallUnary(ctx, req)
+}
+
+// BeginLoginVerification calls komari.credential.v1.PasswordLoginService.BeginLoginVerification.
+func (c *passwordLoginServiceClient) BeginLoginVerification(ctx context.Context, req *connect.Request[v1.BeginLoginVerificationRequest]) (*connect.Response[v1.BeginLoginVerificationResponse], error) {
+	return c.beginLoginVerification.CallUnary(ctx, req)
+}
+
+// CompletePasswordLogin calls komari.credential.v1.PasswordLoginService.CompletePasswordLogin.
+func (c *passwordLoginServiceClient) CompletePasswordLogin(ctx context.Context, req *connect.Request[v1.CompletePasswordLoginRequest]) (*connect.Response[v1.CompletePasswordLoginResponse], error) {
+	return c.completePasswordLogin.CallUnary(ctx, req)
+}
+
+// CancelPasswordLogin calls komari.credential.v1.PasswordLoginService.CancelPasswordLogin.
+func (c *passwordLoginServiceClient) CancelPasswordLogin(ctx context.Context, req *connect.Request[v1.CancelPasswordLoginRequest]) (*connect.Response[v1.CancelPasswordLoginResponse], error) {
+	return c.cancelPasswordLogin.CallUnary(ctx, req)
+}
+
+// PasswordLoginServiceHandler is an implementation of the komari.credential.v1.PasswordLoginService
+// service.
+type PasswordLoginServiceHandler interface {
+	BeginPasswordLogin(context.Context, *connect.Request[v1.BeginPasswordLoginRequest]) (*connect.Response[v1.BeginPasswordLoginResponse], error)
+	BeginLoginVerification(context.Context, *connect.Request[v1.BeginLoginVerificationRequest]) (*connect.Response[v1.BeginLoginVerificationResponse], error)
+	CompletePasswordLogin(context.Context, *connect.Request[v1.CompletePasswordLoginRequest]) (*connect.Response[v1.CompletePasswordLoginResponse], error)
+	CancelPasswordLogin(context.Context, *connect.Request[v1.CancelPasswordLoginRequest]) (*connect.Response[v1.CancelPasswordLoginResponse], error)
+}
+
+// NewPasswordLoginServiceHandler builds an HTTP handler from the service implementation. It returns
+// the path on which to mount the handler and the handler itself.
+//
+// By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
+// and JSON codecs. They also support gzip compression.
+func NewPasswordLoginServiceHandler(svc PasswordLoginServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	passwordLoginServiceMethods := v1.File_komari_credential_v1_credential_proto.Services().ByName("PasswordLoginService").Methods()
+	passwordLoginServiceBeginPasswordLoginHandler := connect.NewUnaryHandler(
+		PasswordLoginServiceBeginPasswordLoginProcedure,
+		svc.BeginPasswordLogin,
+		connect.WithSchema(passwordLoginServiceMethods.ByName("BeginPasswordLogin")),
+		connect.WithHandlerOptions(opts...),
+	)
+	passwordLoginServiceBeginLoginVerificationHandler := connect.NewUnaryHandler(
+		PasswordLoginServiceBeginLoginVerificationProcedure,
+		svc.BeginLoginVerification,
+		connect.WithSchema(passwordLoginServiceMethods.ByName("BeginLoginVerification")),
+		connect.WithHandlerOptions(opts...),
+	)
+	passwordLoginServiceCompletePasswordLoginHandler := connect.NewUnaryHandler(
+		PasswordLoginServiceCompletePasswordLoginProcedure,
+		svc.CompletePasswordLogin,
+		connect.WithSchema(passwordLoginServiceMethods.ByName("CompletePasswordLogin")),
+		connect.WithHandlerOptions(opts...),
+	)
+	passwordLoginServiceCancelPasswordLoginHandler := connect.NewUnaryHandler(
+		PasswordLoginServiceCancelPasswordLoginProcedure,
+		svc.CancelPasswordLogin,
+		connect.WithSchema(passwordLoginServiceMethods.ByName("CancelPasswordLogin")),
+		connect.WithHandlerOptions(opts...),
+	)
+	return "/komari.credential.v1.PasswordLoginService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case PasswordLoginServiceBeginPasswordLoginProcedure:
+			passwordLoginServiceBeginPasswordLoginHandler.ServeHTTP(w, r)
+		case PasswordLoginServiceBeginLoginVerificationProcedure:
+			passwordLoginServiceBeginLoginVerificationHandler.ServeHTTP(w, r)
+		case PasswordLoginServiceCompletePasswordLoginProcedure:
+			passwordLoginServiceCompletePasswordLoginHandler.ServeHTTP(w, r)
+		case PasswordLoginServiceCancelPasswordLoginProcedure:
+			passwordLoginServiceCancelPasswordLoginHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
+}
+
+// UnimplementedPasswordLoginServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedPasswordLoginServiceHandler struct{}
+
+func (UnimplementedPasswordLoginServiceHandler) BeginPasswordLogin(context.Context, *connect.Request[v1.BeginPasswordLoginRequest]) (*connect.Response[v1.BeginPasswordLoginResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.credential.v1.PasswordLoginService.BeginPasswordLogin is not implemented"))
+}
+
+func (UnimplementedPasswordLoginServiceHandler) BeginLoginVerification(context.Context, *connect.Request[v1.BeginLoginVerificationRequest]) (*connect.Response[v1.BeginLoginVerificationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.credential.v1.PasswordLoginService.BeginLoginVerification is not implemented"))
+}
+
+func (UnimplementedPasswordLoginServiceHandler) CompletePasswordLogin(context.Context, *connect.Request[v1.CompletePasswordLoginRequest]) (*connect.Response[v1.CompletePasswordLoginResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.credential.v1.PasswordLoginService.CompletePasswordLogin is not implemented"))
+}
+
+func (UnimplementedPasswordLoginServiceHandler) CancelPasswordLogin(context.Context, *connect.Request[v1.CancelPasswordLoginRequest]) (*connect.Response[v1.CancelPasswordLoginResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.credential.v1.PasswordLoginService.CancelPasswordLogin is not implemented"))
 }
