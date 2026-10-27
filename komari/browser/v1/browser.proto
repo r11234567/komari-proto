@@ -97,6 +97,24 @@ message AgentSummary {
   string event_id = 7;
   komari.report.v1.AgentCapabilities capabilities = 8;
   AgentBasicInfo basic_info = 9;
+  TrafficAccounting traffic_accounting = 10;
+}
+
+// TrafficAccounting is the panel's authoritative billing-cycle view. These
+// values are shared by browser displays and traffic-limit alerts, rather than
+// inferred from Agent lifetime counters. It contains no calibration audit or
+// credential information. Byte amounts use decimal GB in the user interface.
+message TrafficAccounting {
+  optional int32 reset_day = 1;
+  string reset_time = 2;
+  string reset_timezone = 3;
+  google.protobuf.Timestamp cycle_start = 4;
+  google.protobuf.Timestamp next_reset = 5;
+  uint64 used_up_bytes = 6;
+  uint64 used_down_bytes = 7;
+  uint64 billable_bytes = 8;
+  string counting_type = 9;
+  bool cycle_available = 10;
 }
 
 // AgentBasicInfo is the stable non-secret browser node model.
