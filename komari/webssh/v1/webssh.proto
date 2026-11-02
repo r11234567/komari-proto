@@ -144,6 +144,10 @@ message WatchSessionRequest {
 // WatchSessionResponse carries one ordered remote-management event.
 message WatchSessionResponse {
   SessionEvent event = 1;
+  // agent_attached is true only after the Agent has opened the selected-user
+  // PTY and authenticated its session attachment. Empty responses are liveness
+  // and startup observations, never output acknowledgements or grant activity.
+  bool agent_attached = 2;
 }
 
 // AcknowledgeSessionEventsRequest advances the browser replay cursor.
