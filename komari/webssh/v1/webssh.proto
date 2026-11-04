@@ -211,6 +211,8 @@ message AgentSessionAttach {
   string assignment_id = 2;
   string session_id = 3;
   uint64 after_command_sequence = 4;
+  // Opt in to checkpointed transport resumption without recreating the PTY.
+  bool resumable = 5;
 }
 
 // AgentSessionEvent carries terminal/file output or a terminal state.
@@ -228,6 +230,11 @@ message AgentSessionEvent {
 // AttachSessionResponse carries one ordered command to the Agent.
 message AttachSessionResponse {
   uint64 sequence = 1;
+  // Cumulative durable-in-session acceptance, independent of command sequence.
+  uint64 accepted_event_sequence = 6;
+  // A short transport lease, capped by existing absolute/idle authorization.
+  // Heartbeats renew transport liveness only; they do not renew authorization.
+  google.protobuf.Timestamp resume_until = 7;
   oneof command {
     bytes input = 2;
     TerminalSize resize = 3;
