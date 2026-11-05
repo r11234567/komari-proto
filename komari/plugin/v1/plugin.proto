@@ -3,6 +3,7 @@ syntax = "proto3";
 package komari.plugin.v1;
 
 import "google/protobuf/struct.proto";
+import "komari/common/v1/common.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/plugin/v1;pluginv1";
 
@@ -14,7 +15,39 @@ service PluginService {
   rpc DeletePlugin(DeletePluginRequest) returns (DeletePluginResponse);
   rpc GetPluginConfiguration(GetPluginConfigurationRequest) returns (GetPluginConfigurationResponse);
   rpc SetPluginConfiguration(SetPluginConfigurationRequest) returns (SetPluginConfigurationResponse);
+  rpc ListPluginPackages(ListPluginPackagesRequest) returns (ListPluginPackagesResponse);
+  rpc DecidePluginPackage(DecidePluginPackageRequest) returns (DecidePluginPackageResponse);
 }
+
+message ListPluginPackagesRequest {}
+
+message ListPluginPackagesResponse {
+  repeated PluginPackage packages = 1;
+}
+
+message PluginPackage {
+  Plugin plugin = 1;
+  string digest = 2;
+  string source = 3;
+  string permissions_hash = 4;
+  int64 created_at_unix = 5;
+  int64 approved_at_unix = 6;
+  string approved_by = 7;
+  bool revoked = 8;
+  string status = 9;
+  string current_digest = 10;
+}
+
+message DecidePluginPackageRequest {
+  string short_name = 1;
+  string digest = 2;
+  string expected_current_digest = 3;
+  // activate also covers explicit rollback and reapproval of a revoked package.
+  string action = 4;
+  komari.common.v1.TwoFactorProof two_factor = 5;
+}
+
+message DecidePluginPackageResponse {}
 
 message ListPluginsRequest {}
 
