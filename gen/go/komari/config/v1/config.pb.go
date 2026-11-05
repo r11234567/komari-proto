@@ -1325,7 +1325,9 @@ func (x *PrivilegedRevision) GetInstallationBaseline() bool {
 type RuntimeConfig struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	MemoryIncludeCache *bool                  `protobuf:"varint,1,opt,name=memory_include_cache,json=memoryIncludeCache,proto3,oneof" json:"memory_include_cache,omitempty"`
-	// Deprecated: GPU enablement requires reinstalling the Agent.
+	// Windows ordinary GPU collection switch, default enabled when absent.
+	// On Linux this field remains rejected; use approved PrivilegedConfig.enable_gpu.
+	// Deprecated as a cross-platform runtime setting, retained for Windows compatibility.
 	//
 	// Deprecated: Marked as deprecated in komari/config/v1/config.proto.
 	EnableGpu          *bool                `protobuf:"varint,2,opt,name=enable_gpu,json=enableGpu,proto3,oneof" json:"enable_gpu,omitempty"`

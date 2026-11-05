@@ -592,7 +592,9 @@ export type RuntimeConfig = Message<"komari.config.v1.RuntimeConfig"> & {
   memoryIncludeCache?: boolean | undefined;
 
   /**
-   * Deprecated: GPU enablement requires reinstalling the Agent.
+   * Windows ordinary GPU collection switch, default enabled when absent.
+   * On Linux this field remains rejected; use approved PrivilegedConfig.enable_gpu.
+   * Deprecated as a cross-platform runtime setting, retained for Windows compatibility.
    *
    * @generated from field: optional bool enable_gpu = 2 [deprecated = true];
    * @deprecated

@@ -243,7 +243,9 @@ enum PrivilegedDeliveryState {
 // RuntimeConfig contains settings that can be atomically applied without reinstalling.
 message RuntimeConfig {
   optional bool memory_include_cache = 1;
-  // Deprecated: GPU enablement requires reinstalling the Agent.
+  // Windows ordinary GPU collection switch, default enabled when absent.
+  // On Linux this field remains rejected; use approved PrivilegedConfig.enable_gpu.
+  // Deprecated as a cross-platform runtime setting, retained for Windows compatibility.
   optional bool enable_gpu = 2 [deprecated = true];
   optional bool detailed_gpu = 3;
   repeated string include_nics = 4;
