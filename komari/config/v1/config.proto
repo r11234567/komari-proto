@@ -283,10 +283,8 @@ message RuntimeConfig {
 // PrivilegedConfig holds settings whose adoption changes what the agent is
 // permitted to do, rather than how it observes the host.
 //
-// These are delivered in the same revision as RuntimeConfig but are never
-// self-applied. Remote control executes commands with the agent's own process
-// identity, so enabling it on a non-privileged agent is a privilege change and
-// is gated behind an out-of-band, human-performed upgrade.
+// These use signed approvals. Remote child identity is independent of daemon
+// identity. Root children require an explicit capability and local OS ability.
 message PrivilegedConfig {
   optional bool remote_control_enabled = 1;
   optional bool webssh_enabled = 2;
@@ -299,6 +297,9 @@ message PrivilegedConfig {
   // it exceeds what the agent currently holds, the revision produces a manual
   // upgrade task instead of being applied.
   komari.report.v1.PrivilegeMode required_privilege_mode = 6;
+  // root_execution_allowed permits explicitly selected UID-0 WebSSH/exec
+  // children independently of the daemon identity. Missing means denied.
+  optional bool root_execution_allowed = 7;
 }
 
 // UpgradePlan states how one delivered revision may be adopted.
