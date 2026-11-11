@@ -51,6 +51,12 @@ const (
 	// PluginServiceSetPluginConfigurationProcedure is the fully-qualified name of the PluginService's
 	// SetPluginConfiguration RPC.
 	PluginServiceSetPluginConfigurationProcedure = "/komari.plugin.v1.PluginService/SetPluginConfiguration"
+	// PluginServiceListPluginPackagesProcedure is the fully-qualified name of the PluginService's
+	// ListPluginPackages RPC.
+	PluginServiceListPluginPackagesProcedure = "/komari.plugin.v1.PluginService/ListPluginPackages"
+	// PluginServiceDecidePluginPackageProcedure is the fully-qualified name of the PluginService's
+	// DecidePluginPackage RPC.
+	PluginServiceDecidePluginPackageProcedure = "/komari.plugin.v1.PluginService/DecidePluginPackage"
 )
 
 // PluginServiceClient is a client for the komari.plugin.v1.PluginService service.
@@ -61,6 +67,8 @@ type PluginServiceClient interface {
 	DeletePlugin(context.Context, *connect.Request[v1.DeletePluginRequest]) (*connect.Response[v1.DeletePluginResponse], error)
 	GetPluginConfiguration(context.Context, *connect.Request[v1.GetPluginConfigurationRequest]) (*connect.Response[v1.GetPluginConfigurationResponse], error)
 	SetPluginConfiguration(context.Context, *connect.Request[v1.SetPluginConfigurationRequest]) (*connect.Response[v1.SetPluginConfigurationResponse], error)
+	ListPluginPackages(context.Context, *connect.Request[v1.ListPluginPackagesRequest]) (*connect.Response[v1.ListPluginPackagesResponse], error)
+	DecidePluginPackage(context.Context, *connect.Request[v1.DecidePluginPackageRequest]) (*connect.Response[v1.DecidePluginPackageResponse], error)
 }
 
 // NewPluginServiceClient constructs a client for the komari.plugin.v1.PluginService service. By
@@ -110,6 +118,18 @@ func NewPluginServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(pluginServiceMethods.ByName("SetPluginConfiguration")),
 			connect.WithClientOptions(opts...),
 		),
+		listPluginPackages: connect.NewClient[v1.ListPluginPackagesRequest, v1.ListPluginPackagesResponse](
+			httpClient,
+			baseURL+PluginServiceListPluginPackagesProcedure,
+			connect.WithSchema(pluginServiceMethods.ByName("ListPluginPackages")),
+			connect.WithClientOptions(opts...),
+		),
+		decidePluginPackage: connect.NewClient[v1.DecidePluginPackageRequest, v1.DecidePluginPackageResponse](
+			httpClient,
+			baseURL+PluginServiceDecidePluginPackageProcedure,
+			connect.WithSchema(pluginServiceMethods.ByName("DecidePluginPackage")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -121,6 +141,8 @@ type pluginServiceClient struct {
 	deletePlugin           *connect.Client[v1.DeletePluginRequest, v1.DeletePluginResponse]
 	getPluginConfiguration *connect.Client[v1.GetPluginConfigurationRequest, v1.GetPluginConfigurationResponse]
 	setPluginConfiguration *connect.Client[v1.SetPluginConfigurationRequest, v1.SetPluginConfigurationResponse]
+	listPluginPackages     *connect.Client[v1.ListPluginPackagesRequest, v1.ListPluginPackagesResponse]
+	decidePluginPackage    *connect.Client[v1.DecidePluginPackageRequest, v1.DecidePluginPackageResponse]
 }
 
 // ListPlugins calls komari.plugin.v1.PluginService.ListPlugins.
@@ -153,6 +175,16 @@ func (c *pluginServiceClient) SetPluginConfiguration(ctx context.Context, req *c
 	return c.setPluginConfiguration.CallUnary(ctx, req)
 }
 
+// ListPluginPackages calls komari.plugin.v1.PluginService.ListPluginPackages.
+func (c *pluginServiceClient) ListPluginPackages(ctx context.Context, req *connect.Request[v1.ListPluginPackagesRequest]) (*connect.Response[v1.ListPluginPackagesResponse], error) {
+	return c.listPluginPackages.CallUnary(ctx, req)
+}
+
+// DecidePluginPackage calls komari.plugin.v1.PluginService.DecidePluginPackage.
+func (c *pluginServiceClient) DecidePluginPackage(ctx context.Context, req *connect.Request[v1.DecidePluginPackageRequest]) (*connect.Response[v1.DecidePluginPackageResponse], error) {
+	return c.decidePluginPackage.CallUnary(ctx, req)
+}
+
 // PluginServiceHandler is an implementation of the komari.plugin.v1.PluginService service.
 type PluginServiceHandler interface {
 	ListPlugins(context.Context, *connect.Request[v1.ListPluginsRequest]) (*connect.Response[v1.ListPluginsResponse], error)
@@ -161,6 +193,8 @@ type PluginServiceHandler interface {
 	DeletePlugin(context.Context, *connect.Request[v1.DeletePluginRequest]) (*connect.Response[v1.DeletePluginResponse], error)
 	GetPluginConfiguration(context.Context, *connect.Request[v1.GetPluginConfigurationRequest]) (*connect.Response[v1.GetPluginConfigurationResponse], error)
 	SetPluginConfiguration(context.Context, *connect.Request[v1.SetPluginConfigurationRequest]) (*connect.Response[v1.SetPluginConfigurationResponse], error)
+	ListPluginPackages(context.Context, *connect.Request[v1.ListPluginPackagesRequest]) (*connect.Response[v1.ListPluginPackagesResponse], error)
+	DecidePluginPackage(context.Context, *connect.Request[v1.DecidePluginPackageRequest]) (*connect.Response[v1.DecidePluginPackageResponse], error)
 }
 
 // NewPluginServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -206,6 +240,18 @@ func NewPluginServiceHandler(svc PluginServiceHandler, opts ...connect.HandlerOp
 		connect.WithSchema(pluginServiceMethods.ByName("SetPluginConfiguration")),
 		connect.WithHandlerOptions(opts...),
 	)
+	pluginServiceListPluginPackagesHandler := connect.NewUnaryHandler(
+		PluginServiceListPluginPackagesProcedure,
+		svc.ListPluginPackages,
+		connect.WithSchema(pluginServiceMethods.ByName("ListPluginPackages")),
+		connect.WithHandlerOptions(opts...),
+	)
+	pluginServiceDecidePluginPackageHandler := connect.NewUnaryHandler(
+		PluginServiceDecidePluginPackageProcedure,
+		svc.DecidePluginPackage,
+		connect.WithSchema(pluginServiceMethods.ByName("DecidePluginPackage")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/komari.plugin.v1.PluginService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case PluginServiceListPluginsProcedure:
@@ -220,6 +266,10 @@ func NewPluginServiceHandler(svc PluginServiceHandler, opts ...connect.HandlerOp
 			pluginServiceGetPluginConfigurationHandler.ServeHTTP(w, r)
 		case PluginServiceSetPluginConfigurationProcedure:
 			pluginServiceSetPluginConfigurationHandler.ServeHTTP(w, r)
+		case PluginServiceListPluginPackagesProcedure:
+			pluginServiceListPluginPackagesHandler.ServeHTTP(w, r)
+		case PluginServiceDecidePluginPackageProcedure:
+			pluginServiceDecidePluginPackageHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -251,4 +301,12 @@ func (UnimplementedPluginServiceHandler) GetPluginConfiguration(context.Context,
 
 func (UnimplementedPluginServiceHandler) SetPluginConfiguration(context.Context, *connect.Request[v1.SetPluginConfigurationRequest]) (*connect.Response[v1.SetPluginConfigurationResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.plugin.v1.PluginService.SetPluginConfiguration is not implemented"))
+}
+
+func (UnimplementedPluginServiceHandler) ListPluginPackages(context.Context, *connect.Request[v1.ListPluginPackagesRequest]) (*connect.Response[v1.ListPluginPackagesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.plugin.v1.PluginService.ListPluginPackages is not implemented"))
+}
+
+func (UnimplementedPluginServiceHandler) DecidePluginPackage(context.Context, *connect.Request[v1.DecidePluginPackageRequest]) (*connect.Response[v1.DecidePluginPackageResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.plugin.v1.PluginService.DecidePluginPackage is not implemented"))
 }

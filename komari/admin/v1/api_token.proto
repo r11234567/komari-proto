@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package komari.admin.v1;
+
+import "google/protobuf/timestamp.proto";
+import "komari/common/v1/common.proto";
+
+option go_package = "github.com/r11234567/komari-proto/gen/go/komari/admin/v1;adminv1";
+
+// ApiTokenService manages human-approved programmatic credentials.
+// Tokens cannot call this service or authorize remote-control operations.
+service ApiTokenService {
+  rpc ListApiTokens(ListApiTokensRequest) returns (ListApiTokensResponse);
+  rpc CreateApiToken(CreateApiTokenRequest) returns (CreateApiTokenResponse);
+  rpc RevokeApiToken(RevokeApiTokenRequest) returns (RevokeApiTokenResponse);
+  rpc DisableLegacyApiKey(DisableLegacyApiKeyRequest) returns (DisableLegacyApiKeyResponse);
+}
+
+// ApiToken contains public metadata only; no secret or verifier is returned.
+message ApiToken {
+  string id = 1;
+  string name = 2;
+  repeated string scopes = 3;
+  repeated string agent_ids = 4;
+  bool all_agents = 5;
+  google.protobuf.Timestamp expires_at = 6;
+  repeated string allowed_cidrs = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp last_used_at = 9;
+  google.protobuf.Timestamp revoked_at = 10;
+}
+
+message ListApiTokensRequest {
+  uint32 page = 1;
+}
+
+message ListApiTokensResponse {
+  repeated ApiToken tokens = 1;
+  uint32 total = 2;
+  uint32 page = 3;
+  bool legacy_api_key_enabled = 4;
+}
+
+// The entire creation policy is bound to a single-use interactive proof.
+message CreateApiTokenRequest {
+  string name = 1;
+  repeated string scopes = 2;
+  repeated string agent_ids = 3;
+  bool all_agents = 4;
+  google.protobuf.Timestamp expires_at = 5;
+  repeated string allowed_cidrs = 6;
+  komari.common.v1.TwoFactorProof two_factor = 7;
+  // A nonempty ID atomically replaces and revokes an existing owned token.
+  string replaces_token_id = 8;
+}
+
+// secret is returned exactly once and must never enter audit logs or settings.
+message CreateApiTokenResponse {
+  ApiToken token = 1;
+  string secret = 2;
+}
+
+message RevokeApiTokenRequest {
+  string id = 1;
+  komari.common.v1.TwoFactorProof two_factor = 2;
+}
+
+message RevokeApiTokenResponse {}
+
+message DisableLegacyApiKeyRequest {
+  komari.common.v1.TwoFactorProof two_factor = 1;
+}
+
+message DisableLegacyApiKeyResponse {}
