@@ -222,6 +222,13 @@ message DashboardTraffic {
   repeated DashboardTrafficRankItem ranking = 6;
   bool history_ready = 7;
   string error = 8;
+  // Independent modules: a trend failure must not hide settled billing days.
+  string today_error = 9;
+  string trend_error = 10;
+  string ranking_error = 11;
+  optional google.protobuf.Timestamp accounting_through = 12;
+  bool catching_up = 13;
+  string trend_coverage = 14;
 }
 
 // DashboardTrafficBucket carries the aggregated label because intraday buckets
@@ -239,6 +246,8 @@ message DashboardTrafficDay {
   int64 upload_bytes = 2;
   int64 download_bytes = 3;
   int64 billable_bytes = 4;
+  // Absent preserves legacy behavior. False means unknown, never a zero bar.
+  optional bool available = 5;
 }
 
 message DashboardTrafficRankItem {

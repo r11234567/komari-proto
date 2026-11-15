@@ -182,7 +182,7 @@ message GetThemeContractResponse {
 }
 
 // GetTrafficTrendRequest selects a rolling window and bucket interval. Empty
-// values default to 24 hours and 15 minutes respectively.
+// values default to 24 hours and 20 minutes respectively.
 message GetTrafficTrendRequest {
   google.protobuf.Duration window = 1;
   google.protobuf.Duration interval = 2;
@@ -193,6 +193,16 @@ message GetTrafficTrendResponse {
   repeated TrafficTrendBucket buckets = 1;
   google.protobuf.Duration interval = 2;
   google.protobuf.Timestamp generated_at = 3;
+  // interval is the actual grid; requested_interval retains the caller choice.
+  google.protobuf.Duration requested_interval = 4;
+  // complete, partial, coarse, or unavailable. Missing history is never zero.
+  string coverage = 5;
+  optional google.protobuf.Timestamp accounting_through = 6;
+  // Advisory outbox state measured separately from the accounting snapshot.
+  bool catching_up = 7;
+  uint32 missing_clients = 8;
+  string warning = 9;
+  google.protobuf.Timestamp data_end = 10;
 }
 
 // TrafficTrendBucket covers [start_time, start_time + interval).
