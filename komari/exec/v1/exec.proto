@@ -39,6 +39,9 @@ message CreateExecutionRequest {
   // agent_ids authorizes a batch in one fresh-2FA request. agent_id remains
   // for source compatibility and must not be combined with this field.
   repeated string agent_ids = 10;
+  // run_as_root requires a separately approved root-execution capability.
+  // Missing/false runs as the unprivileged komari account on Unix.
+  bool run_as_root = 11;
 }
 
 // CreateExecutionResponse returns the queued task.
@@ -114,6 +117,8 @@ message ExecutionSpec {
   string working_directory = 4;
   google.protobuf.Duration timeout = 5;
   uint64 max_output_bytes = 6;
+  // The signed execution identity. False selects the komari account on Unix.
+  bool run_as_root = 7;
 }
 
 // ExecutionCancellation asks an Agent to stop an assigned running process.

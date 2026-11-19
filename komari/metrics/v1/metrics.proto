@@ -112,6 +112,26 @@ message MetricsSeries {
   bool downsampled = 9;
   string aggregation = 10;
   google.protobuf.Duration interval = 11;
+  // Requested output grid; source precision is independently disclosed below.
+  google.protobuf.Duration requested_interval = 12;
+  // complete, partial, or unavailable. Missing values are never zero-filled.
+  string coverage = 13;
+  google.protobuf.Timestamp coverage_start = 14;
+  google.protobuf.Timestamp coverage_end = 15;
+  bool boundary_adjusted = 16;
+  uint64 summarized_through = 17;
+  uint64 accepted_through = 18;
+  repeated MetricsSourceSpan sources = 19;
+  repeated MetricsSourceSpan gaps = 20;
+}
+
+// MetricsSourceSpan describes one half-open retained source/coverage range.
+message MetricsSourceSpan {
+  google.protobuf.Timestamp start_time = 1;
+  google.protobuf.Timestamp end_time = 2;
+  // Zero denotes exact bounded hot observations, not an unknown interval.
+  google.protobuf.Duration source_interval = 3;
+  string reason = 4;
 }
 
 // QueryPoint is one historical bucket. Missing value distinguishes an empty bucket from zero.
@@ -120,6 +140,9 @@ message QueryPoint {
   optional double value = 2;
   uint32 sample_count = 3;
   map<string, string> labels = 4;
+  google.protobuf.Duration source_interval = 5;
+  string coverage = 6;
+  string coverage_reason = 7;
 }
 
 // ListMetricDefinitionsRequest is intentionally empty.

@@ -27,6 +27,9 @@ encode as lowercase hexadecimal:
    execution_enabled, enable_gpu, rescue_helper_enabled.
 3. required_privilege_mode as four unsigned big-endian bytes, including zero
    when unspecified. Reject invalid enum values before hashing.
+4. Only when root_execution_allowed is true, append the UTF-8 bytes
+   `root_execution_allowed` preceded by a zero byte and followed by byte 1.
+   False or absent appends nothing, preserving existing approved hashes.
 
 The same testdata/privileged-settings-v1.json vectors apply to Go and TS. Hashing
 is explicitly independent of JSON ordering and protobuf optional-field presence.

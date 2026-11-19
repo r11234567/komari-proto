@@ -6,13 +6,159 @@ import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegen
 import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Value } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_struct } from "@bufbuild/protobuf/wkt";
+import type { TwoFactorProof } from "../../common/v1/common_pb";
+import { file_komari_common_v1_common } from "../../common/v1/common_pb";
 import type { JsonObject, Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file komari/plugin/v1/plugin.proto.
  */
 export const file_komari_plugin_v1_plugin: GenFile = /*@__PURE__*/
-  fileDesc("Ch1rb21hcmkvcGx1Z2luL3YxL3BsdWdpbi5wcm90bxIQa29tYXJpLnBsdWdpbi52MSIUChJMaXN0UGx1Z2luc1JlcXVlc3QiQAoTTGlzdFBsdWdpbnNSZXNwb25zZRIpCgdwbHVnaW5zGAEgAygLMhgua29tYXJpLnBsdWdpbi52MS5QbHVnaW4iXAoXU2V0UGx1Z2luRW5hYmxlZFJlcXVlc3QSEgoKc2hvcnRfbmFtZRgBIAEoCRIPCgdlbmFibGVkGAIgASgIEhwKFHBlcm1pc3Npb25zX2FwcHJvdmVkGAMgASgIIkAKGFNldFBsdWdpbkVuYWJsZWRSZXNwb25zZRIkChxyZXF1aXJlc19wZXJtaXNzaW9uX2FwcHJvdmFsGAEgASgIIioKFEdldFBsdWdpbkxvZ3NSZXF1ZXN0EhIKCnNob3J0X25hbWUYASABKAkiJQoVR2V0UGx1Z2luTG9nc1Jlc3BvbnNlEgwKBGxvZ3MYASABKAkiKQoTRGVsZXRlUGx1Z2luUmVxdWVzdBISCgpzaG9ydF9uYW1lGAEgASgJIhYKFERlbGV0ZVBsdWdpblJlc3BvbnNlIjMKHUdldFBsdWdpbkNvbmZpZ3VyYXRpb25SZXF1ZXN0EhIKCnNob3J0X25hbWUYASABKAkihwEKHkdldFBsdWdpbkNvbmZpZ3VyYXRpb25SZXNwb25zZRI8Cg1jb25maWd1cmF0aW9uGAEgASgLMiUua29tYXJpLnBsdWdpbi52MS5QbHVnaW5Db25maWd1cmF0aW9uEicKBnZhbHVlcxgCIAEoCzIXLmdvb2dsZS5wcm90b2J1Zi5TdHJ1Y3QiXAodU2V0UGx1Z2luQ29uZmlndXJhdGlvblJlcXVlc3QSEgoKc2hvcnRfbmFtZRgBIAEoCRInCgZ2YWx1ZXMYAiABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0IiAKHlNldFBsdWdpbkNvbmZpZ3VyYXRpb25SZXNwb25zZSLrAwoGUGx1Z2luEhIKCnNob3J0X25hbWUYASABKAkSLQoEbmFtZRgCIAEoCzIfLmtvbWFyaS5wbHVnaW4udjEuTG9jYWxpemVkVGV4dBI0CgtkZXNjcmlwdGlvbhgDIAEoCzIfLmtvbWFyaS5wbHVnaW4udjEuTG9jYWxpemVkVGV4dBIvCgZhdXRob3IYBCABKAsyHy5rb21hcmkucGx1Z2luLnYxLkxvY2FsaXplZFRleHQSDwoHdmVyc2lvbhgFIAEoCRILCgN1cmwYBiABKAkSDAoEaWNvbhgHIAEoCRIhChlrb21hcmlfdmVyc2lvbl9jb25zdHJhaW50GAggASgJEg0KBWVudHJ5GAkgASgJEjgKC3Blcm1pc3Npb25zGAogASgLMiMua29tYXJpLnBsdWdpbi52MS5QbHVnaW5QZXJtaXNzaW9ucxI8Cg1jb25maWd1cmF0aW9uGAsgASgLMiUua29tYXJpLnBsdWdpbi52MS5QbHVnaW5Db25maWd1cmF0aW9uEisKBXBhZ2VzGAwgAygLMhwua29tYXJpLnBsdWdpbi52MS5QbHVnaW5QYWdlEg8KB2VuYWJsZWQYDSABKAgSDwoHcnVubmluZxgOIAEoCBISCgpsYXN0X2Vycm9yGA8gASgJIp8BCg1Mb2NhbGl6ZWRUZXh0EhAKCGZhbGxiYWNrGAEgASgJEkcKDHRyYW5zbGF0aW9ucxgCIAMoCzIxLmtvbWFyaS5wbHVnaW4udjEuTG9jYWxpemVkVGV4dC5UcmFuc2xhdGlvbnNFbnRyeRozChFUcmFuc2xhdGlvbnNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBIqACChFQbHVnaW5QZXJtaXNzaW9ucxIMCgRub2RlGAEgASgIEhgKEGFsbG93X3N5c3RlbV9ycGMYAiABKAgSFAoMYWxsb3dfcm91dGVzGAMgASgIEhMKC2FsbG93X2hvb2tzGAQgASgIEhkKEWFsbG93X2h0bWxfaW5qZWN0GAUgASgIEhIKCmFsbG93X2V4ZWMYBiABKAgSFAoMYWxsb3dfbGlzdGVuGAcgASgIEh0KFWFsbG93X2FsbF9maWxlX2FjY2VzcxgIIAEoCBIbChNtYXhfaHR0cF9ib2R5X2J5dGVzGAkgASgDEh4KFm1heF9jaGlsZF9vdXRwdXRfYnl0ZXMYCiABKAMSFwoPdGltZW91dF9zZWNvbmRzGAsgASgNIpoBChNQbHVnaW5Db25maWd1cmF0aW9uEgwKBHR5cGUYASABKAkSDAoEaWNvbhgCIAEoCRItCgRuYW1lGAMgASgLMh8ua29tYXJpLnBsdWdpbi52MS5Mb2NhbGl6ZWRUZXh0EjgKBWl0ZW1zGAQgAygLMikua29tYXJpLnBsdWdpbi52MS5QbHVnaW5Db25maWd1cmF0aW9uSXRlbSLkAQoXUGx1Z2luQ29uZmlndXJhdGlvbkl0ZW0SCwoDa2V5GAEgASgJEi0KBG5hbWUYAiABKAsyHy5rb21hcmkucGx1Z2luLnYxLkxvY2FsaXplZFRleHQSEAoIcmVxdWlyZWQYAyABKAgSDAoEdHlwZRgEIAEoCRIPCgdvcHRpb25zGAUgASgJEi0KDWRlZmF1bHRfdmFsdWUYBiABKAsyFi5nb29nbGUucHJvdG9idWYuVmFsdWUSLQoEaGVscBgHIAEoCzIfLmtvbWFyaS5wbHVnaW4udjEuTG9jYWxpemVkVGV4dCKHAQoKUGx1Z2luUGFnZRIMCgRmaWxlGAEgASgJEi4KBXRpdGxlGAIgASgLMh8ua29tYXJpLnBsdWdpbi52MS5Mb2NhbGl6ZWRUZXh0EgwKBGljb24YAyABKAkSDAoEdHlwZRgEIAEoCRILCgN1cmwYBSABKAkSEgoKdmlzaWJpbGl0eRgGIAEoCTKRBQoNUGx1Z2luU2VydmljZRJaCgtMaXN0UGx1Z2lucxIkLmtvbWFyaS5wbHVnaW4udjEuTGlzdFBsdWdpbnNSZXF1ZXN0GiUua29tYXJpLnBsdWdpbi52MS5MaXN0UGx1Z2luc1Jlc3BvbnNlEmkKEFNldFBsdWdpbkVuYWJsZWQSKS5rb21hcmkucGx1Z2luLnYxLlNldFBsdWdpbkVuYWJsZWRSZXF1ZXN0Gioua29tYXJpLnBsdWdpbi52MS5TZXRQbHVnaW5FbmFibGVkUmVzcG9uc2USYAoNR2V0UGx1Z2luTG9ncxImLmtvbWFyaS5wbHVnaW4udjEuR2V0UGx1Z2luTG9nc1JlcXVlc3QaJy5rb21hcmkucGx1Z2luLnYxLkdldFBsdWdpbkxvZ3NSZXNwb25zZRJdCgxEZWxldGVQbHVnaW4SJS5rb21hcmkucGx1Z2luLnYxLkRlbGV0ZVBsdWdpblJlcXVlc3QaJi5rb21hcmkucGx1Z2luLnYxLkRlbGV0ZVBsdWdpblJlc3BvbnNlEnsKFkdldFBsdWdpbkNvbmZpZ3VyYXRpb24SLy5rb21hcmkucGx1Z2luLnYxLkdldFBsdWdpbkNvbmZpZ3VyYXRpb25SZXF1ZXN0GjAua29tYXJpLnBsdWdpbi52MS5HZXRQbHVnaW5Db25maWd1cmF0aW9uUmVzcG9uc2USewoWU2V0UGx1Z2luQ29uZmlndXJhdGlvbhIvLmtvbWFyaS5wbHVnaW4udjEuU2V0UGx1Z2luQ29uZmlndXJhdGlvblJlcXVlc3QaMC5rb21hcmkucGx1Z2luLnYxLlNldFBsdWdpbkNvbmZpZ3VyYXRpb25SZXNwb25zZULJAQoUY29tLmtvbWFyaS5wbHVnaW4udjFCC1BsdWdpblByb3RvUAFaQmdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL3BsdWdpbi92MTtwbHVnaW52MaICA0tQWKoCEEtvbWFyaS5QbHVnaW4uVjHKAhBLb21hcmlcUGx1Z2luXFYx4gIcS29tYXJpXFBsdWdpblxWMVxHUEJNZXRhZGF0YeoCEktvbWFyaTo6UGx1Z2luOjpWMWIGcHJvdG8z", [file_google_protobuf_struct]);
+  fileDesc("Ch1rb21hcmkvcGx1Z2luL3YxL3BsdWdpbi5wcm90bxIQa29tYXJpLnBsdWdpbi52MSIbChlMaXN0UGx1Z2luUGFja2FnZXNSZXF1ZXN0Ik8KGkxpc3RQbHVnaW5QYWNrYWdlc1Jlc3BvbnNlEjEKCHBhY2thZ2VzGAEgAygLMh8ua29tYXJpLnBsdWdpbi52MS5QbHVnaW5QYWNrYWdlIvQBCg1QbHVnaW5QYWNrYWdlEigKBnBsdWdpbhgBIAEoCzIYLmtvbWFyaS5wbHVnaW4udjEuUGx1Z2luEg4KBmRpZ2VzdBgCIAEoCRIOCgZzb3VyY2UYAyABKAkSGAoQcGVybWlzc2lvbnNfaGFzaBgEIAEoCRIXCg9jcmVhdGVkX2F0X3VuaXgYBSABKAMSGAoQYXBwcm92ZWRfYXRfdW5peBgGIAEoAxITCgthcHByb3ZlZF9ieRgHIAEoCRIPCgdyZXZva2VkGAggASgIEg4KBnN0YXR1cxgJIAEoCRIWCg5jdXJyZW50X2RpZ2VzdBgKIAEoCSKnAQoaRGVjaWRlUGx1Z2luUGFja2FnZVJlcXVlc3QSEgoKc2hvcnRfbmFtZRgBIAEoCRIOCgZkaWdlc3QYAiABKAkSHwoXZXhwZWN0ZWRfY3VycmVudF9kaWdlc3QYAyABKAkSDgoGYWN0aW9uGAQgASgJEjQKCnR3b19mYWN0b3IYBSABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mIh0KG0RlY2lkZVBsdWdpblBhY2thZ2VSZXNwb25zZSIUChJMaXN0UGx1Z2luc1JlcXVlc3QiQAoTTGlzdFBsdWdpbnNSZXNwb25zZRIpCgdwbHVnaW5zGAEgAygLMhgua29tYXJpLnBsdWdpbi52MS5QbHVnaW4iXAoXU2V0UGx1Z2luRW5hYmxlZFJlcXVlc3QSEgoKc2hvcnRfbmFtZRgBIAEoCRIPCgdlbmFibGVkGAIgASgIEhwKFHBlcm1pc3Npb25zX2FwcHJvdmVkGAMgASgIIkAKGFNldFBsdWdpbkVuYWJsZWRSZXNwb25zZRIkChxyZXF1aXJlc19wZXJtaXNzaW9uX2FwcHJvdmFsGAEgASgIIioKFEdldFBsdWdpbkxvZ3NSZXF1ZXN0EhIKCnNob3J0X25hbWUYASABKAkiJQoVR2V0UGx1Z2luTG9nc1Jlc3BvbnNlEgwKBGxvZ3MYASABKAkiKQoTRGVsZXRlUGx1Z2luUmVxdWVzdBISCgpzaG9ydF9uYW1lGAEgASgJIhYKFERlbGV0ZVBsdWdpblJlc3BvbnNlIjMKHUdldFBsdWdpbkNvbmZpZ3VyYXRpb25SZXF1ZXN0EhIKCnNob3J0X25hbWUYASABKAkihwEKHkdldFBsdWdpbkNvbmZpZ3VyYXRpb25SZXNwb25zZRI8Cg1jb25maWd1cmF0aW9uGAEgASgLMiUua29tYXJpLnBsdWdpbi52MS5QbHVnaW5Db25maWd1cmF0aW9uEicKBnZhbHVlcxgCIAEoCzIXLmdvb2dsZS5wcm90b2J1Zi5TdHJ1Y3QiXAodU2V0UGx1Z2luQ29uZmlndXJhdGlvblJlcXVlc3QSEgoKc2hvcnRfbmFtZRgBIAEoCRInCgZ2YWx1ZXMYAiABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0IiAKHlNldFBsdWdpbkNvbmZpZ3VyYXRpb25SZXNwb25zZSLrAwoGUGx1Z2luEhIKCnNob3J0X25hbWUYASABKAkSLQoEbmFtZRgCIAEoCzIfLmtvbWFyaS5wbHVnaW4udjEuTG9jYWxpemVkVGV4dBI0CgtkZXNjcmlwdGlvbhgDIAEoCzIfLmtvbWFyaS5wbHVnaW4udjEuTG9jYWxpemVkVGV4dBIvCgZhdXRob3IYBCABKAsyHy5rb21hcmkucGx1Z2luLnYxLkxvY2FsaXplZFRleHQSDwoHdmVyc2lvbhgFIAEoCRILCgN1cmwYBiABKAkSDAoEaWNvbhgHIAEoCRIhChlrb21hcmlfdmVyc2lvbl9jb25zdHJhaW50GAggASgJEg0KBWVudHJ5GAkgASgJEjgKC3Blcm1pc3Npb25zGAogASgLMiMua29tYXJpLnBsdWdpbi52MS5QbHVnaW5QZXJtaXNzaW9ucxI8Cg1jb25maWd1cmF0aW9uGAsgASgLMiUua29tYXJpLnBsdWdpbi52MS5QbHVnaW5Db25maWd1cmF0aW9uEisKBXBhZ2VzGAwgAygLMhwua29tYXJpLnBsdWdpbi52MS5QbHVnaW5QYWdlEg8KB2VuYWJsZWQYDSABKAgSDwoHcnVubmluZxgOIAEoCBISCgpsYXN0X2Vycm9yGA8gASgJIp8BCg1Mb2NhbGl6ZWRUZXh0EhAKCGZhbGxiYWNrGAEgASgJEkcKDHRyYW5zbGF0aW9ucxgCIAMoCzIxLmtvbWFyaS5wbHVnaW4udjEuTG9jYWxpemVkVGV4dC5UcmFuc2xhdGlvbnNFbnRyeRozChFUcmFuc2xhdGlvbnNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBIqACChFQbHVnaW5QZXJtaXNzaW9ucxIMCgRub2RlGAEgASgIEhgKEGFsbG93X3N5c3RlbV9ycGMYAiABKAgSFAoMYWxsb3dfcm91dGVzGAMgASgIEhMKC2FsbG93X2hvb2tzGAQgASgIEhkKEWFsbG93X2h0bWxfaW5qZWN0GAUgASgIEhIKCmFsbG93X2V4ZWMYBiABKAgSFAoMYWxsb3dfbGlzdGVuGAcgASgIEh0KFWFsbG93X2FsbF9maWxlX2FjY2VzcxgIIAEoCBIbChNtYXhfaHR0cF9ib2R5X2J5dGVzGAkgASgDEh4KFm1heF9jaGlsZF9vdXRwdXRfYnl0ZXMYCiABKAMSFwoPdGltZW91dF9zZWNvbmRzGAsgASgNIpoBChNQbHVnaW5Db25maWd1cmF0aW9uEgwKBHR5cGUYASABKAkSDAoEaWNvbhgCIAEoCRItCgRuYW1lGAMgASgLMh8ua29tYXJpLnBsdWdpbi52MS5Mb2NhbGl6ZWRUZXh0EjgKBWl0ZW1zGAQgAygLMikua29tYXJpLnBsdWdpbi52MS5QbHVnaW5Db25maWd1cmF0aW9uSXRlbSLkAQoXUGx1Z2luQ29uZmlndXJhdGlvbkl0ZW0SCwoDa2V5GAEgASgJEi0KBG5hbWUYAiABKAsyHy5rb21hcmkucGx1Z2luLnYxLkxvY2FsaXplZFRleHQSEAoIcmVxdWlyZWQYAyABKAgSDAoEdHlwZRgEIAEoCRIPCgdvcHRpb25zGAUgASgJEi0KDWRlZmF1bHRfdmFsdWUYBiABKAsyFi5nb29nbGUucHJvdG9idWYuVmFsdWUSLQoEaGVscBgHIAEoCzIfLmtvbWFyaS5wbHVnaW4udjEuTG9jYWxpemVkVGV4dCKHAQoKUGx1Z2luUGFnZRIMCgRmaWxlGAEgASgJEi4KBXRpdGxlGAIgASgLMh8ua29tYXJpLnBsdWdpbi52MS5Mb2NhbGl6ZWRUZXh0EgwKBGljb24YAyABKAkSDAoEdHlwZRgEIAEoCRILCgN1cmwYBSABKAkSEgoKdmlzaWJpbGl0eRgGIAEoCTL2BgoNUGx1Z2luU2VydmljZRJaCgtMaXN0UGx1Z2lucxIkLmtvbWFyaS5wbHVnaW4udjEuTGlzdFBsdWdpbnNSZXF1ZXN0GiUua29tYXJpLnBsdWdpbi52MS5MaXN0UGx1Z2luc1Jlc3BvbnNlEmkKEFNldFBsdWdpbkVuYWJsZWQSKS5rb21hcmkucGx1Z2luLnYxLlNldFBsdWdpbkVuYWJsZWRSZXF1ZXN0Gioua29tYXJpLnBsdWdpbi52MS5TZXRQbHVnaW5FbmFibGVkUmVzcG9uc2USYAoNR2V0UGx1Z2luTG9ncxImLmtvbWFyaS5wbHVnaW4udjEuR2V0UGx1Z2luTG9nc1JlcXVlc3QaJy5rb21hcmkucGx1Z2luLnYxLkdldFBsdWdpbkxvZ3NSZXNwb25zZRJdCgxEZWxldGVQbHVnaW4SJS5rb21hcmkucGx1Z2luLnYxLkRlbGV0ZVBsdWdpblJlcXVlc3QaJi5rb21hcmkucGx1Z2luLnYxLkRlbGV0ZVBsdWdpblJlc3BvbnNlEnsKFkdldFBsdWdpbkNvbmZpZ3VyYXRpb24SLy5rb21hcmkucGx1Z2luLnYxLkdldFBsdWdpbkNvbmZpZ3VyYXRpb25SZXF1ZXN0GjAua29tYXJpLnBsdWdpbi52MS5HZXRQbHVnaW5Db25maWd1cmF0aW9uUmVzcG9uc2USewoWU2V0UGx1Z2luQ29uZmlndXJhdGlvbhIvLmtvbWFyaS5wbHVnaW4udjEuU2V0UGx1Z2luQ29uZmlndXJhdGlvblJlcXVlc3QaMC5rb21hcmkucGx1Z2luLnYxLlNldFBsdWdpbkNvbmZpZ3VyYXRpb25SZXNwb25zZRJvChJMaXN0UGx1Z2luUGFja2FnZXMSKy5rb21hcmkucGx1Z2luLnYxLkxpc3RQbHVnaW5QYWNrYWdlc1JlcXVlc3QaLC5rb21hcmkucGx1Z2luLnYxLkxpc3RQbHVnaW5QYWNrYWdlc1Jlc3BvbnNlEnIKE0RlY2lkZVBsdWdpblBhY2thZ2USLC5rb21hcmkucGx1Z2luLnYxLkRlY2lkZVBsdWdpblBhY2thZ2VSZXF1ZXN0Gi0ua29tYXJpLnBsdWdpbi52MS5EZWNpZGVQbHVnaW5QYWNrYWdlUmVzcG9uc2VCyQEKFGNvbS5rb21hcmkucGx1Z2luLnYxQgtQbHVnaW5Qcm90b1ABWkJnaXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9wbHVnaW4vdjE7cGx1Z2ludjGiAgNLUFiqAhBLb21hcmkuUGx1Z2luLlYxygIQS29tYXJpXFBsdWdpblxWMeICHEtvbWFyaVxQbHVnaW5cVjFcR1BCTWV0YWRhdGHqAhJLb21hcmk6OlBsdWdpbjo6VjFiBnByb3RvMw", [file_google_protobuf_struct, file_komari_common_v1_common]);
+
+/**
+ * @generated from message komari.plugin.v1.ListPluginPackagesRequest
+ */
+export type ListPluginPackagesRequest = Message<"komari.plugin.v1.ListPluginPackagesRequest"> & {
+};
+
+/**
+ * Describes the message komari.plugin.v1.ListPluginPackagesRequest.
+ * Use `create(ListPluginPackagesRequestSchema)` to create a new message.
+ */
+export const ListPluginPackagesRequestSchema: GenMessage<ListPluginPackagesRequest> = /*@__PURE__*/
+  messageDesc(file_komari_plugin_v1_plugin, 0);
+
+/**
+ * @generated from message komari.plugin.v1.ListPluginPackagesResponse
+ */
+export type ListPluginPackagesResponse = Message<"komari.plugin.v1.ListPluginPackagesResponse"> & {
+  /**
+   * @generated from field: repeated komari.plugin.v1.PluginPackage packages = 1;
+   */
+  packages: PluginPackage[];
+};
+
+/**
+ * Describes the message komari.plugin.v1.ListPluginPackagesResponse.
+ * Use `create(ListPluginPackagesResponseSchema)` to create a new message.
+ */
+export const ListPluginPackagesResponseSchema: GenMessage<ListPluginPackagesResponse> = /*@__PURE__*/
+  messageDesc(file_komari_plugin_v1_plugin, 1);
+
+/**
+ * @generated from message komari.plugin.v1.PluginPackage
+ */
+export type PluginPackage = Message<"komari.plugin.v1.PluginPackage"> & {
+  /**
+   * @generated from field: komari.plugin.v1.Plugin plugin = 1;
+   */
+  plugin?: Plugin | undefined;
+
+  /**
+   * @generated from field: string digest = 2;
+   */
+  digest: string;
+
+  /**
+   * @generated from field: string source = 3;
+   */
+  source: string;
+
+  /**
+   * @generated from field: string permissions_hash = 4;
+   */
+  permissionsHash: string;
+
+  /**
+   * @generated from field: int64 created_at_unix = 5;
+   */
+  createdAtUnix: bigint;
+
+  /**
+   * @generated from field: int64 approved_at_unix = 6;
+   */
+  approvedAtUnix: bigint;
+
+  /**
+   * @generated from field: string approved_by = 7;
+   */
+  approvedBy: string;
+
+  /**
+   * @generated from field: bool revoked = 8;
+   */
+  revoked: boolean;
+
+  /**
+   * @generated from field: string status = 9;
+   */
+  status: string;
+
+  /**
+   * @generated from field: string current_digest = 10;
+   */
+  currentDigest: string;
+};
+
+/**
+ * Describes the message komari.plugin.v1.PluginPackage.
+ * Use `create(PluginPackageSchema)` to create a new message.
+ */
+export const PluginPackageSchema: GenMessage<PluginPackage> = /*@__PURE__*/
+  messageDesc(file_komari_plugin_v1_plugin, 2);
+
+/**
+ * @generated from message komari.plugin.v1.DecidePluginPackageRequest
+ */
+export type DecidePluginPackageRequest = Message<"komari.plugin.v1.DecidePluginPackageRequest"> & {
+  /**
+   * @generated from field: string short_name = 1;
+   */
+  shortName: string;
+
+  /**
+   * @generated from field: string digest = 2;
+   */
+  digest: string;
+
+  /**
+   * @generated from field: string expected_current_digest = 3;
+   */
+  expectedCurrentDigest: string;
+
+  /**
+   * activate also covers explicit rollback and reapproval of a revoked package.
+   *
+   * @generated from field: string action = 4;
+   */
+  action: string;
+
+  /**
+   * @generated from field: komari.common.v1.TwoFactorProof two_factor = 5;
+   */
+  twoFactor?: TwoFactorProof | undefined;
+};
+
+/**
+ * Describes the message komari.plugin.v1.DecidePluginPackageRequest.
+ * Use `create(DecidePluginPackageRequestSchema)` to create a new message.
+ */
+export const DecidePluginPackageRequestSchema: GenMessage<DecidePluginPackageRequest> = /*@__PURE__*/
+  messageDesc(file_komari_plugin_v1_plugin, 3);
+
+/**
+ * @generated from message komari.plugin.v1.DecidePluginPackageResponse
+ */
+export type DecidePluginPackageResponse = Message<"komari.plugin.v1.DecidePluginPackageResponse"> & {
+};
+
+/**
+ * Describes the message komari.plugin.v1.DecidePluginPackageResponse.
+ * Use `create(DecidePluginPackageResponseSchema)` to create a new message.
+ */
+export const DecidePluginPackageResponseSchema: GenMessage<DecidePluginPackageResponse> = /*@__PURE__*/
+  messageDesc(file_komari_plugin_v1_plugin, 4);
 
 /**
  * @generated from message komari.plugin.v1.ListPluginsRequest
@@ -25,7 +171,7 @@ export type ListPluginsRequest = Message<"komari.plugin.v1.ListPluginsRequest"> 
  * Use `create(ListPluginsRequestSchema)` to create a new message.
  */
 export const ListPluginsRequestSchema: GenMessage<ListPluginsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 0);
+  messageDesc(file_komari_plugin_v1_plugin, 5);
 
 /**
  * @generated from message komari.plugin.v1.ListPluginsResponse
@@ -42,7 +188,7 @@ export type ListPluginsResponse = Message<"komari.plugin.v1.ListPluginsResponse"
  * Use `create(ListPluginsResponseSchema)` to create a new message.
  */
 export const ListPluginsResponseSchema: GenMessage<ListPluginsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 1);
+  messageDesc(file_komari_plugin_v1_plugin, 6);
 
 /**
  * @generated from message komari.plugin.v1.SetPluginEnabledRequest
@@ -69,7 +215,7 @@ export type SetPluginEnabledRequest = Message<"komari.plugin.v1.SetPluginEnabled
  * Use `create(SetPluginEnabledRequestSchema)` to create a new message.
  */
 export const SetPluginEnabledRequestSchema: GenMessage<SetPluginEnabledRequest> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 2);
+  messageDesc(file_komari_plugin_v1_plugin, 7);
 
 /**
  * @generated from message komari.plugin.v1.SetPluginEnabledResponse
@@ -86,7 +232,7 @@ export type SetPluginEnabledResponse = Message<"komari.plugin.v1.SetPluginEnable
  * Use `create(SetPluginEnabledResponseSchema)` to create a new message.
  */
 export const SetPluginEnabledResponseSchema: GenMessage<SetPluginEnabledResponse> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 3);
+  messageDesc(file_komari_plugin_v1_plugin, 8);
 
 /**
  * @generated from message komari.plugin.v1.GetPluginLogsRequest
@@ -103,7 +249,7 @@ export type GetPluginLogsRequest = Message<"komari.plugin.v1.GetPluginLogsReques
  * Use `create(GetPluginLogsRequestSchema)` to create a new message.
  */
 export const GetPluginLogsRequestSchema: GenMessage<GetPluginLogsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 4);
+  messageDesc(file_komari_plugin_v1_plugin, 9);
 
 /**
  * @generated from message komari.plugin.v1.GetPluginLogsResponse
@@ -120,7 +266,7 @@ export type GetPluginLogsResponse = Message<"komari.plugin.v1.GetPluginLogsRespo
  * Use `create(GetPluginLogsResponseSchema)` to create a new message.
  */
 export const GetPluginLogsResponseSchema: GenMessage<GetPluginLogsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 5);
+  messageDesc(file_komari_plugin_v1_plugin, 10);
 
 /**
  * @generated from message komari.plugin.v1.DeletePluginRequest
@@ -137,7 +283,7 @@ export type DeletePluginRequest = Message<"komari.plugin.v1.DeletePluginRequest"
  * Use `create(DeletePluginRequestSchema)` to create a new message.
  */
 export const DeletePluginRequestSchema: GenMessage<DeletePluginRequest> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 6);
+  messageDesc(file_komari_plugin_v1_plugin, 11);
 
 /**
  * @generated from message komari.plugin.v1.DeletePluginResponse
@@ -150,7 +296,7 @@ export type DeletePluginResponse = Message<"komari.plugin.v1.DeletePluginRespons
  * Use `create(DeletePluginResponseSchema)` to create a new message.
  */
 export const DeletePluginResponseSchema: GenMessage<DeletePluginResponse> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 7);
+  messageDesc(file_komari_plugin_v1_plugin, 12);
 
 /**
  * @generated from message komari.plugin.v1.GetPluginConfigurationRequest
@@ -167,7 +313,7 @@ export type GetPluginConfigurationRequest = Message<"komari.plugin.v1.GetPluginC
  * Use `create(GetPluginConfigurationRequestSchema)` to create a new message.
  */
 export const GetPluginConfigurationRequestSchema: GenMessage<GetPluginConfigurationRequest> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 8);
+  messageDesc(file_komari_plugin_v1_plugin, 13);
 
 /**
  * @generated from message komari.plugin.v1.GetPluginConfigurationResponse
@@ -189,7 +335,7 @@ export type GetPluginConfigurationResponse = Message<"komari.plugin.v1.GetPlugin
  * Use `create(GetPluginConfigurationResponseSchema)` to create a new message.
  */
 export const GetPluginConfigurationResponseSchema: GenMessage<GetPluginConfigurationResponse> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 9);
+  messageDesc(file_komari_plugin_v1_plugin, 14);
 
 /**
  * @generated from message komari.plugin.v1.SetPluginConfigurationRequest
@@ -211,7 +357,7 @@ export type SetPluginConfigurationRequest = Message<"komari.plugin.v1.SetPluginC
  * Use `create(SetPluginConfigurationRequestSchema)` to create a new message.
  */
 export const SetPluginConfigurationRequestSchema: GenMessage<SetPluginConfigurationRequest> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 10);
+  messageDesc(file_komari_plugin_v1_plugin, 15);
 
 /**
  * @generated from message komari.plugin.v1.SetPluginConfigurationResponse
@@ -224,7 +370,7 @@ export type SetPluginConfigurationResponse = Message<"komari.plugin.v1.SetPlugin
  * Use `create(SetPluginConfigurationResponseSchema)` to create a new message.
  */
 export const SetPluginConfigurationResponseSchema: GenMessage<SetPluginConfigurationResponse> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 11);
+  messageDesc(file_komari_plugin_v1_plugin, 16);
 
 /**
  * @generated from message komari.plugin.v1.Plugin
@@ -311,7 +457,7 @@ export type Plugin = Message<"komari.plugin.v1.Plugin"> & {
  * Use `create(PluginSchema)` to create a new message.
  */
 export const PluginSchema: GenMessage<Plugin> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 12);
+  messageDesc(file_komari_plugin_v1_plugin, 17);
 
 /**
  * LocalizedText preserves either a manifest fallback string or translations.
@@ -335,7 +481,7 @@ export type LocalizedText = Message<"komari.plugin.v1.LocalizedText"> & {
  * Use `create(LocalizedTextSchema)` to create a new message.
  */
 export const LocalizedTextSchema: GenMessage<LocalizedText> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 13);
+  messageDesc(file_komari_plugin_v1_plugin, 18);
 
 /**
  * @generated from message komari.plugin.v1.PluginPermissions
@@ -402,7 +548,7 @@ export type PluginPermissions = Message<"komari.plugin.v1.PluginPermissions"> & 
  * Use `create(PluginPermissionsSchema)` to create a new message.
  */
 export const PluginPermissionsSchema: GenMessage<PluginPermissions> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 14);
+  messageDesc(file_komari_plugin_v1_plugin, 19);
 
 /**
  * @generated from message komari.plugin.v1.PluginConfiguration
@@ -434,7 +580,7 @@ export type PluginConfiguration = Message<"komari.plugin.v1.PluginConfiguration"
  * Use `create(PluginConfigurationSchema)` to create a new message.
  */
 export const PluginConfigurationSchema: GenMessage<PluginConfiguration> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 15);
+  messageDesc(file_komari_plugin_v1_plugin, 20);
 
 /**
  * @generated from message komari.plugin.v1.PluginConfigurationItem
@@ -481,7 +627,7 @@ export type PluginConfigurationItem = Message<"komari.plugin.v1.PluginConfigurat
  * Use `create(PluginConfigurationItemSchema)` to create a new message.
  */
 export const PluginConfigurationItemSchema: GenMessage<PluginConfigurationItem> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 16);
+  messageDesc(file_komari_plugin_v1_plugin, 21);
 
 /**
  * @generated from message komari.plugin.v1.PluginPage
@@ -523,7 +669,7 @@ export type PluginPage = Message<"komari.plugin.v1.PluginPage"> & {
  * Use `create(PluginPageSchema)` to create a new message.
  */
 export const PluginPageSchema: GenMessage<PluginPage> = /*@__PURE__*/
-  messageDesc(file_komari_plugin_v1_plugin, 17);
+  messageDesc(file_komari_plugin_v1_plugin, 22);
 
 /**
  * PluginService owns typed administration of installed plugins.
@@ -578,6 +724,22 @@ export const PluginService: GenService<{
     methodKind: "unary";
     input: typeof SetPluginConfigurationRequestSchema;
     output: typeof SetPluginConfigurationResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.plugin.v1.PluginService.ListPluginPackages
+   */
+  listPluginPackages: {
+    methodKind: "unary";
+    input: typeof ListPluginPackagesRequestSchema;
+    output: typeof ListPluginPackagesResponseSchema;
+  },
+  /**
+   * @generated from rpc komari.plugin.v1.PluginService.DecidePluginPackage
+   */
+  decidePluginPackage: {
+    methodKind: "unary";
+    input: typeof DecidePluginPackageRequestSchema;
+    output: typeof DecidePluginPackageResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_komari_plugin_v1_plugin, 0);
