@@ -1,23 +1,25 @@
-name: Protocol
+name: CI
 on:
   pull_request:
   push:
-    branches: [main, 'fix/privileged-delivery-v2']
-    tags: ['v*']
+    branches:
+      - main
+    tags:
+      - v*
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   lint-generate:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: bufbuild/buf-setup-action@v1
         with:
-          version: '1.57.0'
+          version: 1.57.0
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
@@ -48,6 +50,17 @@ jobs:
           npx tsc --noEmit --module esnext --moduleResolution bundler --target es2022 --skipLibCheck $(find gen/ts -name '*.ts') 2>&1 | tee ci-artifacts/typescript.log
           node --test tests/privileged-hash.test.mjs 2>&1 | tee ci-artifacts/hash-ts.log
           npm pack --dry-run 2>&1 | tee ci-artifacts/npm-pack.log
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify generated clients and hash vectors on Node 24
+        run: |-
+          set -euo pipefail
+          mapfile -d '' -t sources < <(find gen/ts -name '*.ts' -print0)
+          (( ${#sources[@]} > 0 ))
+          node node_modules/typescript/bin/tsc --noEmit --module esnext --moduleResolution bundler --target es2022 --skipLibCheck "${sources[@]}"
+          node --test tests/privileged-hash.test.mjs
+          npm pack --dry-run
       - name: Package generated clients even on failure
         if: always()
         run: |
@@ -59,3 +72,7 @@ jobs:
           name: protocol-${{ github.run_id }}-${{ github.run_attempt }}
           path: ci-artifacts/
           retention-days: 30
+    name: Contracts, Go and TypeScript
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
