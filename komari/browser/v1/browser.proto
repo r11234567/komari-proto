@@ -13,19 +13,31 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/browser/v1;
 // BrowserService owns typed browser-facing read models and theme compatibility metadata.
 service BrowserService {
   // GetPublicInfo returns public site metadata.
-  rpc GetPublicInfo(GetPublicInfoRequest) returns (GetPublicInfoResponse);
+  rpc GetPublicInfo(GetPublicInfoRequest) returns (GetPublicInfoResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // ListAgents returns a bounded typed node list.
-  rpc ListAgents(ListAgentsRequest) returns (ListAgentsResponse);
+  rpc ListAgents(ListAgentsRequest) returns (ListAgentsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // GetAgent returns one typed node detail.
-  rpc GetAgent(GetAgentRequest) returns (GetAgentResponse);
+  rpc GetAgent(GetAgentRequest) returns (GetAgentResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // WatchAgentStatus streams status changes until AbortSignal/deadline cancellation.
   rpc WatchAgentStatus(WatchAgentStatusRequest) returns (stream WatchAgentStatusResponse);
   // GetSession reports the calling visitor's own login state.
-  rpc GetSession(GetSessionRequest) returns (GetSessionResponse);
+  rpc GetSession(GetSessionRequest) returns (GetSessionResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // GetThemeContract returns the stable third-party theme integration contract.
-  rpc GetThemeContract(GetThemeContractRequest) returns (GetThemeContractResponse);
+  rpc GetThemeContract(GetThemeContractRequest) returns (GetThemeContractResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // GetTrafficTrend returns an administrator-only rolling traffic trend.
-  rpc GetTrafficTrend(GetTrafficTrendRequest) returns (GetTrafficTrendResponse);
+  rpc GetTrafficTrend(GetTrafficTrendRequest) returns (GetTrafficTrendResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 // GetPublicInfoRequest is intentionally empty.

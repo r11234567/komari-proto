@@ -80,6 +80,7 @@ func NewPasskeyLoginServiceClient(httpClient connect.HTTPClient, baseURL string,
 			httpClient,
 			baseURL+PasskeyLoginServiceGetPasskeyStatusProcedure,
 			connect.WithSchema(passkeyLoginServiceMethods.ByName("GetPasskeyStatus")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		beginPasskeyLogin: connect.NewClient[v1.BeginPasskeyLoginRequest, v1.BeginPasskeyLoginResponse](
@@ -138,6 +139,7 @@ func NewPasskeyLoginServiceHandler(svc PasskeyLoginServiceHandler, opts ...conne
 		PasskeyLoginServiceGetPasskeyStatusProcedure,
 		svc.GetPasskeyStatus,
 		connect.WithSchema(passkeyLoginServiceMethods.ByName("GetPasskeyStatus")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	passkeyLoginServiceBeginPasskeyLoginHandler := connect.NewUnaryHandler(

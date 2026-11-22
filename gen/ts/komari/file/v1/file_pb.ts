@@ -14,7 +14,7 @@ import type { JsonObject, Message } from "@bufbuild/protobuf";
  * Describes the file komari/file/v1/file.proto.
  */
 export const file_komari_file_v1_file: GenFile = /*@__PURE__*/
-  fileDesc("Chlrb21hcmkvZmlsZS92MS9maWxlLnByb3RvEg5rb21hcmkuZmlsZS52MSL0AQoJRmlsZUVudHJ5EgwKBG5hbWUYASABKAkSDAoEcGF0aBgCIAEoCRIRCglkaXJlY3RvcnkYAyABKAgSDwoHc3ltbGluaxgEIAEoCBIMCgRzaXplGAUgASgEEgwKBG1vZGUYBiABKAkSEgoKbW9kZV9vY3RhbBgHIAEoCRILCgN1aWQYCCABKAUSCwoDZ2lkGAkgASgFEg0KBW93bmVyGAogASgJEg0KBWdyb3VwGAsgASgJEi8KC21vZGlmaWVkX2F0GAwgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIOCgZ0YXJnZXQYDSABKAkibwoQRGlyZWN0b3J5TGlzdGluZxIqCgdlbnRyaWVzGAEgAygLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5EgwKBHBhdGgYAiABKAkSDgoGcGFyZW50GAMgASgJEhEKCXRydW5jYXRlZBgEIAEoCCI2ChRMaXN0RGlyZWN0b3J5UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIMCgRwYXRoGAIgASgJIkoKFUxpc3REaXJlY3RvcnlSZXNwb25zZRIxCgdsaXN0aW5nGAEgASgLMiAua29tYXJpLmZpbGUudjEuRGlyZWN0b3J5TGlzdGluZyIkChBMaXN0Um9vdHNSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJIj0KEUxpc3RSb290c1Jlc3BvbnNlEigKBXJvb3RzGAEgAygLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5IjEKD1N0YXRGaWxlUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIMCgRwYXRoGAIgASgJIjwKEFN0YXRGaWxlUmVzcG9uc2USKAoFZW50cnkYASABKAsyGS5rb21hcmkuZmlsZS52MS5GaWxlRW50cnkioQEKEkNyZWF0ZUVudHJ5UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIMCgRwYXRoGAIgASgJEicKBGtpbmQYAyABKA4yGS5rb21hcmkuZmlsZS52MS5FbnRyeUtpbmQSDAoEbW9kZRgEIAEoCRI0Cgp0d29fZmFjdG9yGAUgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZiI/ChNDcmVhdGVFbnRyeVJlc3BvbnNlEigKBWVudHJ5GAEgASgLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5In0KEkRlbGV0ZUVudHJ5UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIMCgRwYXRoGAIgASgJEhEKCXJlY3Vyc2l2ZRgDIAEoCBI0Cgp0d29fZmFjdG9yGAQgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZiI0ChNEZWxldGVFbnRyeVJlc3BvbnNlEgwKBHBhdGgYASABKAkSDwoHZGVsZXRlZBgCIAEoCCKSAQoQTW92ZUVudHJ5UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIOCgZzb3VyY2UYAiABKAkSEwoLZGVzdGluYXRpb24YAyABKAkSEQoJb3ZlcndyaXRlGAQgASgIEjQKCnR3b19mYWN0b3IYBSABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mIj0KEU1vdmVFbnRyeVJlc3BvbnNlEigKBWVudHJ5GAEgASgLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5IqUBChBDb3B5RW50cnlSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEg4KBnNvdXJjZRgCIAEoCRITCgtkZXN0aW5hdGlvbhgDIAEoCRIRCglyZWN1cnNpdmUYBCABKAgSEQoJb3ZlcndyaXRlGAUgASgIEjQKCnR3b19mYWN0b3IYBiABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mIj0KEUNvcHlFbnRyeVJlc3BvbnNlEigKBWVudHJ5GAEgASgLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5IncKEUNobW9kRW50cnlSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEgwKBHBhdGgYAiABKAkSDAoEbW9kZRgDIAEoCRI0Cgp0d29fZmFjdG9yGAQgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZiI+ChJDaG1vZEVudHJ5UmVzcG9uc2USKAoFZW50cnkYASABKAsyGS5rb21hcmkuZmlsZS52MS5GaWxlRW50cnkiuwEKEUNob3duRW50cnlSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEgwKBHBhdGgYAiABKAkSEAoDdWlkGAMgASgFSACIAQESEAoDZ2lkGAQgASgFSAGIAQESDQoFb3duZXIYBSABKAkSDQoFZ3JvdXAYBiABKAkSNAoKdHdvX2ZhY3RvchgHIAEoCzIgLmtvbWFyaS5jb21tb24udjEuVHdvRmFjdG9yUHJvb2ZCBgoEX3VpZEIGCgRfZ2lkIj4KEkNob3duRW50cnlSZXNwb25zZRIoCgVlbnRyeRgBIAEoCzIZLmtvbWFyaS5maWxlLnYxLkZpbGVFbnRyeSJpChJTZWFyY2hGaWxlc1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSDAoEcGF0aBgCIAEoCRINCgVxdWVyeRgDIAEoCRIPCgdjb250ZW50GAQgASgIEhMKC21heF9yZXN1bHRzGAUgASgNIkoKC1NlYXJjaE1hdGNoEgwKBHBhdGgYASABKAkSDAoEbGluZRgCIAEoDRIMCgR0ZXh0GAMgASgJEhEKCWRpcmVjdG9yeRgEIAEoCCJiChNTZWFyY2hGaWxlc1Jlc3BvbnNlEiwKB21hdGNoZXMYASADKAsyGy5rb21hcmkuZmlsZS52MS5TZWFyY2hNYXRjaBIPCgdsaW1pdGVkGAIgASgIEgwKBHBhdGgYAyABKAkiSwoaTGVhc2VGaWxlT3BlcmF0aW9uc1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSGwoTYWZ0ZXJfYXNzaWdubWVudF9pZBgCIAEoCSJRChtMZWFzZUZpbGVPcGVyYXRpb25zUmVzcG9uc2USMgoKYXNzaWdubWVudBgBIAEoCzIeLmtvbWFyaS5maWxlLnYxLkZpbGVBc3NpZ25tZW50IvgDCg5GaWxlQXNzaWdubWVudBIVCg1hc3NpZ25tZW50X2lkGAEgASgJEhIKCnJlcXVlc3RfaWQYAiABKAkSMAoJb3BlcmF0aW9uGAMgASgOMh0ua29tYXJpLmZpbGUudjEuRmlsZU9wZXJhdGlvbhIMCgRwYXRoGAQgASgJEhMKC2Rlc3RpbmF0aW9uGAUgASgJEgwKBG1vZGUYBiABKAkSEAoDdWlkGAcgASgFSACIAQESEAoDZ2lkGAggASgFSAGIAQESDQoFb3duZXIYCSABKAkSDQoFZ3JvdXAYCiABKAkSDQoFcXVlcnkYCyABKAkSFgoOY29udGVudF9zZWFyY2gYDCABKAgSEwoLbWF4X3Jlc3VsdHMYDSABKA0SEQoJcmVjdXJzaXZlGA4gASgIEhEKCW92ZXJ3cml0ZRgPIAEoCBIXCg90aW1lb3V0X3NlY29uZHMYECABKA0SNAoQbGVhc2VfZXhwaXJlc19hdBgRIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASKgoJYXJndW1lbnRzGBIgASgLMhcuZ29vZ2xlLnByb3RvYnVmLlN0cnVjdBITCgtzeXN0ZW1fdXNlchgTIAEoCRIUCgx3b3Jrc3BhY2VfaWQYFCABKAlCBgoEX3VpZEIGCgRfZ2lkIowBChtBdHRhY2hGaWxlT3BlcmF0aW9uc1JlcXVlc3QSMQoGYXR0YWNoGAEgASgLMh8ua29tYXJpLmZpbGUudjEuQWdlbnRGaWxlQXR0YWNoSAASLwoFZXZlbnQYAiABKAsyHi5rb21hcmkuZmlsZS52MS5BZ2VudEZpbGVFdmVudEgAQgkKB21lc3NhZ2UiTgoPQWdlbnRGaWxlQXR0YWNoEhAKCGFnZW50X2lkGAEgASgJEhUKDWFzc2lnbm1lbnRfaWQYAiABKAkSEgoKcmVxdWVzdF9pZBgDIAEoCSKCAgoOQWdlbnRGaWxlRXZlbnQSEgoKcmVxdWVzdF9pZBgBIAEoCRIwCglvcGVyYXRpb24YAiABKA4yHS5rb21hcmkuZmlsZS52MS5GaWxlT3BlcmF0aW9uEg8KB3N1Y2Nlc3MYAyABKAgSDQoFZXJyb3IYBCABKAkSKgoHZW50cmllcxgFIAMoCzIZLmtvbWFyaS5maWxlLnYxLkZpbGVFbnRyeRIsCgdtYXRjaGVzGAYgAygLMhsua29tYXJpLmZpbGUudjEuU2VhcmNoTWF0Y2gSDwoHbGltaXRlZBgHIAEoCBIMCgRwYXRoGAggASgJEhEKCXRydW5jYXRlZBgJIAEoCCJ3ChxBdHRhY2hGaWxlT3BlcmF0aW9uc1Jlc3BvbnNlEjQKCmFzc2lnbm1lbnQYASABKAsyHi5rb21hcmkuZmlsZS52MS5GaWxlQXNzaWdubWVudEgAEhYKDGNsb3NlX3JlYXNvbhgCIAEoCUgAQgkKB2NvbW1hbmQqVgoJRW50cnlLaW5kEhoKFkVOVFJZX0tJTkRfVU5TUEVDSUZJRUQQABITCg9FTlRSWV9LSU5EX0ZJTEUQARIYChRFTlRSWV9LSU5EX0RJUkVDVE9SWRACKpcDCg1GaWxlT3BlcmF0aW9uEh4KGkZJTEVfT1BFUkFUSU9OX1VOU1BFQ0lGSUVEEAASFwoTRklMRV9PUEVSQVRJT05fTElTVBABEh0KGUZJTEVfT1BFUkFUSU9OX0xJU1RfUk9PVFMQAhIXChNGSUxFX09QRVJBVElPTl9TVEFUEAMSGQoVRklMRV9PUEVSQVRJT05fQ1JFQVRFEAQSGAoURklMRV9PUEVSQVRJT05fTUtESVIQBRIZChVGSUxFX09QRVJBVElPTl9ERUxFVEUQBhIXChNGSUxFX09QRVJBVElPTl9NT1ZFEAcSFwoTRklMRV9PUEVSQVRJT05fQ09QWRAIEhgKFEZJTEVfT1BFUkFUSU9OX0NITU9EEAkSGAoURklMRV9PUEVSQVRJT05fQ0hPV04QChIZChVGSUxFX09QRVJBVElPTl9TRUFSQ0gQCxIiCh5GSUxFX09QRVJBVElPTl9ET1dOTE9BRF9TVFJFQU0QDBIgChxGSUxFX09QRVJBVElPTl9VUExPQURfU1RSRUFNEA0yywgKC0ZpbGVTZXJ2aWNlElwKDUxpc3REaXJlY3RvcnkSJC5rb21hcmkuZmlsZS52MS5MaXN0RGlyZWN0b3J5UmVxdWVzdBolLmtvbWFyaS5maWxlLnYxLkxpc3REaXJlY3RvcnlSZXNwb25zZRJQCglMaXN0Um9vdHMSIC5rb21hcmkuZmlsZS52MS5MaXN0Um9vdHNSZXF1ZXN0GiEua29tYXJpLmZpbGUudjEuTGlzdFJvb3RzUmVzcG9uc2USTQoIU3RhdEZpbGUSHy5rb21hcmkuZmlsZS52MS5TdGF0RmlsZVJlcXVlc3QaIC5rb21hcmkuZmlsZS52MS5TdGF0RmlsZVJlc3BvbnNlElYKC0NyZWF0ZUVudHJ5EiIua29tYXJpLmZpbGUudjEuQ3JlYXRlRW50cnlSZXF1ZXN0GiMua29tYXJpLmZpbGUudjEuQ3JlYXRlRW50cnlSZXNwb25zZRJWCgtEZWxldGVFbnRyeRIiLmtvbWFyaS5maWxlLnYxLkRlbGV0ZUVudHJ5UmVxdWVzdBojLmtvbWFyaS5maWxlLnYxLkRlbGV0ZUVudHJ5UmVzcG9uc2USUAoJTW92ZUVudHJ5EiAua29tYXJpLmZpbGUudjEuTW92ZUVudHJ5UmVxdWVzdBohLmtvbWFyaS5maWxlLnYxLk1vdmVFbnRyeVJlc3BvbnNlElAKCUNvcHlFbnRyeRIgLmtvbWFyaS5maWxlLnYxLkNvcHlFbnRyeVJlcXVlc3QaIS5rb21hcmkuZmlsZS52MS5Db3B5RW50cnlSZXNwb25zZRJTCgpDaG1vZEVudHJ5EiEua29tYXJpLmZpbGUudjEuQ2htb2RFbnRyeVJlcXVlc3QaIi5rb21hcmkuZmlsZS52MS5DaG1vZEVudHJ5UmVzcG9uc2USUwoKQ2hvd25FbnRyeRIhLmtvbWFyaS5maWxlLnYxLkNob3duRW50cnlSZXF1ZXN0GiIua29tYXJpLmZpbGUudjEuQ2hvd25FbnRyeVJlc3BvbnNlElYKC1NlYXJjaEZpbGVzEiIua29tYXJpLmZpbGUudjEuU2VhcmNoRmlsZXNSZXF1ZXN0GiMua29tYXJpLmZpbGUudjEuU2VhcmNoRmlsZXNSZXNwb25zZRJwChNMZWFzZUZpbGVPcGVyYXRpb25zEioua29tYXJpLmZpbGUudjEuTGVhc2VGaWxlT3BlcmF0aW9uc1JlcXVlc3QaKy5rb21hcmkuZmlsZS52MS5MZWFzZUZpbGVPcGVyYXRpb25zUmVzcG9uc2UwARJ1ChRBdHRhY2hGaWxlT3BlcmF0aW9ucxIrLmtvbWFyaS5maWxlLnYxLkF0dGFjaEZpbGVPcGVyYXRpb25zUmVxdWVzdBosLmtvbWFyaS5maWxlLnYxLkF0dGFjaEZpbGVPcGVyYXRpb25zUmVzcG9uc2UoATABQrkBChJjb20ua29tYXJpLmZpbGUudjFCCUZpbGVQcm90b1ABWj5naXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9maWxlL3YxO2ZpbGV2MaICA0tGWKoCDktvbWFyaS5GaWxlLlYxygIOS29tYXJpXEZpbGVcVjHiAhpLb21hcmlcRmlsZVxWMVxHUEJNZXRhZGF0YeoCEEtvbWFyaTo6RmlsZTo6VjFiBnByb3RvMw", [file_google_protobuf_struct, file_google_protobuf_timestamp, file_komari_common_v1_common]);
+  fileDesc("Chlrb21hcmkvZmlsZS92MS9maWxlLnByb3RvEg5rb21hcmkuZmlsZS52MSL0AQoJRmlsZUVudHJ5EgwKBG5hbWUYASABKAkSDAoEcGF0aBgCIAEoCRIRCglkaXJlY3RvcnkYAyABKAgSDwoHc3ltbGluaxgEIAEoCBIMCgRzaXplGAUgASgEEgwKBG1vZGUYBiABKAkSEgoKbW9kZV9vY3RhbBgHIAEoCRILCgN1aWQYCCABKAUSCwoDZ2lkGAkgASgFEg0KBW93bmVyGAogASgJEg0KBWdyb3VwGAsgASgJEi8KC21vZGlmaWVkX2F0GAwgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIOCgZ0YXJnZXQYDSABKAkibwoQRGlyZWN0b3J5TGlzdGluZxIqCgdlbnRyaWVzGAEgAygLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5EgwKBHBhdGgYAiABKAkSDgoGcGFyZW50GAMgASgJEhEKCXRydW5jYXRlZBgEIAEoCCI2ChRMaXN0RGlyZWN0b3J5UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIMCgRwYXRoGAIgASgJIkoKFUxpc3REaXJlY3RvcnlSZXNwb25zZRIxCgdsaXN0aW5nGAEgASgLMiAua29tYXJpLmZpbGUudjEuRGlyZWN0b3J5TGlzdGluZyIkChBMaXN0Um9vdHNSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJIj0KEUxpc3RSb290c1Jlc3BvbnNlEigKBXJvb3RzGAEgAygLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5IjEKD1N0YXRGaWxlUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIMCgRwYXRoGAIgASgJIjwKEFN0YXRGaWxlUmVzcG9uc2USKAoFZW50cnkYASABKAsyGS5rb21hcmkuZmlsZS52MS5GaWxlRW50cnkioQEKEkNyZWF0ZUVudHJ5UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIMCgRwYXRoGAIgASgJEicKBGtpbmQYAyABKA4yGS5rb21hcmkuZmlsZS52MS5FbnRyeUtpbmQSDAoEbW9kZRgEIAEoCRI0Cgp0d29fZmFjdG9yGAUgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZiI/ChNDcmVhdGVFbnRyeVJlc3BvbnNlEigKBWVudHJ5GAEgASgLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5In0KEkRlbGV0ZUVudHJ5UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIMCgRwYXRoGAIgASgJEhEKCXJlY3Vyc2l2ZRgDIAEoCBI0Cgp0d29fZmFjdG9yGAQgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZiI0ChNEZWxldGVFbnRyeVJlc3BvbnNlEgwKBHBhdGgYASABKAkSDwoHZGVsZXRlZBgCIAEoCCKSAQoQTW92ZUVudHJ5UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIOCgZzb3VyY2UYAiABKAkSEwoLZGVzdGluYXRpb24YAyABKAkSEQoJb3ZlcndyaXRlGAQgASgIEjQKCnR3b19mYWN0b3IYBSABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mIj0KEU1vdmVFbnRyeVJlc3BvbnNlEigKBWVudHJ5GAEgASgLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5IqUBChBDb3B5RW50cnlSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEg4KBnNvdXJjZRgCIAEoCRITCgtkZXN0aW5hdGlvbhgDIAEoCRIRCglyZWN1cnNpdmUYBCABKAgSEQoJb3ZlcndyaXRlGAUgASgIEjQKCnR3b19mYWN0b3IYBiABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mIj0KEUNvcHlFbnRyeVJlc3BvbnNlEigKBWVudHJ5GAEgASgLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5IncKEUNobW9kRW50cnlSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEgwKBHBhdGgYAiABKAkSDAoEbW9kZRgDIAEoCRI0Cgp0d29fZmFjdG9yGAQgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZiI+ChJDaG1vZEVudHJ5UmVzcG9uc2USKAoFZW50cnkYASABKAsyGS5rb21hcmkuZmlsZS52MS5GaWxlRW50cnkiuwEKEUNob3duRW50cnlSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEgwKBHBhdGgYAiABKAkSEAoDdWlkGAMgASgFSACIAQESEAoDZ2lkGAQgASgFSAGIAQESDQoFb3duZXIYBSABKAkSDQoFZ3JvdXAYBiABKAkSNAoKdHdvX2ZhY3RvchgHIAEoCzIgLmtvbWFyaS5jb21tb24udjEuVHdvRmFjdG9yUHJvb2ZCBgoEX3VpZEIGCgRfZ2lkIj4KEkNob3duRW50cnlSZXNwb25zZRIoCgVlbnRyeRgBIAEoCzIZLmtvbWFyaS5maWxlLnYxLkZpbGVFbnRyeSJpChJTZWFyY2hGaWxlc1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSDAoEcGF0aBgCIAEoCRINCgVxdWVyeRgDIAEoCRIPCgdjb250ZW50GAQgASgIEhMKC21heF9yZXN1bHRzGAUgASgNIkoKC1NlYXJjaE1hdGNoEgwKBHBhdGgYASABKAkSDAoEbGluZRgCIAEoDRIMCgR0ZXh0GAMgASgJEhEKCWRpcmVjdG9yeRgEIAEoCCJiChNTZWFyY2hGaWxlc1Jlc3BvbnNlEiwKB21hdGNoZXMYASADKAsyGy5rb21hcmkuZmlsZS52MS5TZWFyY2hNYXRjaBIPCgdsaW1pdGVkGAIgASgIEgwKBHBhdGgYAyABKAkiSwoaTGVhc2VGaWxlT3BlcmF0aW9uc1JlcXVlc3QSEAoIYWdlbnRfaWQYASABKAkSGwoTYWZ0ZXJfYXNzaWdubWVudF9pZBgCIAEoCSJkChtMZWFzZUZpbGVPcGVyYXRpb25zUmVzcG9uc2USMgoKYXNzaWdubWVudBgBIAEoCzIeLmtvbWFyaS5maWxlLnYxLkZpbGVBc3NpZ25tZW50EhEKCWhlYXJ0YmVhdBgCIAEoCCLLCgoORmlsZUFzc2lnbm1lbnQSFQoNYXNzaWdubWVudF9pZBgBIAEoCRISCgpyZXF1ZXN0X2lkGAIgASgJEjAKCW9wZXJhdGlvbhgDIAEoDjIdLmtvbWFyaS5maWxlLnYxLkZpbGVPcGVyYXRpb24SDAoEcGF0aBgEIAEoCRITCgtkZXN0aW5hdGlvbhgFIAEoCRIMCgRtb2RlGAYgASgJEhAKA3VpZBgHIAEoBUgBiAEBEhAKA2dpZBgIIAEoBUgCiAEBEg0KBW93bmVyGAkgASgJEg0KBWdyb3VwGAogASgJEg0KBXF1ZXJ5GAsgASgJEhYKDmNvbnRlbnRfc2VhcmNoGAwgASgIEhMKC21heF9yZXN1bHRzGA0gASgNEhEKCXJlY3Vyc2l2ZRgOIAEoCBIRCglvdmVyd3JpdGUYDyABKAgSFwoPdGltZW91dF9zZWNvbmRzGBAgASgNEjQKEGxlYXNlX2V4cGlyZXNfYXQYESABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCWFyZ3VtZW50cxgSIAEoCzIXLmdvb2dsZS5wcm90b2J1Zi5TdHJ1Y3RCAhgBEhMKC3N5c3RlbV91c2VyGBMgASgJEhQKDHdvcmtzcGFjZV9pZBgUIAEoCRIvCgRsaXN0GBUgASgLMh8ua29tYXJpLmZpbGUudjEuRmlsZUxpc3RQYXlsb2FkSAASOgoKbGlzdF9yb290cxgWIAEoCzIkLmtvbWFyaS5maWxlLnYxLkZpbGVMaXN0Um9vdHNQYXlsb2FkSAASLwoEc3RhdBgXIAEoCzIfLmtvbWFyaS5maWxlLnYxLkZpbGVTdGF0UGF5bG9hZEgAEjMKBmNyZWF0ZRgYIAEoCzIhLmtvbWFyaS5maWxlLnYxLkZpbGVDcmVhdGVQYXlsb2FkSAASMQoFbWtkaXIYGSABKAsyIC5rb21hcmkuZmlsZS52MS5GaWxlTWtkaXJQYXlsb2FkSAASMwoGZGVsZXRlGBogASgLMiEua29tYXJpLmZpbGUudjEuRmlsZURlbGV0ZVBheWxvYWRIABIvCgRtb3ZlGBsgASgLMh8ua29tYXJpLmZpbGUudjEuRmlsZU1vdmVQYXlsb2FkSAASLwoEY29weRgcIAEoCzIfLmtvbWFyaS5maWxlLnYxLkZpbGVDb3B5UGF5bG9hZEgAEjEKBWNobW9kGB0gASgLMiAua29tYXJpLmZpbGUudjEuRmlsZUNobW9kUGF5bG9hZEgAEjEKBWNob3duGB4gASgLMiAua29tYXJpLmZpbGUudjEuRmlsZUNob3duUGF5bG9hZEgAEjMKBnNlYXJjaBgfIAEoCzIhLmtvbWFyaS5maWxlLnYxLkZpbGVTZWFyY2hQYXlsb2FkSAASRAoPZG93bmxvYWRfc3RyZWFtGCAgASgLMikua29tYXJpLmZpbGUudjEuRmlsZURvd25sb2FkU3RyZWFtUGF5bG9hZEgAEkAKDXVwbG9hZF9zdHJlYW0YISABKAsyJy5rb21hcmkuZmlsZS52MS5GaWxlVXBsb2FkU3RyZWFtUGF5bG9hZEgAEkAKDXVwbG9hZF9jb21taXQYIiABKAsyJy5rb21hcmkuZmlsZS52MS5GaWxlVXBsb2FkQ29tbWl0UGF5bG9hZEgAEkAKDXVwbG9hZF9jYW5jZWwYIyABKAsyJy5rb21hcmkuZmlsZS52MS5GaWxlVXBsb2FkQ2FuY2VsUGF5bG9hZEgAQgkKB3BheWxvYWRCBgoEX3VpZEIGCgRfZ2lkIh8KD0ZpbGVMaXN0UGF5bG9hZBIMCgRwYXRoGAEgASgJIhYKFEZpbGVMaXN0Um9vdHNQYXlsb2FkIh8KD0ZpbGVTdGF0UGF5bG9hZBIMCgRwYXRoGAEgASgJIi8KEUZpbGVDcmVhdGVQYXlsb2FkEgwKBHBhdGgYASABKAkSDAoEbW9kZRgCIAEoCSIuChBGaWxlTWtkaXJQYXlsb2FkEgwKBHBhdGgYASABKAkSDAoEbW9kZRgCIAEoCSI0ChFGaWxlRGVsZXRlUGF5bG9hZBIMCgRwYXRoGAEgASgJEhEKCXJlY3Vyc2l2ZRgCIAEoCCJJCg9GaWxlTW92ZVBheWxvYWQSDgoGc291cmNlGAEgASgJEhMKC2Rlc3RpbmF0aW9uGAIgASgJEhEKCW92ZXJ3cml0ZRgDIAEoCCJcCg9GaWxlQ29weVBheWxvYWQSDgoGc291cmNlGAEgASgJEhMKC2Rlc3RpbmF0aW9uGAIgASgJEhEKCXJlY3Vyc2l2ZRgDIAEoCBIRCglvdmVyd3JpdGUYBCABKAgiLgoQRmlsZUNobW9kUGF5bG9hZBIMCgRwYXRoGAEgASgJEgwKBG1vZGUYAiABKAkicgoQRmlsZUNob3duUGF5bG9hZBIMCgRwYXRoGAEgASgJEhAKA3VpZBgCIAEoBUgAiAEBEhAKA2dpZBgDIAEoBUgBiAEBEg0KBW93bmVyGAQgASgJEg0KBWdyb3VwGAUgASgJQgYKBF91aWRCBgoEX2dpZCJWChFGaWxlU2VhcmNoUGF5bG9hZBIMCgRwYXRoGAEgASgJEg0KBXF1ZXJ5GAIgASgJEg8KB2NvbnRlbnQYAyABKAgSEwoLbWF4X3Jlc3VsdHMYBCABKA0izwEKGUZpbGVEb3dubG9hZFN0cmVhbVBheWxvYWQSEwoLdHJhbnNmZXJfaWQYASABKAkSFgoOdHJhbnNmZXJfdG9rZW4YAiABKAkSDAoEcGF0aBgDIAEoCRIOCgZvZmZzZXQYBCABKAMSDgoGbGVuZ3RoGAUgASgDEhMKC2NodW5rX2luZGV4GAYgASgDEhEKCWZpbGVfc2l6ZRgHIAEoAxIvCgttb2RpZmllZF9hdBgIIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAi5wEKF0ZpbGVVcGxvYWRTdHJlYW1QYXlsb2FkEgwKBHBhdGgYASABKAkSDgoGb2Zmc2V0GAIgASgDEhMKC2NodW5rX2luZGV4GAMgASgDEhMKC2NodW5rX2NvdW50GAQgASgDEhIKCnRvdGFsX3NpemUYBSABKAMSEgoKY2h1bmtfc2l6ZRgGIAEoAxIRCgl1cGxvYWRfaWQYByABKAkSDQoFZmlyc3QYCCABKAgSDQoFZmluYWwYCSABKAgSEwoLdHJhbnNmZXJfaWQYCiABKAkSFgoOdHJhbnNmZXJfdG9rZW4YCyABKAkiugEKF0ZpbGVVcGxvYWRDb21taXRQYXlsb2FkEgwKBHBhdGgYASABKAkSEQoJdXBsb2FkX2lkGAIgASgJEhMKC2NodW5rX2luZGV4GAMgASgDEhMKC2NodW5rX2NvdW50GAQgASgDEhIKCnRvdGFsX3NpemUYBSABKAMSEgoKY2h1bmtfc2l6ZRgGIAEoAxIOCgZvZmZzZXQYByABKAMSDQoFZmlyc3QYCCABKAgSDQoFZmluYWwYCSABKAgiOgoXRmlsZVVwbG9hZENhbmNlbFBheWxvYWQSEQoJdXBsb2FkX2lkGAEgASgJEgwKBHBhdGgYAiABKAkijAEKG0F0dGFjaEZpbGVPcGVyYXRpb25zUmVxdWVzdBIxCgZhdHRhY2gYASABKAsyHy5rb21hcmkuZmlsZS52MS5BZ2VudEZpbGVBdHRhY2hIABIvCgVldmVudBgCIAEoCzIeLmtvbWFyaS5maWxlLnYxLkFnZW50RmlsZUV2ZW50SABCCQoHbWVzc2FnZSJOCg9BZ2VudEZpbGVBdHRhY2gSEAoIYWdlbnRfaWQYASABKAkSFQoNYXNzaWdubWVudF9pZBgCIAEoCRISCgpyZXF1ZXN0X2lkGAMgASgJIoICCg5BZ2VudEZpbGVFdmVudBISCgpyZXF1ZXN0X2lkGAEgASgJEjAKCW9wZXJhdGlvbhgCIAEoDjIdLmtvbWFyaS5maWxlLnYxLkZpbGVPcGVyYXRpb24SDwoHc3VjY2VzcxgDIAEoCBINCgVlcnJvchgEIAEoCRIqCgdlbnRyaWVzGAUgAygLMhkua29tYXJpLmZpbGUudjEuRmlsZUVudHJ5EiwKB21hdGNoZXMYBiADKAsyGy5rb21hcmkuZmlsZS52MS5TZWFyY2hNYXRjaBIPCgdsaW1pdGVkGAcgASgIEgwKBHBhdGgYCCABKAkSEQoJdHJ1bmNhdGVkGAkgASgIIncKHEF0dGFjaEZpbGVPcGVyYXRpb25zUmVzcG9uc2USNAoKYXNzaWdubWVudBgBIAEoCzIeLmtvbWFyaS5maWxlLnYxLkZpbGVBc3NpZ25tZW50SAASFgoMY2xvc2VfcmVhc29uGAIgASgJSABCCQoHY29tbWFuZCpWCglFbnRyeUtpbmQSGgoWRU5UUllfS0lORF9VTlNQRUNJRklFRBAAEhMKD0VOVFJZX0tJTkRfRklMRRABEhgKFEVOVFJZX0tJTkRfRElSRUNUT1JZEAIq2wMKDUZpbGVPcGVyYXRpb24SHgoaRklMRV9PUEVSQVRJT05fVU5TUEVDSUZJRUQQABIXChNGSUxFX09QRVJBVElPTl9MSVNUEAESHQoZRklMRV9PUEVSQVRJT05fTElTVF9ST09UUxACEhcKE0ZJTEVfT1BFUkFUSU9OX1NUQVQQAxIZChVGSUxFX09QRVJBVElPTl9DUkVBVEUQBBIYChRGSUxFX09QRVJBVElPTl9NS0RJUhAFEhkKFUZJTEVfT1BFUkFUSU9OX0RFTEVURRAGEhcKE0ZJTEVfT1BFUkFUSU9OX01PVkUQBxIXChNGSUxFX09QRVJBVElPTl9DT1BZEAgSGAoURklMRV9PUEVSQVRJT05fQ0hNT0QQCRIYChRGSUxFX09QRVJBVElPTl9DSE9XThAKEhkKFUZJTEVfT1BFUkFUSU9OX1NFQVJDSBALEiIKHkZJTEVfT1BFUkFUSU9OX0RPV05MT0FEX1NUUkVBTRAMEiAKHEZJTEVfT1BFUkFUSU9OX1VQTE9BRF9TVFJFQU0QDRIgChxGSUxFX09QRVJBVElPTl9VUExPQURfQ09NTUlUEA4SIAocRklMRV9PUEVSQVRJT05fVVBMT0FEX0NBTkNFTBAPMt8ICgtGaWxlU2VydmljZRJhCg1MaXN0RGlyZWN0b3J5EiQua29tYXJpLmZpbGUudjEuTGlzdERpcmVjdG9yeVJlcXVlc3QaJS5rb21hcmkuZmlsZS52MS5MaXN0RGlyZWN0b3J5UmVzcG9uc2UiA5ACARJVCglMaXN0Um9vdHMSIC5rb21hcmkuZmlsZS52MS5MaXN0Um9vdHNSZXF1ZXN0GiEua29tYXJpLmZpbGUudjEuTGlzdFJvb3RzUmVzcG9uc2UiA5ACARJSCghTdGF0RmlsZRIfLmtvbWFyaS5maWxlLnYxLlN0YXRGaWxlUmVxdWVzdBogLmtvbWFyaS5maWxlLnYxLlN0YXRGaWxlUmVzcG9uc2UiA5ACARJWCgtDcmVhdGVFbnRyeRIiLmtvbWFyaS5maWxlLnYxLkNyZWF0ZUVudHJ5UmVxdWVzdBojLmtvbWFyaS5maWxlLnYxLkNyZWF0ZUVudHJ5UmVzcG9uc2USVgoLRGVsZXRlRW50cnkSIi5rb21hcmkuZmlsZS52MS5EZWxldGVFbnRyeVJlcXVlc3QaIy5rb21hcmkuZmlsZS52MS5EZWxldGVFbnRyeVJlc3BvbnNlElAKCU1vdmVFbnRyeRIgLmtvbWFyaS5maWxlLnYxLk1vdmVFbnRyeVJlcXVlc3QaIS5rb21hcmkuZmlsZS52MS5Nb3ZlRW50cnlSZXNwb25zZRJQCglDb3B5RW50cnkSIC5rb21hcmkuZmlsZS52MS5Db3B5RW50cnlSZXF1ZXN0GiEua29tYXJpLmZpbGUudjEuQ29weUVudHJ5UmVzcG9uc2USUwoKQ2htb2RFbnRyeRIhLmtvbWFyaS5maWxlLnYxLkNobW9kRW50cnlSZXF1ZXN0GiIua29tYXJpLmZpbGUudjEuQ2htb2RFbnRyeVJlc3BvbnNlElMKCkNob3duRW50cnkSIS5rb21hcmkuZmlsZS52MS5DaG93bkVudHJ5UmVxdWVzdBoiLmtvbWFyaS5maWxlLnYxLkNob3duRW50cnlSZXNwb25zZRJbCgtTZWFyY2hGaWxlcxIiLmtvbWFyaS5maWxlLnYxLlNlYXJjaEZpbGVzUmVxdWVzdBojLmtvbWFyaS5maWxlLnYxLlNlYXJjaEZpbGVzUmVzcG9uc2UiA5ACARJwChNMZWFzZUZpbGVPcGVyYXRpb25zEioua29tYXJpLmZpbGUudjEuTGVhc2VGaWxlT3BlcmF0aW9uc1JlcXVlc3QaKy5rb21hcmkuZmlsZS52MS5MZWFzZUZpbGVPcGVyYXRpb25zUmVzcG9uc2UwARJ1ChRBdHRhY2hGaWxlT3BlcmF0aW9ucxIrLmtvbWFyaS5maWxlLnYxLkF0dGFjaEZpbGVPcGVyYXRpb25zUmVxdWVzdBosLmtvbWFyaS5maWxlLnYxLkF0dGFjaEZpbGVPcGVyYXRpb25zUmVzcG9uc2UoATABQrkBChJjb20ua29tYXJpLmZpbGUudjFCCUZpbGVQcm90b1ABWj5naXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9maWxlL3YxO2ZpbGV2MaICA0tGWKoCDktvbWFyaS5GaWxlLlYxygIOS29tYXJpXEZpbGVcVjHiAhpLb21hcmlcRmlsZVxWMVxHUEJNZXRhZGF0YeoCEEtvbWFyaTo6RmlsZTo6VjFiBnByb3RvMw", [file_google_protobuf_struct, file_google_protobuf_timestamp, file_komari_common_v1_common]);
 
 /**
  * FileEntry is one directory entry or path metadata record.
@@ -903,6 +903,13 @@ export type LeaseFileOperationsResponse = Message<"komari.file.v1.LeaseFileOpera
    * @generated from field: komari.file.v1.FileAssignment assignment = 1;
    */
   assignment?: FileAssignment | undefined;
+
+  /**
+   * heartbeat keeps long-lived agent lease streams alive across idle proxies.
+   *
+   * @generated from field: bool heartbeat = 2;
+   */
+  heartbeat: boolean;
 };
 
 /**
@@ -1041,8 +1048,10 @@ export type FileAssignment = Message<"komari.file.v1.FileAssignment"> & {
    * arguments carries the operation-specific stream parameters. Control
    * operations use the typed fields above; the transfer operations use this
    * map so the wire shape matches the agent's existing file stream code.
+   * arguments is deprecated in favor of the typed payload oneof.
    *
-   * @generated from field: google.protobuf.Struct arguments = 18;
+   * @generated from field: google.protobuf.Struct arguments = 18 [deprecated = true];
+   * @deprecated
    */
   arguments?: JsonObject | undefined;
 
@@ -1060,6 +1069,103 @@ export type FileAssignment = Message<"komari.file.v1.FileAssignment"> & {
    * @generated from field: string workspace_id = 20;
    */
   workspaceId: string;
+
+  /**
+   * payload carries the strongly typed operation parameters replacing untyped arguments.
+   *
+   * @generated from oneof komari.file.v1.FileAssignment.payload
+   */
+  payload: {
+    /**
+     * @generated from field: komari.file.v1.FileListPayload list = 21;
+     */
+    value: FileListPayload;
+    case: "list";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileListRootsPayload list_roots = 22;
+     */
+    value: FileListRootsPayload;
+    case: "listRoots";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileStatPayload stat = 23;
+     */
+    value: FileStatPayload;
+    case: "stat";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileCreatePayload create = 24;
+     */
+    value: FileCreatePayload;
+    case: "create";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileMkdirPayload mkdir = 25;
+     */
+    value: FileMkdirPayload;
+    case: "mkdir";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileDeletePayload delete = 26;
+     */
+    value: FileDeletePayload;
+    case: "delete";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileMovePayload move = 27;
+     */
+    value: FileMovePayload;
+    case: "move";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileCopyPayload copy = 28;
+     */
+    value: FileCopyPayload;
+    case: "copy";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileChmodPayload chmod = 29;
+     */
+    value: FileChmodPayload;
+    case: "chmod";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileChownPayload chown = 30;
+     */
+    value: FileChownPayload;
+    case: "chown";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileSearchPayload search = 31;
+     */
+    value: FileSearchPayload;
+    case: "search";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileDownloadStreamPayload download_stream = 32;
+     */
+    value: FileDownloadStreamPayload;
+    case: "downloadStream";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileUploadStreamPayload upload_stream = 33;
+     */
+    value: FileUploadStreamPayload;
+    case: "uploadStream";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileUploadCommitPayload upload_commit = 34;
+     */
+    value: FileUploadCommitPayload;
+    case: "uploadCommit";
+  } | {
+    /**
+     * @generated from field: komari.file.v1.FileUploadCancelPayload upload_cancel = 35;
+     */
+    value: FileUploadCancelPayload;
+    case: "uploadCancel";
+  } | { case: undefined; value?: undefined };
 };
 
 /**
@@ -1068,6 +1174,497 @@ export type FileAssignment = Message<"komari.file.v1.FileAssignment"> & {
  */
 export const FileAssignmentSchema: GenMessage<FileAssignment> = /*@__PURE__*/
   messageDesc(file_komari_file_v1_file, 25);
+
+/**
+ * FileListPayload lists one directory path.
+ *
+ * @generated from message komari.file.v1.FileListPayload
+ */
+export type FileListPayload = Message<"komari.file.v1.FileListPayload"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+};
+
+/**
+ * Describes the message komari.file.v1.FileListPayload.
+ * Use `create(FileListPayloadSchema)` to create a new message.
+ */
+export const FileListPayloadSchema: GenMessage<FileListPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 26);
+
+/**
+ * FileListRootsPayload lists exposed filesystem roots.
+ *
+ * @generated from message komari.file.v1.FileListRootsPayload
+ */
+export type FileListRootsPayload = Message<"komari.file.v1.FileListRootsPayload"> & {
+};
+
+/**
+ * Describes the message komari.file.v1.FileListRootsPayload.
+ * Use `create(FileListRootsPayloadSchema)` to create a new message.
+ */
+export const FileListRootsPayloadSchema: GenMessage<FileListRootsPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 27);
+
+/**
+ * FileStatPayload inspects one path.
+ *
+ * @generated from message komari.file.v1.FileStatPayload
+ */
+export type FileStatPayload = Message<"komari.file.v1.FileStatPayload"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+};
+
+/**
+ * Describes the message komari.file.v1.FileStatPayload.
+ * Use `create(FileStatPayloadSchema)` to create a new message.
+ */
+export const FileStatPayloadSchema: GenMessage<FileStatPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 28);
+
+/**
+ * FileCreatePayload creates one empty regular file.
+ *
+ * @generated from message komari.file.v1.FileCreatePayload
+ */
+export type FileCreatePayload = Message<"komari.file.v1.FileCreatePayload"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+
+  /**
+   * @generated from field: string mode = 2;
+   */
+  mode: string;
+};
+
+/**
+ * Describes the message komari.file.v1.FileCreatePayload.
+ * Use `create(FileCreatePayloadSchema)` to create a new message.
+ */
+export const FileCreatePayloadSchema: GenMessage<FileCreatePayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 29);
+
+/**
+ * FileMkdirPayload creates one directory.
+ *
+ * @generated from message komari.file.v1.FileMkdirPayload
+ */
+export type FileMkdirPayload = Message<"komari.file.v1.FileMkdirPayload"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+
+  /**
+   * @generated from field: string mode = 2;
+   */
+  mode: string;
+};
+
+/**
+ * Describes the message komari.file.v1.FileMkdirPayload.
+ * Use `create(FileMkdirPayloadSchema)` to create a new message.
+ */
+export const FileMkdirPayloadSchema: GenMessage<FileMkdirPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 30);
+
+/**
+ * FileDeletePayload removes one file or directory tree.
+ *
+ * @generated from message komari.file.v1.FileDeletePayload
+ */
+export type FileDeletePayload = Message<"komari.file.v1.FileDeletePayload"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+
+  /**
+   * @generated from field: bool recursive = 2;
+   */
+  recursive: boolean;
+};
+
+/**
+ * Describes the message komari.file.v1.FileDeletePayload.
+ * Use `create(FileDeletePayloadSchema)` to create a new message.
+ */
+export const FileDeletePayloadSchema: GenMessage<FileDeletePayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 31);
+
+/**
+ * FileMovePayload moves or renames one path.
+ *
+ * @generated from message komari.file.v1.FileMovePayload
+ */
+export type FileMovePayload = Message<"komari.file.v1.FileMovePayload"> & {
+  /**
+   * @generated from field: string source = 1;
+   */
+  source: string;
+
+  /**
+   * @generated from field: string destination = 2;
+   */
+  destination: string;
+
+  /**
+   * @generated from field: bool overwrite = 3;
+   */
+  overwrite: boolean;
+};
+
+/**
+ * Describes the message komari.file.v1.FileMovePayload.
+ * Use `create(FileMovePayloadSchema)` to create a new message.
+ */
+export const FileMovePayloadSchema: GenMessage<FileMovePayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 32);
+
+/**
+ * FileCopyPayload copies one file or directory tree.
+ *
+ * @generated from message komari.file.v1.FileCopyPayload
+ */
+export type FileCopyPayload = Message<"komari.file.v1.FileCopyPayload"> & {
+  /**
+   * @generated from field: string source = 1;
+   */
+  source: string;
+
+  /**
+   * @generated from field: string destination = 2;
+   */
+  destination: string;
+
+  /**
+   * @generated from field: bool recursive = 3;
+   */
+  recursive: boolean;
+
+  /**
+   * @generated from field: bool overwrite = 4;
+   */
+  overwrite: boolean;
+};
+
+/**
+ * Describes the message komari.file.v1.FileCopyPayload.
+ * Use `create(FileCopyPayloadSchema)` to create a new message.
+ */
+export const FileCopyPayloadSchema: GenMessage<FileCopyPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 33);
+
+/**
+ * FileChmodPayload changes permission bits on one path.
+ *
+ * @generated from message komari.file.v1.FileChmodPayload
+ */
+export type FileChmodPayload = Message<"komari.file.v1.FileChmodPayload"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+
+  /**
+   * @generated from field: string mode = 2;
+   */
+  mode: string;
+};
+
+/**
+ * Describes the message komari.file.v1.FileChmodPayload.
+ * Use `create(FileChmodPayloadSchema)` to create a new message.
+ */
+export const FileChmodPayloadSchema: GenMessage<FileChmodPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 34);
+
+/**
+ * FileChownPayload changes Unix ownership on one path.
+ *
+ * @generated from message komari.file.v1.FileChownPayload
+ */
+export type FileChownPayload = Message<"komari.file.v1.FileChownPayload"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+
+  /**
+   * @generated from field: optional int32 uid = 2;
+   */
+  uid?: number | undefined;
+
+  /**
+   * @generated from field: optional int32 gid = 3;
+   */
+  gid?: number | undefined;
+
+  /**
+   * @generated from field: string owner = 4;
+   */
+  owner: string;
+
+  /**
+   * @generated from field: string group = 5;
+   */
+  group: string;
+};
+
+/**
+ * Describes the message komari.file.v1.FileChownPayload.
+ * Use `create(FileChownPayloadSchema)` to create a new message.
+ */
+export const FileChownPayloadSchema: GenMessage<FileChownPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 35);
+
+/**
+ * FileSearchPayload searches file names or contents below one directory.
+ *
+ * @generated from message komari.file.v1.FileSearchPayload
+ */
+export type FileSearchPayload = Message<"komari.file.v1.FileSearchPayload"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+
+  /**
+   * @generated from field: string query = 2;
+   */
+  query: string;
+
+  /**
+   * @generated from field: bool content = 3;
+   */
+  content: boolean;
+
+  /**
+   * @generated from field: uint32 max_results = 4;
+   */
+  maxResults: number;
+};
+
+/**
+ * Describes the message komari.file.v1.FileSearchPayload.
+ * Use `create(FileSearchPayloadSchema)` to create a new message.
+ */
+export const FileSearchPayloadSchema: GenMessage<FileSearchPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 36);
+
+/**
+ * FileDownloadStreamPayload streams one file range to the control plane relay.
+ *
+ * @generated from message komari.file.v1.FileDownloadStreamPayload
+ */
+export type FileDownloadStreamPayload = Message<"komari.file.v1.FileDownloadStreamPayload"> & {
+  /**
+   * @generated from field: string transfer_id = 1;
+   */
+  transferId: string;
+
+  /**
+   * @generated from field: string transfer_token = 2;
+   */
+  transferToken: string;
+
+  /**
+   * @generated from field: string path = 3;
+   */
+  path: string;
+
+  /**
+   * @generated from field: int64 offset = 4;
+   */
+  offset: bigint;
+
+  /**
+   * @generated from field: int64 length = 5;
+   */
+  length: bigint;
+
+  /**
+   * @generated from field: int64 chunk_index = 6;
+   */
+  chunkIndex: bigint;
+
+  /**
+   * @generated from field: int64 file_size = 7;
+   */
+  fileSize: bigint;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp modified_at = 8;
+   */
+  modifiedAt?: Timestamp | undefined;
+};
+
+/**
+ * Describes the message komari.file.v1.FileDownloadStreamPayload.
+ * Use `create(FileDownloadStreamPayloadSchema)` to create a new message.
+ */
+export const FileDownloadStreamPayloadSchema: GenMessage<FileDownloadStreamPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 37);
+
+/**
+ * FileUploadStreamPayload pulls one uploaded chunk from the control plane relay.
+ *
+ * @generated from message komari.file.v1.FileUploadStreamPayload
+ */
+export type FileUploadStreamPayload = Message<"komari.file.v1.FileUploadStreamPayload"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+
+  /**
+   * @generated from field: int64 offset = 2;
+   */
+  offset: bigint;
+
+  /**
+   * @generated from field: int64 chunk_index = 3;
+   */
+  chunkIndex: bigint;
+
+  /**
+   * @generated from field: int64 chunk_count = 4;
+   */
+  chunkCount: bigint;
+
+  /**
+   * @generated from field: int64 total_size = 5;
+   */
+  totalSize: bigint;
+
+  /**
+   * @generated from field: int64 chunk_size = 6;
+   */
+  chunkSize: bigint;
+
+  /**
+   * @generated from field: string upload_id = 7;
+   */
+  uploadId: string;
+
+  /**
+   * @generated from field: bool first = 8;
+   */
+  first: boolean;
+
+  /**
+   * @generated from field: bool final = 9;
+   */
+  final: boolean;
+
+  /**
+   * @generated from field: string transfer_id = 10;
+   */
+  transferId: string;
+
+  /**
+   * @generated from field: string transfer_token = 11;
+   */
+  transferToken: string;
+};
+
+/**
+ * Describes the message komari.file.v1.FileUploadStreamPayload.
+ * Use `create(FileUploadStreamPayloadSchema)` to create a new message.
+ */
+export const FileUploadStreamPayloadSchema: GenMessage<FileUploadStreamPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 38);
+
+/**
+ * FileUploadCommitPayload finalizes one chunked upload on the agent.
+ *
+ * @generated from message komari.file.v1.FileUploadCommitPayload
+ */
+export type FileUploadCommitPayload = Message<"komari.file.v1.FileUploadCommitPayload"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+
+  /**
+   * @generated from field: string upload_id = 2;
+   */
+  uploadId: string;
+
+  /**
+   * @generated from field: int64 chunk_index = 3;
+   */
+  chunkIndex: bigint;
+
+  /**
+   * @generated from field: int64 chunk_count = 4;
+   */
+  chunkCount: bigint;
+
+  /**
+   * @generated from field: int64 total_size = 5;
+   */
+  totalSize: bigint;
+
+  /**
+   * @generated from field: int64 chunk_size = 6;
+   */
+  chunkSize: bigint;
+
+  /**
+   * @generated from field: int64 offset = 7;
+   */
+  offset: bigint;
+
+  /**
+   * @generated from field: bool first = 8;
+   */
+  first: boolean;
+
+  /**
+   * @generated from field: bool final = 9;
+   */
+  final: boolean;
+};
+
+/**
+ * Describes the message komari.file.v1.FileUploadCommitPayload.
+ * Use `create(FileUploadCommitPayloadSchema)` to create a new message.
+ */
+export const FileUploadCommitPayloadSchema: GenMessage<FileUploadCommitPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 39);
+
+/**
+ * FileUploadCancelPayload aborts one chunked upload and removes temporary parts.
+ *
+ * @generated from message komari.file.v1.FileUploadCancelPayload
+ */
+export type FileUploadCancelPayload = Message<"komari.file.v1.FileUploadCancelPayload"> & {
+  /**
+   * @generated from field: string upload_id = 1;
+   */
+  uploadId: string;
+
+  /**
+   * @generated from field: string path = 2;
+   */
+  path: string;
+};
+
+/**
+ * Describes the message komari.file.v1.FileUploadCancelPayload.
+ * Use `create(FileUploadCancelPayloadSchema)` to create a new message.
+ */
+export const FileUploadCancelPayloadSchema: GenMessage<FileUploadCancelPayload> = /*@__PURE__*/
+  messageDesc(file_komari_file_v1_file, 40);
 
 /**
  * AttachFileOperationsRequest carries the agent handshake or one result.
@@ -1104,7 +1701,7 @@ export type AttachFileOperationsRequest = Message<"komari.file.v1.AttachFileOper
  * Use `create(AttachFileOperationsRequestSchema)` to create a new message.
  */
 export const AttachFileOperationsRequestSchema: GenMessage<AttachFileOperationsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_file_v1_file, 26);
+  messageDesc(file_komari_file_v1_file, 41);
 
 /**
  * AgentFileAttach binds an authenticated agent to one leased assignment.
@@ -1139,7 +1736,7 @@ export type AgentFileAttach = Message<"komari.file.v1.AgentFileAttach"> & {
  * Use `create(AgentFileAttachSchema)` to create a new message.
  */
 export const AgentFileAttachSchema: GenMessage<AgentFileAttach> = /*@__PURE__*/
-  messageDesc(file_komari_file_v1_file, 27);
+  messageDesc(file_komari_file_v1_file, 42);
 
 /**
  * AgentFileEvent reports one operation result or error.
@@ -1216,7 +1813,7 @@ export type AgentFileEvent = Message<"komari.file.v1.AgentFileEvent"> & {
  * Use `create(AgentFileEventSchema)` to create a new message.
  */
 export const AgentFileEventSchema: GenMessage<AgentFileEvent> = /*@__PURE__*/
-  messageDesc(file_komari_file_v1_file, 28);
+  messageDesc(file_komari_file_v1_file, 43);
 
 /**
  * AttachFileOperationsResponse carries one assignment or a close request.
@@ -1253,7 +1850,7 @@ export type AttachFileOperationsResponse = Message<"komari.file.v1.AttachFileOpe
  * Use `create(AttachFileOperationsResponseSchema)` to create a new message.
  */
 export const AttachFileOperationsResponseSchema: GenMessage<AttachFileOperationsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_file_v1_file, 29);
+  messageDesc(file_komari_file_v1_file, 44);
 
 /**
  * EntryKind distinguishes the two creatable entry kinds.
@@ -1394,6 +1991,20 @@ export enum FileOperation {
    * @generated from enum value: FILE_OPERATION_UPLOAD_STREAM = 13;
    */
   UPLOAD_STREAM = 13,
+
+  /**
+   * FILE_OPERATION_UPLOAD_COMMIT finalizes one chunked upload.
+   *
+   * @generated from enum value: FILE_OPERATION_UPLOAD_COMMIT = 14;
+   */
+  UPLOAD_COMMIT = 14,
+
+  /**
+   * FILE_OPERATION_UPLOAD_CANCEL aborts one chunked upload and cleans up state.
+   *
+   * @generated from enum value: FILE_OPERATION_UPLOAD_CANCEL = 15;
+   */
+  UPLOAD_CANCEL = 15,
 }
 
 /**

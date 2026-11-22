@@ -102,6 +102,7 @@ func NewExecutionServiceClient(httpClient connect.HTTPClient, baseURL string, op
 			httpClient,
 			baseURL+ExecutionServiceGetExecutionProcedure,
 			connect.WithSchema(executionServiceMethods.ByName("GetExecution")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		leaseExecution: connect.NewClient[v1.LeaseExecutionRequest, v1.LeaseExecutionResponse](
@@ -204,6 +205,7 @@ func NewExecutionServiceHandler(svc ExecutionServiceHandler, opts ...connect.Han
 		ExecutionServiceGetExecutionProcedure,
 		svc.GetExecution,
 		connect.WithSchema(executionServiceMethods.ByName("GetExecution")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	executionServiceLeaseExecutionHandler := connect.NewServerStreamHandler(

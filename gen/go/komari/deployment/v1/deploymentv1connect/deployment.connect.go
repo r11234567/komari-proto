@@ -69,6 +69,7 @@ func NewDeploymentServiceClient(httpClient connect.HTTPClient, baseURL string, o
 			httpClient,
 			baseURL+DeploymentServiceGetDeploymentProcedure,
 			connect.WithSchema(deploymentServiceMethods.ByName("GetDeployment")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		saveDeploymentProfile: connect.NewClient[v1.SaveDeploymentProfileRequest, v1.SaveDeploymentProfileResponse](
@@ -130,6 +131,7 @@ func NewDeploymentServiceHandler(svc DeploymentServiceHandler, opts ...connect.H
 		DeploymentServiceGetDeploymentProcedure,
 		svc.GetDeployment,
 		connect.WithSchema(deploymentServiceMethods.ByName("GetDeployment")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	deploymentServiceSaveDeploymentProfileHandler := connect.NewUnaryHandler(

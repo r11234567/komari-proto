@@ -15,11 +15,17 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/file/v1;fil
 // data plane so browsers can use ordinary URLs and streaming transfers.
 service FileService {
   // ListDirectory returns the entries of one directory.
-  rpc ListDirectory(ListDirectoryRequest) returns (ListDirectoryResponse);
+  rpc ListDirectory(ListDirectoryRequest) returns (ListDirectoryResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // ListRoots returns the filesystem roots exposed by one agent.
-  rpc ListRoots(ListRootsRequest) returns (ListRootsResponse);
+  rpc ListRoots(ListRootsRequest) returns (ListRootsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // StatFile returns metadata for one path.
-  rpc StatFile(StatFileRequest) returns (StatFileResponse);
+  rpc StatFile(StatFileRequest) returns (StatFileResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // CreateEntry creates one empty file or one directory.
   rpc CreateEntry(CreateEntryRequest) returns (CreateEntryResponse);
   // DeleteEntry removes one file or directory.
@@ -33,7 +39,9 @@ service FileService {
   // ChownEntry changes Unix ownership.
   rpc ChownEntry(ChownEntryRequest) returns (ChownEntryResponse);
   // SearchFiles searches names or file contents below one directory.
-  rpc SearchFiles(SearchFilesRequest) returns (SearchFilesResponse);
+  rpc SearchFiles(SearchFilesRequest) returns (SearchFilesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // LeaseFileOperations assigns pending operations to one authenticated agent.
   rpc LeaseFileOperations(LeaseFileOperationsRequest) returns (stream LeaseFileOperationsResponse);
   // AttachFileOperations is the agent-side bidirectional operation channel.
@@ -82,6 +90,10 @@ enum FileOperation {
   // FILE_OPERATION_UPLOAD_STREAM pulls one uploaded chunk from the control
   // plane over the one-shot transfer endpoint.
   FILE_OPERATION_UPLOAD_STREAM = 13;
+  // FILE_OPERATION_UPLOAD_COMMIT finalizes one chunked upload.
+  FILE_OPERATION_UPLOAD_COMMIT = 14;
+  // FILE_OPERATION_UPLOAD_CANCEL aborts one chunked upload and cleans up state.
+  FILE_OPERATION_UPLOAD_CANCEL = 15;
 }
 
 // FileEntry is one directory entry or path metadata record.
@@ -338,6 +350,8 @@ message LeaseFileOperationsRequest {
 message LeaseFileOperationsResponse {
   // assignment is the next operation to execute.
   FileAssignment assignment = 1;
+  // heartbeat keeps long-lived agent lease streams alive across idle proxies.
+  bool heartbeat = 2;
 }
 
 // FileAssignment describes one operation that an agent must execute.
@@ -379,12 +393,146 @@ message FileAssignment {
   // arguments carries the operation-specific stream parameters. Control
   // operations use the typed fields above; the transfer operations use this
   // map so the wire shape matches the agent's existing file stream code.
-  google.protobuf.Struct arguments = 18;
+  // arguments is deprecated in favor of the typed payload oneof.
+  google.protobuf.Struct arguments = 18 [deprecated = true];
   // system_user executes the entire operation, including transfers, as this OS user.
   // Account-aware Agents must reject an empty or unavailable identity.
   string system_user = 19;
   // workspace_id isolates stateful upload workers between authorizations.
   string workspace_id = 20;
+  // payload carries the strongly typed operation parameters replacing untyped arguments.
+  oneof payload {
+    FileListPayload list = 21;
+    FileListRootsPayload list_roots = 22;
+    FileStatPayload stat = 23;
+    FileCreatePayload create = 24;
+    FileMkdirPayload mkdir = 25;
+    FileDeletePayload delete = 26;
+    FileMovePayload move = 27;
+    FileCopyPayload copy = 28;
+    FileChmodPayload chmod = 29;
+    FileChownPayload chown = 30;
+    FileSearchPayload search = 31;
+    FileDownloadStreamPayload download_stream = 32;
+    FileUploadStreamPayload upload_stream = 33;
+    FileUploadCommitPayload upload_commit = 34;
+    FileUploadCancelPayload upload_cancel = 35;
+  }
+}
+
+// FileListPayload lists one directory path.
+message FileListPayload {
+  string path = 1;
+}
+
+// FileListRootsPayload lists exposed filesystem roots.
+message FileListRootsPayload {}
+
+// FileStatPayload inspects one path.
+message FileStatPayload {
+  string path = 1;
+}
+
+// FileCreatePayload creates one empty regular file.
+message FileCreatePayload {
+  string path = 1;
+  string mode = 2;
+}
+
+// FileMkdirPayload creates one directory.
+message FileMkdirPayload {
+  string path = 1;
+  string mode = 2;
+}
+
+// FileDeletePayload removes one file or directory tree.
+message FileDeletePayload {
+  string path = 1;
+  bool recursive = 2;
+}
+
+// FileMovePayload moves or renames one path.
+message FileMovePayload {
+  string source = 1;
+  string destination = 2;
+  bool overwrite = 3;
+}
+
+// FileCopyPayload copies one file or directory tree.
+message FileCopyPayload {
+  string source = 1;
+  string destination = 2;
+  bool recursive = 3;
+  bool overwrite = 4;
+}
+
+// FileChmodPayload changes permission bits on one path.
+message FileChmodPayload {
+  string path = 1;
+  string mode = 2;
+}
+
+// FileChownPayload changes Unix ownership on one path.
+message FileChownPayload {
+  string path = 1;
+  optional int32 uid = 2;
+  optional int32 gid = 3;
+  string owner = 4;
+  string group = 5;
+}
+
+// FileSearchPayload searches file names or contents below one directory.
+message FileSearchPayload {
+  string path = 1;
+  string query = 2;
+  bool content = 3;
+  uint32 max_results = 4;
+}
+
+// FileDownloadStreamPayload streams one file range to the control plane relay.
+message FileDownloadStreamPayload {
+  string transfer_id = 1;
+  string transfer_token = 2;
+  string path = 3;
+  int64 offset = 4;
+  int64 length = 5;
+  int64 chunk_index = 6;
+  int64 file_size = 7;
+  google.protobuf.Timestamp modified_at = 8;
+}
+
+// FileUploadStreamPayload pulls one uploaded chunk from the control plane relay.
+message FileUploadStreamPayload {
+  string path = 1;
+  int64 offset = 2;
+  int64 chunk_index = 3;
+  int64 chunk_count = 4;
+  int64 total_size = 5;
+  int64 chunk_size = 6;
+  string upload_id = 7;
+  bool first = 8;
+  bool final = 9;
+  string transfer_id = 10;
+  string transfer_token = 11;
+}
+
+// FileUploadCommitPayload finalizes one chunked upload on the agent.
+message FileUploadCommitPayload {
+  string path = 1;
+  string upload_id = 2;
+  int64 chunk_index = 3;
+  int64 chunk_count = 4;
+  int64 total_size = 5;
+  int64 chunk_size = 6;
+  int64 offset = 7;
+  bool first = 8;
+  bool final = 9;
+}
+
+// FileUploadCancelPayload aborts one chunked upload and removes temporary parts.
+message FileUploadCancelPayload {
+  string upload_id = 1;
+  string path = 2;
 }
 
 // AttachFileOperationsRequest carries the agent handshake or one result.

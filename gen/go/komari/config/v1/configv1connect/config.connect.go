@@ -114,6 +114,7 @@ func NewConfigServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			httpClient,
 			baseURL+ConfigServiceGetDesiredConfigProcedure,
 			connect.WithSchema(configServiceMethods.ByName("GetDesiredConfig")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		watchDesiredConfig: connect.NewClient[v1.WatchDesiredConfigRequest, v1.WatchDesiredConfigResponse](
@@ -204,6 +205,7 @@ func NewConfigServiceHandler(svc ConfigServiceHandler, opts ...connect.HandlerOp
 		ConfigServiceGetDesiredConfigProcedure,
 		svc.GetDesiredConfig,
 		connect.WithSchema(configServiceMethods.ByName("GetDesiredConfig")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	configServiceWatchDesiredConfigHandler := connect.NewServerStreamHandler(
@@ -309,12 +311,14 @@ func NewPrivilegedDeliveryServiceClient(httpClient connect.HTTPClient, baseURL s
 			httpClient,
 			baseURL+PrivilegedDeliveryServiceGetNodeConfigStateProcedure,
 			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("GetNodeConfigState")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		getPrivilegedDelivery: connect.NewClient[v1.GetPrivilegedDeliveryRequest, v1.GetPrivilegedDeliveryResponse](
 			httpClient,
 			baseURL+PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure,
 			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("GetPrivilegedDelivery")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		watchPrivilegedDelivery: connect.NewClient[v1.WatchPrivilegedDeliveryRequest, v1.WatchPrivilegedDeliveryResponse](
@@ -351,6 +355,7 @@ func NewPrivilegedDeliveryServiceClient(httpClient connect.HTTPClient, baseURL s
 			httpClient,
 			baseURL+PrivilegedDeliveryServiceListPrivilegedRevisionsProcedure,
 			connect.WithSchema(privilegedDeliveryServiceMethods.ByName("ListPrivilegedRevisions")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -451,12 +456,14 @@ func NewPrivilegedDeliveryServiceHandler(svc PrivilegedDeliveryServiceHandler, o
 		PrivilegedDeliveryServiceGetNodeConfigStateProcedure,
 		svc.GetNodeConfigState,
 		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("GetNodeConfigState")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	privilegedDeliveryServiceGetPrivilegedDeliveryHandler := connect.NewUnaryHandler(
 		PrivilegedDeliveryServiceGetPrivilegedDeliveryProcedure,
 		svc.GetPrivilegedDelivery,
 		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("GetPrivilegedDelivery")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	privilegedDeliveryServiceWatchPrivilegedDeliveryHandler := connect.NewServerStreamHandler(
@@ -493,6 +500,7 @@ func NewPrivilegedDeliveryServiceHandler(svc PrivilegedDeliveryServiceHandler, o
 		PrivilegedDeliveryServiceListPrivilegedRevisionsProcedure,
 		svc.ListPrivilegedRevisions,
 		connect.WithSchema(privilegedDeliveryServiceMethods.ByName("ListPrivilegedRevisions")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/komari.config.v1.PrivilegedDeliveryService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -4,7 +4,9 @@ import (
 	"testing"
 	"time"
 
+	browserv1 "github.com/r11234567/komari-proto/gen/go/komari/browser/v1"
 	execv1 "github.com/r11234567/komari-proto/gen/go/komari/exec/v1"
+	filev1 "github.com/r11234567/komari-proto/gen/go/komari/file/v1"
 	metricsv1 "github.com/r11234567/komari-proto/gen/go/komari/metrics/v1"
 	reportv1 "github.com/r11234567/komari-proto/gen/go/komari/report/v1"
 	rescuev1 "github.com/r11234567/komari-proto/gen/go/komari/rescue/v1"
@@ -143,32 +145,20 @@ func TestDeprecatedRPCs_Enforcement(t *testing.T) {
 		t.Fatal("expected SubmitReport method to be marked deprecated")
 	}
 
-	// 2. WebSSHService legacy polling methods must be deprecated
+	// 2. WebSSHService browser RPCs and agent streams are active; OpenSession is removed.
 	websshServiceDesc := websshv1.File_komari_webssh_v1_webssh_proto.Services().ByName("WebSSHService")
 	if websshServiceDesc == nil {
 		t.Fatal("expected WebSSHService in webssh.proto")
 	}
-	legacyMethods := []string{
+	if m := websshServiceDesc.Methods().ByName("OpenSession"); m != nil {
+		t.Fatal("expected OpenSession method to be removed from WebSSHService")
+	}
+	activeMethods := []string{
 		"CreateSession",
 		"SendSessionCommand",
 		"WatchSession",
 		"AcknowledgeSessionEvents",
 		"CloseSession",
-	}
-	for _, methodName := range legacyMethods {
-		m := websshServiceDesc.Methods().ByName(protoreflect.Name(methodName))
-		if m == nil {
-			t.Fatalf("expected method %s in WebSSHService", methodName)
-		}
-		opts, ok := m.Options().(*descriptorpb.MethodOptions)
-		if !ok || !opts.GetDeprecated() {
-			t.Fatalf("expected method %s to be marked deprecated", methodName)
-		}
-	}
-
-	// Active methods must NOT be deprecated
-	activeMethods := []string{
-		"OpenSession",
 		"LeaseSessions",
 		"AttachSession",
 	}
@@ -196,6 +186,72 @@ func TestDeprecatedRPCs_Enforcement(t *testing.T) {
 		opts, ok := m.Options().(*descriptorpb.MethodOptions)
 		if !ok || !opts.GetDeprecated() {
 			t.Fatalf("expected method %s to be marked deprecated", methodName)
+		}
+	}
+}
+
+func TestP3CProtocolCleanup_Descriptors(t *testing.T) {
+	// 1. FileAssignment keeps arguments deprecated and defines typed payload oneof.
+	assignDesc := (&filev1.FileAssignment{}).ProtoReflect().Descriptor()
+	argsField := assignDesc.Fields().ByName("arguments")
+	if argsField == nil || argsField.Number() != 18 {
+		t.Fatal("expected FileAssignment.arguments field at tag 18")
+	}
+	if opts, ok := argsField.Options().(*descriptorpb.FieldOptions); !ok || !opts.GetDeprecated() {
+		t.Fatal("expected FileAssignment.arguments to be marked deprecated")
+	}
+	payloadOneof := assignDesc.Oneofs().ByName("payload")
+	if payloadOneof == nil || payloadOneof.Fields().Len() != 15 {
+		t.Fatalf("expected FileAssignment.payload oneof with 15 typed branches, got %v", payloadOneof)
+	}
+	leaseRespDesc := (&filev1.LeaseFileOperationsResponse{}).ProtoReflect().Descriptor()
+	if hb := leaseRespDesc.Fields().ByName("heartbeat"); hb == nil || hb.Kind() != protoreflect.BoolKind {
+		t.Fatal("expected LeaseFileOperationsResponse.heartbeat bool field")
+	}
+
+	// 2. Read-only browser GET RPCs declare NO_SIDE_EFFECTS.
+	browserSvc := browserv1.File_komari_browser_v1_browser_proto.Services().ByName("BrowserService")
+	if browserSvc == nil {
+		t.Fatal("expected BrowserService descriptor")
+	}
+	getPublicInfo := browserSvc.Methods().ByName("GetPublicInfo")
+	if getPublicInfo == nil {
+		t.Fatal("expected BrowserService.GetPublicInfo descriptor")
+	}
+	mOpts, _ := getPublicInfo.Options().(*descriptorpb.MethodOptions)
+	if mOpts.GetIdempotencyLevel() != descriptorpb.MethodOptions_NO_SIDE_EFFECTS {
+		t.Fatalf("expected GetPublicInfo NO_SIDE_EFFECTS, got %v", mOpts.GetIdempotencyLevel())
+	}
+
+	// 3. SignatureAlgorithm only exposes Ed25519 and reserves 2..5.
+	sigAlgDesc := securityv1.File_komari_security_v1_security_proto.Enums().ByName("SignatureAlgorithm")
+	if sigAlgDesc == nil {
+		t.Fatal("expected SignatureAlgorithm enum descriptor")
+	}
+	if sigAlgDesc.Values().Len() != 2 {
+		t.Fatalf("expected 2 SignatureAlgorithm enum values (UNSPECIFIED, ED25519), got %d", sigAlgDesc.Values().Len())
+	}
+	for _, tag := range []protoreflect.EnumNumber{2, 3, 4, 5} {
+		if !sigAlgDesc.ReservedRanges().Has(tag) {
+			t.Fatalf("expected SignatureAlgorithm enum tag %d to be reserved", tag)
+		}
+	}
+
+	// 4. WebSSH File fields removed and reserved.
+	for _, check := range []struct {
+		desc protoreflect.MessageDescriptor
+		tag  protoreflect.FieldNumber
+	}{
+		{(&websshv1.SendSessionCommandRequest{}).ProtoReflect().Descriptor(), 5},
+		{(&websshv1.SessionEvent{}).ProtoReflect().Descriptor(), 5},
+		{(&websshv1.AgentSessionEvent{}).ProtoReflect().Descriptor(), 4},
+		{(&websshv1.AttachSessionResponse{}).ProtoReflect().Descriptor(), 4},
+	} {
+		if check.desc.Fields().ByName("file") != nil {
+			t.Fatalf("expected %s.file to be removed", check.desc.FullName())
+		}
+		if !check.desc.ReservedRanges().Has(check.tag) || !check.desc.ReservedNames().Has("file") {
+			t.Fatalf("expected %s tag %d and name 'file' to be reserved", check.desc.FullName(), check.tag)
 		}
 	}
 }

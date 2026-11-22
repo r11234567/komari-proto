@@ -7,57 +7,22 @@ import "komari/common/v1/common.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/webssh/v1;websshv1";
 
-// WebSSHService owns interactive terminal sessions; this is the only bidi API.
+// WebSSHService owns interactive terminal sessions.
 service WebSSHService {
-  // OpenSession is retained for native clients that support bidi streams.
-  rpc OpenSession(stream OpenSessionRequest) returns (stream OpenSessionResponse);
   // CreateSession opens a browser-compatible remote-management session.
-  // Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
-  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse) {
-    option deprecated = true;
-  }
-  // SendSessionCommand carries terminal input, resize, and typed file operations.
-  // Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
-  rpc SendSessionCommand(SendSessionCommandRequest) returns (SendSessionCommandResponse) {
-    option deprecated = true;
-  }
-  // WatchSession streams terminal and file events to browser clients.
-  // Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
-  rpc WatchSession(WatchSessionRequest) returns (stream WatchSessionResponse) {
-    option deprecated = true;
-  }
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
+  // SendSessionCommand carries terminal input and resize commands.
+  rpc SendSessionCommand(SendSessionCommandRequest) returns (SendSessionCommandResponse);
+  // WatchSession streams terminal events to browser clients.
+  rpc WatchSession(WatchSessionRequest) returns (stream WatchSessionResponse);
   // AcknowledgeSessionEvents releases replay buffers consumed by the browser.
-  // Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
-  rpc AcknowledgeSessionEvents(AcknowledgeSessionEventsRequest) returns (AcknowledgeSessionEventsResponse) {
-    option deprecated = true;
-  }
+  rpc AcknowledgeSessionEvents(AcknowledgeSessionEventsRequest) returns (AcknowledgeSessionEventsResponse);
   // CloseSession records explicit cleanup with a short independent deadline.
-  // Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
-  rpc CloseSession(CloseSessionRequest) returns (CloseSessionResponse) {
-    option deprecated = true;
-  }
+  rpc CloseSession(CloseSessionRequest) returns (CloseSessionResponse);
   // LeaseSessions assigns pending sessions to an authenticated Agent.
   rpc LeaseSessions(LeaseSessionsRequest) returns (stream LeaseSessionsResponse);
-  // AttachSession is the Agent-side bidirectional terminal/file channel.
+  // AttachSession is the Agent-side bidirectional terminal channel.
   rpc AttachSession(stream AttachSessionRequest) returns (stream AttachSessionResponse);
-}
-
-// SessionRequest carries exactly one client-side terminal event.
-message OpenSessionRequest {
-  oneof event {
-    SessionStart start = 1;
-    TerminalInput input = 2;
-    TerminalResize resize = 3;
-  }
-}
-
-// SessionResponse carries exactly one server-side terminal event.
-message OpenSessionResponse {
-  oneof event {
-    SessionStarted started = 1;
-    TerminalOutput output = 2;
-    SessionClosed closed = 3;
-  }
 }
 
 // SessionStart authorizes and opens one session with fresh 2FA.
@@ -123,10 +88,11 @@ message CreateSessionResponse {
 message SendSessionCommandRequest {
   string session_id = 1;
   uint64 sequence = 2;
+  reserved 5;
+  reserved "file";
   oneof command {
     bytes input = 3;
     TerminalSize resize = 4;
-    FileCommand file = 5;
   }
 }
 
@@ -161,14 +127,15 @@ message AcknowledgeSessionEventsResponse {
   uint64 accepted_sequence = 1;
 }
 
-// SessionEvent is an ordered terminal, file, or close event.
+// SessionEvent is an ordered terminal or close event.
 message SessionEvent {
   string session_id = 1;
   uint64 sequence = 2;
   google.protobuf.Timestamp occurred_at = 3;
+  reserved 5;
+  reserved "file";
   oneof event {
     bytes output = 4;
-    FileEvent file = 5;
     SessionClosed closed = 6;
   }
 }
@@ -215,14 +182,15 @@ message AgentSessionAttach {
   bool resumable = 5;
 }
 
-// AgentSessionEvent carries terminal/file output or a terminal state.
+// AgentSessionEvent carries terminal output or a terminal state.
 message AgentSessionEvent {
   uint64 sequence = 1;
   google.protobuf.Timestamp occurred_at = 2;
   uint64 accepted_command_sequence = 6;
+  reserved 4;
+  reserved "file";
   oneof event {
     bytes output = 3;
-    FileEvent file = 4;
     SessionClosed closed = 5;
   }
 }
@@ -235,66 +203,13 @@ message AttachSessionResponse {
   // A short transport lease, capped by existing absolute/idle authorization.
   // Heartbeats renew transport liveness only; they do not renew authorization.
   google.protobuf.Timestamp resume_until = 7;
+  reserved 4;
+  reserved "file";
   oneof command {
     bytes input = 2;
     TerminalSize resize = 3;
-    FileCommand file = 4;
     string close_reason = 5;
   }
-}
-
-// FileOperation enumerates bounded remote file-manager actions.
-enum FileOperation {
-  FILE_OPERATION_UNSPECIFIED = 0;
-  FILE_OPERATION_LIST = 1;
-  FILE_OPERATION_MKDIR = 2;
-  FILE_OPERATION_CREATE = 3;
-  FILE_OPERATION_RENAME = 4;
-  FILE_OPERATION_COPY = 5;
-  FILE_OPERATION_DELETE = 6;
-  FILE_OPERATION_UPLOAD_START = 7;
-  FILE_OPERATION_UPLOAD_CHUNK = 8;
-  FILE_OPERATION_UPLOAD_FINISH = 9;
-  FILE_OPERATION_DOWNLOAD = 10;
-}
-
-// FileCommand is one typed file-manager request.
-message FileCommand {
-  string request_id = 1;
-  FileOperation operation = 2;
-  string path = 3;
-  string destination = 4;
-  bool recursive = 5;
-  bool overwrite = 6;
-  uint64 size = 7;
-  string sha256 = 8;
-  string upload_id = 9;
-  bytes data = 10;
-}
-
-// FileEntry is one directory entry without platform-specific metadata blobs.
-message FileEntry {
-  string name = 1;
-  string path = 2;
-  bool directory = 3;
-  uint64 size = 4;
-  google.protobuf.Timestamp modified_at = 5;
-}
-
-// FileEvent is one typed response or transfer chunk.
-message FileEvent {
-  string request_id = 1;
-  FileOperation operation = 2;
-  bool success = 3;
-  string error = 4;
-  repeated FileEntry entries = 5;
-  string parent = 6;
-  string upload_id = 7;
-  uint64 size = 8;
-  uint64 transferred = 9;
-  string sha256 = 10;
-  bytes data = 11;
-  bool complete = 12;
 }
 
 // CloseSessionRequest explicitly closes one session.

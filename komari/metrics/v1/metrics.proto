@@ -20,20 +20,32 @@ service MetricsService {
     option deprecated = true;
   }
   // QueryMetrics retrieves a bounded time window.
-  rpc QueryMetrics(QueryMetricsRequest) returns (QueryMetricsResponse);
+  rpc QueryMetrics(QueryMetricsRequest) returns (QueryMetricsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // ListMetricDefinitions returns the public metric catalog used by themes.
-  rpc ListMetricDefinitions(ListMetricDefinitionsRequest) returns (ListMetricDefinitionsResponse);
+  rpc ListMetricDefinitions(ListMetricDefinitionsRequest) returns (ListMetricDefinitionsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // ListPingTasks returns public latency targets without their secret addresses.
-  rpc ListPingTasks(ListPingTasksRequest) returns (ListPingTasksResponse);
+  rpc ListPingTasks(ListPingTasksRequest) returns (ListPingTasksResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // GetPingStats returns bounded server-computed latency statistics.
-  rpc GetPingStats(GetPingStatsRequest) returns (GetPingStatsResponse);
+  rpc GetPingStats(GetPingStatsRequest) returns (GetPingStatsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // WatchMetrics streams live samples until cancellation or deadline.
   rpc WatchMetrics(WatchMetricsRequest) returns (stream WatchMetricsResponse);
   // UpdateMetricDefinition changes administrator-controlled retention.
   rpc UpdateMetricDefinition(UpdateMetricDefinitionRequest) returns (UpdateMetricDefinitionResponse);
-  rpc GetDownsamplingPolicy(GetDownsamplingPolicyRequest) returns (GetDownsamplingPolicyResponse);
+  rpc GetDownsamplingPolicy(GetDownsamplingPolicyRequest) returns (GetDownsamplingPolicyResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   rpc SetDownsamplingPolicy(SetDownsamplingPolicyRequest) returns (SetDownsamplingPolicyResponse);
-  rpc GetMetricMigrationStatus(GetMetricMigrationStatusRequest) returns (GetMetricMigrationStatusResponse);
+  rpc GetMetricMigrationStatus(GetMetricMigrationStatusRequest) returns (GetMetricMigrationStatusResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   rpc StartMetricMigration(StartMetricMigrationRequest) returns (StartMetricMigrationResponse);
   rpc CancelMetricMigration(CancelMetricMigrationRequest) returns (CancelMetricMigrationResponse);
 }

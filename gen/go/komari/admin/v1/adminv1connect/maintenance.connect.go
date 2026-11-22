@@ -114,6 +114,7 @@ func NewMaintenanceServiceClient(httpClient connect.HTTPClient, baseURL string, 
 			httpClient,
 			baseURL+MaintenanceServiceListSessionsProcedure,
 			connect.WithSchema(maintenanceServiceMethods.ByName("ListSessions")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		deleteSession: connect.NewClient[v1.DeleteSessionRequest, v1.DeleteSessionResponse](
@@ -132,18 +133,21 @@ func NewMaintenanceServiceClient(httpClient connect.HTTPClient, baseURL string, 
 			httpClient,
 			baseURL+MaintenanceServiceListAuditLogsProcedure,
 			connect.WithSchema(maintenanceServiceMethods.ByName("ListAuditLogs")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		listClipboardEntries: connect.NewClient[v1.ListClipboardEntriesRequest, v1.ListClipboardEntriesResponse](
 			httpClient,
 			baseURL+MaintenanceServiceListClipboardEntriesProcedure,
 			connect.WithSchema(maintenanceServiceMethods.ByName("ListClipboardEntries")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		getClipboardEntry: connect.NewClient[v1.GetClipboardEntryRequest, v1.GetClipboardEntryResponse](
 			httpClient,
 			baseURL+MaintenanceServiceGetClipboardEntryProcedure,
 			connect.WithSchema(maintenanceServiceMethods.ByName("GetClipboardEntry")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		createClipboardEntry: connect.NewClient[v1.CreateClipboardEntryRequest, v1.CreateClipboardEntryResponse](
@@ -174,6 +178,7 @@ func NewMaintenanceServiceClient(httpClient connect.HTTPClient, baseURL string, 
 			httpClient,
 			baseURL+MaintenanceServiceGetDatabaseStatusProcedure,
 			connect.WithSchema(maintenanceServiceMethods.ByName("GetDatabaseStatus")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		vacuumDatabase: connect.NewClient[v1.VacuumDatabaseRequest, v1.VacuumDatabaseResponse](
@@ -300,6 +305,7 @@ func NewMaintenanceServiceHandler(svc MaintenanceServiceHandler, opts ...connect
 		MaintenanceServiceListSessionsProcedure,
 		svc.ListSessions,
 		connect.WithSchema(maintenanceServiceMethods.ByName("ListSessions")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	maintenanceServiceDeleteSessionHandler := connect.NewUnaryHandler(
@@ -318,18 +324,21 @@ func NewMaintenanceServiceHandler(svc MaintenanceServiceHandler, opts ...connect
 		MaintenanceServiceListAuditLogsProcedure,
 		svc.ListAuditLogs,
 		connect.WithSchema(maintenanceServiceMethods.ByName("ListAuditLogs")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	maintenanceServiceListClipboardEntriesHandler := connect.NewUnaryHandler(
 		MaintenanceServiceListClipboardEntriesProcedure,
 		svc.ListClipboardEntries,
 		connect.WithSchema(maintenanceServiceMethods.ByName("ListClipboardEntries")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	maintenanceServiceGetClipboardEntryHandler := connect.NewUnaryHandler(
 		MaintenanceServiceGetClipboardEntryProcedure,
 		svc.GetClipboardEntry,
 		connect.WithSchema(maintenanceServiceMethods.ByName("GetClipboardEntry")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	maintenanceServiceCreateClipboardEntryHandler := connect.NewUnaryHandler(
@@ -360,6 +369,7 @@ func NewMaintenanceServiceHandler(svc MaintenanceServiceHandler, opts ...connect
 		MaintenanceServiceGetDatabaseStatusProcedure,
 		svc.GetDatabaseStatus,
 		connect.WithSchema(maintenanceServiceMethods.ByName("GetDatabaseStatus")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	maintenanceServiceVacuumDatabaseHandler := connect.NewUnaryHandler(

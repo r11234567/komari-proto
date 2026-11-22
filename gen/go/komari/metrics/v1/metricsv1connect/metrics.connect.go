@@ -141,24 +141,28 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			httpClient,
 			baseURL+MetricsServiceQueryMetricsProcedure,
 			connect.WithSchema(metricsServiceMethods.ByName("QueryMetrics")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		listMetricDefinitions: connect.NewClient[v1.ListMetricDefinitionsRequest, v1.ListMetricDefinitionsResponse](
 			httpClient,
 			baseURL+MetricsServiceListMetricDefinitionsProcedure,
 			connect.WithSchema(metricsServiceMethods.ByName("ListMetricDefinitions")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		listPingTasks: connect.NewClient[v1.ListPingTasksRequest, v1.ListPingTasksResponse](
 			httpClient,
 			baseURL+MetricsServiceListPingTasksProcedure,
 			connect.WithSchema(metricsServiceMethods.ByName("ListPingTasks")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		getPingStats: connect.NewClient[v1.GetPingStatsRequest, v1.GetPingStatsResponse](
 			httpClient,
 			baseURL+MetricsServiceGetPingStatsProcedure,
 			connect.WithSchema(metricsServiceMethods.ByName("GetPingStats")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		watchMetrics: connect.NewClient[v1.WatchMetricsRequest, v1.WatchMetricsResponse](
@@ -177,6 +181,7 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			httpClient,
 			baseURL+MetricsServiceGetDownsamplingPolicyProcedure,
 			connect.WithSchema(metricsServiceMethods.ByName("GetDownsamplingPolicy")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		setDownsamplingPolicy: connect.NewClient[v1.SetDownsamplingPolicyRequest, v1.SetDownsamplingPolicyResponse](
@@ -189,6 +194,7 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			httpClient,
 			baseURL+MetricsServiceGetMetricMigrationStatusProcedure,
 			connect.WithSchema(metricsServiceMethods.ByName("GetMetricMigrationStatus")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		startMetricMigration: connect.NewClient[v1.StartMetricMigrationRequest, v1.StartMetricMigrationResponse](
@@ -358,24 +364,28 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 		MetricsServiceQueryMetricsProcedure,
 		svc.QueryMetrics,
 		connect.WithSchema(metricsServiceMethods.ByName("QueryMetrics")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	metricsServiceListMetricDefinitionsHandler := connect.NewUnaryHandler(
 		MetricsServiceListMetricDefinitionsProcedure,
 		svc.ListMetricDefinitions,
 		connect.WithSchema(metricsServiceMethods.ByName("ListMetricDefinitions")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	metricsServiceListPingTasksHandler := connect.NewUnaryHandler(
 		MetricsServiceListPingTasksProcedure,
 		svc.ListPingTasks,
 		connect.WithSchema(metricsServiceMethods.ByName("ListPingTasks")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	metricsServiceGetPingStatsHandler := connect.NewUnaryHandler(
 		MetricsServiceGetPingStatsProcedure,
 		svc.GetPingStats,
 		connect.WithSchema(metricsServiceMethods.ByName("GetPingStats")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	metricsServiceWatchMetricsHandler := connect.NewServerStreamHandler(
@@ -394,6 +404,7 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 		MetricsServiceGetDownsamplingPolicyProcedure,
 		svc.GetDownsamplingPolicy,
 		connect.WithSchema(metricsServiceMethods.ByName("GetDownsamplingPolicy")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	metricsServiceSetDownsamplingPolicyHandler := connect.NewUnaryHandler(
@@ -406,6 +417,7 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 		MetricsServiceGetMetricMigrationStatusProcedure,
 		svc.GetMetricMigrationStatus,
 		connect.WithSchema(metricsServiceMethods.ByName("GetMetricMigrationStatus")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	metricsServiceStartMetricMigrationHandler := connect.NewUnaryHandler(

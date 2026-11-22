@@ -12,17 +12,25 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/admin/v1;ad
 // database storage maintenance.
 service MaintenanceService {
   // ListSessions returns every login session and marks the caller's own.
-  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse);
+  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // DeleteSession revokes one login session by its opaque token.
   rpc DeleteSession(DeleteSessionRequest) returns (DeleteSessionResponse);
   // DeleteAllSessions revokes every login session, including the caller's.
   rpc DeleteAllSessions(DeleteAllSessionsRequest) returns (DeleteAllSessionsResponse);
   // ListAuditLogs returns one page of audit entries, newest first.
-  rpc ListAuditLogs(ListAuditLogsRequest) returns (ListAuditLogsResponse);
+  rpc ListAuditLogs(ListAuditLogsRequest) returns (ListAuditLogsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // ListClipboardEntries returns every stored command clipboard entry.
-  rpc ListClipboardEntries(ListClipboardEntriesRequest) returns (ListClipboardEntriesResponse);
+  rpc ListClipboardEntries(ListClipboardEntriesRequest) returns (ListClipboardEntriesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // GetClipboardEntry returns one command clipboard entry.
-  rpc GetClipboardEntry(GetClipboardEntryRequest) returns (GetClipboardEntryResponse);
+  rpc GetClipboardEntry(GetClipboardEntryRequest) returns (GetClipboardEntryResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // CreateClipboardEntry stores one new command clipboard entry.
   rpc CreateClipboardEntry(CreateClipboardEntryRequest) returns (CreateClipboardEntryResponse);
   // UpdateClipboardEntry patches only the fields present in the request.
@@ -32,7 +40,9 @@ service MaintenanceService {
   // ClearRecords deletes stored monitoring records.
   rpc ClearRecords(ClearRecordsRequest) returns (ClearRecordsResponse);
   // GetDatabaseStatus reports driver, location and size for both stores.
-  rpc GetDatabaseStatus(GetDatabaseStatusRequest) returns (GetDatabaseStatusResponse);
+  rpc GetDatabaseStatus(GetDatabaseStatusRequest) returns (GetDatabaseStatusResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // VacuumDatabase reclaims storage and reports per-store outcomes.
   rpc VacuumDatabase(VacuumDatabaseRequest) returns (VacuumDatabaseResponse);
 }

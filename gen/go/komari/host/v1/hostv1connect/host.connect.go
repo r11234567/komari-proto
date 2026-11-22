@@ -92,6 +92,7 @@ func NewHostServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			httpClient,
 			baseURL+HostServiceGetHostOperationProcedure,
 			connect.WithSchema(hostServiceMethods.ByName("GetHostOperation")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -166,6 +167,7 @@ func NewHostServiceHandler(svc HostServiceHandler, opts ...connect.HandlerOption
 		HostServiceGetHostOperationProcedure,
 		svc.GetHostOperation,
 		connect.WithSchema(hostServiceMethods.ByName("GetHostOperation")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/komari.host.v1.HostService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

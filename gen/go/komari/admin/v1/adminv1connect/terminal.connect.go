@@ -65,6 +65,7 @@ func NewTerminalSettingsServiceClient(httpClient connect.HTTPClient, baseURL str
 			httpClient,
 			baseURL+TerminalSettingsServiceGetTerminalSettingsProcedure,
 			connect.WithSchema(terminalSettingsServiceMethods.ByName("GetTerminalSettings")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		setTerminalSettings: connect.NewClient[v1.SetTerminalSettingsRequest, v1.SetTerminalSettingsResponse](
@@ -112,6 +113,7 @@ func NewTerminalSettingsServiceHandler(svc TerminalSettingsServiceHandler, opts 
 		TerminalSettingsServiceGetTerminalSettingsProcedure,
 		svc.GetTerminalSettings,
 		connect.WithSchema(terminalSettingsServiceMethods.ByName("GetTerminalSettings")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	terminalSettingsServiceSetTerminalSettingsHandler := connect.NewUnaryHandler(

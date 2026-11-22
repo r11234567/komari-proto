@@ -88,18 +88,21 @@ func NewBrowserServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			httpClient,
 			baseURL+BrowserServiceGetPublicInfoProcedure,
 			connect.WithSchema(browserServiceMethods.ByName("GetPublicInfo")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		listAgents: connect.NewClient[v1.ListAgentsRequest, v1.ListAgentsResponse](
 			httpClient,
 			baseURL+BrowserServiceListAgentsProcedure,
 			connect.WithSchema(browserServiceMethods.ByName("ListAgents")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		getAgent: connect.NewClient[v1.GetAgentRequest, v1.GetAgentResponse](
 			httpClient,
 			baseURL+BrowserServiceGetAgentProcedure,
 			connect.WithSchema(browserServiceMethods.ByName("GetAgent")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		watchAgentStatus: connect.NewClient[v1.WatchAgentStatusRequest, v1.WatchAgentStatusResponse](
@@ -112,18 +115,21 @@ func NewBrowserServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			httpClient,
 			baseURL+BrowserServiceGetSessionProcedure,
 			connect.WithSchema(browserServiceMethods.ByName("GetSession")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		getThemeContract: connect.NewClient[v1.GetThemeContractRequest, v1.GetThemeContractResponse](
 			httpClient,
 			baseURL+BrowserServiceGetThemeContractProcedure,
 			connect.WithSchema(browserServiceMethods.ByName("GetThemeContract")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		getTrafficTrend: connect.NewClient[v1.GetTrafficTrendRequest, v1.GetTrafficTrendResponse](
 			httpClient,
 			baseURL+BrowserServiceGetTrafficTrendProcedure,
 			connect.WithSchema(browserServiceMethods.ByName("GetTrafficTrend")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -204,18 +210,21 @@ func NewBrowserServiceHandler(svc BrowserServiceHandler, opts ...connect.Handler
 		BrowserServiceGetPublicInfoProcedure,
 		svc.GetPublicInfo,
 		connect.WithSchema(browserServiceMethods.ByName("GetPublicInfo")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	browserServiceListAgentsHandler := connect.NewUnaryHandler(
 		BrowserServiceListAgentsProcedure,
 		svc.ListAgents,
 		connect.WithSchema(browserServiceMethods.ByName("ListAgents")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	browserServiceGetAgentHandler := connect.NewUnaryHandler(
 		BrowserServiceGetAgentProcedure,
 		svc.GetAgent,
 		connect.WithSchema(browserServiceMethods.ByName("GetAgent")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	browserServiceWatchAgentStatusHandler := connect.NewServerStreamHandler(
@@ -228,18 +237,21 @@ func NewBrowserServiceHandler(svc BrowserServiceHandler, opts ...connect.Handler
 		BrowserServiceGetSessionProcedure,
 		svc.GetSession,
 		connect.WithSchema(browserServiceMethods.ByName("GetSession")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	browserServiceGetThemeContractHandler := connect.NewUnaryHandler(
 		BrowserServiceGetThemeContractProcedure,
 		svc.GetThemeContract,
 		connect.WithSchema(browserServiceMethods.ByName("GetThemeContract")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	browserServiceGetTrafficTrendHandler := connect.NewUnaryHandler(
 		BrowserServiceGetTrafficTrendProcedure,
 		svc.GetTrafficTrend,
 		connect.WithSchema(browserServiceMethods.ByName("GetTrafficTrend")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/komari.browser.v1.BrowserService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

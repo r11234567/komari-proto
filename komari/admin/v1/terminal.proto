@@ -14,7 +14,9 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/admin/v1;ad
 // JSON-RPC transport.
 service TerminalSettingsService {
   // GetTerminalSettings returns the stored terminal appearance.
-  rpc GetTerminalSettings(GetTerminalSettingsRequest) returns (GetTerminalSettingsResponse);
+  rpc GetTerminalSettings(GetTerminalSettingsRequest) returns (GetTerminalSettingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // SetTerminalSettings replaces the stored terminal appearance.
   rpc SetTerminalSettings(SetTerminalSettingsRequest) returns (SetTerminalSettingsResponse);
 }

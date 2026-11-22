@@ -79,6 +79,7 @@ func NewPingTaskServiceClient(httpClient connect.HTTPClient, baseURL string, opt
 			httpClient,
 			baseURL+PingTaskServiceListPingTasksProcedure,
 			connect.WithSchema(pingTaskServiceMethods.ByName("ListPingTasks")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		createPingTask: connect.NewClient[v1.CreatePingTaskRequest, v1.CreatePingTaskResponse](
@@ -167,6 +168,7 @@ func NewPingTaskServiceHandler(svc PingTaskServiceHandler, opts ...connect.Handl
 		PingTaskServiceListPingTasksProcedure,
 		svc.ListPingTasks,
 		connect.WithSchema(pingTaskServiceMethods.ByName("ListPingTasks")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	pingTaskServiceCreatePingTaskHandler := connect.NewUnaryHandler(

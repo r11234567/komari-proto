@@ -102,6 +102,7 @@ func NewTrustedCredentialServiceClient(httpClient connect.HTTPClient, baseURL st
 			httpClient,
 			baseURL+TrustedCredentialServiceListTrustedCredentialProvidersProcedure,
 			connect.WithSchema(trustedCredentialServiceMethods.ByName("ListTrustedCredentialProviders")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		beginVerification: connect.NewClient[v1.BeginVerificationRequest, v1.BeginVerificationResponse](
@@ -126,6 +127,7 @@ func NewTrustedCredentialServiceClient(httpClient connect.HTTPClient, baseURL st
 			httpClient,
 			baseURL+TrustedCredentialServiceGetCredentialContactsProcedure,
 			connect.WithSchema(trustedCredentialServiceMethods.ByName("GetCredentialContacts")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		beginContactBinding: connect.NewClient[v1.BeginContactBindingRequest, v1.BeginContactBindingResponse](
@@ -227,6 +229,7 @@ func NewTrustedCredentialServiceHandler(svc TrustedCredentialServiceHandler, opt
 		TrustedCredentialServiceListTrustedCredentialProvidersProcedure,
 		svc.ListTrustedCredentialProviders,
 		connect.WithSchema(trustedCredentialServiceMethods.ByName("ListTrustedCredentialProviders")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	trustedCredentialServiceBeginVerificationHandler := connect.NewUnaryHandler(
@@ -251,6 +254,7 @@ func NewTrustedCredentialServiceHandler(svc TrustedCredentialServiceHandler, opt
 		TrustedCredentialServiceGetCredentialContactsProcedure,
 		svc.GetCredentialContacts,
 		connect.WithSchema(trustedCredentialServiceMethods.ByName("GetCredentialContacts")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	trustedCredentialServiceBeginContactBindingHandler := connect.NewUnaryHandler(
