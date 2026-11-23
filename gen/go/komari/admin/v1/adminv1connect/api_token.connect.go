@@ -70,6 +70,7 @@ func NewApiTokenServiceClient(httpClient connect.HTTPClient, baseURL string, opt
 			httpClient,
 			baseURL+ApiTokenServiceListApiTokensProcedure,
 			connect.WithSchema(apiTokenServiceMethods.ByName("ListApiTokens")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		createApiToken: connect.NewClient[v1.CreateApiTokenRequest, v1.CreateApiTokenResponse](
@@ -140,6 +141,7 @@ func NewApiTokenServiceHandler(svc ApiTokenServiceHandler, opts ...connect.Handl
 		ApiTokenServiceListApiTokensProcedure,
 		svc.ListApiTokens,
 		connect.WithSchema(apiTokenServiceMethods.ByName("ListApiTokens")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	apiTokenServiceCreateApiTokenHandler := connect.NewUnaryHandler(

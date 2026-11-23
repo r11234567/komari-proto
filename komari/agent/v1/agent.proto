@@ -46,6 +46,8 @@ message SubscribeEventsRequest {
 // SubscribeEventsResponse wraps one server event for forward-compatible stream metadata.
 message SubscribeEventsResponse {
   ServerEvent event = 1;
+  // heartbeat keeps long-lived event streams alive across idle proxies.
+  bool heartbeat = 2;
 }
 
 // ServerEvent is a typed server-originated lifecycle notification.

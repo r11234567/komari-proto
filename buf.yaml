@@ -9,3 +9,37 @@ lint:
 breaking:
   use:
     - FILE
+  # Explicit v0.2.0 schema transitions (Phase 3C): path-scoped only to edited files
+  # until v0.2.0 becomes the new breaking baseline tag.
+  ignore_only:
+    RPC_SAME_IDEMPOTENCY_LEVEL:
+      - komari/admin/v1/api_token.proto
+      - komari/admin/v1/dashboard.proto
+      - komari/admin/v1/maintenance.proto
+      - komari/admin/v1/ping.proto
+      - komari/admin/v1/terminal.proto
+      - komari/browser/v1/browser.proto
+      - komari/config/v1/config.proto
+      - komari/credential/v1/credential.proto
+      - komari/credential/v1/passkey.proto
+      - komari/deployment/v1/deployment.proto
+      - komari/enrollment/v1/enrollment.proto
+      - komari/exec/v1/exec.proto
+      - komari/file/v1/file.proto
+      - komari/host/v1/host.proto
+      - komari/metrics/v1/metrics.proto
+      - komari/plugin/v1/plugin.proto
+      - komari/rescue/v1/rescue.proto
+    FIELD_SAME_TYPE:
+      - komari/admin/v1/dashboard.proto
+      - komari/admin/v1/ping.proto
+    ENUM_VALUE_NO_DELETE:
+      - komari/security/v1/security.proto
+    ENUM_NO_DELETE:
+      - komari/webssh/v1/webssh.proto
+    MESSAGE_NO_DELETE:
+      - komari/webssh/v1/webssh.proto
+    RPC_NO_DELETE:
+      - komari/webssh/v1/webssh.proto
+    FIELD_NO_DELETE:
+      - komari/webssh/v1/webssh.proto

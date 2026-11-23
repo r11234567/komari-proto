@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file komari/security/v1/security.proto.
  */
 export const file_komari_security_v1_security: GenFile = /*@__PURE__*/
-  fileDesc("CiFrb21hcmkvc2VjdXJpdHkvdjEvc2VjdXJpdHkucHJvdG8SEmtvbWFyaS5zZWN1cml0eS52MSJUCg5TaWduZWRFbnZlbG9wZRIPCgdwYXlsb2FkGAEgASgMEjEKCnNpZ25hdHVyZXMYAiADKAsyHS5rb21hcmkuc2VjdXJpdHkudjEuU2lnbmF0dXJlIrsBChFTaWduZWRJbnN0cnVjdGlvbhIQCghhZ2VudF9pZBgBIAEoCRINCgVub25jZRgCIAEoCRItCglpc3N1ZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCmV4cGlyZXNfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhgKEGluc3RydWN0aW9uX3R5cGUYBSABKAkSDAoEYm9keRgGIAEoDCJlCglTaWduYXR1cmUSOQoJYWxnb3JpdGhtGAEgASgOMiYua29tYXJpLnNlY3VyaXR5LnYxLlNpZ25hdHVyZUFsZ29yaXRobRINCgV2YWx1ZRgCIAEoDBIOCgZrZXlfaWQYAyABKAki1wEKCVB1YmxpY0tleRI5CglhbGdvcml0aG0YASABKA4yJi5rb21hcmkuc2VjdXJpdHkudjEuU2lnbmF0dXJlQWxnb3JpdGhtEg0KBXZhbHVlGAIgASgMEg4KBmtleV9pZBgDIAEoCRIuCgpub3RfYmVmb3JlGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIyCglub3RfYWZ0ZXIYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSACIAQFCDAoKX25vdF9hZnRlciKKAQoSVmVyaWZpY2F0aW9uUG9saWN5EkMKE2FjY2VwdGVkX2FsZ29yaXRobXMYASADKA4yJi5rb21hcmkuc2VjdXJpdHkudjEuU2lnbmF0dXJlQWxnb3JpdGhtEhMKC3JlcXVpcmVfYWxsGAIgASgIEhoKEm1pbmltdW1fc2lnbmF0dXJlcxgDIAEoDSroAQoSU2lnbmF0dXJlQWxnb3JpdGhtEiMKH1NJR05BVFVSRV9BTEdPUklUSE1fVU5TUEVDSUZJRUQQABIfChtTSUdOQVRVUkVfQUxHT1JJVEhNX0VEMjU1MTkQARIiCh5TSUdOQVRVUkVfQUxHT1JJVEhNX0VDRFNBX1AyNTYQAhIhCh1TSUdOQVRVUkVfQUxHT1JJVEhNX01MX0RTQV82NRADEiEKHVNJR05BVFVSRV9BTEdPUklUSE1fTUxfRFNBXzg3EAQSIgoeU0lHTkFUVVJFX0FMR09SSVRITV9GTl9EU0FfNTEyEAVC2QEKFmNvbS5rb21hcmkuc2VjdXJpdHkudjFCDVNlY3VyaXR5UHJvdG9QAVpGZ2l0aHViLmNvbS9yMTEyMzQ1Njcva29tYXJpLXByb3RvL2dlbi9nby9rb21hcmkvc2VjdXJpdHkvdjE7c2VjdXJpdHl2MaICA0tTWKoCEktvbWFyaS5TZWN1cml0eS5WMcoCEktvbWFyaVxTZWN1cml0eVxWMeICHktvbWFyaVxTZWN1cml0eVxWMVxHUEJNZXRhZGF0YeoCFEtvbWFyaTo6U2VjdXJpdHk6OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
+  fileDesc("CiFrb21hcmkvc2VjdXJpdHkvdjEvc2VjdXJpdHkucHJvdG8SEmtvbWFyaS5zZWN1cml0eS52MSJUCg5TaWduZWRFbnZlbG9wZRIPCgdwYXlsb2FkGAEgASgMEjEKCnNpZ25hdHVyZXMYAiADKAsyHS5rb21hcmkuc2VjdXJpdHkudjEuU2lnbmF0dXJlIrsBChFTaWduZWRJbnN0cnVjdGlvbhIQCghhZ2VudF9pZBgBIAEoCRINCgVub25jZRgCIAEoCRItCglpc3N1ZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCmV4cGlyZXNfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhgKEGluc3RydWN0aW9uX3R5cGUYBSABKAkSDAoEYm9keRgGIAEoDCJlCglTaWduYXR1cmUSOQoJYWxnb3JpdGhtGAEgASgOMiYua29tYXJpLnNlY3VyaXR5LnYxLlNpZ25hdHVyZUFsZ29yaXRobRINCgV2YWx1ZRgCIAEoDBIOCgZrZXlfaWQYAyABKAki1wEKCVB1YmxpY0tleRI5CglhbGdvcml0aG0YASABKA4yJi5rb21hcmkuc2VjdXJpdHkudjEuU2lnbmF0dXJlQWxnb3JpdGhtEg0KBXZhbHVlGAIgASgMEg4KBmtleV9pZBgDIAEoCRIuCgpub3RfYmVmb3JlGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIyCglub3RfYWZ0ZXIYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSACIAQFCDAoKX25vdF9hZnRlciKKAQoSVmVyaWZpY2F0aW9uUG9saWN5EkMKE2FjY2VwdGVkX2FsZ29yaXRobXMYASADKA4yJi5rb21hcmkuc2VjdXJpdHkudjEuU2lnbmF0dXJlQWxnb3JpdGhtEhMKC3JlcXVpcmVfYWxsGAIgASgIEhoKEm1pbmltdW1fc2lnbmF0dXJlcxgDIAEoDSrwAQoSU2lnbmF0dXJlQWxnb3JpdGhtEiMKH1NJR05BVFVSRV9BTEdPUklUSE1fVU5TUEVDSUZJRUQQABIfChtTSUdOQVRVUkVfQUxHT1JJVEhNX0VEMjU1MTkQASIECAIQAiIECAMQAyIECAQQBCIECAUQBSoeU0lHTkFUVVJFX0FMR09SSVRITV9FQ0RTQV9QMjU2Kh1TSUdOQVRVUkVfQUxHT1JJVEhNX01MX0RTQV82NSodU0lHTkFUVVJFX0FMR09SSVRITV9NTF9EU0FfODcqHlNJR05BVFVSRV9BTEdPUklUSE1fRk5fRFNBXzUxMkLZAQoWY29tLmtvbWFyaS5zZWN1cml0eS52MUINU2VjdXJpdHlQcm90b1ABWkZnaXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9zZWN1cml0eS92MTtzZWN1cml0eXYxogIDS1NYqgISS29tYXJpLlNlY3VyaXR5LlYxygISS29tYXJpXFNlY3VyaXR5XFYx4gIeS29tYXJpXFNlY3VyaXR5XFYxXEdQQk1ldGFkYXRh6gIUS29tYXJpOjpTZWN1cml0eTo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp]);
 
 /**
  * SignedEnvelope carries an authenticated instruction from the control plane
@@ -233,11 +233,6 @@ export const VerificationPolicySchema: GenMessage<VerificationPolicy> = /*@__PUR
 /**
  * SignatureAlgorithm enumerates signature algorithms.
  *
- * Post-quantum signature standards are not settled: ML-DSA is specified but
- * absent from the Go standard library, and FN-DSA is still a draft. The
- * enumeration therefore reserves values for them now so that adding one later
- * is a configuration change and a verifier update, not a protocol change.
- *
  * @generated from enum komari.security.v1.SignatureAlgorithm
  */
 export enum SignatureAlgorithm {
@@ -252,34 +247,6 @@ export enum SignatureAlgorithm {
    * @generated from enum value: SIGNATURE_ALGORITHM_ED25519 = 1;
    */
   ED25519 = 1,
-
-  /**
-   * ECDSA over NIST P-256, for deployments constrained to FIPS primitives.
-   *
-   * @generated from enum value: SIGNATURE_ALGORITHM_ECDSA_P256 = 2;
-   */
-  ECDSA_P256 = 2,
-
-  /**
-   * ML-DSA-65 (FIPS 204). Reserved; requires a verifier that implements it.
-   *
-   * @generated from enum value: SIGNATURE_ALGORITHM_ML_DSA_65 = 3;
-   */
-  ML_DSA_65 = 3,
-
-  /**
-   * ML-DSA-87 (FIPS 204). Reserved.
-   *
-   * @generated from enum value: SIGNATURE_ALGORITHM_ML_DSA_87 = 4;
-   */
-  ML_DSA_87 = 4,
-
-  /**
-   * FN-DSA-512 (FIPS 206, draft). Reserved.
-   *
-   * @generated from enum value: SIGNATURE_ALGORITHM_FN_DSA_512 = 5;
-   */
-  FN_DSA_512 = 5,
 }
 
 /**

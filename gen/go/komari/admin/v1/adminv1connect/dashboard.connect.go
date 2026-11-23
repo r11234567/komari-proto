@@ -69,18 +69,21 @@ func NewDashboardServiceClient(httpClient connect.HTTPClient, baseURL string, op
 			httpClient,
 			baseURL+DashboardServiceGetDashboardSummaryProcedure,
 			connect.WithSchema(dashboardServiceMethods.ByName("GetDashboardSummary")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		getDashboardCharts: connect.NewClient[v1.GetDashboardChartsRequest, v1.GetDashboardChartsResponse](
 			httpClient,
 			baseURL+DashboardServiceGetDashboardChartsProcedure,
 			connect.WithSchema(dashboardServiceMethods.ByName("GetDashboardCharts")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		listDashboardAlertItems: connect.NewClient[v1.ListDashboardAlertItemsRequest, v1.ListDashboardAlertItemsResponse](
 			httpClient,
 			baseURL+DashboardServiceListDashboardAlertItemsProcedure,
 			connect.WithSchema(dashboardServiceMethods.ByName("ListDashboardAlertItems")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -129,18 +132,21 @@ func NewDashboardServiceHandler(svc DashboardServiceHandler, opts ...connect.Han
 		DashboardServiceGetDashboardSummaryProcedure,
 		svc.GetDashboardSummary,
 		connect.WithSchema(dashboardServiceMethods.ByName("GetDashboardSummary")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	dashboardServiceGetDashboardChartsHandler := connect.NewUnaryHandler(
 		DashboardServiceGetDashboardChartsProcedure,
 		svc.GetDashboardCharts,
 		connect.WithSchema(dashboardServiceMethods.ByName("GetDashboardCharts")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	dashboardServiceListDashboardAlertItemsHandler := connect.NewUnaryHandler(
 		DashboardServiceListDashboardAlertItemsProcedure,
 		svc.ListDashboardAlertItems,
 		connect.WithSchema(dashboardServiceMethods.ByName("ListDashboardAlertItems")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/komari.admin.v1.DashboardService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

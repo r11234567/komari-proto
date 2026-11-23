@@ -9,13 +9,21 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/plugin/v1;p
 
 // PluginService owns typed administration of installed plugins.
 service PluginService {
-  rpc ListPlugins(ListPluginsRequest) returns (ListPluginsResponse);
+  rpc ListPlugins(ListPluginsRequest) returns (ListPluginsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   rpc SetPluginEnabled(SetPluginEnabledRequest) returns (SetPluginEnabledResponse);
-  rpc GetPluginLogs(GetPluginLogsRequest) returns (GetPluginLogsResponse);
+  rpc GetPluginLogs(GetPluginLogsRequest) returns (GetPluginLogsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   rpc DeletePlugin(DeletePluginRequest) returns (DeletePluginResponse);
-  rpc GetPluginConfiguration(GetPluginConfigurationRequest) returns (GetPluginConfigurationResponse);
+  rpc GetPluginConfiguration(GetPluginConfigurationRequest) returns (GetPluginConfigurationResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   rpc SetPluginConfiguration(SetPluginConfigurationRequest) returns (SetPluginConfigurationResponse);
-  rpc ListPluginPackages(ListPluginPackagesRequest) returns (ListPluginPackagesResponse);
+  rpc ListPluginPackages(ListPluginPackagesRequest) returns (ListPluginPackagesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   rpc DecidePluginPackage(DecidePluginPackageRequest) returns (DecidePluginPackageResponse);
 }
 

@@ -18,7 +18,9 @@ service ExecutionService {
   // CancelExecution requests a business-level terminal cancellation.
   rpc CancelExecution(CancelExecutionRequest) returns (CancelExecutionResponse);
   // GetExecution returns canonical state after reconnect or cleanup.
-  rpc GetExecution(GetExecutionRequest) returns (GetExecutionResponse);
+  rpc GetExecution(GetExecutionRequest) returns (GetExecutionResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // LeaseExecution lets an agent receive tasks on an independent stream.
   rpc LeaseExecution(LeaseExecutionRequest) returns (stream LeaseExecutionResponse);
   // ReportExecutionEvent records sequenced agent output and state.
@@ -59,6 +61,8 @@ message WatchExecutionRequest {
 // WatchExecutionResponse wraps one sequenced task event.
 message WatchExecutionResponse {
   ExecutionEvent event = 1;
+  // heartbeat keeps long-lived execution watch streams alive across idle proxies.
+  bool heartbeat = 2;
 }
 
 // CancelExecutionRequest requests task termination with a fresh proof.
@@ -93,6 +97,8 @@ message LeaseExecutionRequest {
 message LeaseExecutionResponse {
   ExecutionAssignment assignment = 1;
   ExecutionCancellation cancellation = 2;
+  // heartbeat keeps long-lived execution lease streams alive across idle proxies.
+  bool heartbeat = 3;
 }
 
 // ExecutionAssignment is an immutable task assignment.

@@ -17,7 +17,9 @@ service HostService {
   // ReportHostOperation records host progress, never the daemon applied pointer.
   rpc ReportHostOperation(ReportHostOperationRequest) returns (ReportHostOperationResponse);
   // GetHostOperation recovers an operation after interruption.
-  rpc GetHostOperation(GetHostOperationRequest) returns (GetHostOperationResponse);
+  rpc GetHostOperation(GetHostOperationRequest) returns (GetHostOperationResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 // HostAction enumerates the only permitted installation actions.

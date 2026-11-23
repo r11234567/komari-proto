@@ -14,7 +14,9 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/rescue/v1;r
 // It is independent from normal execution and WebSSH transports.
 service RescueService {
   // GetRescueStatus returns the last helper state reported by one agent.
-  rpc GetRescueStatus(GetRescueStatusRequest) returns (GetRescueStatusResponse);
+  rpc GetRescueStatus(GetRescueStatusRequest) returns (GetRescueStatusResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // CreateRescueSession authorizes one bounded rescue operation with fresh 2FA.
   rpc CreateRescueSession(CreateRescueSessionRequest) returns (CreateRescueSessionResponse);
   // WatchRescueSession streams state and bounded output until a terminal state.
@@ -67,6 +69,8 @@ message WatchRescueSessionResponse {
   RescueEvent event = 1;
   // session is emitted initially and whenever its business state changes.
   RescueSession session = 2;
+  // heartbeat keeps long-lived rescue watch streams alive across idle proxies.
+  bool heartbeat = 3;
 }
 
 message CancelRescueSessionRequest {

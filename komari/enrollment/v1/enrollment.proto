@@ -31,7 +31,9 @@ service EnrollmentService {
   rpc RevokeCredentials(RevokeCredentialsRequest) returns (RevokeCredentialsResponse);
   // GetTrustBundle publishes the control-plane signing keys and the policy an
   // agent applies when verifying signed instructions.
-  rpc GetTrustBundle(GetTrustBundleRequest) returns (GetTrustBundleResponse);
+  rpc GetTrustBundle(GetTrustBundleRequest) returns (GetTrustBundleResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 message BeginEnrollmentRequest {
@@ -176,10 +178,14 @@ enum EnrollmentState {
 // actually grants anything.
 service EnrollmentAdminService {
   // ListPendingEnrollments returns requests awaiting a decision.
-  rpc ListPendingEnrollments(ListPendingEnrollmentsRequest) returns (ListPendingEnrollmentsResponse);
+  rpc ListPendingEnrollments(ListPendingEnrollmentsRequest) returns (ListPendingEnrollmentsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // GetPendingEnrollment looks a request up by the code shown on the machine,
   // together with existing machines it plausibly belongs to.
-  rpc GetPendingEnrollment(GetPendingEnrollmentRequest) returns (GetPendingEnrollmentResponse);
+  rpc GetPendingEnrollment(GetPendingEnrollmentRequest) returns (GetPendingEnrollmentResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // ApproveEnrollment binds a request to a new or an existing machine.
   rpc ApproveEnrollment(ApproveEnrollmentRequest) returns (ApproveEnrollmentResponse);
   // DenyEnrollment rejects a request.

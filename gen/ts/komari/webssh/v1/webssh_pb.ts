@@ -14,81 +14,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file komari/webssh/v1/webssh.proto.
  */
 export const file_komari_webssh_v1_webssh: GenFile = /*@__PURE__*/
-  fileDesc("Ch1rb21hcmkvd2Vic3NoL3YxL3dlYnNzaC5wcm90bxIQa29tYXJpLndlYnNzaC52MSK0AQoST3BlblNlc3Npb25SZXF1ZXN0Ei8KBXN0YXJ0GAEgASgLMh4ua29tYXJpLndlYnNzaC52MS5TZXNzaW9uU3RhcnRIABIwCgVpbnB1dBgCIAEoCzIfLmtvbWFyaS53ZWJzc2gudjEuVGVybWluYWxJbnB1dEgAEjIKBnJlc2l6ZRgDIAEoCzIgLmtvbWFyaS53ZWJzc2gudjEuVGVybWluYWxSZXNpemVIAEIHCgVldmVudCK6AQoTT3BlblNlc3Npb25SZXNwb25zZRIzCgdzdGFydGVkGAEgASgLMiAua29tYXJpLndlYnNzaC52MS5TZXNzaW9uU3RhcnRlZEgAEjIKBm91dHB1dBgCIAEoCzIgLmtvbWFyaS53ZWJzc2gudjEuVGVybWluYWxPdXRwdXRIABIxCgZjbG9zZWQYAyABKAsyHy5rb21hcmkud2Vic3NoLnYxLlNlc3Npb25DbG9zZWRIAEIHCgVldmVudCKuAQoMU2Vzc2lvblN0YXJ0EhAKCGFnZW50X2lkGAEgASgJEg0KBXNoZWxsGAIgASgJEiwKBHNpemUYAyABKAsyHi5rb21hcmkud2Vic3NoLnYxLlRlcm1pbmFsU2l6ZRIZChF3b3JraW5nX2RpcmVjdG9yeRgEIAEoCRI0Cgp0d29fZmFjdG9yGAUgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZiJUCg5TZXNzaW9uU3RhcnRlZBISCgpzZXNzaW9uX2lkGAEgASgJEi4KCnN0YXJ0ZWRfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIkMKDVRlcm1pbmFsSW5wdXQSEgoKc2Vzc2lvbl9pZBgBIAEoCRIQCghzZXF1ZW5jZRgCIAEoBBIMCgRkYXRhGAMgASgMIkQKDlRlcm1pbmFsT3V0cHV0EhIKCnNlc3Npb25faWQYASABKAkSEAoIc2VxdWVuY2UYAiABKAQSDAoEZGF0YRgDIAEoDCJSCg5UZXJtaW5hbFJlc2l6ZRISCgpzZXNzaW9uX2lkGAEgASgJEiwKBHNpemUYAiABKAsyHi5rb21hcmkud2Vic3NoLnYxLlRlcm1pbmFsU2l6ZSItCgxUZXJtaW5hbFNpemUSDAoEcm93cxgBIAEoDRIPCgdjb2x1bW5zGAIgASgNIqcBCg1TZXNzaW9uQ2xvc2VkEhIKCnNlc3Npb25faWQYASABKAkSLQoGcmVhc29uGAIgASgOMh0ua29tYXJpLndlYnNzaC52MS5DbG9zZVJlYXNvbhIWCglleGl0X2NvZGUYAyABKAVIAIgBARItCgljbG9zZWRfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wQgwKCl9leGl0X2NvZGUiRQoUQ3JlYXRlU2Vzc2lvblJlcXVlc3QSLQoFc3RhcnQYASABKAsyHi5rb21hcmkud2Vic3NoLnYxLlNlc3Npb25TdGFydCJKChVDcmVhdGVTZXNzaW9uUmVzcG9uc2USMQoHc3RhcnRlZBgBIAEoCzIgLmtvbWFyaS53ZWJzc2gudjEuU2Vzc2lvblN0YXJ0ZWQivgEKGVNlbmRTZXNzaW9uQ29tbWFuZFJlcXVlc3QSEgoKc2Vzc2lvbl9pZBgBIAEoCRIQCghzZXF1ZW5jZRgCIAEoBBIPCgVpbnB1dBgDIAEoDEgAEjAKBnJlc2l6ZRgEIAEoCzIeLmtvbWFyaS53ZWJzc2gudjEuVGVybWluYWxTaXplSAASLQoEZmlsZRgFIAEoCzIdLmtvbWFyaS53ZWJzc2gudjEuRmlsZUNvbW1hbmRIAEIJCgdjb21tYW5kIjcKGlNlbmRTZXNzaW9uQ29tbWFuZFJlc3BvbnNlEhkKEWFjY2VwdGVkX3NlcXVlbmNlGAEgASgEIkEKE1dhdGNoU2Vzc2lvblJlcXVlc3QSEgoKc2Vzc2lvbl9pZBgBIAEoCRIWCg5hZnRlcl9zZXF1ZW5jZRgCIAEoBCJdChRXYXRjaFNlc3Npb25SZXNwb25zZRItCgVldmVudBgBIAEoCzIeLmtvbWFyaS53ZWJzc2gudjEuU2Vzc2lvbkV2ZW50EhYKDmFnZW50X2F0dGFjaGVkGAIgASgIIlAKH0Fja25vd2xlZGdlU2Vzc2lvbkV2ZW50c1JlcXVlc3QSEgoKc2Vzc2lvbl9pZBgBIAEoCRIZChFhY2NlcHRlZF9zZXF1ZW5jZRgCIAEoBCI9CiBBY2tub3dsZWRnZVNlc3Npb25FdmVudHNSZXNwb25zZRIZChFhY2NlcHRlZF9zZXF1ZW5jZRgBIAEoBCLgAQoMU2Vzc2lvbkV2ZW50EhIKCnNlc3Npb25faWQYASABKAkSEAoIc2VxdWVuY2UYAiABKAQSLwoLb2NjdXJyZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhAKBm91dHB1dBgEIAEoDEgAEisKBGZpbGUYBSABKAsyGy5rb21hcmkud2Vic3NoLnYxLkZpbGVFdmVudEgAEjEKBmNsb3NlZBgGIAEoCzIfLmtvbWFyaS53ZWJzc2gudjEuU2Vzc2lvbkNsb3NlZEgAQgcKBWV2ZW50IkUKFExlYXNlU2Vzc2lvbnNSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEhsKE2FmdGVyX2Fzc2lnbm1lbnRfaWQYAiABKAkiUAoVTGVhc2VTZXNzaW9uc1Jlc3BvbnNlEjcKCmFzc2lnbm1lbnQYASABKAsyIy5rb21hcmkud2Vic3NoLnYxLlNlc3Npb25Bc3NpZ25tZW50IvMBChFTZXNzaW9uQXNzaWdubWVudBIVCg1hc3NpZ25tZW50X2lkGAEgASgJEhIKCnNlc3Npb25faWQYAiABKAkSEAoIYWdlbnRfaWQYAyABKAkSDQoFc2hlbGwYBCABKAkSLAoEc2l6ZRgFIAEoCzIeLmtvbWFyaS53ZWJzc2gudjEuVGVybWluYWxTaXplEhkKEXdvcmtpbmdfZGlyZWN0b3J5GAYgASgJEjQKEGxlYXNlX2V4cGlyZXNfYXQYByABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhMKC3N5c3RlbV91c2VyGAggASgJIo8BChRBdHRhY2hTZXNzaW9uUmVxdWVzdBI2CgZhdHRhY2gYASABKAsyJC5rb21hcmkud2Vic3NoLnYxLkFnZW50U2Vzc2lvbkF0dGFjaEgAEjQKBWV2ZW50GAIgASgLMiMua29tYXJpLndlYnNzaC52MS5BZ2VudFNlc3Npb25FdmVudEgAQgkKB21lc3NhZ2UihAEKEkFnZW50U2Vzc2lvbkF0dGFjaBIQCghhZ2VudF9pZBgBIAEoCRIVCg1hc3NpZ25tZW50X2lkGAIgASgJEhIKCnNlc3Npb25faWQYAyABKAkSHgoWYWZ0ZXJfY29tbWFuZF9zZXF1ZW5jZRgEIAEoBBIRCglyZXN1bWFibGUYBSABKAgi9AEKEUFnZW50U2Vzc2lvbkV2ZW50EhAKCHNlcXVlbmNlGAEgASgEEi8KC29jY3VycmVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIhChlhY2NlcHRlZF9jb21tYW5kX3NlcXVlbmNlGAYgASgEEhAKBm91dHB1dBgDIAEoDEgAEisKBGZpbGUYBCABKAsyGy5rb21hcmkud2Vic3NoLnYxLkZpbGVFdmVudEgAEjEKBmNsb3NlZBgFIAEoCzIfLmtvbWFyaS53ZWJzc2gudjEuU2Vzc2lvbkNsb3NlZEgAQgcKBWV2ZW50IpECChVBdHRhY2hTZXNzaW9uUmVzcG9uc2USEAoIc2VxdWVuY2UYASABKAQSHwoXYWNjZXB0ZWRfZXZlbnRfc2VxdWVuY2UYBiABKAQSMAoMcmVzdW1lX3VudGlsGAcgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIPCgVpbnB1dBgCIAEoDEgAEjAKBnJlc2l6ZRgDIAEoCzIeLmtvbWFyaS53ZWJzc2gudjEuVGVybWluYWxTaXplSAASLQoEZmlsZRgEIAEoCzIdLmtvbWFyaS53ZWJzc2gudjEuRmlsZUNvbW1hbmRIABIWCgxjbG9zZV9yZWFzb24YBSABKAlIAEIJCgdjb21tYW5kIt0BCgtGaWxlQ29tbWFuZBISCgpyZXF1ZXN0X2lkGAEgASgJEjIKCW9wZXJhdGlvbhgCIAEoDjIfLmtvbWFyaS53ZWJzc2gudjEuRmlsZU9wZXJhdGlvbhIMCgRwYXRoGAMgASgJEhMKC2Rlc3RpbmF0aW9uGAQgASgJEhEKCXJlY3Vyc2l2ZRgFIAEoCBIRCglvdmVyd3JpdGUYBiABKAgSDAoEc2l6ZRgHIAEoBBIOCgZzaGEyNTYYCCABKAkSEQoJdXBsb2FkX2lkGAkgASgJEgwKBGRhdGEYCiABKAwieQoJRmlsZUVudHJ5EgwKBG5hbWUYASABKAkSDAoEcGF0aBgCIAEoCRIRCglkaXJlY3RvcnkYAyABKAgSDAoEc2l6ZRgEIAEoBBIvCgttb2RpZmllZF9hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAilwIKCUZpbGVFdmVudBISCgpyZXF1ZXN0X2lkGAEgASgJEjIKCW9wZXJhdGlvbhgCIAEoDjIfLmtvbWFyaS53ZWJzc2gudjEuRmlsZU9wZXJhdGlvbhIPCgdzdWNjZXNzGAMgASgIEg0KBWVycm9yGAQgASgJEiwKB2VudHJpZXMYBSADKAsyGy5rb21hcmkud2Vic3NoLnYxLkZpbGVFbnRyeRIOCgZwYXJlbnQYBiABKAkSEQoJdXBsb2FkX2lkGAcgASgJEgwKBHNpemUYCCABKAQSEwoLdHJhbnNmZXJyZWQYCSABKAQSDgoGc2hhMjU2GAogASgJEgwKBGRhdGEYCyABKAwSEAoIY29tcGxldGUYDCABKAgiOQoTQ2xvc2VTZXNzaW9uUmVxdWVzdBISCgpzZXNzaW9uX2lkGAEgASgJEg4KBnJlYXNvbhgCIAEoCSJHChRDbG9zZVNlc3Npb25SZXNwb25zZRIvCgZjbG9zZWQYASABKAsyHy5rb21hcmkud2Vic3NoLnYxLlNlc3Npb25DbG9zZWQqzQIKDUZpbGVPcGVyYXRpb24SHgoaRklMRV9PUEVSQVRJT05fVU5TUEVDSUZJRUQQABIXChNGSUxFX09QRVJBVElPTl9MSVNUEAESGAoURklMRV9PUEVSQVRJT05fTUtESVIQAhIZChVGSUxFX09QRVJBVElPTl9DUkVBVEUQAxIZChVGSUxFX09QRVJBVElPTl9SRU5BTUUQBBIXChNGSUxFX09QRVJBVElPTl9DT1BZEAUSGQoVRklMRV9PUEVSQVRJT05fREVMRVRFEAYSHwobRklMRV9PUEVSQVRJT05fVVBMT0FEX1NUQVJUEAcSHwobRklMRV9PUEVSQVRJT05fVVBMT0FEX0NIVU5LEAgSIAocRklMRV9PUEVSQVRJT05fVVBMT0FEX0ZJTklTSBAJEhsKF0ZJTEVfT1BFUkFUSU9OX0RPV05MT0FEEAoq7AEKC0Nsb3NlUmVhc29uEhwKGENMT1NFX1JFQVNPTl9VTlNQRUNJRklFRBAAEhcKE0NMT1NFX1JFQVNPTl9OT1JNQUwQARIaChZDTE9TRV9SRUFTT05fQ0FOQ0VMTEVEEAISIgoeQ0xPU0VfUkVBU09OX0RFQURMSU5FX0VYQ0VFREVEEAMSKAokQ0xPU0VfUkVBU09OX1JFTU9URV9DT05UUk9MX0RJU0FCTEVEEAQSIwofQ0xPU0VfUkVBU09OX0FHRU5UX0RJU0NPTk5FQ1RFRBAFEhcKE0NMT1NFX1JFQVNPTl9GQUlMRUQQBjLpBgoNV2ViU1NIU2VydmljZRJeCgtPcGVuU2Vzc2lvbhIkLmtvbWFyaS53ZWJzc2gudjEuT3BlblNlc3Npb25SZXF1ZXN0GiUua29tYXJpLndlYnNzaC52MS5PcGVuU2Vzc2lvblJlc3BvbnNlKAEwARJlCg1DcmVhdGVTZXNzaW9uEiYua29tYXJpLndlYnNzaC52MS5DcmVhdGVTZXNzaW9uUmVxdWVzdBonLmtvbWFyaS53ZWJzc2gudjEuQ3JlYXRlU2Vzc2lvblJlc3BvbnNlIgOIAgESdAoSU2VuZFNlc3Npb25Db21tYW5kEisua29tYXJpLndlYnNzaC52MS5TZW5kU2Vzc2lvbkNvbW1hbmRSZXF1ZXN0Giwua29tYXJpLndlYnNzaC52MS5TZW5kU2Vzc2lvbkNvbW1hbmRSZXNwb25zZSIDiAIBEmQKDFdhdGNoU2Vzc2lvbhIlLmtvbWFyaS53ZWJzc2gudjEuV2F0Y2hTZXNzaW9uUmVxdWVzdBomLmtvbWFyaS53ZWJzc2gudjEuV2F0Y2hTZXNzaW9uUmVzcG9uc2UiA4gCATABEoYBChhBY2tub3dsZWRnZVNlc3Npb25FdmVudHMSMS5rb21hcmkud2Vic3NoLnYxLkFja25vd2xlZGdlU2Vzc2lvbkV2ZW50c1JlcXVlc3QaMi5rb21hcmkud2Vic3NoLnYxLkFja25vd2xlZGdlU2Vzc2lvbkV2ZW50c1Jlc3BvbnNlIgOIAgESYgoMQ2xvc2VTZXNzaW9uEiUua29tYXJpLndlYnNzaC52MS5DbG9zZVNlc3Npb25SZXF1ZXN0GiYua29tYXJpLndlYnNzaC52MS5DbG9zZVNlc3Npb25SZXNwb25zZSIDiAIBEmIKDUxlYXNlU2Vzc2lvbnMSJi5rb21hcmkud2Vic3NoLnYxLkxlYXNlU2Vzc2lvbnNSZXF1ZXN0Gicua29tYXJpLndlYnNzaC52MS5MZWFzZVNlc3Npb25zUmVzcG9uc2UwARJkCg1BdHRhY2hTZXNzaW9uEiYua29tYXJpLndlYnNzaC52MS5BdHRhY2hTZXNzaW9uUmVxdWVzdBonLmtvbWFyaS53ZWJzc2gudjEuQXR0YWNoU2Vzc2lvblJlc3BvbnNlKAEwAULJAQoUY29tLmtvbWFyaS53ZWJzc2gudjFCC1dlYnNzaFByb3RvUAFaQmdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL3dlYnNzaC92MTt3ZWJzc2h2MaICA0tXWKoCEEtvbWFyaS5XZWJzc2guVjHKAhBLb21hcmlcV2Vic3NoXFYx4gIcS29tYXJpXFdlYnNzaFxWMVxHUEJNZXRhZGF0YeoCEktvbWFyaTo6V2Vic3NoOjpWMWIGcHJvdG8z", [file_google_protobuf_timestamp, file_komari_common_v1_common]);
-
-/**
- * SessionRequest carries exactly one client-side terminal event.
- *
- * @generated from message komari.webssh.v1.OpenSessionRequest
- */
-export type OpenSessionRequest = Message<"komari.webssh.v1.OpenSessionRequest"> & {
-  /**
-   * @generated from oneof komari.webssh.v1.OpenSessionRequest.event
-   */
-  event: {
-    /**
-     * @generated from field: komari.webssh.v1.SessionStart start = 1;
-     */
-    value: SessionStart;
-    case: "start";
-  } | {
-    /**
-     * @generated from field: komari.webssh.v1.TerminalInput input = 2;
-     */
-    value: TerminalInput;
-    case: "input";
-  } | {
-    /**
-     * @generated from field: komari.webssh.v1.TerminalResize resize = 3;
-     */
-    value: TerminalResize;
-    case: "resize";
-  } | { case: undefined; value?: undefined };
-};
-
-/**
- * Describes the message komari.webssh.v1.OpenSessionRequest.
- * Use `create(OpenSessionRequestSchema)` to create a new message.
- */
-export const OpenSessionRequestSchema: GenMessage<OpenSessionRequest> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 0);
-
-/**
- * SessionResponse carries exactly one server-side terminal event.
- *
- * @generated from message komari.webssh.v1.OpenSessionResponse
- */
-export type OpenSessionResponse = Message<"komari.webssh.v1.OpenSessionResponse"> & {
-  /**
-   * @generated from oneof komari.webssh.v1.OpenSessionResponse.event
-   */
-  event: {
-    /**
-     * @generated from field: komari.webssh.v1.SessionStarted started = 1;
-     */
-    value: SessionStarted;
-    case: "started";
-  } | {
-    /**
-     * @generated from field: komari.webssh.v1.TerminalOutput output = 2;
-     */
-    value: TerminalOutput;
-    case: "output";
-  } | {
-    /**
-     * @generated from field: komari.webssh.v1.SessionClosed closed = 3;
-     */
-    value: SessionClosed;
-    case: "closed";
-  } | { case: undefined; value?: undefined };
-};
-
-/**
- * Describes the message komari.webssh.v1.OpenSessionResponse.
- * Use `create(OpenSessionResponseSchema)` to create a new message.
- */
-export const OpenSessionResponseSchema: GenMessage<OpenSessionResponse> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 1);
+  fileDesc("Ch1rb21hcmkvd2Vic3NoL3YxL3dlYnNzaC5wcm90bxIQa29tYXJpLndlYnNzaC52MSKuAQoMU2Vzc2lvblN0YXJ0EhAKCGFnZW50X2lkGAEgASgJEg0KBXNoZWxsGAIgASgJEiwKBHNpemUYAyABKAsyHi5rb21hcmkud2Vic3NoLnYxLlRlcm1pbmFsU2l6ZRIZChF3b3JraW5nX2RpcmVjdG9yeRgEIAEoCRI0Cgp0d29fZmFjdG9yGAUgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZiJUCg5TZXNzaW9uU3RhcnRlZBISCgpzZXNzaW9uX2lkGAEgASgJEi4KCnN0YXJ0ZWRfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIkMKDVRlcm1pbmFsSW5wdXQSEgoKc2Vzc2lvbl9pZBgBIAEoCRIQCghzZXF1ZW5jZRgCIAEoBBIMCgRkYXRhGAMgASgMIkQKDlRlcm1pbmFsT3V0cHV0EhIKCnNlc3Npb25faWQYASABKAkSEAoIc2VxdWVuY2UYAiABKAQSDAoEZGF0YRgDIAEoDCJSCg5UZXJtaW5hbFJlc2l6ZRISCgpzZXNzaW9uX2lkGAEgASgJEiwKBHNpemUYAiABKAsyHi5rb21hcmkud2Vic3NoLnYxLlRlcm1pbmFsU2l6ZSItCgxUZXJtaW5hbFNpemUSDAoEcm93cxgBIAEoDRIPCgdjb2x1bW5zGAIgASgNIqcBCg1TZXNzaW9uQ2xvc2VkEhIKCnNlc3Npb25faWQYASABKAkSLQoGcmVhc29uGAIgASgOMh0ua29tYXJpLndlYnNzaC52MS5DbG9zZVJlYXNvbhIWCglleGl0X2NvZGUYAyABKAVIAIgBARItCgljbG9zZWRfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wQgwKCl9leGl0X2NvZGUiRQoUQ3JlYXRlU2Vzc2lvblJlcXVlc3QSLQoFc3RhcnQYASABKAsyHi5rb21hcmkud2Vic3NoLnYxLlNlc3Npb25TdGFydCJKChVDcmVhdGVTZXNzaW9uUmVzcG9uc2USMQoHc3RhcnRlZBgBIAEoCzIgLmtvbWFyaS53ZWJzc2gudjEuU2Vzc2lvblN0YXJ0ZWQimwEKGVNlbmRTZXNzaW9uQ29tbWFuZFJlcXVlc3QSEgoKc2Vzc2lvbl9pZBgBIAEoCRIQCghzZXF1ZW5jZRgCIAEoBBIPCgVpbnB1dBgDIAEoDEgAEjAKBnJlc2l6ZRgEIAEoCzIeLmtvbWFyaS53ZWJzc2gudjEuVGVybWluYWxTaXplSABCCQoHY29tbWFuZEoECAUQBlIEZmlsZSI3ChpTZW5kU2Vzc2lvbkNvbW1hbmRSZXNwb25zZRIZChFhY2NlcHRlZF9zZXF1ZW5jZRgBIAEoBCJBChNXYXRjaFNlc3Npb25SZXF1ZXN0EhIKCnNlc3Npb25faWQYASABKAkSFgoOYWZ0ZXJfc2VxdWVuY2UYAiABKAQiXQoUV2F0Y2hTZXNzaW9uUmVzcG9uc2USLQoFZXZlbnQYASABKAsyHi5rb21hcmkud2Vic3NoLnYxLlNlc3Npb25FdmVudBIWCg5hZ2VudF9hdHRhY2hlZBgCIAEoCCJQCh9BY2tub3dsZWRnZVNlc3Npb25FdmVudHNSZXF1ZXN0EhIKCnNlc3Npb25faWQYASABKAkSGQoRYWNjZXB0ZWRfc2VxdWVuY2UYAiABKAQiPQogQWNrbm93bGVkZ2VTZXNzaW9uRXZlbnRzUmVzcG9uc2USGQoRYWNjZXB0ZWRfc2VxdWVuY2UYASABKAQivwEKDFNlc3Npb25FdmVudBISCgpzZXNzaW9uX2lkGAEgASgJEhAKCHNlcXVlbmNlGAIgASgEEi8KC29jY3VycmVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIQCgZvdXRwdXQYBCABKAxIABIxCgZjbG9zZWQYBiABKAsyHy5rb21hcmkud2Vic3NoLnYxLlNlc3Npb25DbG9zZWRIAEIHCgVldmVudEoECAUQBlIEZmlsZSJFChRMZWFzZVNlc3Npb25zUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIbChNhZnRlcl9hc3NpZ25tZW50X2lkGAIgASgJIlAKFUxlYXNlU2Vzc2lvbnNSZXNwb25zZRI3Cgphc3NpZ25tZW50GAEgASgLMiMua29tYXJpLndlYnNzaC52MS5TZXNzaW9uQXNzaWdubWVudCLzAQoRU2Vzc2lvbkFzc2lnbm1lbnQSFQoNYXNzaWdubWVudF9pZBgBIAEoCRISCgpzZXNzaW9uX2lkGAIgASgJEhAKCGFnZW50X2lkGAMgASgJEg0KBXNoZWxsGAQgASgJEiwKBHNpemUYBSABKAsyHi5rb21hcmkud2Vic3NoLnYxLlRlcm1pbmFsU2l6ZRIZChF3b3JraW5nX2RpcmVjdG9yeRgGIAEoCRI0ChBsZWFzZV9leHBpcmVzX2F0GAcgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBITCgtzeXN0ZW1fdXNlchgIIAEoCSKPAQoUQXR0YWNoU2Vzc2lvblJlcXVlc3QSNgoGYXR0YWNoGAEgASgLMiQua29tYXJpLndlYnNzaC52MS5BZ2VudFNlc3Npb25BdHRhY2hIABI0CgVldmVudBgCIAEoCzIjLmtvbWFyaS53ZWJzc2gudjEuQWdlbnRTZXNzaW9uRXZlbnRIAEIJCgdtZXNzYWdlIoQBChJBZ2VudFNlc3Npb25BdHRhY2gSEAoIYWdlbnRfaWQYASABKAkSFQoNYXNzaWdubWVudF9pZBgCIAEoCRISCgpzZXNzaW9uX2lkGAMgASgJEh4KFmFmdGVyX2NvbW1hbmRfc2VxdWVuY2UYBCABKAQSEQoJcmVzdW1hYmxlGAUgASgIItMBChFBZ2VudFNlc3Npb25FdmVudBIQCghzZXF1ZW5jZRgBIAEoBBIvCgtvY2N1cnJlZF9hdBgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASIQoZYWNjZXB0ZWRfY29tbWFuZF9zZXF1ZW5jZRgGIAEoBBIQCgZvdXRwdXQYAyABKAxIABIxCgZjbG9zZWQYBSABKAsyHy5rb21hcmkud2Vic3NoLnYxLlNlc3Npb25DbG9zZWRIAEIHCgVldmVudEoECAQQBVIEZmlsZSLuAQoVQXR0YWNoU2Vzc2lvblJlc3BvbnNlEhAKCHNlcXVlbmNlGAEgASgEEh8KF2FjY2VwdGVkX2V2ZW50X3NlcXVlbmNlGAYgASgEEjAKDHJlc3VtZV91bnRpbBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASDwoFaW5wdXQYAiABKAxIABIwCgZyZXNpemUYAyABKAsyHi5rb21hcmkud2Vic3NoLnYxLlRlcm1pbmFsU2l6ZUgAEhYKDGNsb3NlX3JlYXNvbhgFIAEoCUgAQgkKB2NvbW1hbmRKBAgEEAVSBGZpbGUiOQoTQ2xvc2VTZXNzaW9uUmVxdWVzdBISCgpzZXNzaW9uX2lkGAEgASgJEg4KBnJlYXNvbhgCIAEoCSJHChRDbG9zZVNlc3Npb25SZXNwb25zZRIvCgZjbG9zZWQYASABKAsyHy5rb21hcmkud2Vic3NoLnYxLlNlc3Npb25DbG9zZWQq7AEKC0Nsb3NlUmVhc29uEhwKGENMT1NFX1JFQVNPTl9VTlNQRUNJRklFRBAAEhcKE0NMT1NFX1JFQVNPTl9OT1JNQUwQARIaChZDTE9TRV9SRUFTT05fQ0FOQ0VMTEVEEAISIgoeQ0xPU0VfUkVBU09OX0RFQURMSU5FX0VYQ0VFREVEEAMSKAokQ0xPU0VfUkVBU09OX1JFTU9URV9DT05UUk9MX0RJU0FCTEVEEAQSIwofQ0xPU0VfUkVBU09OX0FHRU5UX0RJU0NPTk5FQ1RFRBAFEhcKE0NMT1NFX1JFQVNPTl9GQUlMRUQQBjLwBQoNV2ViU1NIU2VydmljZRJgCg1DcmVhdGVTZXNzaW9uEiYua29tYXJpLndlYnNzaC52MS5DcmVhdGVTZXNzaW9uUmVxdWVzdBonLmtvbWFyaS53ZWJzc2gudjEuQ3JlYXRlU2Vzc2lvblJlc3BvbnNlEm8KElNlbmRTZXNzaW9uQ29tbWFuZBIrLmtvbWFyaS53ZWJzc2gudjEuU2VuZFNlc3Npb25Db21tYW5kUmVxdWVzdBosLmtvbWFyaS53ZWJzc2gudjEuU2VuZFNlc3Npb25Db21tYW5kUmVzcG9uc2USXwoMV2F0Y2hTZXNzaW9uEiUua29tYXJpLndlYnNzaC52MS5XYXRjaFNlc3Npb25SZXF1ZXN0GiYua29tYXJpLndlYnNzaC52MS5XYXRjaFNlc3Npb25SZXNwb25zZTABEoEBChhBY2tub3dsZWRnZVNlc3Npb25FdmVudHMSMS5rb21hcmkud2Vic3NoLnYxLkFja25vd2xlZGdlU2Vzc2lvbkV2ZW50c1JlcXVlc3QaMi5rb21hcmkud2Vic3NoLnYxLkFja25vd2xlZGdlU2Vzc2lvbkV2ZW50c1Jlc3BvbnNlEl0KDENsb3NlU2Vzc2lvbhIlLmtvbWFyaS53ZWJzc2gudjEuQ2xvc2VTZXNzaW9uUmVxdWVzdBomLmtvbWFyaS53ZWJzc2gudjEuQ2xvc2VTZXNzaW9uUmVzcG9uc2USYgoNTGVhc2VTZXNzaW9ucxImLmtvbWFyaS53ZWJzc2gudjEuTGVhc2VTZXNzaW9uc1JlcXVlc3QaJy5rb21hcmkud2Vic3NoLnYxLkxlYXNlU2Vzc2lvbnNSZXNwb25zZTABEmQKDUF0dGFjaFNlc3Npb24SJi5rb21hcmkud2Vic3NoLnYxLkF0dGFjaFNlc3Npb25SZXF1ZXN0Gicua29tYXJpLndlYnNzaC52MS5BdHRhY2hTZXNzaW9uUmVzcG9uc2UoATABQskBChRjb20ua29tYXJpLndlYnNzaC52MUILV2Vic3NoUHJvdG9QAVpCZ2l0aHViLmNvbS9yMTEyMzQ1Njcva29tYXJpLXByb3RvL2dlbi9nby9rb21hcmkvd2Vic3NoL3YxO3dlYnNzaHYxogIDS1dYqgIQS29tYXJpLldlYnNzaC5WMcoCEEtvbWFyaVxXZWJzc2hcVjHiAhxLb21hcmlcV2Vic3NoXFYxXEdQQk1ldGFkYXRh6gISS29tYXJpOjpXZWJzc2g6OlYxYgZwcm90bzM", [file_google_protobuf_timestamp, file_komari_common_v1_common]);
 
 /**
  * SessionStart authorizes and opens one session with fresh 2FA.
@@ -127,7 +53,7 @@ export type SessionStart = Message<"komari.webssh.v1.SessionStart"> & {
  * Use `create(SessionStartSchema)` to create a new message.
  */
 export const SessionStartSchema: GenMessage<SessionStart> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 2);
+  messageDesc(file_komari_webssh_v1_webssh, 0);
 
 /**
  * SessionStarted confirms one allocated session.
@@ -151,7 +77,7 @@ export type SessionStarted = Message<"komari.webssh.v1.SessionStarted"> & {
  * Use `create(SessionStartedSchema)` to create a new message.
  */
 export const SessionStartedSchema: GenMessage<SessionStarted> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 3);
+  messageDesc(file_komari_webssh_v1_webssh, 1);
 
 /**
  * TerminalInput is one sequenced input chunk.
@@ -180,7 +106,7 @@ export type TerminalInput = Message<"komari.webssh.v1.TerminalInput"> & {
  * Use `create(TerminalInputSchema)` to create a new message.
  */
 export const TerminalInputSchema: GenMessage<TerminalInput> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 4);
+  messageDesc(file_komari_webssh_v1_webssh, 2);
 
 /**
  * TerminalOutput is one sequenced output chunk.
@@ -209,7 +135,7 @@ export type TerminalOutput = Message<"komari.webssh.v1.TerminalOutput"> & {
  * Use `create(TerminalOutputSchema)` to create a new message.
  */
 export const TerminalOutputSchema: GenMessage<TerminalOutput> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 5);
+  messageDesc(file_komari_webssh_v1_webssh, 3);
 
 /**
  * TerminalResize changes terminal dimensions without opening another lifecycle.
@@ -233,7 +159,7 @@ export type TerminalResize = Message<"komari.webssh.v1.TerminalResize"> & {
  * Use `create(TerminalResizeSchema)` to create a new message.
  */
 export const TerminalResizeSchema: GenMessage<TerminalResize> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 6);
+  messageDesc(file_komari_webssh_v1_webssh, 4);
 
 /**
  * TerminalSize describes rows and columns.
@@ -257,7 +183,7 @@ export type TerminalSize = Message<"komari.webssh.v1.TerminalSize"> & {
  * Use `create(TerminalSizeSchema)` to create a new message.
  */
 export const TerminalSizeSchema: GenMessage<TerminalSize> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 7);
+  messageDesc(file_komari_webssh_v1_webssh, 5);
 
 /**
  * SessionClosed is the canonical session terminal state.
@@ -291,7 +217,7 @@ export type SessionClosed = Message<"komari.webssh.v1.SessionClosed"> & {
  * Use `create(SessionClosedSchema)` to create a new message.
  */
 export const SessionClosedSchema: GenMessage<SessionClosed> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 8);
+  messageDesc(file_komari_webssh_v1_webssh, 6);
 
 /**
  * CreateSessionRequest starts one remote-management session with fresh 2FA.
@@ -310,7 +236,7 @@ export type CreateSessionRequest = Message<"komari.webssh.v1.CreateSessionReques
  * Use `create(CreateSessionRequestSchema)` to create a new message.
  */
 export const CreateSessionRequestSchema: GenMessage<CreateSessionRequest> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 9);
+  messageDesc(file_komari_webssh_v1_webssh, 7);
 
 /**
  * CreateSessionResponse returns the allocated session.
@@ -329,7 +255,7 @@ export type CreateSessionResponse = Message<"komari.webssh.v1.CreateSessionRespo
  * Use `create(CreateSessionResponseSchema)` to create a new message.
  */
 export const CreateSessionResponseSchema: GenMessage<CreateSessionResponse> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 10);
+  messageDesc(file_komari_webssh_v1_webssh, 8);
 
 /**
  * SendSessionCommandRequest sends one idempotent browser-side command.
@@ -362,12 +288,6 @@ export type SendSessionCommandRequest = Message<"komari.webssh.v1.SendSessionCom
      */
     value: TerminalSize;
     case: "resize";
-  } | {
-    /**
-     * @generated from field: komari.webssh.v1.FileCommand file = 5;
-     */
-    value: FileCommand;
-    case: "file";
   } | { case: undefined; value?: undefined };
 };
 
@@ -376,7 +296,7 @@ export type SendSessionCommandRequest = Message<"komari.webssh.v1.SendSessionCom
  * Use `create(SendSessionCommandRequestSchema)` to create a new message.
  */
 export const SendSessionCommandRequestSchema: GenMessage<SendSessionCommandRequest> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 11);
+  messageDesc(file_komari_webssh_v1_webssh, 9);
 
 /**
  * SendSessionCommandResponse acknowledges the accepted browser sequence.
@@ -395,7 +315,7 @@ export type SendSessionCommandResponse = Message<"komari.webssh.v1.SendSessionCo
  * Use `create(SendSessionCommandResponseSchema)` to create a new message.
  */
 export const SendSessionCommandResponseSchema: GenMessage<SendSessionCommandResponse> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 12);
+  messageDesc(file_komari_webssh_v1_webssh, 10);
 
 /**
  * WatchSessionRequest resumes browser output after a known sequence.
@@ -419,7 +339,7 @@ export type WatchSessionRequest = Message<"komari.webssh.v1.WatchSessionRequest"
  * Use `create(WatchSessionRequestSchema)` to create a new message.
  */
 export const WatchSessionRequestSchema: GenMessage<WatchSessionRequest> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 13);
+  messageDesc(file_komari_webssh_v1_webssh, 11);
 
 /**
  * WatchSessionResponse carries one ordered remote-management event.
@@ -447,7 +367,7 @@ export type WatchSessionResponse = Message<"komari.webssh.v1.WatchSessionRespons
  * Use `create(WatchSessionResponseSchema)` to create a new message.
  */
 export const WatchSessionResponseSchema: GenMessage<WatchSessionResponse> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 14);
+  messageDesc(file_komari_webssh_v1_webssh, 12);
 
 /**
  * AcknowledgeSessionEventsRequest advances the browser replay cursor.
@@ -471,7 +391,7 @@ export type AcknowledgeSessionEventsRequest = Message<"komari.webssh.v1.Acknowle
  * Use `create(AcknowledgeSessionEventsRequestSchema)` to create a new message.
  */
 export const AcknowledgeSessionEventsRequestSchema: GenMessage<AcknowledgeSessionEventsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 15);
+  messageDesc(file_komari_webssh_v1_webssh, 13);
 
 /**
  * AcknowledgeSessionEventsResponse confirms the released replay cursor.
@@ -490,10 +410,10 @@ export type AcknowledgeSessionEventsResponse = Message<"komari.webssh.v1.Acknowl
  * Use `create(AcknowledgeSessionEventsResponseSchema)` to create a new message.
  */
 export const AcknowledgeSessionEventsResponseSchema: GenMessage<AcknowledgeSessionEventsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 16);
+  messageDesc(file_komari_webssh_v1_webssh, 14);
 
 /**
- * SessionEvent is an ordered terminal, file, or close event.
+ * SessionEvent is an ordered terminal or close event.
  *
  * @generated from message komari.webssh.v1.SessionEvent
  */
@@ -524,12 +444,6 @@ export type SessionEvent = Message<"komari.webssh.v1.SessionEvent"> & {
     case: "output";
   } | {
     /**
-     * @generated from field: komari.webssh.v1.FileEvent file = 5;
-     */
-    value: FileEvent;
-    case: "file";
-  } | {
-    /**
      * @generated from field: komari.webssh.v1.SessionClosed closed = 6;
      */
     value: SessionClosed;
@@ -542,7 +456,7 @@ export type SessionEvent = Message<"komari.webssh.v1.SessionEvent"> & {
  * Use `create(SessionEventSchema)` to create a new message.
  */
 export const SessionEventSchema: GenMessage<SessionEvent> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 17);
+  messageDesc(file_komari_webssh_v1_webssh, 15);
 
 /**
  * LeaseSessionsRequest opens the Agent assignment stream.
@@ -566,7 +480,7 @@ export type LeaseSessionsRequest = Message<"komari.webssh.v1.LeaseSessionsReques
  * Use `create(LeaseSessionsRequestSchema)` to create a new message.
  */
 export const LeaseSessionsRequestSchema: GenMessage<LeaseSessionsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 18);
+  messageDesc(file_komari_webssh_v1_webssh, 16);
 
 /**
  * LeaseSessionsResponse contains one immutable pending assignment.
@@ -585,7 +499,7 @@ export type LeaseSessionsResponse = Message<"komari.webssh.v1.LeaseSessionsRespo
  * Use `create(LeaseSessionsResponseSchema)` to create a new message.
  */
 export const LeaseSessionsResponseSchema: GenMessage<LeaseSessionsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 19);
+  messageDesc(file_komari_webssh_v1_webssh, 17);
 
 /**
  * SessionAssignment describes one session that an Agent must attach to.
@@ -641,7 +555,7 @@ export type SessionAssignment = Message<"komari.webssh.v1.SessionAssignment"> & 
  * Use `create(SessionAssignmentSchema)` to create a new message.
  */
 export const SessionAssignmentSchema: GenMessage<SessionAssignment> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 20);
+  messageDesc(file_komari_webssh_v1_webssh, 18);
 
 /**
  * AttachSessionRequest carries the Agent handshake or an ordered event.
@@ -672,7 +586,7 @@ export type AttachSessionRequest = Message<"komari.webssh.v1.AttachSessionReques
  * Use `create(AttachSessionRequestSchema)` to create a new message.
  */
 export const AttachSessionRequestSchema: GenMessage<AttachSessionRequest> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 21);
+  messageDesc(file_komari_webssh_v1_webssh, 19);
 
 /**
  * AgentSessionAttach binds an authenticated Agent to a leased session.
@@ -713,10 +627,10 @@ export type AgentSessionAttach = Message<"komari.webssh.v1.AgentSessionAttach"> 
  * Use `create(AgentSessionAttachSchema)` to create a new message.
  */
 export const AgentSessionAttachSchema: GenMessage<AgentSessionAttach> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 22);
+  messageDesc(file_komari_webssh_v1_webssh, 20);
 
 /**
- * AgentSessionEvent carries terminal/file output or a terminal state.
+ * AgentSessionEvent carries terminal output or a terminal state.
  *
  * @generated from message komari.webssh.v1.AgentSessionEvent
  */
@@ -747,12 +661,6 @@ export type AgentSessionEvent = Message<"komari.webssh.v1.AgentSessionEvent"> & 
     case: "output";
   } | {
     /**
-     * @generated from field: komari.webssh.v1.FileEvent file = 4;
-     */
-    value: FileEvent;
-    case: "file";
-  } | {
-    /**
      * @generated from field: komari.webssh.v1.SessionClosed closed = 5;
      */
     value: SessionClosed;
@@ -765,7 +673,7 @@ export type AgentSessionEvent = Message<"komari.webssh.v1.AgentSessionEvent"> & 
  * Use `create(AgentSessionEventSchema)` to create a new message.
  */
 export const AgentSessionEventSchema: GenMessage<AgentSessionEvent> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 23);
+  messageDesc(file_komari_webssh_v1_webssh, 21);
 
 /**
  * AttachSessionResponse carries one ordered command to the Agent.
@@ -810,12 +718,6 @@ export type AttachSessionResponse = Message<"komari.webssh.v1.AttachSessionRespo
     case: "resize";
   } | {
     /**
-     * @generated from field: komari.webssh.v1.FileCommand file = 4;
-     */
-    value: FileCommand;
-    case: "file";
-  } | {
-    /**
      * @generated from field: string close_reason = 5;
      */
     value: string;
@@ -828,184 +730,7 @@ export type AttachSessionResponse = Message<"komari.webssh.v1.AttachSessionRespo
  * Use `create(AttachSessionResponseSchema)` to create a new message.
  */
 export const AttachSessionResponseSchema: GenMessage<AttachSessionResponse> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 24);
-
-/**
- * FileCommand is one typed file-manager request.
- *
- * @generated from message komari.webssh.v1.FileCommand
- */
-export type FileCommand = Message<"komari.webssh.v1.FileCommand"> & {
-  /**
-   * @generated from field: string request_id = 1;
-   */
-  requestId: string;
-
-  /**
-   * @generated from field: komari.webssh.v1.FileOperation operation = 2;
-   */
-  operation: FileOperation;
-
-  /**
-   * @generated from field: string path = 3;
-   */
-  path: string;
-
-  /**
-   * @generated from field: string destination = 4;
-   */
-  destination: string;
-
-  /**
-   * @generated from field: bool recursive = 5;
-   */
-  recursive: boolean;
-
-  /**
-   * @generated from field: bool overwrite = 6;
-   */
-  overwrite: boolean;
-
-  /**
-   * @generated from field: uint64 size = 7;
-   */
-  size: bigint;
-
-  /**
-   * @generated from field: string sha256 = 8;
-   */
-  sha256: string;
-
-  /**
-   * @generated from field: string upload_id = 9;
-   */
-  uploadId: string;
-
-  /**
-   * @generated from field: bytes data = 10;
-   */
-  data: Uint8Array;
-};
-
-/**
- * Describes the message komari.webssh.v1.FileCommand.
- * Use `create(FileCommandSchema)` to create a new message.
- */
-export const FileCommandSchema: GenMessage<FileCommand> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 25);
-
-/**
- * FileEntry is one directory entry without platform-specific metadata blobs.
- *
- * @generated from message komari.webssh.v1.FileEntry
- */
-export type FileEntry = Message<"komari.webssh.v1.FileEntry"> & {
-  /**
-   * @generated from field: string name = 1;
-   */
-  name: string;
-
-  /**
-   * @generated from field: string path = 2;
-   */
-  path: string;
-
-  /**
-   * @generated from field: bool directory = 3;
-   */
-  directory: boolean;
-
-  /**
-   * @generated from field: uint64 size = 4;
-   */
-  size: bigint;
-
-  /**
-   * @generated from field: google.protobuf.Timestamp modified_at = 5;
-   */
-  modifiedAt?: Timestamp | undefined;
-};
-
-/**
- * Describes the message komari.webssh.v1.FileEntry.
- * Use `create(FileEntrySchema)` to create a new message.
- */
-export const FileEntrySchema: GenMessage<FileEntry> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 26);
-
-/**
- * FileEvent is one typed response or transfer chunk.
- *
- * @generated from message komari.webssh.v1.FileEvent
- */
-export type FileEvent = Message<"komari.webssh.v1.FileEvent"> & {
-  /**
-   * @generated from field: string request_id = 1;
-   */
-  requestId: string;
-
-  /**
-   * @generated from field: komari.webssh.v1.FileOperation operation = 2;
-   */
-  operation: FileOperation;
-
-  /**
-   * @generated from field: bool success = 3;
-   */
-  success: boolean;
-
-  /**
-   * @generated from field: string error = 4;
-   */
-  error: string;
-
-  /**
-   * @generated from field: repeated komari.webssh.v1.FileEntry entries = 5;
-   */
-  entries: FileEntry[];
-
-  /**
-   * @generated from field: string parent = 6;
-   */
-  parent: string;
-
-  /**
-   * @generated from field: string upload_id = 7;
-   */
-  uploadId: string;
-
-  /**
-   * @generated from field: uint64 size = 8;
-   */
-  size: bigint;
-
-  /**
-   * @generated from field: uint64 transferred = 9;
-   */
-  transferred: bigint;
-
-  /**
-   * @generated from field: string sha256 = 10;
-   */
-  sha256: string;
-
-  /**
-   * @generated from field: bytes data = 11;
-   */
-  data: Uint8Array;
-
-  /**
-   * @generated from field: bool complete = 12;
-   */
-  complete: boolean;
-};
-
-/**
- * Describes the message komari.webssh.v1.FileEvent.
- * Use `create(FileEventSchema)` to create a new message.
- */
-export const FileEventSchema: GenMessage<FileEvent> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 27);
+  messageDesc(file_komari_webssh_v1_webssh, 22);
 
 /**
  * CloseSessionRequest explicitly closes one session.
@@ -1029,7 +754,7 @@ export type CloseSessionRequest = Message<"komari.webssh.v1.CloseSessionRequest"
  * Use `create(CloseSessionRequestSchema)` to create a new message.
  */
 export const CloseSessionRequestSchema: GenMessage<CloseSessionRequest> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 28);
+  messageDesc(file_komari_webssh_v1_webssh, 23);
 
 /**
  * CloseSessionResponse confirms canonical cleanup.
@@ -1048,75 +773,7 @@ export type CloseSessionResponse = Message<"komari.webssh.v1.CloseSessionRespons
  * Use `create(CloseSessionResponseSchema)` to create a new message.
  */
 export const CloseSessionResponseSchema: GenMessage<CloseSessionResponse> = /*@__PURE__*/
-  messageDesc(file_komari_webssh_v1_webssh, 29);
-
-/**
- * FileOperation enumerates bounded remote file-manager actions.
- *
- * @generated from enum komari.webssh.v1.FileOperation
- */
-export enum FileOperation {
-  /**
-   * @generated from enum value: FILE_OPERATION_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
-
-  /**
-   * @generated from enum value: FILE_OPERATION_LIST = 1;
-   */
-  LIST = 1,
-
-  /**
-   * @generated from enum value: FILE_OPERATION_MKDIR = 2;
-   */
-  MKDIR = 2,
-
-  /**
-   * @generated from enum value: FILE_OPERATION_CREATE = 3;
-   */
-  CREATE = 3,
-
-  /**
-   * @generated from enum value: FILE_OPERATION_RENAME = 4;
-   */
-  RENAME = 4,
-
-  /**
-   * @generated from enum value: FILE_OPERATION_COPY = 5;
-   */
-  COPY = 5,
-
-  /**
-   * @generated from enum value: FILE_OPERATION_DELETE = 6;
-   */
-  DELETE = 6,
-
-  /**
-   * @generated from enum value: FILE_OPERATION_UPLOAD_START = 7;
-   */
-  UPLOAD_START = 7,
-
-  /**
-   * @generated from enum value: FILE_OPERATION_UPLOAD_CHUNK = 8;
-   */
-  UPLOAD_CHUNK = 8,
-
-  /**
-   * @generated from enum value: FILE_OPERATION_UPLOAD_FINISH = 9;
-   */
-  UPLOAD_FINISH = 9,
-
-  /**
-   * @generated from enum value: FILE_OPERATION_DOWNLOAD = 10;
-   */
-  DOWNLOAD = 10,
-}
-
-/**
- * Describes the enum komari.webssh.v1.FileOperation.
- */
-export const FileOperationSchema: GenEnum<FileOperation> = /*@__PURE__*/
-  enumDesc(file_komari_webssh_v1_webssh, 0);
+  messageDesc(file_komari_webssh_v1_webssh, 24);
 
 /**
  * CloseReason classifies terminal session cleanup.
@@ -1164,30 +821,18 @@ export enum CloseReason {
  * Describes the enum komari.webssh.v1.CloseReason.
  */
 export const CloseReasonSchema: GenEnum<CloseReason> = /*@__PURE__*/
-  enumDesc(file_komari_webssh_v1_webssh, 1);
+  enumDesc(file_komari_webssh_v1_webssh, 0);
 
 /**
- * WebSSHService owns interactive terminal sessions; this is the only bidi API.
+ * WebSSHService owns interactive terminal sessions.
  *
  * @generated from service komari.webssh.v1.WebSSHService
  */
 export const WebSSHService: GenService<{
   /**
-   * OpenSession is retained for native clients that support bidi streams.
-   *
-   * @generated from rpc komari.webssh.v1.WebSSHService.OpenSession
-   */
-  openSession: {
-    methodKind: "bidi_streaming";
-    input: typeof OpenSessionRequestSchema;
-    output: typeof OpenSessionResponseSchema;
-  },
-  /**
    * CreateSession opens a browser-compatible remote-management session.
-   * Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
    *
    * @generated from rpc komari.webssh.v1.WebSSHService.CreateSession
-   * @deprecated
    */
   createSession: {
     methodKind: "unary";
@@ -1195,11 +840,9 @@ export const WebSSHService: GenService<{
     output: typeof CreateSessionResponseSchema;
   },
   /**
-   * SendSessionCommand carries terminal input, resize, and typed file operations.
-   * Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+   * SendSessionCommand carries terminal input and resize commands.
    *
    * @generated from rpc komari.webssh.v1.WebSSHService.SendSessionCommand
-   * @deprecated
    */
   sendSessionCommand: {
     methodKind: "unary";
@@ -1207,11 +850,9 @@ export const WebSSHService: GenService<{
     output: typeof SendSessionCommandResponseSchema;
   },
   /**
-   * WatchSession streams terminal and file events to browser clients.
-   * Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
+   * WatchSession streams terminal events to browser clients.
    *
    * @generated from rpc komari.webssh.v1.WebSSHService.WatchSession
-   * @deprecated
    */
   watchSession: {
     methodKind: "server_streaming";
@@ -1220,10 +861,8 @@ export const WebSSHService: GenService<{
   },
   /**
    * AcknowledgeSessionEvents releases replay buffers consumed by the browser.
-   * Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
    *
    * @generated from rpc komari.webssh.v1.WebSSHService.AcknowledgeSessionEvents
-   * @deprecated
    */
   acknowledgeSessionEvents: {
     methodKind: "unary";
@@ -1232,10 +871,8 @@ export const WebSSHService: GenService<{
   },
   /**
    * CloseSession records explicit cleanup with a short independent deadline.
-   * Deprecated: migrate to OpenSession or AttachSession bidirectional streams.
    *
    * @generated from rpc komari.webssh.v1.WebSSHService.CloseSession
-   * @deprecated
    */
   closeSession: {
     methodKind: "unary";
@@ -1253,7 +890,7 @@ export const WebSSHService: GenService<{
     output: typeof LeaseSessionsResponseSchema;
   },
   /**
-   * AttachSession is the Agent-side bidirectional terminal/file channel.
+   * AttachSession is the Agent-side bidirectional terminal channel.
    *
    * @generated from rpc komari.webssh.v1.WebSSHService.AttachSession
    */

@@ -86,6 +86,7 @@ func NewPluginServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			httpClient,
 			baseURL+PluginServiceListPluginsProcedure,
 			connect.WithSchema(pluginServiceMethods.ByName("ListPlugins")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		setPluginEnabled: connect.NewClient[v1.SetPluginEnabledRequest, v1.SetPluginEnabledResponse](
@@ -98,6 +99,7 @@ func NewPluginServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			httpClient,
 			baseURL+PluginServiceGetPluginLogsProcedure,
 			connect.WithSchema(pluginServiceMethods.ByName("GetPluginLogs")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		deletePlugin: connect.NewClient[v1.DeletePluginRequest, v1.DeletePluginResponse](
@@ -110,6 +112,7 @@ func NewPluginServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			httpClient,
 			baseURL+PluginServiceGetPluginConfigurationProcedure,
 			connect.WithSchema(pluginServiceMethods.ByName("GetPluginConfiguration")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		setPluginConfiguration: connect.NewClient[v1.SetPluginConfigurationRequest, v1.SetPluginConfigurationResponse](
@@ -122,6 +125,7 @@ func NewPluginServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			httpClient,
 			baseURL+PluginServiceListPluginPackagesProcedure,
 			connect.WithSchema(pluginServiceMethods.ByName("ListPluginPackages")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		decidePluginPackage: connect.NewClient[v1.DecidePluginPackageRequest, v1.DecidePluginPackageResponse](
@@ -208,6 +212,7 @@ func NewPluginServiceHandler(svc PluginServiceHandler, opts ...connect.HandlerOp
 		PluginServiceListPluginsProcedure,
 		svc.ListPlugins,
 		connect.WithSchema(pluginServiceMethods.ByName("ListPlugins")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	pluginServiceSetPluginEnabledHandler := connect.NewUnaryHandler(
@@ -220,6 +225,7 @@ func NewPluginServiceHandler(svc PluginServiceHandler, opts ...connect.HandlerOp
 		PluginServiceGetPluginLogsProcedure,
 		svc.GetPluginLogs,
 		connect.WithSchema(pluginServiceMethods.ByName("GetPluginLogs")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	pluginServiceDeletePluginHandler := connect.NewUnaryHandler(
@@ -232,6 +238,7 @@ func NewPluginServiceHandler(svc PluginServiceHandler, opts ...connect.HandlerOp
 		PluginServiceGetPluginConfigurationProcedure,
 		svc.GetPluginConfiguration,
 		connect.WithSchema(pluginServiceMethods.ByName("GetPluginConfiguration")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	pluginServiceSetPluginConfigurationHandler := connect.NewUnaryHandler(
@@ -244,6 +251,7 @@ func NewPluginServiceHandler(svc PluginServiceHandler, opts ...connect.HandlerOp
 		PluginServiceListPluginPackagesProcedure,
 		svc.ListPluginPackages,
 		connect.WithSchema(pluginServiceMethods.ByName("ListPluginPackages")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	pluginServiceDecidePluginPackageHandler := connect.NewUnaryHandler(

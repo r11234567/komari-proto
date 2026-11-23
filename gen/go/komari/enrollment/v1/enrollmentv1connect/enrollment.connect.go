@@ -121,6 +121,7 @@ func NewEnrollmentServiceClient(httpClient connect.HTTPClient, baseURL string, o
 			httpClient,
 			baseURL+EnrollmentServiceGetTrustBundleProcedure,
 			connect.WithSchema(enrollmentServiceMethods.ByName("GetTrustBundle")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -214,6 +215,7 @@ func NewEnrollmentServiceHandler(svc EnrollmentServiceHandler, opts ...connect.H
 		EnrollmentServiceGetTrustBundleProcedure,
 		svc.GetTrustBundle,
 		connect.WithSchema(enrollmentServiceMethods.ByName("GetTrustBundle")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/komari.enrollment.v1.EnrollmentService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -287,12 +289,14 @@ func NewEnrollmentAdminServiceClient(httpClient connect.HTTPClient, baseURL stri
 			httpClient,
 			baseURL+EnrollmentAdminServiceListPendingEnrollmentsProcedure,
 			connect.WithSchema(enrollmentAdminServiceMethods.ByName("ListPendingEnrollments")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		getPendingEnrollment: connect.NewClient[v1.GetPendingEnrollmentRequest, v1.GetPendingEnrollmentResponse](
 			httpClient,
 			baseURL+EnrollmentAdminServiceGetPendingEnrollmentProcedure,
 			connect.WithSchema(enrollmentAdminServiceMethods.ByName("GetPendingEnrollment")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		approveEnrollment: connect.NewClient[v1.ApproveEnrollmentRequest, v1.ApproveEnrollmentResponse](
@@ -363,12 +367,14 @@ func NewEnrollmentAdminServiceHandler(svc EnrollmentAdminServiceHandler, opts ..
 		EnrollmentAdminServiceListPendingEnrollmentsProcedure,
 		svc.ListPendingEnrollments,
 		connect.WithSchema(enrollmentAdminServiceMethods.ByName("ListPendingEnrollments")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	enrollmentAdminServiceGetPendingEnrollmentHandler := connect.NewUnaryHandler(
 		EnrollmentAdminServiceGetPendingEnrollmentProcedure,
 		svc.GetPendingEnrollment,
 		connect.WithSchema(enrollmentAdminServiceMethods.ByName("GetPendingEnrollment")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	enrollmentAdminServiceApproveEnrollmentHandler := connect.NewUnaryHandler(

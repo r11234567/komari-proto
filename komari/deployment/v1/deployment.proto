@@ -13,7 +13,9 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/deployment/
 // DeploymentService owns install-only settings and runtime delivery status.
 service DeploymentService {
   // GetDeployment returns one agent deployment state.
-  rpc GetDeployment(GetDeploymentRequest) returns (GetDeploymentResponse);
+  rpc GetDeployment(GetDeploymentRequest) returns (GetDeploymentResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // SaveDeploymentProfile updates install settings and desired runtime config.
   rpc SaveDeploymentProfile(SaveDeploymentProfileRequest) returns (SaveDeploymentProfileResponse);
   // GenerateInstallCommand creates a platform-specific command without exposing tokens in logs.

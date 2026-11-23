@@ -10,7 +10,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file komari/admin/v1/ping.proto.
  */
 export const file_komari_admin_v1_ping: GenFile = /*@__PURE__*/
-  fileDesc("Chprb21hcmkvYWRtaW4vdjEvcGluZy5wcm90bxIPa29tYXJpLmFkbWluLnYxIhYKFExpc3RQaW5nVGFza3NSZXF1ZXN0IkEKFUxpc3RQaW5nVGFza3NSZXNwb25zZRIoCgV0YXNrcxgBIAMoCzIZLmtvbWFyaS5hZG1pbi52MS5QaW5nVGFzayKCAQoVQ3JlYXRlUGluZ1Rhc2tSZXF1ZXN0EgwKBG5hbWUYASABKAkSDgoGdGFyZ2V0GAIgASgJEgwKBHR5cGUYAyABKAkSGAoQaW50ZXJ2YWxfc2Vjb25kcxgEIAEoBRIPCgdjbGllbnRzGAUgAygJEhIKCmRlZmF1bHRfb24YBiABKAgiKQoWQ3JlYXRlUGluZ1Rhc2tSZXNwb25zZRIPCgd0YXNrX2lkGAEgASgNIkIKFlVwZGF0ZVBpbmdUYXNrc1JlcXVlc3QSKAoFdGFza3MYASADKAsyGS5rb21hcmkuYWRtaW4udjEuUGluZ1Rhc2siGQoXVXBkYXRlUGluZ1Rhc2tzUmVzcG9uc2UiJQoWRGVsZXRlUGluZ1Rhc2tzUmVxdWVzdBILCgNpZHMYASADKA0iGQoXRGVsZXRlUGluZ1Rhc2tzUmVzcG9uc2UikQEKF1Jlb3JkZXJQaW5nVGFza3NSZXF1ZXN0EkYKB3dlaWdodHMYASADKAsyNS5rb21hcmkuYWRtaW4udjEuUmVvcmRlclBpbmdUYXNrc1JlcXVlc3QuV2VpZ2h0c0VudHJ5Gi4KDFdlaWdodHNFbnRyeRILCgNrZXkYASABKA0SDQoFdmFsdWUYAiABKAU6AjgBIhoKGFJlb3JkZXJQaW5nVGFza3NSZXNwb25zZSKRAQoIUGluZ1Rhc2sSCgoCaWQYASABKA0SDAoEbmFtZRgCIAEoCRIOCgZ0YXJnZXQYAyABKAkSDAoEdHlwZRgEIAEoCRIYChBpbnRlcnZhbF9zZWNvbmRzGAUgASgFEg8KB2NsaWVudHMYBiADKAkSEgoKZGVmYXVsdF9vbhgHIAEoCBIOCgZ3ZWlnaHQYCCABKAUyiQQKD1BpbmdUYXNrU2VydmljZRJeCg1MaXN0UGluZ1Rhc2tzEiUua29tYXJpLmFkbWluLnYxLkxpc3RQaW5nVGFza3NSZXF1ZXN0GiYua29tYXJpLmFkbWluLnYxLkxpc3RQaW5nVGFza3NSZXNwb25zZRJhCg5DcmVhdGVQaW5nVGFzaxImLmtvbWFyaS5hZG1pbi52MS5DcmVhdGVQaW5nVGFza1JlcXVlc3QaJy5rb21hcmkuYWRtaW4udjEuQ3JlYXRlUGluZ1Rhc2tSZXNwb25zZRJkCg9VcGRhdGVQaW5nVGFza3MSJy5rb21hcmkuYWRtaW4udjEuVXBkYXRlUGluZ1Rhc2tzUmVxdWVzdBooLmtvbWFyaS5hZG1pbi52MS5VcGRhdGVQaW5nVGFza3NSZXNwb25zZRJkCg9EZWxldGVQaW5nVGFza3MSJy5rb21hcmkuYWRtaW4udjEuRGVsZXRlUGluZ1Rhc2tzUmVxdWVzdBooLmtvbWFyaS5hZG1pbi52MS5EZWxldGVQaW5nVGFza3NSZXNwb25zZRJnChBSZW9yZGVyUGluZ1Rhc2tzEigua29tYXJpLmFkbWluLnYxLlJlb3JkZXJQaW5nVGFza3NSZXF1ZXN0Gikua29tYXJpLmFkbWluLnYxLlJlb3JkZXJQaW5nVGFza3NSZXNwb25zZULAAQoTY29tLmtvbWFyaS5hZG1pbi52MUIJUGluZ1Byb3RvUAFaQGdpdGh1Yi5jb20vcjExMjM0NTY3L2tvbWFyaS1wcm90by9nZW4vZ28va29tYXJpL2FkbWluL3YxO2FkbWludjGiAgNLQViqAg9Lb21hcmkuQWRtaW4uVjHKAg9Lb21hcmlcQWRtaW5cVjHiAhtLb21hcmlcQWRtaW5cVjFcR1BCTWV0YWRhdGHqAhFLb21hcmk6OkFkbWluOjpWMWIGcHJvdG8z");
+  fileDesc("Chprb21hcmkvYWRtaW4vdjEvcGluZy5wcm90bxIPa29tYXJpLmFkbWluLnYxIhYKFExpc3RQaW5nVGFza3NSZXF1ZXN0IkEKFUxpc3RQaW5nVGFza3NSZXNwb25zZRIoCgV0YXNrcxgBIAMoCzIZLmtvbWFyaS5hZG1pbi52MS5QaW5nVGFzayKCAQoVQ3JlYXRlUGluZ1Rhc2tSZXF1ZXN0EgwKBG5hbWUYASABKAkSDgoGdGFyZ2V0GAIgASgJEgwKBHR5cGUYAyABKAkSGAoQaW50ZXJ2YWxfc2Vjb25kcxgEIAEoBRIPCgdjbGllbnRzGAUgAygJEhIKCmRlZmF1bHRfb24YBiABKAgiKQoWQ3JlYXRlUGluZ1Rhc2tSZXNwb25zZRIPCgd0YXNrX2lkGAEgASgEIkIKFlVwZGF0ZVBpbmdUYXNrc1JlcXVlc3QSKAoFdGFza3MYASADKAsyGS5rb21hcmkuYWRtaW4udjEuUGluZ1Rhc2siGQoXVXBkYXRlUGluZ1Rhc2tzUmVzcG9uc2UiJQoWRGVsZXRlUGluZ1Rhc2tzUmVxdWVzdBILCgNpZHMYASADKAQiGQoXRGVsZXRlUGluZ1Rhc2tzUmVzcG9uc2UikQEKF1Jlb3JkZXJQaW5nVGFza3NSZXF1ZXN0EkYKB3dlaWdodHMYASADKAsyNS5rb21hcmkuYWRtaW4udjEuUmVvcmRlclBpbmdUYXNrc1JlcXVlc3QuV2VpZ2h0c0VudHJ5Gi4KDFdlaWdodHNFbnRyeRILCgNrZXkYASABKAQSDQoFdmFsdWUYAiABKAU6AjgBIhoKGFJlb3JkZXJQaW5nVGFza3NSZXNwb25zZSKRAQoIUGluZ1Rhc2sSCgoCaWQYASABKAQSDAoEbmFtZRgCIAEoCRIOCgZ0YXJnZXQYAyABKAkSDAoEdHlwZRgEIAEoCRIYChBpbnRlcnZhbF9zZWNvbmRzGAUgASgFEg8KB2NsaWVudHMYBiADKAkSEgoKZGVmYXVsdF9vbhgHIAEoCBIOCgZ3ZWlnaHQYCCABKAUyjgQKD1BpbmdUYXNrU2VydmljZRJjCg1MaXN0UGluZ1Rhc2tzEiUua29tYXJpLmFkbWluLnYxLkxpc3RQaW5nVGFza3NSZXF1ZXN0GiYua29tYXJpLmFkbWluLnYxLkxpc3RQaW5nVGFza3NSZXNwb25zZSIDkAIBEmEKDkNyZWF0ZVBpbmdUYXNrEiYua29tYXJpLmFkbWluLnYxLkNyZWF0ZVBpbmdUYXNrUmVxdWVzdBonLmtvbWFyaS5hZG1pbi52MS5DcmVhdGVQaW5nVGFza1Jlc3BvbnNlEmQKD1VwZGF0ZVBpbmdUYXNrcxInLmtvbWFyaS5hZG1pbi52MS5VcGRhdGVQaW5nVGFza3NSZXF1ZXN0Gigua29tYXJpLmFkbWluLnYxLlVwZGF0ZVBpbmdUYXNrc1Jlc3BvbnNlEmQKD0RlbGV0ZVBpbmdUYXNrcxInLmtvbWFyaS5hZG1pbi52MS5EZWxldGVQaW5nVGFza3NSZXF1ZXN0Gigua29tYXJpLmFkbWluLnYxLkRlbGV0ZVBpbmdUYXNrc1Jlc3BvbnNlEmcKEFJlb3JkZXJQaW5nVGFza3MSKC5rb21hcmkuYWRtaW4udjEuUmVvcmRlclBpbmdUYXNrc1JlcXVlc3QaKS5rb21hcmkuYWRtaW4udjEuUmVvcmRlclBpbmdUYXNrc1Jlc3BvbnNlQsABChNjb20ua29tYXJpLmFkbWluLnYxQglQaW5nUHJvdG9QAVpAZ2l0aHViLmNvbS9yMTEyMzQ1Njcva29tYXJpLXByb3RvL2dlbi9nby9rb21hcmkvYWRtaW4vdjE7YWRtaW52MaICA0tBWKoCD0tvbWFyaS5BZG1pbi5WMcoCD0tvbWFyaVxBZG1pblxWMeICG0tvbWFyaVxBZG1pblxWMVxHUEJNZXRhZGF0YeoCEUtvbWFyaTo6QWRtaW46OlYxYgZwcm90bzM");
 
 /**
  * @generated from message komari.admin.v1.ListPingTasksRequest
@@ -92,9 +92,9 @@ export const CreatePingTaskRequestSchema: GenMessage<CreatePingTaskRequest> = /*
  */
 export type CreatePingTaskResponse = Message<"komari.admin.v1.CreatePingTaskResponse"> & {
   /**
-   * @generated from field: uint32 task_id = 1;
+   * @generated from field: uint64 task_id = 1;
    */
-  taskId: number;
+  taskId: bigint;
 };
 
 /**
@@ -139,9 +139,9 @@ export const UpdatePingTasksResponseSchema: GenMessage<UpdatePingTasksResponse> 
  */
 export type DeletePingTasksRequest = Message<"komari.admin.v1.DeletePingTasksRequest"> & {
   /**
-   * @generated from field: repeated uint32 ids = 1;
+   * @generated from field: repeated uint64 ids = 1;
    */
-  ids: number[];
+  ids: bigint[];
 };
 
 /**
@@ -171,9 +171,9 @@ export type ReorderPingTasksRequest = Message<"komari.admin.v1.ReorderPingTasksR
   /**
    * weights maps a probe task id to its display weight.
    *
-   * @generated from field: map<uint32, int32> weights = 1;
+   * @generated from field: map<uint64, int32> weights = 1;
    */
-  weights: { [key: number]: number };
+  weights: { [key: string]: number };
 };
 
 /**
@@ -201,9 +201,9 @@ export const ReorderPingTasksResponseSchema: GenMessage<ReorderPingTasksResponse
  */
 export type PingTask = Message<"komari.admin.v1.PingTask"> & {
   /**
-   * @generated from field: uint32 id = 1;
+   * @generated from field: uint64 id = 1;
    */
-  id: number;
+  id: bigint;
 
   /**
    * @generated from field: string name = 2;

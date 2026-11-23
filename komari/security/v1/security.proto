@@ -86,21 +86,10 @@ message VerificationPolicy {
 }
 
 // SignatureAlgorithm enumerates signature algorithms.
-//
-// Post-quantum signature standards are not settled: ML-DSA is specified but
-// absent from the Go standard library, and FN-DSA is still a draft. The
-// enumeration therefore reserves values for them now so that adding one later
-// is a configuration change and a verifier update, not a protocol change.
 enum SignatureAlgorithm {
   SIGNATURE_ALGORITHM_UNSPECIFIED = 0;
   // Ed25519, available in the Go standard library today.
   SIGNATURE_ALGORITHM_ED25519 = 1;
-  // ECDSA over NIST P-256, for deployments constrained to FIPS primitives.
-  SIGNATURE_ALGORITHM_ECDSA_P256 = 2;
-  // ML-DSA-65 (FIPS 204). Reserved; requires a verifier that implements it.
-  SIGNATURE_ALGORITHM_ML_DSA_65 = 3;
-  // ML-DSA-87 (FIPS 204). Reserved.
-  SIGNATURE_ALGORITHM_ML_DSA_87 = 4;
-  // FN-DSA-512 (FIPS 206, draft). Reserved.
-  SIGNATURE_ALGORITHM_FN_DSA_512 = 5;
+  reserved 2, 3, 4, 5;
+  reserved "SIGNATURE_ALGORITHM_ECDSA_P256", "SIGNATURE_ALGORITHM_ML_DSA_65", "SIGNATURE_ALGORITHM_ML_DSA_87", "SIGNATURE_ALGORITHM_FN_DSA_512";
 }

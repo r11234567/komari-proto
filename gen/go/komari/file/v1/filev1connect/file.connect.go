@@ -105,18 +105,21 @@ func NewFileServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			httpClient,
 			baseURL+FileServiceListDirectoryProcedure,
 			connect.WithSchema(fileServiceMethods.ByName("ListDirectory")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		listRoots: connect.NewClient[v1.ListRootsRequest, v1.ListRootsResponse](
 			httpClient,
 			baseURL+FileServiceListRootsProcedure,
 			connect.WithSchema(fileServiceMethods.ByName("ListRoots")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		statFile: connect.NewClient[v1.StatFileRequest, v1.StatFileResponse](
 			httpClient,
 			baseURL+FileServiceStatFileProcedure,
 			connect.WithSchema(fileServiceMethods.ByName("StatFile")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		createEntry: connect.NewClient[v1.CreateEntryRequest, v1.CreateEntryResponse](
@@ -159,6 +162,7 @@ func NewFileServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			httpClient,
 			baseURL+FileServiceSearchFilesProcedure,
 			connect.WithSchema(fileServiceMethods.ByName("SearchFiles")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		leaseFileOperations: connect.NewClient[v1.LeaseFileOperationsRequest, v1.LeaseFileOperationsResponse](
@@ -291,18 +295,21 @@ func NewFileServiceHandler(svc FileServiceHandler, opts ...connect.HandlerOption
 		FileServiceListDirectoryProcedure,
 		svc.ListDirectory,
 		connect.WithSchema(fileServiceMethods.ByName("ListDirectory")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	fileServiceListRootsHandler := connect.NewUnaryHandler(
 		FileServiceListRootsProcedure,
 		svc.ListRoots,
 		connect.WithSchema(fileServiceMethods.ByName("ListRoots")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	fileServiceStatFileHandler := connect.NewUnaryHandler(
 		FileServiceStatFileProcedure,
 		svc.StatFile,
 		connect.WithSchema(fileServiceMethods.ByName("StatFile")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	fileServiceCreateEntryHandler := connect.NewUnaryHandler(
@@ -345,6 +352,7 @@ func NewFileServiceHandler(svc FileServiceHandler, opts ...connect.HandlerOption
 		FileServiceSearchFilesProcedure,
 		svc.SearchFiles,
 		connect.WithSchema(fileServiceMethods.ByName("SearchFiles")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	fileServiceLeaseFileOperationsHandler := connect.NewServerStreamHandler(

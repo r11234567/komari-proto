@@ -18,7 +18,9 @@ service ConfigService {
   // nodes. Migration never rewrites ordinary configuration or privilege history.
   rpc InitializeNodeConfig(InitializeNodeConfigRequest) returns (InitializeNodeConfigResponse);
   // GetDesiredConfig returns immediately and is suitable for reconnect recovery.
-  rpc GetDesiredConfig(GetDesiredConfigRequest) returns (GetDesiredConfigResponse);
+  rpc GetDesiredConfig(GetDesiredConfigRequest) returns (GetDesiredConfigResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // WatchDesiredConfig streams only configuration revisions.
   rpc WatchDesiredConfig(WatchDesiredConfigRequest) returns (stream WatchDesiredConfigResponse);
   // AcknowledgeConfig records applied or rejected as a business-level terminal state.
@@ -40,10 +42,14 @@ service ConfigService {
 // existing behaviour untouched.
 service PrivilegedDeliveryService {
   // GetNodeConfigState returns authoritative desired and applied snapshots.
-  rpc GetNodeConfigState(GetNodeConfigStateRequest) returns (GetNodeConfigStateResponse);
+  rpc GetNodeConfigState(GetNodeConfigStateRequest) returns (GetNodeConfigStateResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // GetPrivilegedDelivery returns the current privileged revision and its
   // state. Suitable for reconnect recovery.
-  rpc GetPrivilegedDelivery(GetPrivilegedDeliveryRequest) returns (GetPrivilegedDeliveryResponse);
+  rpc GetPrivilegedDelivery(GetPrivilegedDeliveryRequest) returns (GetPrivilegedDeliveryResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // WatchPrivilegedDelivery streams privileged revisions and state changes.
   rpc WatchPrivilegedDelivery(WatchPrivilegedDeliveryRequest) returns (stream WatchPrivilegedDeliveryResponse);
   // UpdatePrivilegedDelivery stores a new privileged revision, computing the
@@ -62,7 +68,9 @@ service PrivilegedDeliveryService {
   rpc CompleteManualUpgrade(CompleteManualUpgradeRequest) returns (CompleteManualUpgradeResponse);
   // ListPrivilegedRevisions returns a machine's privileged history and which
   // revision it is actually running, for the panel.
-  rpc ListPrivilegedRevisions(ListPrivilegedRevisionsRequest) returns (ListPrivilegedRevisionsResponse);
+  rpc ListPrivilegedRevisions(ListPrivilegedRevisionsRequest) returns (ListPrivilegedRevisionsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 message ListPrivilegedRevisionsRequest {
@@ -105,6 +113,8 @@ message WatchPrivilegedDeliveryRequest {
 message WatchPrivilegedDeliveryResponse {
   PrivilegedRevision revision = 1;
   uint64 update_sequence = 2;
+  // heartbeat keeps long-lived privileged delivery streams alive across idle proxies.
+  bool heartbeat = 3;
 }
 
 message UpdatePrivilegedDeliveryRequest {
@@ -394,6 +404,8 @@ message WatchDesiredConfigRequest {
 // WatchDesiredConfigResponse wraps one immutable desired revision.
 message WatchDesiredConfigResponse {
   DesiredConfig desired = 1;
+  // heartbeat keeps long-lived config watch streams alive across idle proxies.
+  bool heartbeat = 2;
 }
 
 // AcknowledgeConfigRequest reports the atomic apply result.

@@ -10,7 +10,9 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/admin/v1;ad
 // ApiTokenService manages human-approved programmatic credentials.
 // Tokens cannot call this service or authorize remote-control operations.
 service ApiTokenService {
-  rpc ListApiTokens(ListApiTokensRequest) returns (ListApiTokensResponse);
+  rpc ListApiTokens(ListApiTokensRequest) returns (ListApiTokensResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   rpc CreateApiToken(CreateApiTokenRequest) returns (CreateApiTokenResponse);
   rpc RevokeApiToken(RevokeApiTokenRequest) returns (RevokeApiTokenResponse);
   rpc DisableLegacyApiKey(DisableLegacyApiKeyRequest) returns (DisableLegacyApiKeyResponse);

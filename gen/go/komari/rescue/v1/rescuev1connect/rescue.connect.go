@@ -89,6 +89,7 @@ func NewRescueServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			httpClient,
 			baseURL+RescueServiceGetRescueStatusProcedure,
 			connect.WithSchema(rescueServiceMethods.ByName("GetRescueStatus")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
 		createRescueSession: connect.NewClient[v1.CreateRescueSessionRequest, v1.CreateRescueSessionResponse](
@@ -205,6 +206,7 @@ func NewRescueServiceHandler(svc RescueServiceHandler, opts ...connect.HandlerOp
 		RescueServiceGetRescueStatusProcedure,
 		svc.GetRescueStatus,
 		connect.WithSchema(rescueServiceMethods.ByName("GetRescueStatus")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
 	rescueServiceCreateRescueSessionHandler := connect.NewUnaryHandler(

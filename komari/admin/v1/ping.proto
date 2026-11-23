@@ -9,7 +9,9 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/admin/v1;ad
 // the task definitions.
 service PingTaskService {
   // ListPingTasks returns every configured probe task.
-  rpc ListPingTasks(ListPingTasksRequest) returns (ListPingTasksResponse);
+  rpc ListPingTasks(ListPingTasksRequest) returns (ListPingTasksResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // CreatePingTask registers one probe task and returns its assigned id.
   rpc CreatePingTask(CreatePingTaskRequest) returns (CreatePingTaskResponse);
   // UpdatePingTasks saves one or many probe tasks in a single call.
@@ -38,7 +40,7 @@ message CreatePingTaskRequest {
 }
 
 message CreatePingTaskResponse {
-  uint32 task_id = 1;
+  uint64 task_id = 1;
 }
 
 message UpdatePingTasksRequest {
@@ -48,20 +50,20 @@ message UpdatePingTasksRequest {
 message UpdatePingTasksResponse {}
 
 message DeletePingTasksRequest {
-  repeated uint32 ids = 1;
+  repeated uint64 ids = 1;
 }
 
 message DeletePingTasksResponse {}
 
 message ReorderPingTasksRequest {
   // weights maps a probe task id to its display weight.
-  map<uint32, int32> weights = 1;
+  map<uint64, int32> weights = 1;
 }
 
 message ReorderPingTasksResponse {}
 
 message PingTask {
-  uint32 id = 1;
+  uint64 id = 1;
   string name = 2;
   string target = 3;
   string type = 4;
