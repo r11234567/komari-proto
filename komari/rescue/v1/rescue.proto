@@ -152,6 +152,9 @@ message RescueHelperStatus {
   // Set by the panel while a revocation of this window is awaiting the helper.
   bool ssh_revoke_pending = 15;
   string ssh_enrollment_key_id = 16;
+  // Explains why the local SSH entry point could not be announced. Independent
+  // of the helper's connection error and the outcome of an individual grant.
+  komari.common.v1.ErrorDetail ssh_window_error = 17;
 }
 
 message RescueSession {
