@@ -7,10 +7,10 @@
 package configv1
 
 import (
-	v11 "github.com/r11234567/komari-proto/gen/go/komari/common/v1"
-	v12 "github.com/r11234567/komari-proto/gen/go/komari/host/v1"
+	v12 "github.com/r11234567/komari-proto/gen/go/komari/common/v1"
+	v13 "github.com/r11234567/komari-proto/gen/go/komari/host/v1"
 	v1 "github.com/r11234567/komari-proto/gen/go/komari/report/v1"
-	v13 "github.com/r11234567/komari-proto/gen/go/komari/security/v1"
+	v11 "github.com/r11234567/komari-proto/gen/go/komari/security/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
@@ -529,9 +529,12 @@ type WatchPrivilegedDeliveryResponse struct {
 	Revision       *PrivilegedRevision    `protobuf:"bytes,1,opt,name=revision,proto3" json:"revision,omitempty"`
 	UpdateSequence uint64                 `protobuf:"varint,2,opt,name=update_sequence,json=updateSequence,proto3" json:"update_sequence,omitempty"`
 	// heartbeat keeps long-lived privileged delivery streams alive across idle proxies.
-	Heartbeat     bool `protobuf:"varint,3,opt,name=heartbeat,proto3" json:"heartbeat,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Heartbeat bool `protobuf:"varint,3,opt,name=heartbeat,proto3" json:"heartbeat,omitempty"`
+	// Signed terminal notice for the enrollment that opened a rescue watch.
+	// The signed body is the enrollment key ID. No policy or access token is disclosed.
+	RescueEnrollmentRevoked *v11.SignedEnvelope `protobuf:"bytes,4,opt,name=rescue_enrollment_revoked,json=rescueEnrollmentRevoked,proto3" json:"rescue_enrollment_revoked,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *WatchPrivilegedDeliveryResponse) Reset() {
@@ -583,6 +586,13 @@ func (x *WatchPrivilegedDeliveryResponse) GetHeartbeat() bool {
 		return x.Heartbeat
 	}
 	return false
+}
+
+func (x *WatchPrivilegedDeliveryResponse) GetRescueEnrollmentRevoked() *v11.SignedEnvelope {
+	if x != nil {
+		return x.RescueEnrollmentRevoked
+	}
+	return nil
 }
 
 type UpdatePrivilegedDeliveryRequest struct {
@@ -711,7 +721,7 @@ type ConfirmPrivilegedDeliveryRequest struct {
 	Revision uint64                 `protobuf:"varint,2,opt,name=revision,proto3" json:"revision,omitempty"`
 	// two_factor is required: confirming here is what authorizes a privilege
 	// change on the host.
-	TwoFactor     *v11.TwoFactorProof `protobuf:"bytes,3,opt,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
+	TwoFactor     *v12.TwoFactorProof `protobuf:"bytes,3,opt,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -760,7 +770,7 @@ func (x *ConfirmPrivilegedDeliveryRequest) GetRevision() uint64 {
 	return 0
 }
 
-func (x *ConfirmPrivilegedDeliveryRequest) GetTwoFactor() *v11.TwoFactorProof {
+func (x *ConfirmPrivilegedDeliveryRequest) GetTwoFactor() *v12.TwoFactorProof {
 	if x != nil {
 		return x.TwoFactor
 	}
@@ -816,7 +826,7 @@ type ReportPrivilegedDeliveryRequest struct {
 	AgentId    string                  `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
 	Revision   uint64                  `protobuf:"varint,2,opt,name=revision,proto3" json:"revision,omitempty"`
 	State      PrivilegedDeliveryState `protobuf:"varint,3,opt,name=state,proto3,enum=komari.config.v1.PrivilegedDeliveryState" json:"state,omitempty"`
-	Errors     []*v11.ErrorDetail      `protobuf:"bytes,4,rep,name=errors,proto3" json:"errors,omitempty"`
+	Errors     []*v12.ErrorDetail      `protobuf:"bytes,4,rep,name=errors,proto3" json:"errors,omitempty"`
 	FinishedAt *timestamppb.Timestamp  `protobuf:"bytes,5,opt,name=finished_at,json=finishedAt,proto3" json:"finished_at,omitempty"`
 	// active_privilege_mode is what the agent actually holds after the
 	// transition, which the panel checks against what the revision assumed
@@ -824,7 +834,7 @@ type ReportPrivilegedDeliveryRequest struct {
 	ActivePrivilegeMode v1.PrivilegeMode `protobuf:"varint,6,opt,name=active_privilege_mode,json=activePrivilegeMode,proto3,enum=komari.report.v1.PrivilegeMode" json:"active_privilege_mode,omitempty"`
 	// Legacy reports can record receipt only. V2 terminal reports require observation.
 	ProtocolVersion uint32                 `protobuf:"varint,7,opt,name=protocol_version,json=protocolVersion,proto3" json:"protocol_version,omitempty"`
-	Observation     *v12.DaemonObservation `protobuf:"bytes,8,opt,name=observation,proto3,oneof" json:"observation,omitempty"`
+	Observation     *v13.DaemonObservation `protobuf:"bytes,8,opt,name=observation,proto3,oneof" json:"observation,omitempty"`
 	ReceiptId       string                 `protobuf:"bytes,9,opt,name=receipt_id,json=receiptId,proto3" json:"receipt_id,omitempty"`
 	// Binds a v2 FAILED report to the attempted approval, without claiming apply.
 	ConfigHash         string `protobuf:"bytes,10,opt,name=config_hash,json=configHash,proto3" json:"config_hash,omitempty"`
@@ -884,7 +894,7 @@ func (x *ReportPrivilegedDeliveryRequest) GetState() PrivilegedDeliveryState {
 	return PrivilegedDeliveryState_PRIVILEGED_DELIVERY_STATE_UNSPECIFIED
 }
 
-func (x *ReportPrivilegedDeliveryRequest) GetErrors() []*v11.ErrorDetail {
+func (x *ReportPrivilegedDeliveryRequest) GetErrors() []*v12.ErrorDetail {
 	if x != nil {
 		return x.Errors
 	}
@@ -912,7 +922,7 @@ func (x *ReportPrivilegedDeliveryRequest) GetProtocolVersion() uint32 {
 	return 0
 }
 
-func (x *ReportPrivilegedDeliveryRequest) GetObservation() *v12.DaemonObservation {
+func (x *ReportPrivilegedDeliveryRequest) GetObservation() *v13.DaemonObservation {
 	if x != nil {
 		return x.Observation
 	}
@@ -1136,7 +1146,7 @@ type PrivilegedRevision struct {
 	SavedAt     *timestamppb.Timestamp  `protobuf:"bytes,6,opt,name=saved_at,json=savedAt,proto3" json:"saved_at,omitempty"`
 	ConfirmedAt *timestamppb.Timestamp  `protobuf:"bytes,7,opt,name=confirmed_at,json=confirmedAt,proto3,oneof" json:"confirmed_at,omitempty"`
 	FinishedAt  *timestamppb.Timestamp  `protobuf:"bytes,8,opt,name=finished_at,json=finishedAt,proto3,oneof" json:"finished_at,omitempty"`
-	Errors      []*v11.ErrorDetail      `protobuf:"bytes,9,rep,name=errors,proto3" json:"errors,omitempty"`
+	Errors      []*v12.ErrorDetail      `protobuf:"bytes,9,rep,name=errors,proto3" json:"errors,omitempty"`
 	// previous_revision is what a rollback returns to, so a panel can show what
 	// rolling back would mean before it happens.
 	PreviousRevision *uint64 `protobuf:"varint,10,opt,name=previous_revision,json=previousRevision,proto3,oneof" json:"previous_revision,omitempty"`
@@ -1152,13 +1162,13 @@ type PrivilegedRevision struct {
 	// It is optional only so an agent can report a missing signature as a
 	// refusal rather than failing to parse. An agent that has pinned keys must
 	// never act on a revision without one.
-	Signature          *v13.SignedEnvelope    `protobuf:"bytes,11,opt,name=signature,proto3,oneof" json:"signature,omitempty"`
+	Signature          *v11.SignedEnvelope    `protobuf:"bytes,11,opt,name=signature,proto3,oneof" json:"signature,omitempty"`
 	ConfigHash         string                 `protobuf:"bytes,12,opt,name=config_hash,json=configHash,proto3" json:"config_hash,omitempty"`
 	ApprovalGeneration uint64                 `protobuf:"varint,13,opt,name=approval_generation,json=approvalGeneration,proto3" json:"approval_generation,omitempty"`
 	UpdateSequence     uint64                 `protobuf:"varint,14,opt,name=update_sequence,json=updateSequence,proto3" json:"update_sequence,omitempty"`
 	ReceivedAt         *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=received_at,json=receivedAt,proto3,oneof" json:"received_at,omitempty"`
 	ConfirmedBy        string                 `protobuf:"bytes,16,opt,name=confirmed_by,json=confirmedBy,proto3" json:"confirmed_by,omitempty"`
-	Authorization      *v12.HostAuthorization `protobuf:"bytes,17,opt,name=authorization,proto3,oneof" json:"authorization,omitempty"`
+	Authorization      *v13.HostAuthorization `protobuf:"bytes,17,opt,name=authorization,proto3,oneof" json:"authorization,omitempty"`
 	ProtocolVersion    uint32                 `protobuf:"varint,18,opt,name=protocol_version,json=protocolVersion,proto3" json:"protocol_version,omitempty"`
 	// Installation baseline can only match root-owned local install policy. It
 	// cannot authorize an identity change or install a helper.
@@ -1253,7 +1263,7 @@ func (x *PrivilegedRevision) GetFinishedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *PrivilegedRevision) GetErrors() []*v11.ErrorDetail {
+func (x *PrivilegedRevision) GetErrors() []*v12.ErrorDetail {
 	if x != nil {
 		return x.Errors
 	}
@@ -1267,7 +1277,7 @@ func (x *PrivilegedRevision) GetPreviousRevision() uint64 {
 	return 0
 }
 
-func (x *PrivilegedRevision) GetSignature() *v13.SignedEnvelope {
+func (x *PrivilegedRevision) GetSignature() *v11.SignedEnvelope {
 	if x != nil {
 		return x.Signature
 	}
@@ -1309,7 +1319,7 @@ func (x *PrivilegedRevision) GetConfirmedBy() string {
 	return ""
 }
 
-func (x *PrivilegedRevision) GetAuthorization() *v12.HostAuthorization {
+func (x *PrivilegedRevision) GetAuthorization() *v13.HostAuthorization {
 	if x != nil {
 		return x.Authorization
 	}
@@ -1998,7 +2008,7 @@ func (x *GetDesiredConfigRequest) GetAppliedRevision() uint64 {
 type GetDesiredConfigResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Desired       *DesiredConfig         `protobuf:"bytes,1,opt,name=desired,proto3,oneof" json:"desired,omitempty"`
-	DeliveryState v11.DeliveryState      `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
+	DeliveryState v12.DeliveryState      `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2040,11 +2050,11 @@ func (x *GetDesiredConfigResponse) GetDesired() *DesiredConfig {
 	return nil
 }
 
-func (x *GetDesiredConfigResponse) GetDeliveryState() v11.DeliveryState {
+func (x *GetDesiredConfigResponse) GetDeliveryState() v12.DeliveryState {
 	if x != nil {
 		return x.DeliveryState
 	}
-	return v11.DeliveryState(0)
+	return v12.DeliveryState(0)
 }
 
 // WatchDesiredConfigRequest subscribes after a known revision.
@@ -2160,7 +2170,7 @@ type AcknowledgeConfigRequest struct {
 	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
 	Revision      uint64                 `protobuf:"varint,2,opt,name=revision,proto3" json:"revision,omitempty"`
 	Status        ConfigApplyStatus      `protobuf:"varint,3,opt,name=status,proto3,enum=komari.config.v1.ConfigApplyStatus" json:"status,omitempty"`
-	Errors        []*v11.ErrorDetail     `protobuf:"bytes,4,rep,name=errors,proto3" json:"errors,omitempty"`
+	Errors        []*v12.ErrorDetail     `protobuf:"bytes,4,rep,name=errors,proto3" json:"errors,omitempty"`
 	FinishedAt    *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=finished_at,json=finishedAt,proto3" json:"finished_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2217,7 +2227,7 @@ func (x *AcknowledgeConfigRequest) GetStatus() ConfigApplyStatus {
 	return ConfigApplyStatus_CONFIG_APPLY_STATUS_UNSPECIFIED
 }
 
-func (x *AcknowledgeConfigRequest) GetErrors() []*v11.ErrorDetail {
+func (x *AcknowledgeConfigRequest) GetErrors() []*v12.ErrorDetail {
 	if x != nil {
 		return x.Errors
 	}
@@ -2235,7 +2245,7 @@ func (x *AcknowledgeConfigRequest) GetFinishedAt() *timestamppb.Timestamp {
 type AcknowledgeConfigResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Accepted      bool                   `protobuf:"varint,1,opt,name=accepted,proto3" json:"accepted,omitempty"`
-	DeliveryState v11.DeliveryState      `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
+	DeliveryState v12.DeliveryState      `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2277,11 +2287,11 @@ func (x *AcknowledgeConfigResponse) GetAccepted() bool {
 	return false
 }
 
-func (x *AcknowledgeConfigResponse) GetDeliveryState() v11.DeliveryState {
+func (x *AcknowledgeConfigResponse) GetDeliveryState() v12.DeliveryState {
 	if x != nil {
 		return x.DeliveryState
 	}
-	return v11.DeliveryState(0)
+	return v12.DeliveryState(0)
 }
 
 // UpdateDesiredConfigRequest creates a revision using optimistic concurrency.
@@ -2366,7 +2376,7 @@ func (x *UpdateDesiredConfigRequest) GetForceDispatch() bool {
 type UpdateDesiredConfigResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Desired       *DesiredConfig         `protobuf:"bytes,1,opt,name=desired,proto3" json:"desired,omitempty"`
-	DeliveryState v11.DeliveryState      `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
+	DeliveryState v12.DeliveryState      `protobuf:"varint,2,opt,name=delivery_state,json=deliveryState,proto3,enum=komari.common.v1.DeliveryState" json:"delivery_state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2408,11 +2418,11 @@ func (x *UpdateDesiredConfigResponse) GetDesired() *DesiredConfig {
 	return nil
 }
 
-func (x *UpdateDesiredConfigResponse) GetDeliveryState() v11.DeliveryState {
+func (x *UpdateDesiredConfigResponse) GetDeliveryState() v12.DeliveryState {
 	if x != nil {
 		return x.DeliveryState
 	}
-	return v11.DeliveryState(0)
+	return v12.DeliveryState(0)
 }
 
 // GetNodeConfigStateRequest reads one node without scanning history.
@@ -2468,9 +2478,9 @@ type GetNodeConfigStateResponse struct {
 	AppliedRevision      uint64                 `protobuf:"varint,3,opt,name=applied_revision,json=appliedRevision,proto3" json:"applied_revision,omitempty"`
 	UpdateSequence       uint64                 `protobuf:"varint,4,opt,name=update_sequence,json=updateSequence,proto3" json:"update_sequence,omitempty"`
 	ProtocolVersion      uint32                 `protobuf:"varint,5,opt,name=protocol_version,json=protocolVersion,proto3" json:"protocol_version,omitempty"`
-	Observation          *v12.DaemonObservation `protobuf:"bytes,6,opt,name=observation,proto3,oneof" json:"observation,omitempty"`
-	HostOperation        *v12.HostOperation     `protobuf:"bytes,7,opt,name=host_operation,json=hostOperation,proto3,oneof" json:"host_operation,omitempty"`
-	SupportedHostActions []v12.HostAction       `protobuf:"varint,8,rep,packed,name=supported_host_actions,json=supportedHostActions,proto3,enum=komari.host.v1.HostAction" json:"supported_host_actions,omitempty"`
+	Observation          *v13.DaemonObservation `protobuf:"bytes,6,opt,name=observation,proto3,oneof" json:"observation,omitempty"`
+	HostOperation        *v13.HostOperation     `protobuf:"bytes,7,opt,name=host_operation,json=hostOperation,proto3,oneof" json:"host_operation,omitempty"`
+	SupportedHostActions []v13.HostAction       `protobuf:"varint,8,rep,packed,name=supported_host_actions,json=supportedHostActions,proto3,enum=komari.host.v1.HostAction" json:"supported_host_actions,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -2540,21 +2550,21 @@ func (x *GetNodeConfigStateResponse) GetProtocolVersion() uint32 {
 	return 0
 }
 
-func (x *GetNodeConfigStateResponse) GetObservation() *v12.DaemonObservation {
+func (x *GetNodeConfigStateResponse) GetObservation() *v13.DaemonObservation {
 	if x != nil {
 		return x.Observation
 	}
 	return nil
 }
 
-func (x *GetNodeConfigStateResponse) GetHostOperation() *v12.HostOperation {
+func (x *GetNodeConfigStateResponse) GetHostOperation() *v13.HostOperation {
 	if x != nil {
 		return x.HostOperation
 	}
 	return nil
 }
 
-func (x *GetNodeConfigStateResponse) GetSupportedHostActions() []v12.HostAction {
+func (x *GetNodeConfigStateResponse) GetSupportedHostActions() []v13.HostAction {
 	if x != nil {
 		return x.SupportedHostActions
 	}
@@ -2791,7 +2801,7 @@ var file_komari_config_v1_config_proto_rawDesc = string([]byte{
 	0x04, 0x52, 0x0d, 0x61, 0x66, 0x74, 0x65, 0x72, 0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65,
 	0x12, 0x29, 0x0a, 0x10, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x5f, 0x76, 0x65, 0x72,
 	0x73, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0f, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x63, 0x6f, 0x6c, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x22, 0xaa, 0x01, 0x0a, 0x1f,
+	0x6f, 0x63, 0x6f, 0x6c, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x22, 0x8a, 0x02, 0x0a, 0x1f,
 	0x57, 0x61, 0x74, 0x63, 0x68, 0x50, 0x72, 0x69, 0x76, 0x69, 0x6c, 0x65, 0x67, 0x65, 0x64, 0x44,
 	0x65, 0x6c, 0x69, 0x76, 0x65, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
 	0x40, 0x0a, 0x08, 0x72, 0x65, 0x76, 0x69, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28,
@@ -2802,7 +2812,13 @@ var file_komari_config_v1_config_proto_rawDesc = string([]byte{
 	0x65, 0x6e, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0e, 0x75, 0x70, 0x64, 0x61,
 	0x74, 0x65, 0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x68, 0x65,
 	0x61, 0x72, 0x74, 0x62, 0x65, 0x61, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x68,
-	0x65, 0x61, 0x72, 0x74, 0x62, 0x65, 0x61, 0x74, 0x22, 0xf0, 0x01, 0x0a, 0x1f, 0x55, 0x70, 0x64,
+	0x65, 0x61, 0x72, 0x74, 0x62, 0x65, 0x61, 0x74, 0x12, 0x5e, 0x0a, 0x19, 0x72, 0x65, 0x73, 0x63,
+	0x75, 0x65, 0x5f, 0x65, 0x6e, 0x72, 0x6f, 0x6c, 0x6c, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x72, 0x65,
+	0x76, 0x6f, 0x6b, 0x65, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x6b, 0x6f,
+	0x6d, 0x61, 0x72, 0x69, 0x2e, 0x73, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x2e, 0x76, 0x31,
+	0x2e, 0x53, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x45, 0x6e, 0x76, 0x65, 0x6c, 0x6f, 0x70, 0x65, 0x52,
+	0x17, 0x72, 0x65, 0x73, 0x63, 0x75, 0x65, 0x45, 0x6e, 0x72, 0x6f, 0x6c, 0x6c, 0x6d, 0x65, 0x6e,
+	0x74, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x64, 0x22, 0xf0, 0x01, 0x0a, 0x1f, 0x55, 0x70, 0x64,
 	0x61, 0x74, 0x65, 0x50, 0x72, 0x69, 0x76, 0x69, 0x6c, 0x65, 0x67, 0x65, 0x64, 0x44, 0x65, 0x6c,
 	0x69, 0x76, 0x65, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x08,
 	0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
@@ -3542,16 +3558,16 @@ var file_komari_config_v1_config_proto_goTypes = []any{
 	(*InitializeNodeConfigRequest)(nil),       // 33: komari.config.v1.InitializeNodeConfigRequest
 	(*InitializeNodeConfigResponse)(nil),      // 34: komari.config.v1.InitializeNodeConfigResponse
 	(v1.PrivilegeMode)(0),                     // 35: komari.report.v1.PrivilegeMode
-	(*v11.TwoFactorProof)(nil),                // 36: komari.common.v1.TwoFactorProof
-	(*v11.ErrorDetail)(nil),                   // 37: komari.common.v1.ErrorDetail
-	(*timestamppb.Timestamp)(nil),             // 38: google.protobuf.Timestamp
-	(*v12.DaemonObservation)(nil),             // 39: komari.host.v1.DaemonObservation
-	(*v13.SignedEnvelope)(nil),                // 40: komari.security.v1.SignedEnvelope
-	(*v12.HostAuthorization)(nil),             // 41: komari.host.v1.HostAuthorization
+	(*v11.SignedEnvelope)(nil),                // 36: komari.security.v1.SignedEnvelope
+	(*v12.TwoFactorProof)(nil),                // 37: komari.common.v1.TwoFactorProof
+	(*v12.ErrorDetail)(nil),                   // 38: komari.common.v1.ErrorDetail
+	(*timestamppb.Timestamp)(nil),             // 39: google.protobuf.Timestamp
+	(*v13.DaemonObservation)(nil),             // 40: komari.host.v1.DaemonObservation
+	(*v13.HostAuthorization)(nil),             // 41: komari.host.v1.HostAuthorization
 	(*durationpb.Duration)(nil),               // 42: google.protobuf.Duration
-	(v11.DeliveryState)(0),                    // 43: komari.common.v1.DeliveryState
-	(*v12.HostOperation)(nil),                 // 44: komari.host.v1.HostOperation
-	(v12.HostAction)(0),                       // 45: komari.host.v1.HostAction
+	(v12.DeliveryState)(0),                    // 43: komari.common.v1.DeliveryState
+	(*v13.HostOperation)(nil),                 // 44: komari.host.v1.HostOperation
+	(v13.HostAction)(0),                       // 45: komari.host.v1.HostAction
 }
 var file_komari_config_v1_config_proto_depIdxs = []int32{
 	17, // 0: komari.config.v1.ListPrivilegedRevisionsResponse.revisions:type_name -> komari.config.v1.PrivilegedRevision
@@ -3559,91 +3575,92 @@ var file_komari_config_v1_config_proto_depIdxs = []int32{
 	17, // 2: komari.config.v1.ListPrivilegedRevisionsResponse.applied:type_name -> komari.config.v1.PrivilegedRevision
 	17, // 3: komari.config.v1.GetPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
 	17, // 4: komari.config.v1.WatchPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	19, // 5: komari.config.v1.UpdatePrivilegedDeliveryRequest.privileged:type_name -> komari.config.v1.PrivilegedConfig
-	17, // 6: komari.config.v1.UpdatePrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	36, // 7: komari.config.v1.ConfirmPrivilegedDeliveryRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
-	17, // 8: komari.config.v1.ConfirmPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	0,  // 9: komari.config.v1.ReportPrivilegedDeliveryRequest.state:type_name -> komari.config.v1.PrivilegedDeliveryState
-	37, // 10: komari.config.v1.ReportPrivilegedDeliveryRequest.errors:type_name -> komari.common.v1.ErrorDetail
-	38, // 11: komari.config.v1.ReportPrivilegedDeliveryRequest.finished_at:type_name -> google.protobuf.Timestamp
-	35, // 12: komari.config.v1.ReportPrivilegedDeliveryRequest.active_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	39, // 13: komari.config.v1.ReportPrivilegedDeliveryRequest.observation:type_name -> komari.host.v1.DaemonObservation
-	17, // 14: komari.config.v1.ReportPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	35, // 15: komari.config.v1.CompleteManualUpgradeRequest.resulting_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	17, // 16: komari.config.v1.CompleteManualUpgradeResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
-	19, // 17: komari.config.v1.PrivilegedRevision.privileged:type_name -> komari.config.v1.PrivilegedConfig
-	20, // 18: komari.config.v1.PrivilegedRevision.plan:type_name -> komari.config.v1.UpgradePlan
-	0,  // 19: komari.config.v1.PrivilegedRevision.state:type_name -> komari.config.v1.PrivilegedDeliveryState
-	38, // 20: komari.config.v1.PrivilegedRevision.saved_at:type_name -> google.protobuf.Timestamp
-	38, // 21: komari.config.v1.PrivilegedRevision.confirmed_at:type_name -> google.protobuf.Timestamp
-	38, // 22: komari.config.v1.PrivilegedRevision.finished_at:type_name -> google.protobuf.Timestamp
-	37, // 23: komari.config.v1.PrivilegedRevision.errors:type_name -> komari.common.v1.ErrorDetail
-	40, // 24: komari.config.v1.PrivilegedRevision.signature:type_name -> komari.security.v1.SignedEnvelope
-	38, // 25: komari.config.v1.PrivilegedRevision.received_at:type_name -> google.protobuf.Timestamp
-	41, // 26: komari.config.v1.PrivilegedRevision.authorization:type_name -> komari.host.v1.HostAuthorization
-	42, // 27: komari.config.v1.RuntimeConfig.report_interval:type_name -> google.protobuf.Duration
-	42, // 28: komari.config.v1.RuntimeConfig.info_report_interval:type_name -> google.protobuf.Duration
-	42, // 29: komari.config.v1.RuntimeConfig.reconnect_interval:type_name -> google.protobuf.Duration
-	35, // 30: komari.config.v1.PrivilegedConfig.required_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	1,  // 31: komari.config.v1.UpgradePlan.upgrade_class:type_name -> komari.config.v1.UpgradeClass
-	35, // 32: komari.config.v1.UpgradePlan.from_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	35, // 33: komari.config.v1.UpgradePlan.to_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
-	21, // 34: komari.config.v1.UpgradePlan.manual_task:type_name -> komari.config.v1.ManualUpgradeTask
-	38, // 35: komari.config.v1.ManualUpgradeTask.expires_at:type_name -> google.protobuf.Timestamp
-	18, // 36: komari.config.v1.DesiredConfig.runtime:type_name -> komari.config.v1.RuntimeConfig
-	38, // 37: komari.config.v1.DesiredConfig.saved_at:type_name -> google.protobuf.Timestamp
-	19, // 38: komari.config.v1.DesiredConfig.privileged:type_name -> komari.config.v1.PrivilegedConfig
-	20, // 39: komari.config.v1.DesiredConfig.plan:type_name -> komari.config.v1.UpgradePlan
-	22, // 40: komari.config.v1.GetDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
-	43, // 41: komari.config.v1.GetDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
-	22, // 42: komari.config.v1.WatchDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
-	2,  // 43: komari.config.v1.AcknowledgeConfigRequest.status:type_name -> komari.config.v1.ConfigApplyStatus
-	37, // 44: komari.config.v1.AcknowledgeConfigRequest.errors:type_name -> komari.common.v1.ErrorDetail
-	38, // 45: komari.config.v1.AcknowledgeConfigRequest.finished_at:type_name -> google.protobuf.Timestamp
-	43, // 46: komari.config.v1.AcknowledgeConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
-	18, // 47: komari.config.v1.UpdateDesiredConfigRequest.runtime:type_name -> komari.config.v1.RuntimeConfig
-	22, // 48: komari.config.v1.UpdateDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
-	43, // 49: komari.config.v1.UpdateDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
-	17, // 50: komari.config.v1.GetNodeConfigStateResponse.desired:type_name -> komari.config.v1.PrivilegedRevision
-	17, // 51: komari.config.v1.GetNodeConfigStateResponse.applied:type_name -> komari.config.v1.PrivilegedRevision
-	39, // 52: komari.config.v1.GetNodeConfigStateResponse.observation:type_name -> komari.host.v1.DaemonObservation
-	44, // 53: komari.config.v1.GetNodeConfigStateResponse.host_operation:type_name -> komari.host.v1.HostOperation
-	45, // 54: komari.config.v1.GetNodeConfigStateResponse.supported_host_actions:type_name -> komari.host.v1.HostAction
-	18, // 55: komari.config.v1.InitializeNodeConfigRequest.runtime:type_name -> komari.config.v1.RuntimeConfig
-	19, // 56: komari.config.v1.InitializeNodeConfigRequest.privileged:type_name -> komari.config.v1.PrivilegedConfig
-	22, // 57: komari.config.v1.InitializeNodeConfigResponse.runtime:type_name -> komari.config.v1.DesiredConfig
-	17, // 58: komari.config.v1.InitializeNodeConfigResponse.privileged:type_name -> komari.config.v1.PrivilegedRevision
-	33, // 59: komari.config.v1.ConfigService.InitializeNodeConfig:input_type -> komari.config.v1.InitializeNodeConfigRequest
-	23, // 60: komari.config.v1.ConfigService.GetDesiredConfig:input_type -> komari.config.v1.GetDesiredConfigRequest
-	25, // 61: komari.config.v1.ConfigService.WatchDesiredConfig:input_type -> komari.config.v1.WatchDesiredConfigRequest
-	27, // 62: komari.config.v1.ConfigService.AcknowledgeConfig:input_type -> komari.config.v1.AcknowledgeConfigRequest
-	29, // 63: komari.config.v1.ConfigService.UpdateDesiredConfig:input_type -> komari.config.v1.UpdateDesiredConfigRequest
-	31, // 64: komari.config.v1.PrivilegedDeliveryService.GetNodeConfigState:input_type -> komari.config.v1.GetNodeConfigStateRequest
-	5,  // 65: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:input_type -> komari.config.v1.GetPrivilegedDeliveryRequest
-	7,  // 66: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:input_type -> komari.config.v1.WatchPrivilegedDeliveryRequest
-	9,  // 67: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:input_type -> komari.config.v1.UpdatePrivilegedDeliveryRequest
-	11, // 68: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:input_type -> komari.config.v1.ConfirmPrivilegedDeliveryRequest
-	13, // 69: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:input_type -> komari.config.v1.ReportPrivilegedDeliveryRequest
-	15, // 70: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:input_type -> komari.config.v1.CompleteManualUpgradeRequest
-	3,  // 71: komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions:input_type -> komari.config.v1.ListPrivilegedRevisionsRequest
-	34, // 72: komari.config.v1.ConfigService.InitializeNodeConfig:output_type -> komari.config.v1.InitializeNodeConfigResponse
-	24, // 73: komari.config.v1.ConfigService.GetDesiredConfig:output_type -> komari.config.v1.GetDesiredConfigResponse
-	26, // 74: komari.config.v1.ConfigService.WatchDesiredConfig:output_type -> komari.config.v1.WatchDesiredConfigResponse
-	28, // 75: komari.config.v1.ConfigService.AcknowledgeConfig:output_type -> komari.config.v1.AcknowledgeConfigResponse
-	30, // 76: komari.config.v1.ConfigService.UpdateDesiredConfig:output_type -> komari.config.v1.UpdateDesiredConfigResponse
-	32, // 77: komari.config.v1.PrivilegedDeliveryService.GetNodeConfigState:output_type -> komari.config.v1.GetNodeConfigStateResponse
-	6,  // 78: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:output_type -> komari.config.v1.GetPrivilegedDeliveryResponse
-	8,  // 79: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:output_type -> komari.config.v1.WatchPrivilegedDeliveryResponse
-	10, // 80: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:output_type -> komari.config.v1.UpdatePrivilegedDeliveryResponse
-	12, // 81: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:output_type -> komari.config.v1.ConfirmPrivilegedDeliveryResponse
-	14, // 82: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:output_type -> komari.config.v1.ReportPrivilegedDeliveryResponse
-	16, // 83: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:output_type -> komari.config.v1.CompleteManualUpgradeResponse
-	4,  // 84: komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions:output_type -> komari.config.v1.ListPrivilegedRevisionsResponse
-	72, // [72:85] is the sub-list for method output_type
-	59, // [59:72] is the sub-list for method input_type
-	59, // [59:59] is the sub-list for extension type_name
-	59, // [59:59] is the sub-list for extension extendee
-	0,  // [0:59] is the sub-list for field type_name
+	36, // 5: komari.config.v1.WatchPrivilegedDeliveryResponse.rescue_enrollment_revoked:type_name -> komari.security.v1.SignedEnvelope
+	19, // 6: komari.config.v1.UpdatePrivilegedDeliveryRequest.privileged:type_name -> komari.config.v1.PrivilegedConfig
+	17, // 7: komari.config.v1.UpdatePrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
+	37, // 8: komari.config.v1.ConfirmPrivilegedDeliveryRequest.two_factor:type_name -> komari.common.v1.TwoFactorProof
+	17, // 9: komari.config.v1.ConfirmPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
+	0,  // 10: komari.config.v1.ReportPrivilegedDeliveryRequest.state:type_name -> komari.config.v1.PrivilegedDeliveryState
+	38, // 11: komari.config.v1.ReportPrivilegedDeliveryRequest.errors:type_name -> komari.common.v1.ErrorDetail
+	39, // 12: komari.config.v1.ReportPrivilegedDeliveryRequest.finished_at:type_name -> google.protobuf.Timestamp
+	35, // 13: komari.config.v1.ReportPrivilegedDeliveryRequest.active_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	40, // 14: komari.config.v1.ReportPrivilegedDeliveryRequest.observation:type_name -> komari.host.v1.DaemonObservation
+	17, // 15: komari.config.v1.ReportPrivilegedDeliveryResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
+	35, // 16: komari.config.v1.CompleteManualUpgradeRequest.resulting_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	17, // 17: komari.config.v1.CompleteManualUpgradeResponse.revision:type_name -> komari.config.v1.PrivilegedRevision
+	19, // 18: komari.config.v1.PrivilegedRevision.privileged:type_name -> komari.config.v1.PrivilegedConfig
+	20, // 19: komari.config.v1.PrivilegedRevision.plan:type_name -> komari.config.v1.UpgradePlan
+	0,  // 20: komari.config.v1.PrivilegedRevision.state:type_name -> komari.config.v1.PrivilegedDeliveryState
+	39, // 21: komari.config.v1.PrivilegedRevision.saved_at:type_name -> google.protobuf.Timestamp
+	39, // 22: komari.config.v1.PrivilegedRevision.confirmed_at:type_name -> google.protobuf.Timestamp
+	39, // 23: komari.config.v1.PrivilegedRevision.finished_at:type_name -> google.protobuf.Timestamp
+	38, // 24: komari.config.v1.PrivilegedRevision.errors:type_name -> komari.common.v1.ErrorDetail
+	36, // 25: komari.config.v1.PrivilegedRevision.signature:type_name -> komari.security.v1.SignedEnvelope
+	39, // 26: komari.config.v1.PrivilegedRevision.received_at:type_name -> google.protobuf.Timestamp
+	41, // 27: komari.config.v1.PrivilegedRevision.authorization:type_name -> komari.host.v1.HostAuthorization
+	42, // 28: komari.config.v1.RuntimeConfig.report_interval:type_name -> google.protobuf.Duration
+	42, // 29: komari.config.v1.RuntimeConfig.info_report_interval:type_name -> google.protobuf.Duration
+	42, // 30: komari.config.v1.RuntimeConfig.reconnect_interval:type_name -> google.protobuf.Duration
+	35, // 31: komari.config.v1.PrivilegedConfig.required_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	1,  // 32: komari.config.v1.UpgradePlan.upgrade_class:type_name -> komari.config.v1.UpgradeClass
+	35, // 33: komari.config.v1.UpgradePlan.from_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	35, // 34: komari.config.v1.UpgradePlan.to_privilege_mode:type_name -> komari.report.v1.PrivilegeMode
+	21, // 35: komari.config.v1.UpgradePlan.manual_task:type_name -> komari.config.v1.ManualUpgradeTask
+	39, // 36: komari.config.v1.ManualUpgradeTask.expires_at:type_name -> google.protobuf.Timestamp
+	18, // 37: komari.config.v1.DesiredConfig.runtime:type_name -> komari.config.v1.RuntimeConfig
+	39, // 38: komari.config.v1.DesiredConfig.saved_at:type_name -> google.protobuf.Timestamp
+	19, // 39: komari.config.v1.DesiredConfig.privileged:type_name -> komari.config.v1.PrivilegedConfig
+	20, // 40: komari.config.v1.DesiredConfig.plan:type_name -> komari.config.v1.UpgradePlan
+	22, // 41: komari.config.v1.GetDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
+	43, // 42: komari.config.v1.GetDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
+	22, // 43: komari.config.v1.WatchDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
+	2,  // 44: komari.config.v1.AcknowledgeConfigRequest.status:type_name -> komari.config.v1.ConfigApplyStatus
+	38, // 45: komari.config.v1.AcknowledgeConfigRequest.errors:type_name -> komari.common.v1.ErrorDetail
+	39, // 46: komari.config.v1.AcknowledgeConfigRequest.finished_at:type_name -> google.protobuf.Timestamp
+	43, // 47: komari.config.v1.AcknowledgeConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
+	18, // 48: komari.config.v1.UpdateDesiredConfigRequest.runtime:type_name -> komari.config.v1.RuntimeConfig
+	22, // 49: komari.config.v1.UpdateDesiredConfigResponse.desired:type_name -> komari.config.v1.DesiredConfig
+	43, // 50: komari.config.v1.UpdateDesiredConfigResponse.delivery_state:type_name -> komari.common.v1.DeliveryState
+	17, // 51: komari.config.v1.GetNodeConfigStateResponse.desired:type_name -> komari.config.v1.PrivilegedRevision
+	17, // 52: komari.config.v1.GetNodeConfigStateResponse.applied:type_name -> komari.config.v1.PrivilegedRevision
+	40, // 53: komari.config.v1.GetNodeConfigStateResponse.observation:type_name -> komari.host.v1.DaemonObservation
+	44, // 54: komari.config.v1.GetNodeConfigStateResponse.host_operation:type_name -> komari.host.v1.HostOperation
+	45, // 55: komari.config.v1.GetNodeConfigStateResponse.supported_host_actions:type_name -> komari.host.v1.HostAction
+	18, // 56: komari.config.v1.InitializeNodeConfigRequest.runtime:type_name -> komari.config.v1.RuntimeConfig
+	19, // 57: komari.config.v1.InitializeNodeConfigRequest.privileged:type_name -> komari.config.v1.PrivilegedConfig
+	22, // 58: komari.config.v1.InitializeNodeConfigResponse.runtime:type_name -> komari.config.v1.DesiredConfig
+	17, // 59: komari.config.v1.InitializeNodeConfigResponse.privileged:type_name -> komari.config.v1.PrivilegedRevision
+	33, // 60: komari.config.v1.ConfigService.InitializeNodeConfig:input_type -> komari.config.v1.InitializeNodeConfigRequest
+	23, // 61: komari.config.v1.ConfigService.GetDesiredConfig:input_type -> komari.config.v1.GetDesiredConfigRequest
+	25, // 62: komari.config.v1.ConfigService.WatchDesiredConfig:input_type -> komari.config.v1.WatchDesiredConfigRequest
+	27, // 63: komari.config.v1.ConfigService.AcknowledgeConfig:input_type -> komari.config.v1.AcknowledgeConfigRequest
+	29, // 64: komari.config.v1.ConfigService.UpdateDesiredConfig:input_type -> komari.config.v1.UpdateDesiredConfigRequest
+	31, // 65: komari.config.v1.PrivilegedDeliveryService.GetNodeConfigState:input_type -> komari.config.v1.GetNodeConfigStateRequest
+	5,  // 66: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:input_type -> komari.config.v1.GetPrivilegedDeliveryRequest
+	7,  // 67: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:input_type -> komari.config.v1.WatchPrivilegedDeliveryRequest
+	9,  // 68: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:input_type -> komari.config.v1.UpdatePrivilegedDeliveryRequest
+	11, // 69: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:input_type -> komari.config.v1.ConfirmPrivilegedDeliveryRequest
+	13, // 70: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:input_type -> komari.config.v1.ReportPrivilegedDeliveryRequest
+	15, // 71: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:input_type -> komari.config.v1.CompleteManualUpgradeRequest
+	3,  // 72: komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions:input_type -> komari.config.v1.ListPrivilegedRevisionsRequest
+	34, // 73: komari.config.v1.ConfigService.InitializeNodeConfig:output_type -> komari.config.v1.InitializeNodeConfigResponse
+	24, // 74: komari.config.v1.ConfigService.GetDesiredConfig:output_type -> komari.config.v1.GetDesiredConfigResponse
+	26, // 75: komari.config.v1.ConfigService.WatchDesiredConfig:output_type -> komari.config.v1.WatchDesiredConfigResponse
+	28, // 76: komari.config.v1.ConfigService.AcknowledgeConfig:output_type -> komari.config.v1.AcknowledgeConfigResponse
+	30, // 77: komari.config.v1.ConfigService.UpdateDesiredConfig:output_type -> komari.config.v1.UpdateDesiredConfigResponse
+	32, // 78: komari.config.v1.PrivilegedDeliveryService.GetNodeConfigState:output_type -> komari.config.v1.GetNodeConfigStateResponse
+	6,  // 79: komari.config.v1.PrivilegedDeliveryService.GetPrivilegedDelivery:output_type -> komari.config.v1.GetPrivilegedDeliveryResponse
+	8,  // 80: komari.config.v1.PrivilegedDeliveryService.WatchPrivilegedDelivery:output_type -> komari.config.v1.WatchPrivilegedDeliveryResponse
+	10, // 81: komari.config.v1.PrivilegedDeliveryService.UpdatePrivilegedDelivery:output_type -> komari.config.v1.UpdatePrivilegedDeliveryResponse
+	12, // 82: komari.config.v1.PrivilegedDeliveryService.ConfirmPrivilegedDelivery:output_type -> komari.config.v1.ConfirmPrivilegedDeliveryResponse
+	14, // 83: komari.config.v1.PrivilegedDeliveryService.ReportPrivilegedDelivery:output_type -> komari.config.v1.ReportPrivilegedDeliveryResponse
+	16, // 84: komari.config.v1.PrivilegedDeliveryService.CompleteManualUpgrade:output_type -> komari.config.v1.CompleteManualUpgradeResponse
+	4,  // 85: komari.config.v1.PrivilegedDeliveryService.ListPrivilegedRevisions:output_type -> komari.config.v1.ListPrivilegedRevisionsResponse
+	73, // [73:86] is the sub-list for method output_type
+	60, // [60:73] is the sub-list for method input_type
+	60, // [60:60] is the sub-list for extension type_name
+	60, // [60:60] is the sub-list for extension extendee
+	0,  // [0:60] is the sub-list for field type_name
 }
 
 func init() { file_komari_config_v1_config_proto_init() }

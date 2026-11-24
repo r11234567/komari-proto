@@ -115,6 +115,9 @@ message WatchPrivilegedDeliveryResponse {
   uint64 update_sequence = 2;
   // heartbeat keeps long-lived privileged delivery streams alive across idle proxies.
   bool heartbeat = 3;
+  // Signed terminal notice for the enrollment that opened a rescue watch.
+  // The signed body is the enrollment key ID. No policy or access token is disclosed.
+  komari.security.v1.SignedEnvelope rescue_enrollment_revoked = 4;
 }
 
 message UpdatePrivilegedDeliveryRequest {
