@@ -18,7 +18,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file komari/rescue/v1/rescue.proto.
  */
 export const file_komari_rescue_v1_rescue: GenFile = /*@__PURE__*/
-  fileDesc("Ch1rb21hcmkvcmVzY3VlL3YxL3Jlc2N1ZS5wcm90bxIQa29tYXJpLnJlc2N1ZS52MSIqChZHZXRSZXNjdWVTdGF0dXNSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJIk8KF0dldFJlc2N1ZVN0YXR1c1Jlc3BvbnNlEjQKBnN0YXR1cxgBIAEoCzIkLmtvbWFyaS5yZXNjdWUudjEuUmVzY3VlSGVscGVyU3RhdHVzIqoCChpDcmVhdGVSZXNjdWVTZXNzaW9uUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIuCgZhY3Rpb24YAiABKA4yHi5rb21hcmkucmVzY3VlLnYxLlJlc2N1ZUFjdGlvbhIRCglhcmd1bWVudHMYAyADKAkSKgoHdGltZW91dBgEIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhIYChBtYXhfb3V0cHV0X2J5dGVzGAUgASgEEhcKD2lkZW1wb3RlbmN5X2tleRgGIAEoCRI0Cgp0d29fZmFjdG9yGAcgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZhIVCghzc2hfcG9ydBgIIAEoDUgAiAEBQgsKCV9zc2hfcG9ydCJPChtDcmVhdGVSZXNjdWVTZXNzaW9uUmVzcG9uc2USMAoHc2Vzc2lvbhgBIAEoCzIfLmtvbWFyaS5yZXNjdWUudjEuUmVzY3VlU2Vzc2lvbiJHChlXYXRjaFJlc2N1ZVNlc3Npb25SZXF1ZXN0EhIKCnNlc3Npb25faWQYASABKAkSFgoOYWZ0ZXJfc2VxdWVuY2UYAiABKAQijwEKGldhdGNoUmVzY3VlU2Vzc2lvblJlc3BvbnNlEiwKBWV2ZW50GAEgASgLMh0ua29tYXJpLnJlc2N1ZS52MS5SZXNjdWVFdmVudBIwCgdzZXNzaW9uGAIgASgLMh8ua29tYXJpLnJlc2N1ZS52MS5SZXNjdWVTZXNzaW9uEhEKCWhlYXJ0YmVhdBgDIAEoCCJ2ChpDYW5jZWxSZXNjdWVTZXNzaW9uUmVxdWVzdBISCgpzZXNzaW9uX2lkGAEgASgJEg4KBnJlYXNvbhgCIAEoCRI0Cgp0d29fZmFjdG9yGAMgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZiJPChtDYW5jZWxSZXNjdWVTZXNzaW9uUmVzcG9uc2USMAoHc2Vzc2lvbhgBIAEoCzIfLmtvbWFyaS5yZXNjdWUudjEuUmVzY3VlU2Vzc2lvbiJnChpMZWFzZVJlc2N1ZVNlc3Npb25zUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIaChJoZWxwZXJfaW5zdGFuY2VfaWQYAiABKAkSGwoTYWZ0ZXJfYXNzaWdubWVudF9pZBgDIAEoCSJVChtMZWFzZVJlc2N1ZVNlc3Npb25zUmVzcG9uc2USNgoKYXNzaWdubWVudBgBIAEoCzIiLmtvbWFyaS5yZXNjdWUudjEuUmVzY3VlQXNzaWdubWVudCLdAQoQUmVzY3VlQXNzaWdubWVudBIVCg1hc3NpZ25tZW50X2lkGAEgASgJEjQKB3Nlc3Npb24YAiABKAsyHy5rb21hcmkucmVzY3VlLnYxLlJlc2N1ZVNlc3Npb25CAhgBEjQKEGxlYXNlX2V4cGlyZXNfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjkKCGVudmVsb3BlGAQgASgLMiIua29tYXJpLnNlY3VyaXR5LnYxLlNpZ25lZEVudmVsb3BlSACIAQFCCwoJX2VudmVsb3BlInYKGFJlcG9ydFJlc2N1ZUV2ZW50UmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIaChJoZWxwZXJfaW5zdGFuY2VfaWQYAiABKAkSLAoFZXZlbnQYAyABKAsyHS5rb21hcmkucmVzY3VlLnYxLlJlc2N1ZUV2ZW50IjYKGVJlcG9ydFJlc2N1ZUV2ZW50UmVzcG9uc2USGQoRYWNjZXB0ZWRfc2VxdWVuY2UYASABKAQiYwoZUmVwb3J0UmVzY3VlU3RhdHVzUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRI0CgZzdGF0dXMYAiABKAsyJC5rb21hcmkucmVzY3VlLnYxLlJlc2N1ZUhlbHBlclN0YXR1cyIuChpSZXBvcnRSZXNjdWVTdGF0dXNSZXNwb25zZRIQCghhY2NlcHRlZBgBIAEoCCKHAwoSUmVzY3VlSGVscGVyU3RhdHVzEhEKCXJlcXVlc3RlZBgBIAEoCBIRCglpbnN0YWxsZWQYAiABKAgSGAoQZ3VhcmRpYW5fcnVubmluZxgDIAEoCBIWCg5oZWxwZXJfcnVubmluZxgEIAEoCBIfChNmaXJld2FsbF9jb25maWd1cmVkGAUgASgIQgIYARIPCgd2ZXJzaW9uGAYgASgJEhoKEmhlbHBlcl9pbnN0YW5jZV9pZBgHIAEoCRIxCgVlcnJvchgIIAEoCzIdLmtvbWFyaS5jb21tb24udjEuRXJyb3JEZXRhaWxIAIgBARIvCgtvYnNlcnZlZF9hdBgJIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASQQoRbmV0d29ya19pc29sYXRpb24YCiABKA4yJi5rb21hcmkucmVzY3VlLnYxLk5ldHdvcmtJc29sYXRpb25Nb2RlEhoKEmJsb2NrZWRfaW50ZXJmYWNlcxgLIAMoCUIICgZfZXJyb3IioAQKDVJlc2N1ZVNlc3Npb24SEgoKc2Vzc2lvbl9pZBgBIAEoCRIQCghhZ2VudF9pZBgCIAEoCRIuCgZhY3Rpb24YAyABKA4yHi5rb21hcmkucmVzY3VlLnYxLlJlc2N1ZUFjdGlvbhIRCglhcmd1bWVudHMYBCADKAkSLwoFc3RhdGUYBSABKA4yIC5rb21hcmkuY29tbW9uLnYxLk9wZXJhdGlvblN0YXRlEi4KCmNyZWF0ZWRfYXQYBiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjMKCnN0YXJ0ZWRfYXQYByABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSACIAQESNAoLZmluaXNoZWRfYXQYCCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSAGIAQESFAoMb3V0cHV0X2J5dGVzGAkgASgEEjEKBWVycm9yGAogASgLMh0ua29tYXJpLmNvbW1vbi52MS5FcnJvckRldGFpbEgCiAEBEjQKC2RlYWRsaW5lX2F0GAsgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgDiAEBEhUKCHNzaF9wb3J0GAwgASgNSASIAQFCDQoLX3N0YXJ0ZWRfYXRCDgoMX2ZpbmlzaGVkX2F0QggKBl9lcnJvckIOCgxfZGVhZGxpbmVfYXRCCwoJX3NzaF9wb3J0IrMDCgtSZXNjdWVFdmVudBISCgpzZXNzaW9uX2lkGAEgASgJEhAKCHNlcXVlbmNlGAIgASgEEi8KC29jY3VycmVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIvCgVzdGF0ZRgEIAEoDjIgLmtvbWFyaS5jb21tb24udjEuT3BlcmF0aW9uU3RhdGUSNAoGc3RyZWFtGAUgASgOMiQua29tYXJpLnJlc2N1ZS52MS5SZXNjdWVPdXRwdXRTdHJlYW0SDgoGb3V0cHV0GAYgASgMEjEKBWVycm9yGAcgASgLMh0ua29tYXJpLmNvbW1vbi52MS5FcnJvckRldGFpbEgAiAEBEjsKC2RpYWdub3N0aWNzGAggASgLMiEua29tYXJpLmRpYWcudjEuRGlhZ25vc3RpY3NSZXBvcnRIAYgBARI9Cgpzc2hfYWNjZXNzGAkgASgLMiQua29tYXJpLnJlc2N1ZS52MS5UZW1wb3JhcnlTU0hBY2Nlc3NIAogBAUIICgZfZXJyb3JCDgoMX2RpYWdub3N0aWNzQg0KC19zc2hfYWNjZXNzIoYCChJUZW1wb3JhcnlTU0hBY2Nlc3MSDAoEcG9ydBgBIAEoDRIPCgdncmFudGVkGAIgASgIEi4KCmdyYW50ZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCmV4cGlyZXNfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjsKEGV4cGlyeV9tZWNoYW5pc20YBSABKA4yIS5rb21hcmkucmVzY3VlLnYxLkV4cGlyeU1lY2hhbmlzbRI0Cgpzc2hkX3N0YXRlGAYgASgLMiAua29tYXJpLnJlc2N1ZS52MS5TU0hEYWVtb25TdGF0ZSKBAQoOU1NIRGFlbW9uU3RhdGUSDwoHcnVubmluZxgBIAEoCBIYChBsaXN0ZW5fYWRkcmVzc2VzGAIgAygJEh0KFW9ic2VydmVkX2xpc3Rlbl9wb3J0cxgDIAMoDRIRCglyZWFjaGFibGUYBCABKAgSEgoKbGltaXRhdGlvbhgFIAEoCSqlAQoPRXhwaXJ5TWVjaGFuaXNtEiAKHEVYUElSWV9NRUNIQU5JU01fVU5TUEVDSUZJRUQQABIlCiFFWFBJUllfTUVDSEFOSVNNX05GVEFCTEVTX1RJTUVPVVQQARIiCh5FWFBJUllfTUVDSEFOSVNNX1NZU1RFTURfVElNRVIQAhIlCiFFWFBJUllfTUVDSEFOSVNNX0hFTFBFUl9SRUNPTkNJTEUQAyr8BQoMUmVzY3VlQWN0aW9uEh0KGVJFU0NVRV9BQ1RJT05fVU5TUEVDSUZJRUQQABIdChlSRVNDVUVfQUNUSU9OX0RJQUdOT1NUSUNTEAESKQohUkVTQ1VFX0FDVElPTl9WRVJJRllfSU5TVEFMTEFUSU9OEAIaAggBEikKIVJFU0NVRV9BQ1RJT05fUkVTVE9SRV9MQVNUX0NPTkZJRxADGgIIARIvCidSRVNDVUVfQUNUSU9OX1JPTExCQUNLX1JVTlRJTUVfU05BUFNIT1QQBBoCCAESJQodUkVTQ1VFX0FDVElPTl9SRVBBSVJfRklSRVdBTEwQBRoCCAESIwobUkVTQ1VFX0FDVElPTl9SRVNUQVJUX0FHRU5UEAYaAggBEhoKFlJFU0NVRV9BQ1RJT05fU0hVVERPV04QBxIYChRSRVNDVUVfQUNUSU9OX1JFQk9PVBAIEikKJVJFU0NVRV9BQ1RJT05fQkxPQ0tfUFVCTElDX0lOVEVSRkFDRVMQCRIsCihSRVNDVUVfQUNUSU9OX0JMT0NLX1RBSUxTQ0FMRV9JTlRFUkZBQ0VTEAoSJwojUkVTQ1VFX0FDVElPTl9JU09MQVRFX0NPTlRST0xfUExBTkUQCxIhCh1SRVNDVUVfQUNUSU9OX1JFU1RPUkVfTkVUV09SSxAMEigKJFJFU0NVRV9BQ1RJT05fUk9MTEJBQ0tfT05MSU5FX0NPTkZJRxANEiYKIlJFU0NVRV9BQ1RJT05fREVUQUlMRURfQ1BVX01FVFJJQ1MQDhIpCiVSRVNDVUVfQUNUSU9OX0RFVEFJTEVEX01FTU9SWV9NRVRSSUNTEA8SJgoiUkVTQ1VFX0FDVElPTl9URU1QT1JBUllfU1NIX0FDQ0VTUxAQEi0KKVJFU0NVRV9BQ1RJT05fUkVWT0tFX1RFTVBPUkFSWV9TU0hfQUNDRVNTEBESLAooUkVTQ1VFX0FDVElPTl9ST0xMQkFDS19QUklWSUxFR0VEX0NPTkZJRxASKu0BChROZXR3b3JrSXNvbGF0aW9uTW9kZRImCiJORVRXT1JLX0lTT0xBVElPTl9NT0RFX1VOU1BFQ0lGSUVEEAASHwobTkVUV09SS19JU09MQVRJT05fTU9ERV9OT05FEAESLAooTkVUV09SS19JU09MQVRJT05fTU9ERV9QVUJMSUNfSU5URVJGQUNFUxACEi8KK05FVFdPUktfSVNPTEFUSU9OX01PREVfVEFJTFNDQUxFX0lOVEVSRkFDRVMQAxItCilORVRXT1JLX0lTT0xBVElPTl9NT0RFX0NPTlRST0xfUExBTkVfT05MWRAEKnwKElJlc2N1ZU91dHB1dFN0cmVhbRIkCiBSRVNDVUVfT1VUUFVUX1NUUkVBTV9VTlNQRUNJRklFRBAAEh8KG1JFU0NVRV9PVVRQVVRfU1RSRUFNX1NURE9VVBABEh8KG1JFU0NVRV9PVVRQVVRfU1RSRUFNX1NUREVSUhACMqwGCg1SZXNjdWVTZXJ2aWNlEmsKD0dldFJlc2N1ZVN0YXR1cxIoLmtvbWFyaS5yZXNjdWUudjEuR2V0UmVzY3VlU3RhdHVzUmVxdWVzdBopLmtvbWFyaS5yZXNjdWUudjEuR2V0UmVzY3VlU3RhdHVzUmVzcG9uc2UiA5ACARJyChNDcmVhdGVSZXNjdWVTZXNzaW9uEiwua29tYXJpLnJlc2N1ZS52MS5DcmVhdGVSZXNjdWVTZXNzaW9uUmVxdWVzdBotLmtvbWFyaS5yZXNjdWUudjEuQ3JlYXRlUmVzY3VlU2Vzc2lvblJlc3BvbnNlEnEKEldhdGNoUmVzY3VlU2Vzc2lvbhIrLmtvbWFyaS5yZXNjdWUudjEuV2F0Y2hSZXNjdWVTZXNzaW9uUmVxdWVzdBosLmtvbWFyaS5yZXNjdWUudjEuV2F0Y2hSZXNjdWVTZXNzaW9uUmVzcG9uc2UwARJyChNDYW5jZWxSZXNjdWVTZXNzaW9uEiwua29tYXJpLnJlc2N1ZS52MS5DYW5jZWxSZXNjdWVTZXNzaW9uUmVxdWVzdBotLmtvbWFyaS5yZXNjdWUudjEuQ2FuY2VsUmVzY3VlU2Vzc2lvblJlc3BvbnNlEnQKE0xlYXNlUmVzY3VlU2Vzc2lvbnMSLC5rb21hcmkucmVzY3VlLnYxLkxlYXNlUmVzY3VlU2Vzc2lvbnNSZXF1ZXN0Gi0ua29tYXJpLnJlc2N1ZS52MS5MZWFzZVJlc2N1ZVNlc3Npb25zUmVzcG9uc2UwARJsChFSZXBvcnRSZXNjdWVFdmVudBIqLmtvbWFyaS5yZXNjdWUudjEuUmVwb3J0UmVzY3VlRXZlbnRSZXF1ZXN0Gisua29tYXJpLnJlc2N1ZS52MS5SZXBvcnRSZXNjdWVFdmVudFJlc3BvbnNlEm8KElJlcG9ydFJlc2N1ZVN0YXR1cxIrLmtvbWFyaS5yZXNjdWUudjEuUmVwb3J0UmVzY3VlU3RhdHVzUmVxdWVzdBosLmtvbWFyaS5yZXNjdWUudjEuUmVwb3J0UmVzY3VlU3RhdHVzUmVzcG9uc2VCyQEKFGNvbS5rb21hcmkucmVzY3VlLnYxQgtSZXNjdWVQcm90b1ABWkJnaXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9yZXNjdWUvdjE7cmVzY3VldjGiAgNLUliqAhBLb21hcmkuUmVzY3VlLlYxygIQS29tYXJpXFJlc2N1ZVxWMeICHEtvbWFyaVxSZXNjdWVcVjFcR1BCTWV0YWRhdGHqAhJLb21hcmk6OlJlc2N1ZTo6VjFiBnByb3RvMw", [file_google_protobuf_duration, file_google_protobuf_timestamp, file_komari_common_v1_common, file_komari_diag_v1_diag, file_komari_security_v1_security]);
+  fileDesc("Ch1rb21hcmkvcmVzY3VlL3YxL3Jlc2N1ZS5wcm90bxIQa29tYXJpLnJlc2N1ZS52MSIqChZHZXRSZXNjdWVTdGF0dXNSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJIk8KF0dldFJlc2N1ZVN0YXR1c1Jlc3BvbnNlEjQKBnN0YXR1cxgBIAEoCzIkLmtvbWFyaS5yZXNjdWUudjEuUmVzY3VlSGVscGVyU3RhdHVzIuICChpDcmVhdGVSZXNjdWVTZXNzaW9uUmVxdWVzdBIQCghhZ2VudF9pZBgBIAEoCRIuCgZhY3Rpb24YAiABKA4yHi5rb21hcmkucmVzY3VlLnYxLlJlc2N1ZUFjdGlvbhIRCglhcmd1bWVudHMYAyADKAkSKgoHdGltZW91dBgEIAEoCzIZLmdvb2dsZS5wcm90b2J1Zi5EdXJhdGlvbhIYChBtYXhfb3V0cHV0X2J5dGVzGAUgASgEEhcKD2lkZW1wb3RlbmN5X2tleRgGIAEoCRI0Cgp0d29fZmFjdG9yGAcgASgLMiAua29tYXJpLmNvbW1vbi52MS5Ud29GYWN0b3JQcm9vZhIVCghzc2hfcG9ydBgIIAEoDUgAiAEBEjYKCnNzaF93aW5kb3cYCSABKAsyIi5rb21hcmkucmVzY3VlLnYxLlNTSFdpbmRvd1JlcXVlc3RCCwoJX3NzaF9wb3J0IlsKEFNTSFdpbmRvd1JlcXVlc3QSEQoJc291cmNlX2lwGAEgASgJEhkKEXByZXZpb3VzX2dyYW50X2lkGAIgASgJEhkKEWVucm9sbG1lbnRfa2V5X2lkGAMgASgJIk8KG0NyZWF0ZVJlc2N1ZVNlc3Npb25SZXNwb25zZRIwCgdzZXNzaW9uGAEgASgLMh8ua29tYXJpLnJlc2N1ZS52MS5SZXNjdWVTZXNzaW9uIkcKGVdhdGNoUmVzY3VlU2Vzc2lvblJlcXVlc3QSEgoKc2Vzc2lvbl9pZBgBIAEoCRIWCg5hZnRlcl9zZXF1ZW5jZRgCIAEoBCKPAQoaV2F0Y2hSZXNjdWVTZXNzaW9uUmVzcG9uc2USLAoFZXZlbnQYASABKAsyHS5rb21hcmkucmVzY3VlLnYxLlJlc2N1ZUV2ZW50EjAKB3Nlc3Npb24YAiABKAsyHy5rb21hcmkucmVzY3VlLnYxLlJlc2N1ZVNlc3Npb24SEQoJaGVhcnRiZWF0GAMgASgIInYKGkNhbmNlbFJlc2N1ZVNlc3Npb25SZXF1ZXN0EhIKCnNlc3Npb25faWQYASABKAkSDgoGcmVhc29uGAIgASgJEjQKCnR3b19mYWN0b3IYAyABKAsyIC5rb21hcmkuY29tbW9uLnYxLlR3b0ZhY3RvclByb29mIk8KG0NhbmNlbFJlc2N1ZVNlc3Npb25SZXNwb25zZRIwCgdzZXNzaW9uGAEgASgLMh8ua29tYXJpLnJlc2N1ZS52MS5SZXNjdWVTZXNzaW9uImcKGkxlYXNlUmVzY3VlU2Vzc2lvbnNSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEhoKEmhlbHBlcl9pbnN0YW5jZV9pZBgCIAEoCRIbChNhZnRlcl9hc3NpZ25tZW50X2lkGAMgASgJIlUKG0xlYXNlUmVzY3VlU2Vzc2lvbnNSZXNwb25zZRI2Cgphc3NpZ25tZW50GAEgASgLMiIua29tYXJpLnJlc2N1ZS52MS5SZXNjdWVBc3NpZ25tZW50It0BChBSZXNjdWVBc3NpZ25tZW50EhUKDWFzc2lnbm1lbnRfaWQYASABKAkSNAoHc2Vzc2lvbhgCIAEoCzIfLmtvbWFyaS5yZXNjdWUudjEuUmVzY3VlU2Vzc2lvbkICGAESNAoQbGVhc2VfZXhwaXJlc19hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASOQoIZW52ZWxvcGUYBCABKAsyIi5rb21hcmkuc2VjdXJpdHkudjEuU2lnbmVkRW52ZWxvcGVIAIgBAUILCglfZW52ZWxvcGUidgoYUmVwb3J0UmVzY3VlRXZlbnRSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEhoKEmhlbHBlcl9pbnN0YW5jZV9pZBgCIAEoCRIsCgVldmVudBgDIAEoCzIdLmtvbWFyaS5yZXNjdWUudjEuUmVzY3VlRXZlbnQiNgoZUmVwb3J0UmVzY3VlRXZlbnRSZXNwb25zZRIZChFhY2NlcHRlZF9zZXF1ZW5jZRgBIAEoBCJjChlSZXBvcnRSZXNjdWVTdGF0dXNSZXF1ZXN0EhAKCGFnZW50X2lkGAEgASgJEjQKBnN0YXR1cxgCIAEoCzIkLmtvbWFyaS5yZXNjdWUudjEuUmVzY3VlSGVscGVyU3RhdHVzIi4KGlJlcG9ydFJlc2N1ZVN0YXR1c1Jlc3BvbnNlEhAKCGFjY2VwdGVkGAEgASgIIrMEChJSZXNjdWVIZWxwZXJTdGF0dXMSEQoJcmVxdWVzdGVkGAEgASgIEhEKCWluc3RhbGxlZBgCIAEoCBIYChBndWFyZGlhbl9ydW5uaW5nGAMgASgIEhYKDmhlbHBlcl9ydW5uaW5nGAQgASgIEh8KE2ZpcmV3YWxsX2NvbmZpZ3VyZWQYBSABKAhCAhgBEg8KB3ZlcnNpb24YBiABKAkSGgoSaGVscGVyX2luc3RhbmNlX2lkGAcgASgJEjEKBWVycm9yGAggASgLMh0ua29tYXJpLmNvbW1vbi52MS5FcnJvckRldGFpbEgAiAEBEi8KC29ic2VydmVkX2F0GAkgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBJBChFuZXR3b3JrX2lzb2xhdGlvbhgKIAEoDjImLmtvbWFyaS5yZXNjdWUudjEuTmV0d29ya0lzb2xhdGlvbk1vZGUSGgoSYmxvY2tlZF9pbnRlcmZhY2VzGAsgAygJEhwKFHNzaF93aW5kb3dfc3VwcG9ydGVkGAwgASgIEhcKD3NzaF9hY2Nlc3NfcG9ydBgNIAEoDRI4Cgpzc2hfYWNjZXNzGA4gASgLMiQua29tYXJpLnJlc2N1ZS52MS5UZW1wb3JhcnlTU0hBY2Nlc3MSGgoSc3NoX3Jldm9rZV9wZW5kaW5nGA8gASgIEh0KFXNzaF9lbnJvbGxtZW50X2tleV9pZBgQIAEoCUIICgZfZXJyb3Ii2AQKDVJlc2N1ZVNlc3Npb24SEgoKc2Vzc2lvbl9pZBgBIAEoCRIQCghhZ2VudF9pZBgCIAEoCRIuCgZhY3Rpb24YAyABKA4yHi5rb21hcmkucmVzY3VlLnYxLlJlc2N1ZUFjdGlvbhIRCglhcmd1bWVudHMYBCADKAkSLwoFc3RhdGUYBSABKA4yIC5rb21hcmkuY29tbW9uLnYxLk9wZXJhdGlvblN0YXRlEi4KCmNyZWF0ZWRfYXQYBiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjMKCnN0YXJ0ZWRfYXQYByABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSACIAQESNAoLZmluaXNoZWRfYXQYCCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSAGIAQESFAoMb3V0cHV0X2J5dGVzGAkgASgEEjEKBWVycm9yGAogASgLMh0ua29tYXJpLmNvbW1vbi52MS5FcnJvckRldGFpbEgCiAEBEjQKC2RlYWRsaW5lX2F0GAsgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgDiAEBEhUKCHNzaF9wb3J0GAwgASgNSASIAQESNgoKc3NoX3dpbmRvdxgNIAEoCzIiLmtvbWFyaS5yZXNjdWUudjEuU1NIV2luZG93UmVxdWVzdEINCgtfc3RhcnRlZF9hdEIOCgxfZmluaXNoZWRfYXRCCAoGX2Vycm9yQg4KDF9kZWFkbGluZV9hdEILCglfc3NoX3BvcnQiswMKC1Jlc2N1ZUV2ZW50EhIKCnNlc3Npb25faWQYASABKAkSEAoIc2VxdWVuY2UYAiABKAQSLwoLb2NjdXJyZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi8KBXN0YXRlGAQgASgOMiAua29tYXJpLmNvbW1vbi52MS5PcGVyYXRpb25TdGF0ZRI0CgZzdHJlYW0YBSABKA4yJC5rb21hcmkucmVzY3VlLnYxLlJlc2N1ZU91dHB1dFN0cmVhbRIOCgZvdXRwdXQYBiABKAwSMQoFZXJyb3IYByABKAsyHS5rb21hcmkuY29tbW9uLnYxLkVycm9yRGV0YWlsSACIAQESOwoLZGlhZ25vc3RpY3MYCCABKAsyIS5rb21hcmkuZGlhZy52MS5EaWFnbm9zdGljc1JlcG9ydEgBiAEBEj0KCnNzaF9hY2Nlc3MYCSABKAsyJC5rb21hcmkucmVzY3VlLnYxLlRlbXBvcmFyeVNTSEFjY2Vzc0gCiAEBQggKBl9lcnJvckIOCgxfZGlhZ25vc3RpY3NCDQoLX3NzaF9hY2Nlc3MiqwIKElRlbXBvcmFyeVNTSEFjY2VzcxIMCgRwb3J0GAEgASgNEg8KB2dyYW50ZWQYAiABKAgSLgoKZ3JhbnRlZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKZXhwaXJlc19hdBgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASOwoQZXhwaXJ5X21lY2hhbmlzbRgFIAEoDjIhLmtvbWFyaS5yZXNjdWUudjEuRXhwaXJ5TWVjaGFuaXNtEjQKCnNzaGRfc3RhdGUYBiABKAsyIC5rb21hcmkucmVzY3VlLnYxLlNTSERhZW1vblN0YXRlEhEKCXNvdXJjZV9pcBgHIAEoCRIQCghncmFudF9pZBgIIAEoCSKBAQoOU1NIRGFlbW9uU3RhdGUSDwoHcnVubmluZxgBIAEoCBIYChBsaXN0ZW5fYWRkcmVzc2VzGAIgAygJEh0KFW9ic2VydmVkX2xpc3Rlbl9wb3J0cxgDIAMoDRIRCglyZWFjaGFibGUYBCABKAgSEgoKbGltaXRhdGlvbhgFIAEoCSqlAQoPRXhwaXJ5TWVjaGFuaXNtEiAKHEVYUElSWV9NRUNIQU5JU01fVU5TUEVDSUZJRUQQABIlCiFFWFBJUllfTUVDSEFOSVNNX05GVEFCTEVTX1RJTUVPVVQQARIiCh5FWFBJUllfTUVDSEFOSVNNX1NZU1RFTURfVElNRVIQAhIlCiFFWFBJUllfTUVDSEFOSVNNX0hFTFBFUl9SRUNPTkNJTEUQAyr8BQoMUmVzY3VlQWN0aW9uEh0KGVJFU0NVRV9BQ1RJT05fVU5TUEVDSUZJRUQQABIdChlSRVNDVUVfQUNUSU9OX0RJQUdOT1NUSUNTEAESKQohUkVTQ1VFX0FDVElPTl9WRVJJRllfSU5TVEFMTEFUSU9OEAIaAggBEikKIVJFU0NVRV9BQ1RJT05fUkVTVE9SRV9MQVNUX0NPTkZJRxADGgIIARIvCidSRVNDVUVfQUNUSU9OX1JPTExCQUNLX1JVTlRJTUVfU05BUFNIT1QQBBoCCAESJQodUkVTQ1VFX0FDVElPTl9SRVBBSVJfRklSRVdBTEwQBRoCCAESIwobUkVTQ1VFX0FDVElPTl9SRVNUQVJUX0FHRU5UEAYaAggBEhoKFlJFU0NVRV9BQ1RJT05fU0hVVERPV04QBxIYChRSRVNDVUVfQUNUSU9OX1JFQk9PVBAIEikKJVJFU0NVRV9BQ1RJT05fQkxPQ0tfUFVCTElDX0lOVEVSRkFDRVMQCRIsCihSRVNDVUVfQUNUSU9OX0JMT0NLX1RBSUxTQ0FMRV9JTlRFUkZBQ0VTEAoSJwojUkVTQ1VFX0FDVElPTl9JU09MQVRFX0NPTlRST0xfUExBTkUQCxIhCh1SRVNDVUVfQUNUSU9OX1JFU1RPUkVfTkVUV09SSxAMEigKJFJFU0NVRV9BQ1RJT05fUk9MTEJBQ0tfT05MSU5FX0NPTkZJRxANEiYKIlJFU0NVRV9BQ1RJT05fREVUQUlMRURfQ1BVX01FVFJJQ1MQDhIpCiVSRVNDVUVfQUNUSU9OX0RFVEFJTEVEX01FTU9SWV9NRVRSSUNTEA8SJgoiUkVTQ1VFX0FDVElPTl9URU1QT1JBUllfU1NIX0FDQ0VTUxAQEi0KKVJFU0NVRV9BQ1RJT05fUkVWT0tFX1RFTVBPUkFSWV9TU0hfQUNDRVNTEBESLAooUkVTQ1VFX0FDVElPTl9ST0xMQkFDS19QUklWSUxFR0VEX0NPTkZJRxASKu0BChROZXR3b3JrSXNvbGF0aW9uTW9kZRImCiJORVRXT1JLX0lTT0xBVElPTl9NT0RFX1VOU1BFQ0lGSUVEEAASHwobTkVUV09SS19JU09MQVRJT05fTU9ERV9OT05FEAESLAooTkVUV09SS19JU09MQVRJT05fTU9ERV9QVUJMSUNfSU5URVJGQUNFUxACEi8KK05FVFdPUktfSVNPTEFUSU9OX01PREVfVEFJTFNDQUxFX0lOVEVSRkFDRVMQAxItCilORVRXT1JLX0lTT0xBVElPTl9NT0RFX0NPTlRST0xfUExBTkVfT05MWRAEKnwKElJlc2N1ZU91dHB1dFN0cmVhbRIkCiBSRVNDVUVfT1VUUFVUX1NUUkVBTV9VTlNQRUNJRklFRBAAEh8KG1JFU0NVRV9PVVRQVVRfU1RSRUFNX1NURE9VVBABEh8KG1JFU0NVRV9PVVRQVVRfU1RSRUFNX1NUREVSUhACMqwGCg1SZXNjdWVTZXJ2aWNlEmsKD0dldFJlc2N1ZVN0YXR1cxIoLmtvbWFyaS5yZXNjdWUudjEuR2V0UmVzY3VlU3RhdHVzUmVxdWVzdBopLmtvbWFyaS5yZXNjdWUudjEuR2V0UmVzY3VlU3RhdHVzUmVzcG9uc2UiA5ACARJyChNDcmVhdGVSZXNjdWVTZXNzaW9uEiwua29tYXJpLnJlc2N1ZS52MS5DcmVhdGVSZXNjdWVTZXNzaW9uUmVxdWVzdBotLmtvbWFyaS5yZXNjdWUudjEuQ3JlYXRlUmVzY3VlU2Vzc2lvblJlc3BvbnNlEnEKEldhdGNoUmVzY3VlU2Vzc2lvbhIrLmtvbWFyaS5yZXNjdWUudjEuV2F0Y2hSZXNjdWVTZXNzaW9uUmVxdWVzdBosLmtvbWFyaS5yZXNjdWUudjEuV2F0Y2hSZXNjdWVTZXNzaW9uUmVzcG9uc2UwARJyChNDYW5jZWxSZXNjdWVTZXNzaW9uEiwua29tYXJpLnJlc2N1ZS52MS5DYW5jZWxSZXNjdWVTZXNzaW9uUmVxdWVzdBotLmtvbWFyaS5yZXNjdWUudjEuQ2FuY2VsUmVzY3VlU2Vzc2lvblJlc3BvbnNlEnQKE0xlYXNlUmVzY3VlU2Vzc2lvbnMSLC5rb21hcmkucmVzY3VlLnYxLkxlYXNlUmVzY3VlU2Vzc2lvbnNSZXF1ZXN0Gi0ua29tYXJpLnJlc2N1ZS52MS5MZWFzZVJlc2N1ZVNlc3Npb25zUmVzcG9uc2UwARJsChFSZXBvcnRSZXNjdWVFdmVudBIqLmtvbWFyaS5yZXNjdWUudjEuUmVwb3J0UmVzY3VlRXZlbnRSZXF1ZXN0Gisua29tYXJpLnJlc2N1ZS52MS5SZXBvcnRSZXNjdWVFdmVudFJlc3BvbnNlEm8KElJlcG9ydFJlc2N1ZVN0YXR1cxIrLmtvbWFyaS5yZXNjdWUudjEuUmVwb3J0UmVzY3VlU3RhdHVzUmVxdWVzdBosLmtvbWFyaS5yZXNjdWUudjEuUmVwb3J0UmVzY3VlU3RhdHVzUmVzcG9uc2VCyQEKFGNvbS5rb21hcmkucmVzY3VlLnYxQgtSZXNjdWVQcm90b1ABWkJnaXRodWIuY29tL3IxMTIzNDU2Ny9rb21hcmktcHJvdG8vZ2VuL2dvL2tvbWFyaS9yZXNjdWUvdjE7cmVzY3VldjGiAgNLUliqAhBLb21hcmkuUmVzY3VlLlYxygIQS29tYXJpXFJlc2N1ZVxWMeICHEtvbWFyaVxSZXNjdWVcVjFcR1BCTWV0YWRhdGHqAhJLb21hcmk6OlJlc2N1ZTo6VjFiBnByb3RvMw", [file_google_protobuf_duration, file_google_protobuf_timestamp, file_komari_common_v1_common, file_komari_diag_v1_diag, file_komari_security_v1_security]);
 
 /**
  * @generated from message komari.rescue.v1.GetRescueStatusRequest
@@ -105,6 +105,11 @@ export type CreateRescueSessionRequest = Message<"komari.rescue.v1.CreateRescueS
    * @generated from field: optional uint32 ssh_port = 8;
    */
   sshPort?: number | undefined;
+
+  /**
+   * @generated from field: komari.rescue.v1.SSHWindowRequest ssh_window = 9;
+   */
+  sshWindow?: SSHWindowRequest | undefined;
 };
 
 /**
@@ -113,6 +118,41 @@ export type CreateRescueSessionRequest = Message<"komari.rescue.v1.CreateRescueS
  */
 export const CreateRescueSessionRequestSchema: GenMessage<CreateRescueSessionRequest> = /*@__PURE__*/
   messageDesc(file_komari_rescue_v1_rescue, 2);
+
+/**
+ * SSHWindowRequest binds a grant or revocation to a single host-scoped window.
+ *
+ * @generated from message komari.rescue.v1.SSHWindowRequest
+ */
+export type SSHWindowRequest = Message<"komari.rescue.v1.SSHWindowRequest"> & {
+  /**
+   * A single IPv4 or IPv6 address. Required for a grant and empty for a revoke.
+   *
+   * @generated from field: string source_ip = 1;
+   */
+  sourceIp: string;
+
+  /**
+   * Required for a revoke, and set for an explicit replacement of this grant.
+   *
+   * @generated from field: string previous_grant_id = 2;
+   */
+  previousGrantId: string;
+
+  /**
+   * The enrollment key ID stays stable across ordinary token rotation.
+   *
+   * @generated from field: string enrollment_key_id = 3;
+   */
+  enrollmentKeyId: string;
+};
+
+/**
+ * Describes the message komari.rescue.v1.SSHWindowRequest.
+ * Use `create(SSHWindowRequestSchema)` to create a new message.
+ */
+export const SSHWindowRequestSchema: GenMessage<SSHWindowRequest> = /*@__PURE__*/
+  messageDesc(file_komari_rescue_v1_rescue, 3);
 
 /**
  * @generated from message komari.rescue.v1.CreateRescueSessionResponse
@@ -129,7 +169,7 @@ export type CreateRescueSessionResponse = Message<"komari.rescue.v1.CreateRescue
  * Use `create(CreateRescueSessionResponseSchema)` to create a new message.
  */
 export const CreateRescueSessionResponseSchema: GenMessage<CreateRescueSessionResponse> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 3);
+  messageDesc(file_komari_rescue_v1_rescue, 4);
 
 /**
  * @generated from message komari.rescue.v1.WatchRescueSessionRequest
@@ -151,7 +191,7 @@ export type WatchRescueSessionRequest = Message<"komari.rescue.v1.WatchRescueSes
  * Use `create(WatchRescueSessionRequestSchema)` to create a new message.
  */
 export const WatchRescueSessionRequestSchema: GenMessage<WatchRescueSessionRequest> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 4);
+  messageDesc(file_komari_rescue_v1_rescue, 5);
 
 /**
  * @generated from message komari.rescue.v1.WatchRescueSessionResponse
@@ -182,7 +222,7 @@ export type WatchRescueSessionResponse = Message<"komari.rescue.v1.WatchRescueSe
  * Use `create(WatchRescueSessionResponseSchema)` to create a new message.
  */
 export const WatchRescueSessionResponseSchema: GenMessage<WatchRescueSessionResponse> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 5);
+  messageDesc(file_komari_rescue_v1_rescue, 6);
 
 /**
  * @generated from message komari.rescue.v1.CancelRescueSessionRequest
@@ -209,7 +249,7 @@ export type CancelRescueSessionRequest = Message<"komari.rescue.v1.CancelRescueS
  * Use `create(CancelRescueSessionRequestSchema)` to create a new message.
  */
 export const CancelRescueSessionRequestSchema: GenMessage<CancelRescueSessionRequest> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 6);
+  messageDesc(file_komari_rescue_v1_rescue, 7);
 
 /**
  * @generated from message komari.rescue.v1.CancelRescueSessionResponse
@@ -226,7 +266,7 @@ export type CancelRescueSessionResponse = Message<"komari.rescue.v1.CancelRescue
  * Use `create(CancelRescueSessionResponseSchema)` to create a new message.
  */
 export const CancelRescueSessionResponseSchema: GenMessage<CancelRescueSessionResponse> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 7);
+  messageDesc(file_komari_rescue_v1_rescue, 8);
 
 /**
  * @generated from message komari.rescue.v1.LeaseRescueSessionsRequest
@@ -253,7 +293,7 @@ export type LeaseRescueSessionsRequest = Message<"komari.rescue.v1.LeaseRescueSe
  * Use `create(LeaseRescueSessionsRequestSchema)` to create a new message.
  */
 export const LeaseRescueSessionsRequestSchema: GenMessage<LeaseRescueSessionsRequest> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 8);
+  messageDesc(file_komari_rescue_v1_rescue, 9);
 
 /**
  * @generated from message komari.rescue.v1.LeaseRescueSessionsResponse
@@ -270,7 +310,7 @@ export type LeaseRescueSessionsResponse = Message<"komari.rescue.v1.LeaseRescueS
  * Use `create(LeaseRescueSessionsResponseSchema)` to create a new message.
  */
 export const LeaseRescueSessionsResponseSchema: GenMessage<LeaseRescueSessionsResponse> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 9);
+  messageDesc(file_komari_rescue_v1_rescue, 10);
 
 /**
  * @generated from message komari.rescue.v1.RescueAssignment
@@ -308,7 +348,7 @@ export type RescueAssignment = Message<"komari.rescue.v1.RescueAssignment"> & {
  * Use `create(RescueAssignmentSchema)` to create a new message.
  */
 export const RescueAssignmentSchema: GenMessage<RescueAssignment> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 10);
+  messageDesc(file_komari_rescue_v1_rescue, 11);
 
 /**
  * @generated from message komari.rescue.v1.ReportRescueEventRequest
@@ -335,7 +375,7 @@ export type ReportRescueEventRequest = Message<"komari.rescue.v1.ReportRescueEve
  * Use `create(ReportRescueEventRequestSchema)` to create a new message.
  */
 export const ReportRescueEventRequestSchema: GenMessage<ReportRescueEventRequest> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 11);
+  messageDesc(file_komari_rescue_v1_rescue, 12);
 
 /**
  * @generated from message komari.rescue.v1.ReportRescueEventResponse
@@ -352,7 +392,7 @@ export type ReportRescueEventResponse = Message<"komari.rescue.v1.ReportRescueEv
  * Use `create(ReportRescueEventResponseSchema)` to create a new message.
  */
 export const ReportRescueEventResponseSchema: GenMessage<ReportRescueEventResponse> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 12);
+  messageDesc(file_komari_rescue_v1_rescue, 13);
 
 /**
  * @generated from message komari.rescue.v1.ReportRescueStatusRequest
@@ -374,7 +414,7 @@ export type ReportRescueStatusRequest = Message<"komari.rescue.v1.ReportRescueSt
  * Use `create(ReportRescueStatusRequestSchema)` to create a new message.
  */
 export const ReportRescueStatusRequestSchema: GenMessage<ReportRescueStatusRequest> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 13);
+  messageDesc(file_komari_rescue_v1_rescue, 14);
 
 /**
  * @generated from message komari.rescue.v1.ReportRescueStatusResponse
@@ -391,7 +431,7 @@ export type ReportRescueStatusResponse = Message<"komari.rescue.v1.ReportRescueS
  * Use `create(ReportRescueStatusResponseSchema)` to create a new message.
  */
 export const ReportRescueStatusResponseSchema: GenMessage<ReportRescueStatusResponse> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 14);
+  messageDesc(file_komari_rescue_v1_rescue, 15);
 
 /**
  * @generated from message komari.rescue.v1.RescueHelperStatus
@@ -452,6 +492,35 @@ export type RescueHelperStatus = Message<"komari.rescue.v1.RescueHelperStatus"> 
    * @generated from field: repeated string blocked_interfaces = 11;
    */
   blockedInterfaces: string[];
+
+  /**
+   * ssh_window_supported distinguishes an updated helper with no configured port from an older helper.
+   *
+   * @generated from field: bool ssh_window_supported = 12;
+   */
+  sshWindowSupported: boolean;
+
+  /**
+   * @generated from field: uint32 ssh_access_port = 13;
+   */
+  sshAccessPort: number;
+
+  /**
+   * @generated from field: komari.rescue.v1.TemporarySSHAccess ssh_access = 14;
+   */
+  sshAccess?: TemporarySSHAccess | undefined;
+
+  /**
+   * Set by the panel while a revocation of this window is awaiting the helper.
+   *
+   * @generated from field: bool ssh_revoke_pending = 15;
+   */
+  sshRevokePending: boolean;
+
+  /**
+   * @generated from field: string ssh_enrollment_key_id = 16;
+   */
+  sshEnrollmentKeyId: string;
 };
 
 /**
@@ -459,7 +528,7 @@ export type RescueHelperStatus = Message<"komari.rescue.v1.RescueHelperStatus"> 
  * Use `create(RescueHelperStatusSchema)` to create a new message.
  */
 export const RescueHelperStatusSchema: GenMessage<RescueHelperStatus> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 15);
+  messageDesc(file_komari_rescue_v1_rescue, 16);
 
 /**
  * @generated from message komari.rescue.v1.RescueSession
@@ -528,6 +597,11 @@ export type RescueSession = Message<"komari.rescue.v1.RescueSession"> & {
    * @generated from field: optional uint32 ssh_port = 12;
    */
   sshPort?: number | undefined;
+
+  /**
+   * @generated from field: komari.rescue.v1.SSHWindowRequest ssh_window = 13;
+   */
+  sshWindow?: SSHWindowRequest | undefined;
 };
 
 /**
@@ -535,7 +609,7 @@ export type RescueSession = Message<"komari.rescue.v1.RescueSession"> & {
  * Use `create(RescueSessionSchema)` to create a new message.
  */
 export const RescueSessionSchema: GenMessage<RescueSession> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 16);
+  messageDesc(file_komari_rescue_v1_rescue, 17);
 
 /**
  * @generated from message komari.rescue.v1.RescueEvent
@@ -598,7 +672,7 @@ export type RescueEvent = Message<"komari.rescue.v1.RescueEvent"> & {
  * Use `create(RescueEventSchema)` to create a new message.
  */
 export const RescueEventSchema: GenMessage<RescueEvent> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 17);
+  messageDesc(file_komari_rescue_v1_rescue, 18);
 
 /**
  * TemporarySSHAccess reports one temporary public SSH exposure.
@@ -644,6 +718,16 @@ export type TemporarySSHAccess = Message<"komari.rescue.v1.TemporarySSHAccess"> 
    * @generated from field: komari.rescue.v1.SSHDaemonState sshd_state = 6;
    */
   sshdState?: SSHDaemonState | undefined;
+
+  /**
+   * @generated from field: string source_ip = 7;
+   */
+  sourceIp: string;
+
+  /**
+   * @generated from field: string grant_id = 8;
+   */
+  grantId: string;
 };
 
 /**
@@ -651,7 +735,7 @@ export type TemporarySSHAccess = Message<"komari.rescue.v1.TemporarySSHAccess"> 
  * Use `create(TemporarySSHAccessSchema)` to create a new message.
  */
 export const TemporarySSHAccessSchema: GenMessage<TemporarySSHAccess> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 18);
+  messageDesc(file_komari_rescue_v1_rescue, 19);
 
 /**
  * SSHDaemonState is the pre-flight check performed before the firewall changes.
@@ -698,7 +782,7 @@ export type SSHDaemonState = Message<"komari.rescue.v1.SSHDaemonState"> & {
  * Use `create(SSHDaemonStateSchema)` to create a new message.
  */
 export const SSHDaemonStateSchema: GenMessage<SSHDaemonState> = /*@__PURE__*/
-  messageDesc(file_komari_rescue_v1_rescue, 19);
+  messageDesc(file_komari_rescue_v1_rescue, 20);
 
 /**
  * ExpiryMechanism records which local mechanism will close the window, so an
