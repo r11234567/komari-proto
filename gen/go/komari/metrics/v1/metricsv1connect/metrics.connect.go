@@ -36,6 +36,9 @@ const (
 	// MetricsServiceSubmitMetricsProcedure is the fully-qualified name of the MetricsService's
 	// SubmitMetrics RPC.
 	MetricsServiceSubmitMetricsProcedure = "/komari.metrics.v1.MetricsService/SubmitMetrics"
+	// MetricsServiceSubmitTrafficSamplesProcedure is the fully-qualified name of the MetricsService's
+	// SubmitTrafficSamples RPC.
+	MetricsServiceSubmitTrafficSamplesProcedure = "/komari.metrics.v1.MetricsService/SubmitTrafficSamples"
 	// MetricsServiceUploadMetricsProcedure is the fully-qualified name of the MetricsService's
 	// UploadMetrics RPC.
 	MetricsServiceUploadMetricsProcedure = "/komari.metrics.v1.MetricsService/UploadMetrics"
@@ -81,6 +84,9 @@ const (
 type MetricsServiceClient interface {
 	// SubmitMetrics stores one idempotent batch. This is the primary metric ingestion path.
 	SubmitMetrics(context.Context, *connect.Request[v1.SubmitMetricsRequest]) (*connect.Response[v1.SubmitMetricsResponse], error)
+	// SubmitTrafficSamples commits an ordered prefix of durable traffic samples.
+	// An empty batch discovers support without enabling the traffic stream.
+	SubmitTrafficSamples(context.Context, *connect.Request[v1.SubmitTrafficSamplesRequest]) (*connect.Response[v1.SubmitTrafficSamplesResponse], error)
 	// UploadMetrics is deprecated. Use unary SubmitMetrics instead.
 	//
 	// Deprecated: do not use.
@@ -123,6 +129,12 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			httpClient,
 			baseURL+MetricsServiceSubmitMetricsProcedure,
 			connect.WithSchema(metricsServiceMethods.ByName("SubmitMetrics")),
+			connect.WithClientOptions(opts...),
+		),
+		submitTrafficSamples: connect.NewClient[v1.SubmitTrafficSamplesRequest, v1.SubmitTrafficSamplesResponse](
+			httpClient,
+			baseURL+MetricsServiceSubmitTrafficSamplesProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("SubmitTrafficSamples")),
 			connect.WithClientOptions(opts...),
 		),
 		uploadMetrics: connect.NewClient[v1.UploadMetricsRequest, v1.UploadMetricsResponse](
@@ -215,6 +227,7 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 // metricsServiceClient implements MetricsServiceClient.
 type metricsServiceClient struct {
 	submitMetrics            *connect.Client[v1.SubmitMetricsRequest, v1.SubmitMetricsResponse]
+	submitTrafficSamples     *connect.Client[v1.SubmitTrafficSamplesRequest, v1.SubmitTrafficSamplesResponse]
 	uploadMetrics            *connect.Client[v1.UploadMetricsRequest, v1.UploadMetricsResponse]
 	streamMetrics            *connect.Client[v1.StreamMetricsRequest, v1.StreamMetricsResponse]
 	queryMetrics             *connect.Client[v1.QueryMetricsRequest, v1.QueryMetricsResponse]
@@ -233,6 +246,11 @@ type metricsServiceClient struct {
 // SubmitMetrics calls komari.metrics.v1.MetricsService.SubmitMetrics.
 func (c *metricsServiceClient) SubmitMetrics(ctx context.Context, req *connect.Request[v1.SubmitMetricsRequest]) (*connect.Response[v1.SubmitMetricsResponse], error) {
 	return c.submitMetrics.CallUnary(ctx, req)
+}
+
+// SubmitTrafficSamples calls komari.metrics.v1.MetricsService.SubmitTrafficSamples.
+func (c *metricsServiceClient) SubmitTrafficSamples(ctx context.Context, req *connect.Request[v1.SubmitTrafficSamplesRequest]) (*connect.Response[v1.SubmitTrafficSamplesResponse], error) {
+	return c.submitTrafficSamples.CallUnary(ctx, req)
 }
 
 // UploadMetrics calls komari.metrics.v1.MetricsService.UploadMetrics.
@@ -308,6 +326,9 @@ func (c *metricsServiceClient) CancelMetricMigration(ctx context.Context, req *c
 type MetricsServiceHandler interface {
 	// SubmitMetrics stores one idempotent batch. This is the primary metric ingestion path.
 	SubmitMetrics(context.Context, *connect.Request[v1.SubmitMetricsRequest]) (*connect.Response[v1.SubmitMetricsResponse], error)
+	// SubmitTrafficSamples commits an ordered prefix of durable traffic samples.
+	// An empty batch discovers support without enabling the traffic stream.
+	SubmitTrafficSamples(context.Context, *connect.Request[v1.SubmitTrafficSamplesRequest]) (*connect.Response[v1.SubmitTrafficSamplesResponse], error)
 	// UploadMetrics is deprecated. Use unary SubmitMetrics instead.
 	//
 	// Deprecated: do not use.
@@ -346,6 +367,12 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 		MetricsServiceSubmitMetricsProcedure,
 		svc.SubmitMetrics,
 		connect.WithSchema(metricsServiceMethods.ByName("SubmitMetrics")),
+		connect.WithHandlerOptions(opts...),
+	)
+	metricsServiceSubmitTrafficSamplesHandler := connect.NewUnaryHandler(
+		MetricsServiceSubmitTrafficSamplesProcedure,
+		svc.SubmitTrafficSamples,
+		connect.WithSchema(metricsServiceMethods.ByName("SubmitTrafficSamples")),
 		connect.WithHandlerOptions(opts...),
 	)
 	metricsServiceUploadMetricsHandler := connect.NewClientStreamHandler(
@@ -436,6 +463,8 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 		switch r.URL.Path {
 		case MetricsServiceSubmitMetricsProcedure:
 			metricsServiceSubmitMetricsHandler.ServeHTTP(w, r)
+		case MetricsServiceSubmitTrafficSamplesProcedure:
+			metricsServiceSubmitTrafficSamplesHandler.ServeHTTP(w, r)
 		case MetricsServiceUploadMetricsProcedure:
 			metricsServiceUploadMetricsHandler.ServeHTTP(w, r)
 		case MetricsServiceStreamMetricsProcedure:
@@ -473,6 +502,10 @@ type UnimplementedMetricsServiceHandler struct{}
 
 func (UnimplementedMetricsServiceHandler) SubmitMetrics(context.Context, *connect.Request[v1.SubmitMetricsRequest]) (*connect.Response[v1.SubmitMetricsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.SubmitMetrics is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) SubmitTrafficSamples(context.Context, *connect.Request[v1.SubmitTrafficSamplesRequest]) (*connect.Response[v1.SubmitTrafficSamplesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.SubmitTrafficSamples is not implemented"))
 }
 
 func (UnimplementedMetricsServiceHandler) UploadMetrics(context.Context, *connect.ClientStream[v1.UploadMetricsRequest]) (*connect.Response[v1.UploadMetricsResponse], error) {

@@ -265,7 +265,7 @@ message RuntimeConfig {
   repeated string exclude_nics = 5;
   repeated string include_mountpoints = 6;
   optional google.protobuf.Duration report_interval = 7;
-  optional uint32 traffic_reset_day = 8;
+  optional uint32 traffic_reset_day = 8 [deprecated = true];
   // Deprecated: remote-control enablement requires reinstalling the Agent.
   optional bool remote_control_enabled = 9 [deprecated = true];
 
