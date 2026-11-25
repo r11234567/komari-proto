@@ -11,6 +11,9 @@ option go_package = "github.com/r11234567/komari-proto/gen/go/komari/metrics/v1;
 service MetricsService {
   // SubmitMetrics stores one idempotent batch. This is the primary metric ingestion path.
   rpc SubmitMetrics(SubmitMetricsRequest) returns (SubmitMetricsResponse);
+  // SubmitTrafficSamples commits an ordered prefix of durable traffic samples.
+  // An empty batch discovers support without enabling the traffic stream.
+  rpc SubmitTrafficSamples(SubmitTrafficSamplesRequest) returns (SubmitTrafficSamplesResponse);
   // UploadMetrics is deprecated. Use unary SubmitMetrics instead.
   rpc UploadMetrics(stream UploadMetricsRequest) returns (UploadMetricsResponse) {
     option deprecated = true;
@@ -69,6 +72,32 @@ message SubmitMetricsRequest {
 message SubmitMetricsResponse {
   uint64 accepted_sequence = 1;
   uint32 accepted_points = 2;
+}
+
+message TrafficInterfaceSample {
+  string interface_id = 1;
+  uint64 sent_bytes = 2;
+  uint64 received_bytes = 3;
+}
+
+message TrafficSample {
+  uint64 sequence = 1;
+  google.protobuf.Timestamp observed_at = 2;
+  string boot_id = 3;
+  google.protobuf.Timestamp booted_at = 4;
+  repeated TrafficInterfaceSample interfaces = 5;
+  // Set on a retained sample after earlier pending samples were lost or expired.
+  google.protobuf.Timestamp gap_started_at = 6;
+}
+
+message SubmitTrafficSamplesRequest {
+  string agent_id = 1;
+  string stream_id = 2;
+  repeated TrafficSample samples = 3;
+}
+
+message SubmitTrafficSamplesResponse {
+  uint64 accepted_sequence = 1;
 }
 
 // UploadMetricsRequest is one batch in a bounded upload stream.
