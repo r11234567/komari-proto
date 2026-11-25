@@ -4,6 +4,7 @@ package komari.network.v1;
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+import "komari/security/v1/security.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/network/v1;networkv1";
 
@@ -34,6 +35,8 @@ message PingProbeAssignment {
   string target = 4;
   google.protobuf.Duration timeout = 5;
   google.protobuf.Timestamp lease_expires_at = 6;
+  // The signed body is a PingProbeAssignment with envelope omitted.
+  komari.security.v1.SignedEnvelope envelope = 7;
 }
 
 message SubmitPingProbeResultRequest {
@@ -66,6 +69,8 @@ message ReturnRouteProbeAssignment {
   uint32 max_hops = 6;
   google.protobuf.Duration hop_timeout = 7;
   google.protobuf.Timestamp lease_expires_at = 8;
+  // The signed body is a ReturnRouteProbeAssignment with envelope omitted.
+  komari.security.v1.SignedEnvelope envelope = 9;
 }
 
 message SubmitReturnRouteProbeResultRequest {

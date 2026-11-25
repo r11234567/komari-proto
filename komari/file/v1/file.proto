@@ -5,6 +5,7 @@ package komari.file.v1;
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
+import "komari/security/v1/security.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/file/v1;filev1";
 
@@ -418,6 +419,8 @@ message FileAssignment {
     FileUploadCommitPayload upload_commit = 34;
     FileUploadCancelPayload upload_cancel = 35;
   }
+  // The signed body is a FileAssignment with envelope omitted.
+  komari.security.v1.SignedEnvelope envelope = 36;
 }
 
 // FileListPayload lists one directory path.
