@@ -42,5 +42,29 @@
     ],
     "required_privilege_mode": 3,
     "sha256": "f49adf70ac905d501c03a3a7f6a72ba4dcfee3ff33ec165e0f43e7c23a406cf9"
+  },
+  {
+    "booleans": [
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    "required_privilege_mode": 1,
+    "root_execution_allowed": false,
+    "sha256": "732d1dcb21b8c7f11ee60fb34e3fb182658abed2d5b0a2e8f7f535cb22d71be2"
+  },
+  {
+    "booleans": [
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    "required_privilege_mode": 1,
+    "root_execution_allowed": true,
+    "sha256": "905ed93eb53892e1f086adcd3c2cd46ad0cdcd913568879d0275c501790e01fa"
   }
 ]
