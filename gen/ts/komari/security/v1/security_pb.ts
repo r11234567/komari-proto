@@ -206,9 +206,8 @@ export type VerificationPolicy = Message<"komari.security.v1.VerificationPolicy"
   acceptedAlgorithms: SignatureAlgorithm[];
 
   /**
-   * require_all demands every accepted algorithm present in the envelope
-   * verify. When false, one verifying signature from the accepted set is
-   * sufficient.
+   * require_all requires a valid signature for every accepted algorithm.
+   * minimum_signatures still applies to the number of verified keys.
    *
    * @generated from field: bool require_all = 2;
    */

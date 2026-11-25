@@ -385,9 +385,8 @@ type VerificationPolicy struct {
 	// accepted_algorithms lists algorithms an agent may count toward the
 	// threshold. An unrecognized algorithm is ignored, never trusted.
 	AcceptedAlgorithms []SignatureAlgorithm `protobuf:"varint,1,rep,packed,name=accepted_algorithms,json=acceptedAlgorithms,proto3,enum=komari.security.v1.SignatureAlgorithm" json:"accepted_algorithms,omitempty"`
-	// require_all demands every accepted algorithm present in the envelope
-	// verify. When false, one verifying signature from the accepted set is
-	// sufficient.
+	// require_all requires a valid signature for every accepted algorithm.
+	// minimum_signatures still applies to the number of verified keys.
 	RequireAll bool `protobuf:"varint,2,opt,name=require_all,json=requireAll,proto3" json:"require_all,omitempty"`
 	// minimum_signatures is the count that must verify, applied after
 	// require_all. Zero means one.

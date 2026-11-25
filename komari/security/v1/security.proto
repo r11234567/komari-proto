@@ -76,9 +76,8 @@ message VerificationPolicy {
   // accepted_algorithms lists algorithms an agent may count toward the
   // threshold. An unrecognized algorithm is ignored, never trusted.
   repeated SignatureAlgorithm accepted_algorithms = 1;
-  // require_all demands every accepted algorithm present in the envelope
-  // verify. When false, one verifying signature from the accepted set is
-  // sufficient.
+  // require_all requires a valid signature for every accepted algorithm.
+  // minimum_signatures still applies to the number of verified keys.
   bool require_all = 2;
   // minimum_signatures is the count that must verify, applied after
   // require_all. Zero means one.
