@@ -111,6 +111,9 @@ message RevokeCredentialsResponse {
 
 message GetTrustBundleRequest {
   string agent_id = 1;
+  // challenge is a fresh 32-byte value supplied by a client requesting an
+  // authenticated bundle. The signed response binds it to this request.
+  bytes challenge = 2;
 }
 
 message GetTrustBundleResponse {
@@ -120,6 +123,30 @@ message GetTrustBundleResponse {
   // refresh_after tells the agent when to re-fetch, so key rotation converges
   // without a restart.
   google.protobuf.Duration refresh_after = 3;
+  // envelope holds a SignedInstruction whose body is a TrustBundle. The
+  // instruction binds this response to the requested Agent and challenge.
+  // Clients with a local pin use only the fields inside the verified body.
+  komari.security.v1.SignedEnvelope envelope = 4;
+}
+
+// TrustBundle is signed by the current control-plane signing key.
+message TrustBundle {
+  // revision increases whenever the set of trusted keys or policy changes.
+  uint64 revision = 1;
+  bytes challenge = 2;
+  repeated komari.security.v1.PublicKey signing_keys = 3;
+  komari.security.v1.VerificationPolicy policy = 4;
+  google.protobuf.Duration refresh_after = 5;
+  // rotations are ordered from oldest to newest. Each is an envelope over
+  // a TrustKeyRotation, signed by the preceding trusted key.
+  repeated komari.security.v1.SignedEnvelope rotations = 6;
+}
+
+// TrustKeyRotation authorizes one successor to a trusted control-plane key.
+message TrustKeyRotation {
+  string previous_key_id = 1;
+  uint64 revision = 2;
+  komari.security.v1.PublicKey key = 3;
 }
 
 // AgentCredentials is one access/refresh pair.

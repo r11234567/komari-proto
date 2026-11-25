@@ -4,6 +4,7 @@ package komari.webssh.v1;
 
 import "google/protobuf/timestamp.proto";
 import "komari/common/v1/common.proto";
+import "komari/security/v1/security.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/webssh/v1;websshv1";
 
@@ -162,6 +163,8 @@ message SessionAssignment {
   google.protobuf.Timestamp lease_expires_at = 7;
   // system_user is mandatory for account-aware Agents; never fall back to root.
   string system_user = 8;
+  // The signed body is a SessionAssignment with envelope omitted.
+  komari.security.v1.SignedEnvelope envelope = 9;
 }
 
 // AttachSessionRequest carries the Agent handshake or an ordered event.
@@ -180,6 +183,8 @@ message AgentSessionAttach {
   uint64 after_command_sequence = 4;
   // Opt in to checkpointed transport resumption without recreating the PTY.
   bool resumable = 5;
+  // A fresh 32-byte challenge binds signed frames to this attachment.
+  bytes challenge = 6;
 }
 
 // AgentSessionEvent carries terminal output or a terminal state.
@@ -203,6 +208,8 @@ message AttachSessionResponse {
   // A short transport lease, capped by existing absolute/idle authorization.
   // Heartbeats renew transport liveness only; they do not renew authorization.
   google.protobuf.Timestamp resume_until = 7;
+  // The signed body binds the session, assignment and frame as one command.
+  komari.security.v1.SignedEnvelope envelope = 8;
   reserved 4;
   reserved "file";
   oneof command {
@@ -210,6 +217,16 @@ message AttachSessionResponse {
     TerminalSize resize = 3;
     string close_reason = 5;
   }
+}
+
+message SessionControlFrame {
+  string session_id = 1;
+  string assignment_id = 2;
+  // frame omits its envelope. Its sequence and acknowledgments are signed.
+  AttachSessionResponse frame = 3;
+  bytes challenge = 4;
+  // Starts at one for each attachment and increases even on heartbeat frames.
+  uint64 frame_number = 5;
 }
 
 // CloseSessionRequest explicitly closes one session.
