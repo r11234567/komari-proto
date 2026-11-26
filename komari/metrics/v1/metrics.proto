@@ -14,6 +14,17 @@ service MetricsService {
   // SubmitTrafficSamples commits an ordered prefix of durable traffic samples.
   // An empty batch discovers support without enabling the traffic stream.
   rpc SubmitTrafficSamples(SubmitTrafficSamplesRequest) returns (SubmitTrafficSamplesResponse);
+  // SubmitTrafficEvidence stores a revision of an opt-in hourly summary or incident.
+  rpc SubmitTrafficEvidence(SubmitTrafficEvidenceRequest) returns (SubmitTrafficEvidenceResponse) {
+    option idempotency_level = IDEMPOTENT;
+  }
+  // Administrative browser-session reads. List responses omit peer addresses.
+  rpc ListTrafficEvidence(ListTrafficEvidenceRequest) returns (ListTrafficEvidenceResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc GetTrafficEvidenceIncident(GetTrafficEvidenceIncidentRequest) returns (GetTrafficEvidenceIncidentResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // UploadMetrics is deprecated. Use unary SubmitMetrics instead.
   rpc UploadMetrics(stream UploadMetricsRequest) returns (UploadMetricsResponse) {
     option deprecated = true;
@@ -98,6 +109,78 @@ message SubmitTrafficSamplesRequest {
 
 message SubmitTrafficSamplesResponse {
   uint64 accepted_sequence = 1;
+}
+
+message TrafficEvidenceBytes {
+  uint64 rx_bytes = 1;
+  uint64 tx_bytes = 2;
+}
+
+message TrafficEvidencePeer {
+  string ip = 1;
+  uint64 bytes = 2;
+}
+
+message TrafficEvidenceHour {
+  google.protobuf.Timestamp hour_utc = 1;
+  google.protobuf.Timestamp through = 2;
+  TrafficEvidenceBytes observed = 3;
+  map<string, TrafficEvidenceBytes> services = 4;
+  TrafficEvidenceBytes unexplained = 5;
+  bool partial = 6;
+}
+
+message TrafficEvidenceIncident {
+  string id = 1;
+  string reason = 2;
+  string interface_name = 3;
+  string sampler = 4;
+  google.protobuf.Timestamp triggered_at = 5;
+  google.protobuf.Timestamp start = 6;
+  google.protobuf.Timestamp end = 7;
+  google.protobuf.Timestamp first_packet_at = 8;
+  google.protobuf.Timestamp last_packet_at = 9;
+  bool flows_span_slices = 10;
+  TrafficEvidenceBytes observed = 11;
+  TrafficEvidenceBytes trigger_unexplained = 12;
+  uint64 unclassified_bytes = 13;
+  bool partial = 14;
+  bool complete = 15;
+  repeated TrafficEvidencePeer ingress_sources = 16;
+  repeated TrafficEvidencePeer egress_destinations = 17;
+  TrafficEvidenceBytes other = 18;
+}
+
+message SubmitTrafficEvidenceRequest {
+  // Must match the enrolled identity. The server keys evidence by that identity.
+  string agent_id = 1;
+  oneof record {
+    TrafficEvidenceHour hour = 2;
+    TrafficEvidenceIncident incident = 3;
+  }
+}
+
+message SubmitTrafficEvidenceResponse {
+  // Indicates the sent revision was stored or already superseded.
+  bool accepted = 1;
+}
+
+message ListTrafficEvidenceRequest {
+  string agent_id = 1;
+}
+
+message ListTrafficEvidenceResponse {
+  repeated TrafficEvidenceHour hours = 1;
+  repeated TrafficEvidenceIncident incidents = 2;
+}
+
+message GetTrafficEvidenceIncidentRequest {
+  string agent_id = 1;
+  string incident_id = 2;
+}
+
+message GetTrafficEvidenceIncidentResponse {
+  TrafficEvidenceIncident incident = 1;
 }
 
 // UploadMetricsRequest is one batch in a bounded upload stream.

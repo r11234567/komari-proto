@@ -177,7 +177,7 @@ export const SetTerminalSettingsResponseSchema: GenMessage<SetTerminalSettingsRe
 
 /**
  * TerminalSettingsService owns the administrator's terminal appearance.
- *
+ * 
  * Settings are deployment-wide rather than per-session: the web terminal reads
  * them before opening any terminal and applies the same appearance to every
  * session. They are not theme settings and are not available over the legacy

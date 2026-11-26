@@ -684,7 +684,7 @@ export const RescueEventSchema: GenMessage<RescueEvent> = /*@__PURE__*/
 
 /**
  * TemporarySSHAccess reports one temporary public SSH exposure.
- *
+ * 
  * The expiry is enforced locally by the host, never by the control plane: a
  * nftables set element timeout where available, otherwise a systemd transient
  * timer, with a persisted deadline reconciled by the helper on every lease so
@@ -943,7 +943,7 @@ export enum RescueAction {
 
   /**
    * Withdraw the active privileged configuration locally.
-   *
+   * 
    * This exists because a privilege change has to be undoable from the host
    * without the control plane's cooperation. If the only way back were a
    * panel instruction, then a panel that is unreachable, or that was itself

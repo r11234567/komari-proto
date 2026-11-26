@@ -2024,7 +2024,7 @@ export const FileOperationSchema: GenEnum<FileOperation> = /*@__PURE__*/
 
 /**
  * FileService owns administrator-facing remote file management for one agent.
- *
+ * 
  * The control plane carries metadata and mutations. File contents are not
  * carried here: downloads, uploads, and previews travel over the binary HTTP
  * data plane so browsers can use ordinary URLs and streaming transfers.
