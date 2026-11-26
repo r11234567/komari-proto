@@ -415,7 +415,7 @@ export const TrustKeyRotationSchema: GenMessage<TrustKeyRotation> = /*@__PURE__*
 
 /**
  * AgentCredentials is one access/refresh pair.
- * 
+ *
  * The access token is short-lived and carried on ordinary requests. The
  * refresh token is long-lived and used only to rotate. Rotation is silent and
  * unattended; a human is involved only if the refresh token itself is lost or
@@ -897,7 +897,7 @@ export const EnrollmentStateSchema: GenEnum<EnrollmentState> = /*@__PURE__*/
 /**
  * EnrollmentService replaces static agent tokens with a device authorization
  * grant and short-lived, rotating credentials.
- * 
+ *
  * The flow is poll-based on purpose. An agent behind NAT, or reachable only
  * over a private mesh with its public ports closed, cannot receive an inbound
  * callback; requiring one would make enrollment impossible on exactly the
@@ -967,7 +967,7 @@ export const EnrollmentService: GenService<{
 /**
  * EnrollmentAdminService is the panel side of an enrollment: where a signed-in
  * administrator sees a pending request and decides what it becomes.
- * 
+ *
  * It is separate from EnrollmentService because the two have opposite callers.
  * EnrollmentService is reached by machines that hold no credential yet; this
  * service is reached only by an administrator session, and it is the step that

@@ -17,7 +17,7 @@ export const file_komari_security_v1_security: GenFile = /*@__PURE__*/
 /**
  * SignedEnvelope carries an authenticated instruction from the control plane
  * to one agent.
- * 
+ *
  * Transport confidentiality is TLS's job, and Go's TLS stack already performs
  * a hybrid post-quantum key exchange by default. What TLS cannot provide is
  * end-to-end authenticity when it terminates before the control plane: a
@@ -56,7 +56,7 @@ export const SignedEnvelopeSchema: GenMessage<SignedEnvelope> = /*@__PURE__*/
 
 /**
  * SignedInstruction is the payload bytes of a SignedEnvelope.
- * 
+ *
  * Every field is covered by the signature. The replay defenses are part of the
  * signed content rather than transport metadata, because a signature that does
  * not bind the target and a deadline can be replayed against another agent or
@@ -189,7 +189,7 @@ export const PublicKeySchema: GenMessage<PublicKey> = /*@__PURE__*/
 
 /**
  * VerificationPolicy states how many signatures must verify.
- * 
+ *
  * It is delivered as configuration so a deployment can move from "accept the
  * classic signature" through dual-signing to "require the post-quantum
  * signature" without an agent release at each step.

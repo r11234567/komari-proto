@@ -528,14 +528,14 @@ export type PrivilegedRevision = Message<"komari.config.v1.PrivilegedRevision"> 
 
   /**
    * signature authenticates this revision end to end.
-   * 
+   *
    * TLS cannot establish it: the connection commonly terminates at a reverse
    * proxy or access gateway that sees plaintext, so anything past that point
    * could compose a revision widening what the agent may do. The envelope
    * carries a SignedInstruction whose agent_id, nonce and expiry are inside
    * the signature, which is what stops a captured revision from being replayed
    * against another host or at another time.
-   * 
+   *
    * It is optional only so an agent can report a missing signature as a
    * refusal rather than failing to parse. An agent that has pinned keys must
    * never act on a revision without one.
@@ -659,7 +659,7 @@ export type RuntimeConfig = Message<"komari.config.v1.RuntimeConfig"> & {
    * Fields below complete the delivery surface: every agent setting that a
    * running agent can adopt is deliverable, so an operator never edits a
    * config file by hand to change something the panel already knows.
-   * 
+   *
    * Deliverability is not the same as automatic application. Settings that a
    * running agent cannot adopt, or that would widen what the agent is allowed
    * to do, are classified separately in UpgradePlan below and are never
@@ -741,7 +741,7 @@ export const RuntimeConfigSchema: GenMessage<RuntimeConfig> = /*@__PURE__*/
 /**
  * PrivilegedConfig holds settings whose adoption changes what the agent is
  * permitted to do, rather than how it observes the host.
- * 
+ *
  * These use signed approvals. Remote child identity is independent of daemon
  * identity. Root children require an explicit capability and local OS ability.
  *
@@ -803,7 +803,7 @@ export const PrivilegedConfigSchema: GenMessage<PrivilegedConfig> = /*@__PURE__*
 
 /**
  * UpgradePlan states how one delivered revision may be adopted.
- * 
+ *
  * The classification is computed by the control plane from the revision's
  * content and the agent's reported privilege mode, and is delivered with the
  * revision so the agent and the panel agree on what is permitted without
@@ -854,7 +854,7 @@ export const UpgradePlanSchema: GenMessage<UpgradePlan> = /*@__PURE__*/
 
 /**
  * ManualUpgradeTask is an upgrade a human must perform on the host itself.
- * 
+ *
  * The control plane never collects a host credential. The operator runs the
  * command on the machine, in their own session, and the local sudo or PAM
  * stack collects and verifies the password there. The panel learns only that
@@ -1354,7 +1354,7 @@ export const InitializeNodeConfigResponseSchema: GenMessage<InitializeNodeConfig
 
 /**
  * PrivilegedDeliveryState is the state of one privileged revision.
- * 
+ *
  * These are business states of a human decision, not transport states, which
  * is why they are separate from DeliveryState: "sent" is meaningless for a
  * change that a machine is never allowed to adopt by itself.
@@ -1573,7 +1573,7 @@ export const ConfigService: GenService<{
 /**
  * PrivilegedDeliveryService owns the separate delivery track for settings a
  * adoption requires an explicit signed approval.
- * 
+ *
  * It is deliberately a second track rather than an extension of ConfigService.
  * The ordinary track is a convergence loop: the panel names a desired state
  * and the agent reaches it unattended. These settings cannot work that way,
