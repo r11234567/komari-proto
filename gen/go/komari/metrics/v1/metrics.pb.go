@@ -513,6 +513,702 @@ func (x *SubmitTrafficSamplesResponse) GetAcceptedSequence() uint64 {
 	return 0
 }
 
+type TrafficEvidenceBytes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RxBytes       uint64                 `protobuf:"varint,1,opt,name=rx_bytes,json=rxBytes,proto3" json:"rx_bytes,omitempty"`
+	TxBytes       uint64                 `protobuf:"varint,2,opt,name=tx_bytes,json=txBytes,proto3" json:"tx_bytes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrafficEvidenceBytes) Reset() {
+	*x = TrafficEvidenceBytes{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrafficEvidenceBytes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrafficEvidenceBytes) ProtoMessage() {}
+
+func (x *TrafficEvidenceBytes) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrafficEvidenceBytes.ProtoReflect.Descriptor instead.
+func (*TrafficEvidenceBytes) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *TrafficEvidenceBytes) GetRxBytes() uint64 {
+	if x != nil {
+		return x.RxBytes
+	}
+	return 0
+}
+
+func (x *TrafficEvidenceBytes) GetTxBytes() uint64 {
+	if x != nil {
+		return x.TxBytes
+	}
+	return 0
+}
+
+type TrafficEvidencePeer struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ip            string                 `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`
+	Bytes         uint64                 `protobuf:"varint,2,opt,name=bytes,proto3" json:"bytes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrafficEvidencePeer) Reset() {
+	*x = TrafficEvidencePeer{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrafficEvidencePeer) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrafficEvidencePeer) ProtoMessage() {}
+
+func (x *TrafficEvidencePeer) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrafficEvidencePeer.ProtoReflect.Descriptor instead.
+func (*TrafficEvidencePeer) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *TrafficEvidencePeer) GetIp() string {
+	if x != nil {
+		return x.Ip
+	}
+	return ""
+}
+
+func (x *TrafficEvidencePeer) GetBytes() uint64 {
+	if x != nil {
+		return x.Bytes
+	}
+	return 0
+}
+
+type TrafficEvidenceHour struct {
+	state         protoimpl.MessageState           `protogen:"open.v1"`
+	HourUtc       *timestamppb.Timestamp           `protobuf:"bytes,1,opt,name=hour_utc,json=hourUtc,proto3" json:"hour_utc,omitempty"`
+	Through       *timestamppb.Timestamp           `protobuf:"bytes,2,opt,name=through,proto3" json:"through,omitempty"`
+	Observed      *TrafficEvidenceBytes            `protobuf:"bytes,3,opt,name=observed,proto3" json:"observed,omitempty"`
+	Services      map[string]*TrafficEvidenceBytes `protobuf:"bytes,4,rep,name=services,proto3" json:"services,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Unexplained   *TrafficEvidenceBytes            `protobuf:"bytes,5,opt,name=unexplained,proto3" json:"unexplained,omitempty"`
+	Partial       bool                             `protobuf:"varint,6,opt,name=partial,proto3" json:"partial,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrafficEvidenceHour) Reset() {
+	*x = TrafficEvidenceHour{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrafficEvidenceHour) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrafficEvidenceHour) ProtoMessage() {}
+
+func (x *TrafficEvidenceHour) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrafficEvidenceHour.ProtoReflect.Descriptor instead.
+func (*TrafficEvidenceHour) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *TrafficEvidenceHour) GetHourUtc() *timestamppb.Timestamp {
+	if x != nil {
+		return x.HourUtc
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceHour) GetThrough() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Through
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceHour) GetObserved() *TrafficEvidenceBytes {
+	if x != nil {
+		return x.Observed
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceHour) GetServices() map[string]*TrafficEvidenceBytes {
+	if x != nil {
+		return x.Services
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceHour) GetUnexplained() *TrafficEvidenceBytes {
+	if x != nil {
+		return x.Unexplained
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceHour) GetPartial() bool {
+	if x != nil {
+		return x.Partial
+	}
+	return false
+}
+
+type TrafficEvidenceIncident struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Reason             string                 `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
+	InterfaceName      string                 `protobuf:"bytes,3,opt,name=interface_name,json=interfaceName,proto3" json:"interface_name,omitempty"`
+	Sampler            string                 `protobuf:"bytes,4,opt,name=sampler,proto3" json:"sampler,omitempty"`
+	TriggeredAt        *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=triggered_at,json=triggeredAt,proto3" json:"triggered_at,omitempty"`
+	Start              *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=start,proto3" json:"start,omitempty"`
+	End                *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=end,proto3" json:"end,omitempty"`
+	FirstPacketAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=first_packet_at,json=firstPacketAt,proto3" json:"first_packet_at,omitempty"`
+	LastPacketAt       *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=last_packet_at,json=lastPacketAt,proto3" json:"last_packet_at,omitempty"`
+	FlowsSpanSlices    bool                   `protobuf:"varint,10,opt,name=flows_span_slices,json=flowsSpanSlices,proto3" json:"flows_span_slices,omitempty"`
+	Observed           *TrafficEvidenceBytes  `protobuf:"bytes,11,opt,name=observed,proto3" json:"observed,omitempty"`
+	TriggerUnexplained *TrafficEvidenceBytes  `protobuf:"bytes,12,opt,name=trigger_unexplained,json=triggerUnexplained,proto3" json:"trigger_unexplained,omitempty"`
+	UnclassifiedBytes  uint64                 `protobuf:"varint,13,opt,name=unclassified_bytes,json=unclassifiedBytes,proto3" json:"unclassified_bytes,omitempty"`
+	Partial            bool                   `protobuf:"varint,14,opt,name=partial,proto3" json:"partial,omitempty"`
+	Complete           bool                   `protobuf:"varint,15,opt,name=complete,proto3" json:"complete,omitempty"`
+	IngressSources     []*TrafficEvidencePeer `protobuf:"bytes,16,rep,name=ingress_sources,json=ingressSources,proto3" json:"ingress_sources,omitempty"`
+	EgressDestinations []*TrafficEvidencePeer `protobuf:"bytes,17,rep,name=egress_destinations,json=egressDestinations,proto3" json:"egress_destinations,omitempty"`
+	Other              *TrafficEvidenceBytes  `protobuf:"bytes,18,opt,name=other,proto3" json:"other,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *TrafficEvidenceIncident) Reset() {
+	*x = TrafficEvidenceIncident{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrafficEvidenceIncident) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrafficEvidenceIncident) ProtoMessage() {}
+
+func (x *TrafficEvidenceIncident) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrafficEvidenceIncident.ProtoReflect.Descriptor instead.
+func (*TrafficEvidenceIncident) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *TrafficEvidenceIncident) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *TrafficEvidenceIncident) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *TrafficEvidenceIncident) GetInterfaceName() string {
+	if x != nil {
+		return x.InterfaceName
+	}
+	return ""
+}
+
+func (x *TrafficEvidenceIncident) GetSampler() string {
+	if x != nil {
+		return x.Sampler
+	}
+	return ""
+}
+
+func (x *TrafficEvidenceIncident) GetTriggeredAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.TriggeredAt
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceIncident) GetStart() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Start
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceIncident) GetEnd() *timestamppb.Timestamp {
+	if x != nil {
+		return x.End
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceIncident) GetFirstPacketAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.FirstPacketAt
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceIncident) GetLastPacketAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastPacketAt
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceIncident) GetFlowsSpanSlices() bool {
+	if x != nil {
+		return x.FlowsSpanSlices
+	}
+	return false
+}
+
+func (x *TrafficEvidenceIncident) GetObserved() *TrafficEvidenceBytes {
+	if x != nil {
+		return x.Observed
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceIncident) GetTriggerUnexplained() *TrafficEvidenceBytes {
+	if x != nil {
+		return x.TriggerUnexplained
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceIncident) GetUnclassifiedBytes() uint64 {
+	if x != nil {
+		return x.UnclassifiedBytes
+	}
+	return 0
+}
+
+func (x *TrafficEvidenceIncident) GetPartial() bool {
+	if x != nil {
+		return x.Partial
+	}
+	return false
+}
+
+func (x *TrafficEvidenceIncident) GetComplete() bool {
+	if x != nil {
+		return x.Complete
+	}
+	return false
+}
+
+func (x *TrafficEvidenceIncident) GetIngressSources() []*TrafficEvidencePeer {
+	if x != nil {
+		return x.IngressSources
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceIncident) GetEgressDestinations() []*TrafficEvidencePeer {
+	if x != nil {
+		return x.EgressDestinations
+	}
+	return nil
+}
+
+func (x *TrafficEvidenceIncident) GetOther() *TrafficEvidenceBytes {
+	if x != nil {
+		return x.Other
+	}
+	return nil
+}
+
+type SubmitTrafficEvidenceRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Must match the enrolled identity. The server keys evidence by that identity.
+	AgentId string `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	// Types that are valid to be assigned to Record:
+	//
+	//	*SubmitTrafficEvidenceRequest_Hour
+	//	*SubmitTrafficEvidenceRequest_Incident
+	Record        isSubmitTrafficEvidenceRequest_Record `protobuf_oneof:"record"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitTrafficEvidenceRequest) Reset() {
+	*x = SubmitTrafficEvidenceRequest{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitTrafficEvidenceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitTrafficEvidenceRequest) ProtoMessage() {}
+
+func (x *SubmitTrafficEvidenceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitTrafficEvidenceRequest.ProtoReflect.Descriptor instead.
+func (*SubmitTrafficEvidenceRequest) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *SubmitTrafficEvidenceRequest) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+func (x *SubmitTrafficEvidenceRequest) GetRecord() isSubmitTrafficEvidenceRequest_Record {
+	if x != nil {
+		return x.Record
+	}
+	return nil
+}
+
+func (x *SubmitTrafficEvidenceRequest) GetHour() *TrafficEvidenceHour {
+	if x != nil {
+		if x, ok := x.Record.(*SubmitTrafficEvidenceRequest_Hour); ok {
+			return x.Hour
+		}
+	}
+	return nil
+}
+
+func (x *SubmitTrafficEvidenceRequest) GetIncident() *TrafficEvidenceIncident {
+	if x != nil {
+		if x, ok := x.Record.(*SubmitTrafficEvidenceRequest_Incident); ok {
+			return x.Incident
+		}
+	}
+	return nil
+}
+
+type isSubmitTrafficEvidenceRequest_Record interface {
+	isSubmitTrafficEvidenceRequest_Record()
+}
+
+type SubmitTrafficEvidenceRequest_Hour struct {
+	Hour *TrafficEvidenceHour `protobuf:"bytes,2,opt,name=hour,proto3,oneof"`
+}
+
+type SubmitTrafficEvidenceRequest_Incident struct {
+	Incident *TrafficEvidenceIncident `protobuf:"bytes,3,opt,name=incident,proto3,oneof"`
+}
+
+func (*SubmitTrafficEvidenceRequest_Hour) isSubmitTrafficEvidenceRequest_Record() {}
+
+func (*SubmitTrafficEvidenceRequest_Incident) isSubmitTrafficEvidenceRequest_Record() {}
+
+type SubmitTrafficEvidenceResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Indicates the sent revision was stored or already superseded.
+	Accepted      bool `protobuf:"varint,1,opt,name=accepted,proto3" json:"accepted,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitTrafficEvidenceResponse) Reset() {
+	*x = SubmitTrafficEvidenceResponse{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitTrafficEvidenceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitTrafficEvidenceResponse) ProtoMessage() {}
+
+func (x *SubmitTrafficEvidenceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitTrafficEvidenceResponse.ProtoReflect.Descriptor instead.
+func (*SubmitTrafficEvidenceResponse) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *SubmitTrafficEvidenceResponse) GetAccepted() bool {
+	if x != nil {
+		return x.Accepted
+	}
+	return false
+}
+
+type ListTrafficEvidenceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTrafficEvidenceRequest) Reset() {
+	*x = ListTrafficEvidenceRequest{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTrafficEvidenceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTrafficEvidenceRequest) ProtoMessage() {}
+
+func (x *ListTrafficEvidenceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTrafficEvidenceRequest.ProtoReflect.Descriptor instead.
+func (*ListTrafficEvidenceRequest) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ListTrafficEvidenceRequest) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+type ListTrafficEvidenceResponse struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Hours         []*TrafficEvidenceHour     `protobuf:"bytes,1,rep,name=hours,proto3" json:"hours,omitempty"`
+	Incidents     []*TrafficEvidenceIncident `protobuf:"bytes,2,rep,name=incidents,proto3" json:"incidents,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTrafficEvidenceResponse) Reset() {
+	*x = ListTrafficEvidenceResponse{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTrafficEvidenceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTrafficEvidenceResponse) ProtoMessage() {}
+
+func (x *ListTrafficEvidenceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTrafficEvidenceResponse.ProtoReflect.Descriptor instead.
+func (*ListTrafficEvidenceResponse) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ListTrafficEvidenceResponse) GetHours() []*TrafficEvidenceHour {
+	if x != nil {
+		return x.Hours
+	}
+	return nil
+}
+
+func (x *ListTrafficEvidenceResponse) GetIncidents() []*TrafficEvidenceIncident {
+	if x != nil {
+		return x.Incidents
+	}
+	return nil
+}
+
+type GetTrafficEvidenceIncidentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	IncidentId    string                 `protobuf:"bytes,2,opt,name=incident_id,json=incidentId,proto3" json:"incident_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTrafficEvidenceIncidentRequest) Reset() {
+	*x = GetTrafficEvidenceIncidentRequest{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTrafficEvidenceIncidentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTrafficEvidenceIncidentRequest) ProtoMessage() {}
+
+func (x *GetTrafficEvidenceIncidentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTrafficEvidenceIncidentRequest.ProtoReflect.Descriptor instead.
+func (*GetTrafficEvidenceIncidentRequest) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GetTrafficEvidenceIncidentRequest) GetAgentId() string {
+	if x != nil {
+		return x.AgentId
+	}
+	return ""
+}
+
+func (x *GetTrafficEvidenceIncidentRequest) GetIncidentId() string {
+	if x != nil {
+		return x.IncidentId
+	}
+	return ""
+}
+
+type GetTrafficEvidenceIncidentResponse struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Incident      *TrafficEvidenceIncident `protobuf:"bytes,1,opt,name=incident,proto3" json:"incident,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTrafficEvidenceIncidentResponse) Reset() {
+	*x = GetTrafficEvidenceIncidentResponse{}
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTrafficEvidenceIncidentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTrafficEvidenceIncidentResponse) ProtoMessage() {}
+
+func (x *GetTrafficEvidenceIncidentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTrafficEvidenceIncidentResponse.ProtoReflect.Descriptor instead.
+func (*GetTrafficEvidenceIncidentResponse) Descriptor() ([]byte, []int) {
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetTrafficEvidenceIncidentResponse) GetIncident() *TrafficEvidenceIncident {
+	if x != nil {
+		return x.Incident
+	}
+	return nil
+}
+
 // UploadMetricsRequest is one batch in a bounded upload stream.
 type UploadMetricsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -523,7 +1219,7 @@ type UploadMetricsRequest struct {
 
 func (x *UploadMetricsRequest) Reset() {
 	*x = UploadMetricsRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[7]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -535,7 +1231,7 @@ func (x *UploadMetricsRequest) String() string {
 func (*UploadMetricsRequest) ProtoMessage() {}
 
 func (x *UploadMetricsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[7]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -548,7 +1244,7 @@ func (x *UploadMetricsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UploadMetricsRequest.ProtoReflect.Descriptor instead.
 func (*UploadMetricsRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{7}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *UploadMetricsRequest) GetBatch() *SubmitMetricsRequest {
@@ -569,7 +1265,7 @@ type UploadMetricsResponse struct {
 
 func (x *UploadMetricsResponse) Reset() {
 	*x = UploadMetricsResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[8]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -581,7 +1277,7 @@ func (x *UploadMetricsResponse) String() string {
 func (*UploadMetricsResponse) ProtoMessage() {}
 
 func (x *UploadMetricsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[8]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -594,7 +1290,7 @@ func (x *UploadMetricsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UploadMetricsResponse.ProtoReflect.Descriptor instead.
 func (*UploadMetricsResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{8}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *UploadMetricsResponse) GetAcceptedSequence() uint64 {
@@ -621,7 +1317,7 @@ type StreamMetricsRequest struct {
 
 func (x *StreamMetricsRequest) Reset() {
 	*x = StreamMetricsRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[9]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -633,7 +1329,7 @@ func (x *StreamMetricsRequest) String() string {
 func (*StreamMetricsRequest) ProtoMessage() {}
 
 func (x *StreamMetricsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[9]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -646,7 +1342,7 @@ func (x *StreamMetricsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamMetricsRequest.ProtoReflect.Descriptor instead.
 func (*StreamMetricsRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{9}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *StreamMetricsRequest) GetBatch() *SubmitMetricsRequest {
@@ -667,7 +1363,7 @@ type StreamMetricsResponse struct {
 
 func (x *StreamMetricsResponse) Reset() {
 	*x = StreamMetricsResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[10]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -679,7 +1375,7 @@ func (x *StreamMetricsResponse) String() string {
 func (*StreamMetricsResponse) ProtoMessage() {}
 
 func (x *StreamMetricsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[10]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -692,7 +1388,7 @@ func (x *StreamMetricsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamMetricsResponse.ProtoReflect.Descriptor instead.
 func (*StreamMetricsResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{10}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *StreamMetricsResponse) GetAcceptedSequence() uint64 {
@@ -727,7 +1423,7 @@ type QueryMetricsRequest struct {
 
 func (x *QueryMetricsRequest) Reset() {
 	*x = QueryMetricsRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[11]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -739,7 +1435,7 @@ func (x *QueryMetricsRequest) String() string {
 func (*QueryMetricsRequest) ProtoMessage() {}
 
 func (x *QueryMetricsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[11]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -752,7 +1448,7 @@ func (x *QueryMetricsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryMetricsRequest.ProtoReflect.Descriptor instead.
 func (*QueryMetricsRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{11}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *QueryMetricsRequest) GetAgentIds() []string {
@@ -828,7 +1524,7 @@ type QueryMetricsResponse struct {
 
 func (x *QueryMetricsResponse) Reset() {
 	*x = QueryMetricsResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[12]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -840,7 +1536,7 @@ func (x *QueryMetricsResponse) String() string {
 func (*QueryMetricsResponse) ProtoMessage() {}
 
 func (x *QueryMetricsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[12]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -853,7 +1549,7 @@ func (x *QueryMetricsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryMetricsResponse.ProtoReflect.Descriptor instead.
 func (*QueryMetricsResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{12}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *QueryMetricsResponse) GetSeries() []*MetricsSeries {
@@ -894,7 +1590,7 @@ type MetricsSeries struct {
 
 func (x *MetricsSeries) Reset() {
 	*x = MetricsSeries{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[13]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -906,7 +1602,7 @@ func (x *MetricsSeries) String() string {
 func (*MetricsSeries) ProtoMessage() {}
 
 func (x *MetricsSeries) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[13]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -919,7 +1615,7 @@ func (x *MetricsSeries) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetricsSeries.ProtoReflect.Descriptor instead.
 func (*MetricsSeries) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{13}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *MetricsSeries) GetAgentId() string {
@@ -1076,7 +1772,7 @@ type MetricsSourceSpan struct {
 
 func (x *MetricsSourceSpan) Reset() {
 	*x = MetricsSourceSpan{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[14]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1088,7 +1784,7 @@ func (x *MetricsSourceSpan) String() string {
 func (*MetricsSourceSpan) ProtoMessage() {}
 
 func (x *MetricsSourceSpan) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[14]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1101,7 +1797,7 @@ func (x *MetricsSourceSpan) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetricsSourceSpan.ProtoReflect.Descriptor instead.
 func (*MetricsSourceSpan) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{14}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *MetricsSourceSpan) GetStartTime() *timestamppb.Timestamp {
@@ -1148,7 +1844,7 @@ type QueryPoint struct {
 
 func (x *QueryPoint) Reset() {
 	*x = QueryPoint{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[15]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1160,7 +1856,7 @@ func (x *QueryPoint) String() string {
 func (*QueryPoint) ProtoMessage() {}
 
 func (x *QueryPoint) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[15]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1173,7 +1869,7 @@ func (x *QueryPoint) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryPoint.ProtoReflect.Descriptor instead.
 func (*QueryPoint) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{15}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *QueryPoint) GetObservedAt() *timestamppb.Timestamp {
@@ -1234,7 +1930,7 @@ type ListMetricDefinitionsRequest struct {
 
 func (x *ListMetricDefinitionsRequest) Reset() {
 	*x = ListMetricDefinitionsRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[16]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1246,7 +1942,7 @@ func (x *ListMetricDefinitionsRequest) String() string {
 func (*ListMetricDefinitionsRequest) ProtoMessage() {}
 
 func (x *ListMetricDefinitionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[16]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1259,7 +1955,7 @@ func (x *ListMetricDefinitionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMetricDefinitionsRequest.ProtoReflect.Descriptor instead.
 func (*ListMetricDefinitionsRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{16}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{26}
 }
 
 type ListMetricDefinitionsResponse struct {
@@ -1271,7 +1967,7 @@ type ListMetricDefinitionsResponse struct {
 
 func (x *ListMetricDefinitionsResponse) Reset() {
 	*x = ListMetricDefinitionsResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[17]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1283,7 +1979,7 @@ func (x *ListMetricDefinitionsResponse) String() string {
 func (*ListMetricDefinitionsResponse) ProtoMessage() {}
 
 func (x *ListMetricDefinitionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[17]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1296,7 +1992,7 @@ func (x *ListMetricDefinitionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMetricDefinitionsResponse.ProtoReflect.Descriptor instead.
 func (*ListMetricDefinitionsResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{17}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *ListMetricDefinitionsResponse) GetDefinitions() []*MetricDefinition {
@@ -1322,7 +2018,7 @@ type MetricDefinition struct {
 
 func (x *MetricDefinition) Reset() {
 	*x = MetricDefinition{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[18]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1334,7 +2030,7 @@ func (x *MetricDefinition) String() string {
 func (*MetricDefinition) ProtoMessage() {}
 
 func (x *MetricDefinition) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[18]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1347,7 +2043,7 @@ func (x *MetricDefinition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetricDefinition.ProtoReflect.Descriptor instead.
 func (*MetricDefinition) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{18}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *MetricDefinition) GetName() string {
@@ -1415,7 +2111,7 @@ type ListPingTasksRequest struct {
 
 func (x *ListPingTasksRequest) Reset() {
 	*x = ListPingTasksRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[19]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1427,7 +2123,7 @@ func (x *ListPingTasksRequest) String() string {
 func (*ListPingTasksRequest) ProtoMessage() {}
 
 func (x *ListPingTasksRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[19]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1440,7 +2136,7 @@ func (x *ListPingTasksRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPingTasksRequest.ProtoReflect.Descriptor instead.
 func (*ListPingTasksRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{19}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{29}
 }
 
 type ListPingTasksResponse struct {
@@ -1452,7 +2148,7 @@ type ListPingTasksResponse struct {
 
 func (x *ListPingTasksResponse) Reset() {
 	*x = ListPingTasksResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[20]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1464,7 +2160,7 @@ func (x *ListPingTasksResponse) String() string {
 func (*ListPingTasksResponse) ProtoMessage() {}
 
 func (x *ListPingTasksResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[20]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1477,7 +2173,7 @@ func (x *ListPingTasksResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPingTasksResponse.ProtoReflect.Descriptor instead.
 func (*ListPingTasksResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{20}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *ListPingTasksResponse) GetTasks() []*PingTask {
@@ -1499,7 +2195,7 @@ type PingTask struct {
 
 func (x *PingTask) Reset() {
 	*x = PingTask{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[21]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1511,7 +2207,7 @@ func (x *PingTask) String() string {
 func (*PingTask) ProtoMessage() {}
 
 func (x *PingTask) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[21]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1524,7 +2220,7 @@ func (x *PingTask) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PingTask.ProtoReflect.Descriptor instead.
 func (*PingTask) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{21}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *PingTask) GetTaskId() uint64 {
@@ -1568,7 +2264,7 @@ type GetPingStatsRequest struct {
 
 func (x *GetPingStatsRequest) Reset() {
 	*x = GetPingStatsRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[22]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1580,7 +2276,7 @@ func (x *GetPingStatsRequest) String() string {
 func (*GetPingStatsRequest) ProtoMessage() {}
 
 func (x *GetPingStatsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[22]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1593,7 +2289,7 @@ func (x *GetPingStatsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPingStatsRequest.ProtoReflect.Descriptor instead.
 func (*GetPingStatsRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{22}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *GetPingStatsRequest) GetAgentIds() []string {
@@ -1643,7 +2339,7 @@ type GetPingStatsResponse struct {
 
 func (x *GetPingStatsResponse) Reset() {
 	*x = GetPingStatsResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[23]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1655,7 +2351,7 @@ func (x *GetPingStatsResponse) String() string {
 func (*GetPingStatsResponse) ProtoMessage() {}
 
 func (x *GetPingStatsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[23]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1668,7 +2364,7 @@ func (x *GetPingStatsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPingStatsResponse.ProtoReflect.Descriptor instead.
 func (*GetPingStatsResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{23}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *GetPingStatsResponse) GetStartTime() *timestamppb.Timestamp {
@@ -1725,7 +2421,7 @@ type PingStat struct {
 
 func (x *PingStat) Reset() {
 	*x = PingStat{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[24]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1737,7 +2433,7 @@ func (x *PingStat) String() string {
 func (*PingStat) ProtoMessage() {}
 
 func (x *PingStat) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[24]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1750,7 +2446,7 @@ func (x *PingStat) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PingStat.ProtoReflect.Descriptor instead.
 func (*PingStat) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{24}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *PingStat) GetAgentId() string {
@@ -1891,7 +2587,7 @@ type WatchMetricsRequest struct {
 
 func (x *WatchMetricsRequest) Reset() {
 	*x = WatchMetricsRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[25]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1903,7 +2599,7 @@ func (x *WatchMetricsRequest) String() string {
 func (*WatchMetricsRequest) ProtoMessage() {}
 
 func (x *WatchMetricsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[25]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1916,7 +2612,7 @@ func (x *WatchMetricsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WatchMetricsRequest.ProtoReflect.Descriptor instead.
 func (*WatchMetricsRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{25}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *WatchMetricsRequest) GetAgentIds() []string {
@@ -1951,7 +2647,7 @@ type WatchMetricsResponse struct {
 
 func (x *WatchMetricsResponse) Reset() {
 	*x = WatchMetricsResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[26]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1963,7 +2659,7 @@ func (x *WatchMetricsResponse) String() string {
 func (*WatchMetricsResponse) ProtoMessage() {}
 
 func (x *WatchMetricsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[26]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1976,7 +2672,7 @@ func (x *WatchMetricsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WatchMetricsResponse.ProtoReflect.Descriptor instead.
 func (*WatchMetricsResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{26}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *WatchMetricsResponse) GetPoint() *MetricsPoint {
@@ -2003,7 +2699,7 @@ type UpdateMetricDefinitionRequest struct {
 
 func (x *UpdateMetricDefinitionRequest) Reset() {
 	*x = UpdateMetricDefinitionRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[27]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2015,7 +2711,7 @@ func (x *UpdateMetricDefinitionRequest) String() string {
 func (*UpdateMetricDefinitionRequest) ProtoMessage() {}
 
 func (x *UpdateMetricDefinitionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[27]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2028,7 +2724,7 @@ func (x *UpdateMetricDefinitionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateMetricDefinitionRequest.ProtoReflect.Descriptor instead.
 func (*UpdateMetricDefinitionRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{27}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *UpdateMetricDefinitionRequest) GetName() string {
@@ -2054,7 +2750,7 @@ type UpdateMetricDefinitionResponse struct {
 
 func (x *UpdateMetricDefinitionResponse) Reset() {
 	*x = UpdateMetricDefinitionResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[28]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2066,7 +2762,7 @@ func (x *UpdateMetricDefinitionResponse) String() string {
 func (*UpdateMetricDefinitionResponse) ProtoMessage() {}
 
 func (x *UpdateMetricDefinitionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[28]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2079,7 +2775,7 @@ func (x *UpdateMetricDefinitionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateMetricDefinitionResponse.ProtoReflect.Descriptor instead.
 func (*UpdateMetricDefinitionResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{28}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *UpdateMetricDefinitionResponse) GetDefinition() *MetricDefinition {
@@ -2097,7 +2793,7 @@ type GetDownsamplingPolicyRequest struct {
 
 func (x *GetDownsamplingPolicyRequest) Reset() {
 	*x = GetDownsamplingPolicyRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[29]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2109,7 +2805,7 @@ func (x *GetDownsamplingPolicyRequest) String() string {
 func (*GetDownsamplingPolicyRequest) ProtoMessage() {}
 
 func (x *GetDownsamplingPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[29]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2122,7 +2818,7 @@ func (x *GetDownsamplingPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDownsamplingPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetDownsamplingPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{29}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{39}
 }
 
 type GetDownsamplingPolicyResponse struct {
@@ -2134,7 +2830,7 @@ type GetDownsamplingPolicyResponse struct {
 
 func (x *GetDownsamplingPolicyResponse) Reset() {
 	*x = GetDownsamplingPolicyResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[30]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2146,7 +2842,7 @@ func (x *GetDownsamplingPolicyResponse) String() string {
 func (*GetDownsamplingPolicyResponse) ProtoMessage() {}
 
 func (x *GetDownsamplingPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[30]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2159,7 +2855,7 @@ func (x *GetDownsamplingPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDownsamplingPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetDownsamplingPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{30}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *GetDownsamplingPolicyResponse) GetPolicy() *DownsamplingPolicy {
@@ -2181,7 +2877,7 @@ type SetDownsamplingPolicyRequest struct {
 
 func (x *SetDownsamplingPolicyRequest) Reset() {
 	*x = SetDownsamplingPolicyRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[31]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2193,7 +2889,7 @@ func (x *SetDownsamplingPolicyRequest) String() string {
 func (*SetDownsamplingPolicyRequest) ProtoMessage() {}
 
 func (x *SetDownsamplingPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[31]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2206,7 +2902,7 @@ func (x *SetDownsamplingPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetDownsamplingPolicyRequest.ProtoReflect.Descriptor instead.
 func (*SetDownsamplingPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{31}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *SetDownsamplingPolicyRequest) GetEnabled() bool {
@@ -2246,7 +2942,7 @@ type SetDownsamplingPolicyResponse struct {
 
 func (x *SetDownsamplingPolicyResponse) Reset() {
 	*x = SetDownsamplingPolicyResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[32]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2258,7 +2954,7 @@ func (x *SetDownsamplingPolicyResponse) String() string {
 func (*SetDownsamplingPolicyResponse) ProtoMessage() {}
 
 func (x *SetDownsamplingPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[32]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2271,7 +2967,7 @@ func (x *SetDownsamplingPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetDownsamplingPolicyResponse.ProtoReflect.Descriptor instead.
 func (*SetDownsamplingPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{32}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *SetDownsamplingPolicyResponse) GetPolicy() *DownsamplingPolicy {
@@ -2296,7 +2992,7 @@ type DownsamplingPolicy struct {
 
 func (x *DownsamplingPolicy) Reset() {
 	*x = DownsamplingPolicy{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[33]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2308,7 +3004,7 @@ func (x *DownsamplingPolicy) String() string {
 func (*DownsamplingPolicy) ProtoMessage() {}
 
 func (x *DownsamplingPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[33]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2321,7 +3017,7 @@ func (x *DownsamplingPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DownsamplingPolicy.ProtoReflect.Descriptor instead.
 func (*DownsamplingPolicy) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{33}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *DownsamplingPolicy) GetEnabled() bool {
@@ -2383,7 +3079,7 @@ type DownsamplingTier struct {
 
 func (x *DownsamplingTier) Reset() {
 	*x = DownsamplingTier{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[34]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2395,7 +3091,7 @@ func (x *DownsamplingTier) String() string {
 func (*DownsamplingTier) ProtoMessage() {}
 
 func (x *DownsamplingTier) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[34]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2408,7 +3104,7 @@ func (x *DownsamplingTier) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DownsamplingTier.ProtoReflect.Descriptor instead.
 func (*DownsamplingTier) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{34}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *DownsamplingTier) GetInterval() string {
@@ -2433,7 +3129,7 @@ type GetMetricMigrationStatusRequest struct {
 
 func (x *GetMetricMigrationStatusRequest) Reset() {
 	*x = GetMetricMigrationStatusRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[35]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2445,7 +3141,7 @@ func (x *GetMetricMigrationStatusRequest) String() string {
 func (*GetMetricMigrationStatusRequest) ProtoMessage() {}
 
 func (x *GetMetricMigrationStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[35]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2458,7 +3154,7 @@ func (x *GetMetricMigrationStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMetricMigrationStatusRequest.ProtoReflect.Descriptor instead.
 func (*GetMetricMigrationStatusRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{35}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{45}
 }
 
 type GetMetricMigrationStatusResponse struct {
@@ -2470,7 +3166,7 @@ type GetMetricMigrationStatusResponse struct {
 
 func (x *GetMetricMigrationStatusResponse) Reset() {
 	*x = GetMetricMigrationStatusResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[36]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2482,7 +3178,7 @@ func (x *GetMetricMigrationStatusResponse) String() string {
 func (*GetMetricMigrationStatusResponse) ProtoMessage() {}
 
 func (x *GetMetricMigrationStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[36]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2495,7 +3191,7 @@ func (x *GetMetricMigrationStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMetricMigrationStatusResponse.ProtoReflect.Descriptor instead.
 func (*GetMetricMigrationStatusResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{36}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *GetMetricMigrationStatusResponse) GetMigration() *MetricMigration {
@@ -2515,7 +3211,7 @@ type StartMetricMigrationRequest struct {
 
 func (x *StartMetricMigrationRequest) Reset() {
 	*x = StartMetricMigrationRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[37]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2527,7 +3223,7 @@ func (x *StartMetricMigrationRequest) String() string {
 func (*StartMetricMigrationRequest) ProtoMessage() {}
 
 func (x *StartMetricMigrationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[37]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2540,7 +3236,7 @@ func (x *StartMetricMigrationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StartMetricMigrationRequest.ProtoReflect.Descriptor instead.
 func (*StartMetricMigrationRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{37}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *StartMetricMigrationRequest) GetSourceDriver() string {
@@ -2566,7 +3262,7 @@ type StartMetricMigrationResponse struct {
 
 func (x *StartMetricMigrationResponse) Reset() {
 	*x = StartMetricMigrationResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[38]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2578,7 +3274,7 @@ func (x *StartMetricMigrationResponse) String() string {
 func (*StartMetricMigrationResponse) ProtoMessage() {}
 
 func (x *StartMetricMigrationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[38]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2591,7 +3287,7 @@ func (x *StartMetricMigrationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StartMetricMigrationResponse.ProtoReflect.Descriptor instead.
 func (*StartMetricMigrationResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{38}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *StartMetricMigrationResponse) GetMigration() *MetricMigration {
@@ -2609,7 +3305,7 @@ type CancelMetricMigrationRequest struct {
 
 func (x *CancelMetricMigrationRequest) Reset() {
 	*x = CancelMetricMigrationRequest{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[39]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2621,7 +3317,7 @@ func (x *CancelMetricMigrationRequest) String() string {
 func (*CancelMetricMigrationRequest) ProtoMessage() {}
 
 func (x *CancelMetricMigrationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[39]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2634,7 +3330,7 @@ func (x *CancelMetricMigrationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CancelMetricMigrationRequest.ProtoReflect.Descriptor instead.
 func (*CancelMetricMigrationRequest) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{39}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{49}
 }
 
 type CancelMetricMigrationResponse struct {
@@ -2646,7 +3342,7 @@ type CancelMetricMigrationResponse struct {
 
 func (x *CancelMetricMigrationResponse) Reset() {
 	*x = CancelMetricMigrationResponse{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[40]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2658,7 +3354,7 @@ func (x *CancelMetricMigrationResponse) String() string {
 func (*CancelMetricMigrationResponse) ProtoMessage() {}
 
 func (x *CancelMetricMigrationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[40]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2671,7 +3367,7 @@ func (x *CancelMetricMigrationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CancelMetricMigrationResponse.ProtoReflect.Descriptor instead.
 func (*CancelMetricMigrationResponse) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{40}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *CancelMetricMigrationResponse) GetMigration() *MetricMigration {
@@ -2702,7 +3398,7 @@ type MetricMigration struct {
 
 func (x *MetricMigration) Reset() {
 	*x = MetricMigration{}
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[41]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2714,7 +3410,7 @@ func (x *MetricMigration) String() string {
 func (*MetricMigration) ProtoMessage() {}
 
 func (x *MetricMigration) ProtoReflect() protoreflect.Message {
-	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[41]
+	mi := &file_komari_metrics_v1_metrics_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2727,7 +3423,7 @@ func (x *MetricMigration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetricMigration.ProtoReflect.Descriptor instead.
 func (*MetricMigration) Descriptor() ([]byte, []int) {
-	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{41}
+	return file_komari_metrics_v1_metrics_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *MetricMigration) GetState() MetricMigrationState {
@@ -2905,7 +3601,150 @@ var file_komari_metrics_v1_metrics_proto_rawDesc = string([]byte{
 	0x6c, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2b, 0x0a, 0x11, 0x61,
 	0x63, 0x63, 0x65, 0x70, 0x74, 0x65, 0x64, 0x5f, 0x73, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x10, 0x61, 0x63, 0x63, 0x65, 0x70, 0x74, 0x65, 0x64,
-	0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x22, 0x55, 0x0a, 0x14, 0x55, 0x70, 0x6c, 0x6f,
+	0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x22, 0x4c, 0x0a, 0x14, 0x54, 0x72, 0x61, 0x66,
+	0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x42, 0x79, 0x74, 0x65, 0x73,
+	0x12, 0x19, 0x0a, 0x08, 0x72, 0x78, 0x5f, 0x62, 0x79, 0x74, 0x65, 0x73, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x04, 0x52, 0x07, 0x72, 0x78, 0x42, 0x79, 0x74, 0x65, 0x73, 0x12, 0x19, 0x0a, 0x08, 0x74,
+	0x78, 0x5f, 0x62, 0x79, 0x74, 0x65, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x07, 0x74,
+	0x78, 0x42, 0x79, 0x74, 0x65, 0x73, 0x22, 0x3b, 0x0a, 0x13, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69,
+	0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x50, 0x65, 0x65, 0x72, 0x12, 0x0e, 0x0a,
+	0x02, 0x69, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70, 0x12, 0x14, 0x0a,
+	0x05, 0x62, 0x79, 0x74, 0x65, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x62, 0x79,
+	0x74, 0x65, 0x73, 0x22, 0xe4, 0x03, 0x0a, 0x13, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45,
+	0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x48, 0x6f, 0x75, 0x72, 0x12, 0x35, 0x0a, 0x08, 0x68,
+	0x6f, 0x75, 0x72, 0x5f, 0x75, 0x74, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
+	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x07, 0x68, 0x6f, 0x75, 0x72, 0x55,
+	0x74, 0x63, 0x12, 0x34, 0x0a, 0x07, 0x74, 0x68, 0x72, 0x6f, 0x75, 0x67, 0x68, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52,
+	0x07, 0x74, 0x68, 0x72, 0x6f, 0x75, 0x67, 0x68, 0x12, 0x43, 0x0a, 0x08, 0x6f, 0x62, 0x73, 0x65,
+	0x72, 0x76, 0x65, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x6b, 0x6f, 0x6d,
+	0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54,
+	0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x42, 0x79,
+	0x74, 0x65, 0x73, 0x52, 0x08, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x65, 0x64, 0x12, 0x50, 0x0a,
+	0x08, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x34, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73,
+	0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65,
+	0x6e, 0x63, 0x65, 0x48, 0x6f, 0x75, 0x72, 0x2e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73,
+	0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x08, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x12,
+	0x49, 0x0a, 0x0b, 0x75, 0x6e, 0x65, 0x78, 0x70, 0x6c, 0x61, 0x69, 0x6e, 0x65, 0x64, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65,
+	0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63,
+	0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x42, 0x79, 0x74, 0x65, 0x73, 0x52, 0x0b, 0x75,
+	0x6e, 0x65, 0x78, 0x70, 0x6c, 0x61, 0x69, 0x6e, 0x65, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x70, 0x61,
+	0x72, 0x74, 0x69, 0x61, 0x6c, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x70, 0x61, 0x72,
+	0x74, 0x69, 0x61, 0x6c, 0x1a, 0x64, 0x0a, 0x0d, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73,
+	0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x3d, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e,
+	0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66,
+	0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x42, 0x79, 0x74, 0x65, 0x73, 0x52,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0xc0, 0x07, 0x0a, 0x17, 0x54,
+	0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x49, 0x6e,
+	0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x12, 0x25,
+	0x0a, 0x0e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63,
+	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x72,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x72, 0x12,
+	0x3d, 0x0a, 0x0c, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
+	0x70, 0x52, 0x0b, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x65, 0x64, 0x41, 0x74, 0x12, 0x30,
+	0x0a, 0x05, 0x73, 0x74, 0x61, 0x72, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
+	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x05, 0x73, 0x74, 0x61, 0x72, 0x74,
+	0x12, 0x2c, 0x0a, 0x03, 0x65, 0x6e, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
+	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x03, 0x65, 0x6e, 0x64, 0x12, 0x42,
+	0x0a, 0x0f, 0x66, 0x69, 0x72, 0x73, 0x74, 0x5f, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x61,
+	0x74, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
+	0x61, 0x6d, 0x70, 0x52, 0x0d, 0x66, 0x69, 0x72, 0x73, 0x74, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74,
+	0x41, 0x74, 0x12, 0x40, 0x0a, 0x0e, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x70, 0x61, 0x63, 0x6b, 0x65,
+	0x74, 0x5f, 0x61, 0x74, 0x18, 0x09, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f,
+	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d,
+	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0c, 0x6c, 0x61, 0x73, 0x74, 0x50, 0x61, 0x63, 0x6b,
+	0x65, 0x74, 0x41, 0x74, 0x12, 0x2a, 0x0a, 0x11, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0x5f, 0x73, 0x70,
+	0x61, 0x6e, 0x5f, 0x73, 0x6c, 0x69, 0x63, 0x65, 0x73, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x0f, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0x53, 0x70, 0x61, 0x6e, 0x53, 0x6c, 0x69, 0x63, 0x65, 0x73,
+	0x12, 0x43, 0x0a, 0x08, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x65, 0x64, 0x18, 0x0b, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76,
+	0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x42, 0x79, 0x74, 0x65, 0x73, 0x52, 0x08, 0x6f, 0x62, 0x73,
+	0x65, 0x72, 0x76, 0x65, 0x64, 0x12, 0x58, 0x0a, 0x13, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72,
+	0x5f, 0x75, 0x6e, 0x65, 0x78, 0x70, 0x6c, 0x61, 0x69, 0x6e, 0x65, 0x64, 0x18, 0x0c, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76,
+	0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x42, 0x79, 0x74, 0x65, 0x73, 0x52, 0x12, 0x74, 0x72, 0x69,
+	0x67, 0x67, 0x65, 0x72, 0x55, 0x6e, 0x65, 0x78, 0x70, 0x6c, 0x61, 0x69, 0x6e, 0x65, 0x64, 0x12,
+	0x2d, 0x0a, 0x12, 0x75, 0x6e, 0x63, 0x6c, 0x61, 0x73, 0x73, 0x69, 0x66, 0x69, 0x65, 0x64, 0x5f,
+	0x62, 0x79, 0x74, 0x65, 0x73, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x04, 0x52, 0x11, 0x75, 0x6e, 0x63,
+	0x6c, 0x61, 0x73, 0x73, 0x69, 0x66, 0x69, 0x65, 0x64, 0x42, 0x79, 0x74, 0x65, 0x73, 0x12, 0x18,
+	0x0a, 0x07, 0x70, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x07, 0x70, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x6f, 0x6d, 0x70,
+	0x6c, 0x65, 0x74, 0x65, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x63, 0x6f, 0x6d, 0x70,
+	0x6c, 0x65, 0x74, 0x65, 0x12, 0x4f, 0x0a, 0x0f, 0x69, 0x6e, 0x67, 0x72, 0x65, 0x73, 0x73, 0x5f,
+	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x73, 0x18, 0x10, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x26, 0x2e,
+	0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76,
+	0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63,
+	0x65, 0x50, 0x65, 0x65, 0x72, 0x52, 0x0e, 0x69, 0x6e, 0x67, 0x72, 0x65, 0x73, 0x73, 0x53, 0x6f,
+	0x75, 0x72, 0x63, 0x65, 0x73, 0x12, 0x57, 0x0a, 0x13, 0x65, 0x67, 0x72, 0x65, 0x73, 0x73, 0x5f,
+	0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x11, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x26, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76,
+	0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52, 0x12, 0x65, 0x67, 0x72, 0x65,
+	0x73, 0x73, 0x44, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x3d,
+	0x0a, 0x05, 0x6f, 0x74, 0x68, 0x65, 0x72, 0x18, 0x12, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e,
+	0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76,
+	0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63,
+	0x65, 0x42, 0x79, 0x74, 0x65, 0x73, 0x52, 0x05, 0x6f, 0x74, 0x68, 0x65, 0x72, 0x22, 0xcb, 0x01,
+	0x0a, 0x1c, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45,
+	0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19,
+	0x0a, 0x08, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x3c, 0x0a, 0x04, 0x68, 0x6f, 0x75,
+	0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69,
+	0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x66,
+	0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x48, 0x6f, 0x75, 0x72, 0x48,
+	0x00, 0x52, 0x04, 0x68, 0x6f, 0x75, 0x72, 0x12, 0x48, 0x0a, 0x08, 0x69, 0x6e, 0x63, 0x69, 0x64,
+	0x65, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x6b, 0x6f, 0x6d, 0x61,
+	0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72,
+	0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x49, 0x6e, 0x63,
+	0x69, 0x64, 0x65, 0x6e, 0x74, 0x48, 0x00, 0x52, 0x08, 0x69, 0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e,
+	0x74, 0x42, 0x08, 0x0a, 0x06, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x22, 0x3b, 0x0a, 0x1d, 0x53,
+	0x75, 0x62, 0x6d, 0x69, 0x74, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64,
+	0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1a, 0x0a, 0x08,
+	0x61, 0x63, 0x63, 0x65, 0x70, 0x74, 0x65, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08,
+	0x61, 0x63, 0x63, 0x65, 0x70, 0x74, 0x65, 0x64, 0x22, 0x37, 0x0a, 0x1a, 0x4c, 0x69, 0x73, 0x74,
+	0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x49,
+	0x64, 0x22, 0xa5, 0x01, 0x0a, 0x1b, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69,
+	0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x3c, 0x0a, 0x05, 0x68, 0x6f, 0x75, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x26, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64,
+	0x65, 0x6e, 0x63, 0x65, 0x48, 0x6f, 0x75, 0x72, 0x52, 0x05, 0x68, 0x6f, 0x75, 0x72, 0x73, 0x12,
+	0x48, 0x0a, 0x09, 0x69, 0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x02, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76,
+	0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x49, 0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x52, 0x09,
+	0x69, 0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x5f, 0x0a, 0x21, 0x47, 0x65, 0x74,
+	0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x49,
+	0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19,
+	0x0a, 0x08, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x6e, 0x63,
+	0x69, 0x64, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a,
+	0x69, 0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x22, 0x6c, 0x0a, 0x22, 0x47, 0x65,
+	0x74, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65,
+	0x49, 0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x46, 0x0a, 0x08, 0x69, 0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76,
+	0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x49, 0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x52, 0x08,
+	0x69, 0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x22, 0x55, 0x0a, 0x14, 0x55, 0x70, 0x6c, 0x6f,
 	0x61, 0x64, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x12, 0x3d, 0x0a, 0x05, 0x62, 0x61, 0x74, 0x63, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
 	0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73,
@@ -3357,7 +4196,7 @@ var file_komari_metrics_v1_metrics_proto_rawDesc = string([]byte{
 	0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x46, 0x41, 0x49,
 	0x4c, 0x45, 0x44, 0x10, 0x04, 0x12, 0x23, 0x0a, 0x1f, 0x4d, 0x45, 0x54, 0x52, 0x49, 0x43, 0x5f,
 	0x4d, 0x49, 0x47, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f,
-	0x43, 0x41, 0x4e, 0x43, 0x45, 0x4c, 0x45, 0x44, 0x10, 0x05, 0x32, 0xda, 0x0d, 0x0a, 0x0e, 0x4d,
+	0x43, 0x41, 0x4e, 0x43, 0x45, 0x4c, 0x45, 0x44, 0x10, 0x05, 0x32, 0xe7, 0x10, 0x0a, 0x0e, 0x4d,
 	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x62, 0x0a,
 	0x0d, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x12, 0x27,
 	0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e,
@@ -3372,116 +4211,140 @@ var file_komari_metrics_v1_metrics_proto_rawDesc = string([]byte{
 	0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d, 0x61,
 	0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x75,
 	0x62, 0x6d, 0x69, 0x74, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x53, 0x61, 0x6d, 0x70, 0x6c,
-	0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x69, 0x0a, 0x0d, 0x55, 0x70,
-	0x6c, 0x6f, 0x61, 0x64, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x12, 0x27, 0x2e, 0x6b, 0x6f,
-	0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e,
-	0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65,
-	0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x4d,
-	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03,
-	0x88, 0x02, 0x01, 0x28, 0x01, 0x12, 0x6b, 0x0a, 0x0d, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x4d,
-	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x12, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e,
-	0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x72, 0x65, 0x61,
-	0x6d, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
-	0x28, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73,
-	0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63,
-	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x88, 0x02, 0x01, 0x28, 0x01,
-	0x30, 0x01, 0x12, 0x64, 0x0a, 0x0c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x74, 0x72, 0x69,
-	0x63, 0x73, 0x12, 0x26, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
-	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x74, 0x72,
-	0x69, 0x63, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e, 0x6b, 0x6f, 0x6d,
-	0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x51,
-	0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x7f, 0x0a, 0x15, 0x4c, 0x69, 0x73, 0x74,
-	0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x12, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69,
-	0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63,
-	0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x30, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
-	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69,
-	0x63, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x67, 0x0a, 0x0d, 0x4c, 0x69, 0x73,
-	0x74, 0x50, 0x69, 0x6e, 0x67, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x12, 0x27, 0x2e, 0x6b, 0x6f, 0x6d,
-	0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4c,
-	0x69, 0x73, 0x74, 0x50, 0x69, 0x6e, 0x67, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74,
-	0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x69, 0x6e, 0x67,
-	0x54, 0x61, 0x73, 0x6b, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90,
-	0x02, 0x01, 0x12, 0x64, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x50, 0x69, 0x6e, 0x67, 0x53, 0x74, 0x61,
-	0x74, 0x73, 0x12, 0x26, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
-	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x69, 0x6e, 0x67, 0x53, 0x74,
-	0x61, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e, 0x6b, 0x6f, 0x6d,
-	0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47,
-	0x65, 0x74, 0x50, 0x69, 0x6e, 0x67, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x61, 0x0a, 0x0c, 0x57, 0x61, 0x74, 0x63,
-	0x68, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x12, 0x26, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72,
-	0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x57, 0x61, 0x74,
-	0x63, 0x68, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63,
-	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x57, 0x61, 0x74, 0x63, 0x68, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63,
-	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x30, 0x01, 0x12, 0x7d, 0x0a, 0x16, 0x55,
-	0x70, 0x64, 0x61, 0x74, 0x65, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x44, 0x65, 0x66, 0x69, 0x6e,
-	0x69, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x30, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d,
-	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
-	0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69,
-	0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x64, 0x61,
-	0x74, 0x65, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69,
-	0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x7f, 0x0a, 0x15, 0x47, 0x65,
-	0x74, 0x44, 0x6f, 0x77, 0x6e, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c,
-	0x69, 0x63, 0x79, 0x12, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74,
-	0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x6f, 0x77, 0x6e, 0x73,
-	0x61, 0x6d, 0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52, 0x65, 0x71,
+	0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x7f, 0x0a, 0x15, 0x53, 0x75,
+	0x62, 0x6d, 0x69, 0x74, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65,
+	0x6e, 0x63, 0x65, 0x12, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74,
+	0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x54, 0x72,
+	0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x1a, 0x30, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65,
-	0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x6f, 0x77, 0x6e,
-	0x73, 0x61, 0x6d, 0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x7a, 0x0a, 0x15, 0x53,
-	0x65, 0x74, 0x44, 0x6f, 0x77, 0x6e, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f,
-	0x6c, 0x69, 0x63, 0x79, 0x12, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65,
-	0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x65, 0x74, 0x44, 0x6f, 0x77, 0x6e,
-	0x73, 0x61, 0x6d, 0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x30, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d,
-	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x65, 0x74, 0x44, 0x6f, 0x77,
-	0x6e, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x88, 0x01, 0x0a, 0x18, 0x47, 0x65, 0x74, 0x4d,
-	0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74,
-	0x61, 0x74, 0x75, 0x73, 0x12, 0x32, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65,
-	0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x74, 0x72,
-	0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x33, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72,
-	0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74,
-	0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53,
-	0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90,
-	0x02, 0x01, 0x12, 0x77, 0x0a, 0x14, 0x53, 0x74, 0x61, 0x72, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69,
-	0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2e, 0x2e, 0x6b, 0x6f, 0x6d,
-	0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53,
-	0x74, 0x61, 0x72, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d,
-	0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53,
-	0x74, 0x61, 0x72, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x7a, 0x0a, 0x15, 0x43,
-	0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65,
-	0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4d,
-	0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x30, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d,
-	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c,
-	0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xd1, 0x01, 0x0a, 0x15, 0x63, 0x6f, 0x6d, 0x2e,
+	0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x54,
+	0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x02, 0x12, 0x79, 0x0a, 0x13, 0x4c,
+	0x69, 0x73, 0x74, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e,
+	0x63, 0x65, 0x12, 0x2d, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x72, 0x61, 0x66, 0x66,
+	0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x2e, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69,
+	0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69,
+	0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x8e, 0x01, 0x0a, 0x1a, 0x47, 0x65, 0x74, 0x54, 0x72,
+	0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x49, 0x6e, 0x63,
+	0x69, 0x64, 0x65, 0x6e, 0x74, 0x12, 0x34, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d,
+	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x54, 0x72, 0x61,
+	0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x49, 0x6e, 0x63, 0x69,
+	0x64, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x35, 0x2e, 0x6b, 0x6f,
+	0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e,
+	0x47, 0x65, 0x74, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x45, 0x76, 0x69, 0x64, 0x65, 0x6e,
+	0x63, 0x65, 0x49, 0x6e, 0x63, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x69, 0x0a, 0x0d, 0x55, 0x70, 0x6c, 0x6f, 0x61,
+	0x64, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x12, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72,
+	0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x6c,
+	0x6f, 0x61, 0x64, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x28, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69,
+	0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x4d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x88, 0x02, 0x01,
+	0x28, 0x01, 0x12, 0x6b, 0x0a, 0x0d, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x4d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x12, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74,
+	0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x4d, 0x65,
+	0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x6b,
+	0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31,
+	0x2e, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x88, 0x02, 0x01, 0x28, 0x01, 0x30, 0x01, 0x12,
+	0x64, 0x0a, 0x0c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x12,
+	0x26, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73,
+	0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69,
+	0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x7f, 0x0a, 0x15, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x74,
+	0x72, 0x69, 0x63, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x2f,
+	0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e,
+	0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x44, 0x65, 0x66,
+	0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x30, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73,
+	0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x44, 0x65,
+	0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x67, 0x0a, 0x0d, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x69,
+	0x6e, 0x67, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x12, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69,
+	0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74,
+	0x50, 0x69, 0x6e, 0x67, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x28, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x69, 0x6e, 0x67, 0x54, 0x61, 0x73,
+	0x6b, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12,
+	0x64, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x50, 0x69, 0x6e, 0x67, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12,
+	0x26, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73,
+	0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x69, 0x6e, 0x67, 0x53, 0x74, 0x61, 0x74, 0x73,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69,
+	0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x50,
+	0x69, 0x6e, 0x67, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x61, 0x0a, 0x0c, 0x57, 0x61, 0x74, 0x63, 0x68, 0x4d, 0x65,
+	0x74, 0x72, 0x69, 0x63, 0x73, 0x12, 0x26, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d,
+	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x57, 0x61, 0x74, 0x63, 0x68, 0x4d,
+	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e,
 	0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76,
-	0x31, 0x42, 0x0c, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
-	0x01, 0x5a, 0x44, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x72, 0x31,
-	0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x2f, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2d, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x65, 0x6e, 0x2f, 0x67, 0x6f, 0x2f, 0x6b, 0x6f, 0x6d, 0x61,
-	0x72, 0x69, 0x2f, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2f, 0x76, 0x31, 0x3b, 0x6d, 0x65,
-	0x74, 0x72, 0x69, 0x63, 0x73, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4b, 0x4d, 0x58, 0xaa, 0x02, 0x11,
-	0x4b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x56,
-	0x31, 0xca, 0x02, 0x11, 0x4b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x5c, 0x4d, 0x65, 0x74, 0x72, 0x69,
-	0x63, 0x73, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1d, 0x4b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x5c, 0x4d,
-	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74,
-	0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x13, 0x4b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x3a, 0x3a,
-	0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x31, 0x2e, 0x57, 0x61, 0x74, 0x63, 0x68, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x30, 0x01, 0x12, 0x7d, 0x0a, 0x16, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x30, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4d, 0x65, 0x74,
+	0x72, 0x69, 0x63, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65,
+	0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4d,
+	0x65, 0x74, 0x72, 0x69, 0x63, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x7f, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x44, 0x6f,
+	0x77, 0x6e, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79,
+	0x12, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x6f, 0x77, 0x6e, 0x73, 0x61, 0x6d, 0x70,
+	0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x30, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69,
+	0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x6f, 0x77, 0x6e, 0x73, 0x61, 0x6d,
+	0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x7a, 0x0a, 0x15, 0x53, 0x65, 0x74, 0x44,
+	0x6f, 0x77, 0x6e, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c, 0x69, 0x63,
+	0x79, 0x12, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69,
+	0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x65, 0x74, 0x44, 0x6f, 0x77, 0x6e, 0x73, 0x61, 0x6d,
+	0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x30, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x65, 0x74, 0x44, 0x6f, 0x77, 0x6e, 0x73, 0x61,
+	0x6d, 0x70, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x88, 0x01, 0x0a, 0x18, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75,
+	0x73, 0x12, 0x32, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69,
+	0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x4d,
+	0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x33, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d,
+	0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x74,
+	0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12,
+	0x77, 0x0a, 0x14, 0x53, 0x74, 0x61, 0x72, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69,
+	0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2e, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69,
+	0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x72,
+	0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69,
+	0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x72,
+	0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x7a, 0x0a, 0x15, 0x43, 0x61, 0x6e, 0x63,
+	0x65, 0x6c, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x12, 0x2f, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69,
+	0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x30, 0x2e, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4d, 0x65, 0x74,
+	0x72, 0x69, 0x63, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x42, 0xd1, 0x01, 0x0a, 0x15, 0x63, 0x6f, 0x6d, 0x2e, 0x6b, 0x6f, 0x6d,
+	0x61, 0x72, 0x69, 0x2e, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x31, 0x42, 0x0c,
+	0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x44,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x72, 0x31, 0x31, 0x32, 0x33,
+	0x34, 0x35, 0x36, 0x37, 0x2f, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2d, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x2f, 0x67, 0x65, 0x6e, 0x2f, 0x67, 0x6f, 0x2f, 0x6b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x2f,
+	0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2f, 0x76, 0x31, 0x3b, 0x6d, 0x65, 0x74, 0x72, 0x69,
+	0x63, 0x73, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4b, 0x4d, 0x58, 0xaa, 0x02, 0x11, 0x4b, 0x6f, 0x6d,
+	0x61, 0x72, 0x69, 0x2e, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x2e, 0x56, 0x31, 0xca, 0x02,
+	0x11, 0x4b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x5c, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x73, 0x5c,
+	0x56, 0x31, 0xe2, 0x02, 0x1d, 0x4b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x5c, 0x4d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x73, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
+	0x74, 0x61, 0xea, 0x02, 0x13, 0x4b, 0x6f, 0x6d, 0x61, 0x72, 0x69, 0x3a, 0x3a, 0x4d, 0x65, 0x74,
+	0x72, 0x69, 0x63, 0x73, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -3497,151 +4360,189 @@ func file_komari_metrics_v1_metrics_proto_rawDescGZIP() []byte {
 }
 
 var file_komari_metrics_v1_metrics_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_komari_metrics_v1_metrics_proto_msgTypes = make([]protoimpl.MessageInfo, 48)
+var file_komari_metrics_v1_metrics_proto_msgTypes = make([]protoimpl.MessageInfo, 59)
 var file_komari_metrics_v1_metrics_proto_goTypes = []any{
-	(MetricMigrationState)(0),                // 0: komari.metrics.v1.MetricMigrationState
-	(*MetricsPoint)(nil),                     // 1: komari.metrics.v1.MetricsPoint
-	(*SubmitMetricsRequest)(nil),             // 2: komari.metrics.v1.SubmitMetricsRequest
-	(*SubmitMetricsResponse)(nil),            // 3: komari.metrics.v1.SubmitMetricsResponse
-	(*TrafficInterfaceSample)(nil),           // 4: komari.metrics.v1.TrafficInterfaceSample
-	(*TrafficSample)(nil),                    // 5: komari.metrics.v1.TrafficSample
-	(*SubmitTrafficSamplesRequest)(nil),      // 6: komari.metrics.v1.SubmitTrafficSamplesRequest
-	(*SubmitTrafficSamplesResponse)(nil),     // 7: komari.metrics.v1.SubmitTrafficSamplesResponse
-	(*UploadMetricsRequest)(nil),             // 8: komari.metrics.v1.UploadMetricsRequest
-	(*UploadMetricsResponse)(nil),            // 9: komari.metrics.v1.UploadMetricsResponse
-	(*StreamMetricsRequest)(nil),             // 10: komari.metrics.v1.StreamMetricsRequest
-	(*StreamMetricsResponse)(nil),            // 11: komari.metrics.v1.StreamMetricsResponse
-	(*QueryMetricsRequest)(nil),              // 12: komari.metrics.v1.QueryMetricsRequest
-	(*QueryMetricsResponse)(nil),             // 13: komari.metrics.v1.QueryMetricsResponse
-	(*MetricsSeries)(nil),                    // 14: komari.metrics.v1.MetricsSeries
-	(*MetricsSourceSpan)(nil),                // 15: komari.metrics.v1.MetricsSourceSpan
-	(*QueryPoint)(nil),                       // 16: komari.metrics.v1.QueryPoint
-	(*ListMetricDefinitionsRequest)(nil),     // 17: komari.metrics.v1.ListMetricDefinitionsRequest
-	(*ListMetricDefinitionsResponse)(nil),    // 18: komari.metrics.v1.ListMetricDefinitionsResponse
-	(*MetricDefinition)(nil),                 // 19: komari.metrics.v1.MetricDefinition
-	(*ListPingTasksRequest)(nil),             // 20: komari.metrics.v1.ListPingTasksRequest
-	(*ListPingTasksResponse)(nil),            // 21: komari.metrics.v1.ListPingTasksResponse
-	(*PingTask)(nil),                         // 22: komari.metrics.v1.PingTask
-	(*GetPingStatsRequest)(nil),              // 23: komari.metrics.v1.GetPingStatsRequest
-	(*GetPingStatsResponse)(nil),             // 24: komari.metrics.v1.GetPingStatsResponse
-	(*PingStat)(nil),                         // 25: komari.metrics.v1.PingStat
-	(*WatchMetricsRequest)(nil),              // 26: komari.metrics.v1.WatchMetricsRequest
-	(*WatchMetricsResponse)(nil),             // 27: komari.metrics.v1.WatchMetricsResponse
-	(*UpdateMetricDefinitionRequest)(nil),    // 28: komari.metrics.v1.UpdateMetricDefinitionRequest
-	(*UpdateMetricDefinitionResponse)(nil),   // 29: komari.metrics.v1.UpdateMetricDefinitionResponse
-	(*GetDownsamplingPolicyRequest)(nil),     // 30: komari.metrics.v1.GetDownsamplingPolicyRequest
-	(*GetDownsamplingPolicyResponse)(nil),    // 31: komari.metrics.v1.GetDownsamplingPolicyResponse
-	(*SetDownsamplingPolicyRequest)(nil),     // 32: komari.metrics.v1.SetDownsamplingPolicyRequest
-	(*SetDownsamplingPolicyResponse)(nil),    // 33: komari.metrics.v1.SetDownsamplingPolicyResponse
-	(*DownsamplingPolicy)(nil),               // 34: komari.metrics.v1.DownsamplingPolicy
-	(*DownsamplingTier)(nil),                 // 35: komari.metrics.v1.DownsamplingTier
-	(*GetMetricMigrationStatusRequest)(nil),  // 36: komari.metrics.v1.GetMetricMigrationStatusRequest
-	(*GetMetricMigrationStatusResponse)(nil), // 37: komari.metrics.v1.GetMetricMigrationStatusResponse
-	(*StartMetricMigrationRequest)(nil),      // 38: komari.metrics.v1.StartMetricMigrationRequest
-	(*StartMetricMigrationResponse)(nil),     // 39: komari.metrics.v1.StartMetricMigrationResponse
-	(*CancelMetricMigrationRequest)(nil),     // 40: komari.metrics.v1.CancelMetricMigrationRequest
-	(*CancelMetricMigrationResponse)(nil),    // 41: komari.metrics.v1.CancelMetricMigrationResponse
-	(*MetricMigration)(nil),                  // 42: komari.metrics.v1.MetricMigration
-	nil,                                      // 43: komari.metrics.v1.MetricsPoint.LabelsEntry
-	nil,                                      // 44: komari.metrics.v1.QueryMetricsRequest.TagsEntry
-	nil,                                      // 45: komari.metrics.v1.MetricsSeries.LabelsEntry
-	nil,                                      // 46: komari.metrics.v1.QueryPoint.LabelsEntry
-	nil,                                      // 47: komari.metrics.v1.MetricDefinition.MetadataEntry
-	nil,                                      // 48: komari.metrics.v1.PingStat.TagsEntry
-	(*timestamppb.Timestamp)(nil),            // 49: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),              // 50: google.protobuf.Duration
+	(MetricMigrationState)(0),                  // 0: komari.metrics.v1.MetricMigrationState
+	(*MetricsPoint)(nil),                       // 1: komari.metrics.v1.MetricsPoint
+	(*SubmitMetricsRequest)(nil),               // 2: komari.metrics.v1.SubmitMetricsRequest
+	(*SubmitMetricsResponse)(nil),              // 3: komari.metrics.v1.SubmitMetricsResponse
+	(*TrafficInterfaceSample)(nil),             // 4: komari.metrics.v1.TrafficInterfaceSample
+	(*TrafficSample)(nil),                      // 5: komari.metrics.v1.TrafficSample
+	(*SubmitTrafficSamplesRequest)(nil),        // 6: komari.metrics.v1.SubmitTrafficSamplesRequest
+	(*SubmitTrafficSamplesResponse)(nil),       // 7: komari.metrics.v1.SubmitTrafficSamplesResponse
+	(*TrafficEvidenceBytes)(nil),               // 8: komari.metrics.v1.TrafficEvidenceBytes
+	(*TrafficEvidencePeer)(nil),                // 9: komari.metrics.v1.TrafficEvidencePeer
+	(*TrafficEvidenceHour)(nil),                // 10: komari.metrics.v1.TrafficEvidenceHour
+	(*TrafficEvidenceIncident)(nil),            // 11: komari.metrics.v1.TrafficEvidenceIncident
+	(*SubmitTrafficEvidenceRequest)(nil),       // 12: komari.metrics.v1.SubmitTrafficEvidenceRequest
+	(*SubmitTrafficEvidenceResponse)(nil),      // 13: komari.metrics.v1.SubmitTrafficEvidenceResponse
+	(*ListTrafficEvidenceRequest)(nil),         // 14: komari.metrics.v1.ListTrafficEvidenceRequest
+	(*ListTrafficEvidenceResponse)(nil),        // 15: komari.metrics.v1.ListTrafficEvidenceResponse
+	(*GetTrafficEvidenceIncidentRequest)(nil),  // 16: komari.metrics.v1.GetTrafficEvidenceIncidentRequest
+	(*GetTrafficEvidenceIncidentResponse)(nil), // 17: komari.metrics.v1.GetTrafficEvidenceIncidentResponse
+	(*UploadMetricsRequest)(nil),               // 18: komari.metrics.v1.UploadMetricsRequest
+	(*UploadMetricsResponse)(nil),              // 19: komari.metrics.v1.UploadMetricsResponse
+	(*StreamMetricsRequest)(nil),               // 20: komari.metrics.v1.StreamMetricsRequest
+	(*StreamMetricsResponse)(nil),              // 21: komari.metrics.v1.StreamMetricsResponse
+	(*QueryMetricsRequest)(nil),                // 22: komari.metrics.v1.QueryMetricsRequest
+	(*QueryMetricsResponse)(nil),               // 23: komari.metrics.v1.QueryMetricsResponse
+	(*MetricsSeries)(nil),                      // 24: komari.metrics.v1.MetricsSeries
+	(*MetricsSourceSpan)(nil),                  // 25: komari.metrics.v1.MetricsSourceSpan
+	(*QueryPoint)(nil),                         // 26: komari.metrics.v1.QueryPoint
+	(*ListMetricDefinitionsRequest)(nil),       // 27: komari.metrics.v1.ListMetricDefinitionsRequest
+	(*ListMetricDefinitionsResponse)(nil),      // 28: komari.metrics.v1.ListMetricDefinitionsResponse
+	(*MetricDefinition)(nil),                   // 29: komari.metrics.v1.MetricDefinition
+	(*ListPingTasksRequest)(nil),               // 30: komari.metrics.v1.ListPingTasksRequest
+	(*ListPingTasksResponse)(nil),              // 31: komari.metrics.v1.ListPingTasksResponse
+	(*PingTask)(nil),                           // 32: komari.metrics.v1.PingTask
+	(*GetPingStatsRequest)(nil),                // 33: komari.metrics.v1.GetPingStatsRequest
+	(*GetPingStatsResponse)(nil),               // 34: komari.metrics.v1.GetPingStatsResponse
+	(*PingStat)(nil),                           // 35: komari.metrics.v1.PingStat
+	(*WatchMetricsRequest)(nil),                // 36: komari.metrics.v1.WatchMetricsRequest
+	(*WatchMetricsResponse)(nil),               // 37: komari.metrics.v1.WatchMetricsResponse
+	(*UpdateMetricDefinitionRequest)(nil),      // 38: komari.metrics.v1.UpdateMetricDefinitionRequest
+	(*UpdateMetricDefinitionResponse)(nil),     // 39: komari.metrics.v1.UpdateMetricDefinitionResponse
+	(*GetDownsamplingPolicyRequest)(nil),       // 40: komari.metrics.v1.GetDownsamplingPolicyRequest
+	(*GetDownsamplingPolicyResponse)(nil),      // 41: komari.metrics.v1.GetDownsamplingPolicyResponse
+	(*SetDownsamplingPolicyRequest)(nil),       // 42: komari.metrics.v1.SetDownsamplingPolicyRequest
+	(*SetDownsamplingPolicyResponse)(nil),      // 43: komari.metrics.v1.SetDownsamplingPolicyResponse
+	(*DownsamplingPolicy)(nil),                 // 44: komari.metrics.v1.DownsamplingPolicy
+	(*DownsamplingTier)(nil),                   // 45: komari.metrics.v1.DownsamplingTier
+	(*GetMetricMigrationStatusRequest)(nil),    // 46: komari.metrics.v1.GetMetricMigrationStatusRequest
+	(*GetMetricMigrationStatusResponse)(nil),   // 47: komari.metrics.v1.GetMetricMigrationStatusResponse
+	(*StartMetricMigrationRequest)(nil),        // 48: komari.metrics.v1.StartMetricMigrationRequest
+	(*StartMetricMigrationResponse)(nil),       // 49: komari.metrics.v1.StartMetricMigrationResponse
+	(*CancelMetricMigrationRequest)(nil),       // 50: komari.metrics.v1.CancelMetricMigrationRequest
+	(*CancelMetricMigrationResponse)(nil),      // 51: komari.metrics.v1.CancelMetricMigrationResponse
+	(*MetricMigration)(nil),                    // 52: komari.metrics.v1.MetricMigration
+	nil,                                        // 53: komari.metrics.v1.MetricsPoint.LabelsEntry
+	nil,                                        // 54: komari.metrics.v1.TrafficEvidenceHour.ServicesEntry
+	nil,                                        // 55: komari.metrics.v1.QueryMetricsRequest.TagsEntry
+	nil,                                        // 56: komari.metrics.v1.MetricsSeries.LabelsEntry
+	nil,                                        // 57: komari.metrics.v1.QueryPoint.LabelsEntry
+	nil,                                        // 58: komari.metrics.v1.MetricDefinition.MetadataEntry
+	nil,                                        // 59: komari.metrics.v1.PingStat.TagsEntry
+	(*timestamppb.Timestamp)(nil),              // 60: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),                // 61: google.protobuf.Duration
 }
 var file_komari_metrics_v1_metrics_proto_depIdxs = []int32{
-	49, // 0: komari.metrics.v1.MetricsPoint.observed_at:type_name -> google.protobuf.Timestamp
-	43, // 1: komari.metrics.v1.MetricsPoint.labels:type_name -> komari.metrics.v1.MetricsPoint.LabelsEntry
+	60, // 0: komari.metrics.v1.MetricsPoint.observed_at:type_name -> google.protobuf.Timestamp
+	53, // 1: komari.metrics.v1.MetricsPoint.labels:type_name -> komari.metrics.v1.MetricsPoint.LabelsEntry
 	1,  // 2: komari.metrics.v1.SubmitMetricsRequest.points:type_name -> komari.metrics.v1.MetricsPoint
-	49, // 3: komari.metrics.v1.TrafficSample.observed_at:type_name -> google.protobuf.Timestamp
-	49, // 4: komari.metrics.v1.TrafficSample.booted_at:type_name -> google.protobuf.Timestamp
+	60, // 3: komari.metrics.v1.TrafficSample.observed_at:type_name -> google.protobuf.Timestamp
+	60, // 4: komari.metrics.v1.TrafficSample.booted_at:type_name -> google.protobuf.Timestamp
 	4,  // 5: komari.metrics.v1.TrafficSample.interfaces:type_name -> komari.metrics.v1.TrafficInterfaceSample
-	49, // 6: komari.metrics.v1.TrafficSample.gap_started_at:type_name -> google.protobuf.Timestamp
+	60, // 6: komari.metrics.v1.TrafficSample.gap_started_at:type_name -> google.protobuf.Timestamp
 	5,  // 7: komari.metrics.v1.SubmitTrafficSamplesRequest.samples:type_name -> komari.metrics.v1.TrafficSample
-	2,  // 8: komari.metrics.v1.UploadMetricsRequest.batch:type_name -> komari.metrics.v1.SubmitMetricsRequest
-	2,  // 9: komari.metrics.v1.StreamMetricsRequest.batch:type_name -> komari.metrics.v1.SubmitMetricsRequest
-	49, // 10: komari.metrics.v1.QueryMetricsRequest.start_time:type_name -> google.protobuf.Timestamp
-	49, // 11: komari.metrics.v1.QueryMetricsRequest.end_time:type_name -> google.protobuf.Timestamp
-	44, // 12: komari.metrics.v1.QueryMetricsRequest.tags:type_name -> komari.metrics.v1.QueryMetricsRequest.TagsEntry
-	14, // 13: komari.metrics.v1.QueryMetricsResponse.series:type_name -> komari.metrics.v1.MetricsSeries
-	45, // 14: komari.metrics.v1.MetricsSeries.labels:type_name -> komari.metrics.v1.MetricsSeries.LabelsEntry
-	1,  // 15: komari.metrics.v1.MetricsSeries.points:type_name -> komari.metrics.v1.MetricsPoint
-	16, // 16: komari.metrics.v1.MetricsSeries.query_points:type_name -> komari.metrics.v1.QueryPoint
-	50, // 17: komari.metrics.v1.MetricsSeries.interval:type_name -> google.protobuf.Duration
-	50, // 18: komari.metrics.v1.MetricsSeries.requested_interval:type_name -> google.protobuf.Duration
-	49, // 19: komari.metrics.v1.MetricsSeries.coverage_start:type_name -> google.protobuf.Timestamp
-	49, // 20: komari.metrics.v1.MetricsSeries.coverage_end:type_name -> google.protobuf.Timestamp
-	15, // 21: komari.metrics.v1.MetricsSeries.sources:type_name -> komari.metrics.v1.MetricsSourceSpan
-	15, // 22: komari.metrics.v1.MetricsSeries.gaps:type_name -> komari.metrics.v1.MetricsSourceSpan
-	49, // 23: komari.metrics.v1.MetricsSourceSpan.start_time:type_name -> google.protobuf.Timestamp
-	49, // 24: komari.metrics.v1.MetricsSourceSpan.end_time:type_name -> google.protobuf.Timestamp
-	50, // 25: komari.metrics.v1.MetricsSourceSpan.source_interval:type_name -> google.protobuf.Duration
-	49, // 26: komari.metrics.v1.QueryPoint.observed_at:type_name -> google.protobuf.Timestamp
-	46, // 27: komari.metrics.v1.QueryPoint.labels:type_name -> komari.metrics.v1.QueryPoint.LabelsEntry
-	50, // 28: komari.metrics.v1.QueryPoint.source_interval:type_name -> google.protobuf.Duration
-	19, // 29: komari.metrics.v1.ListMetricDefinitionsResponse.definitions:type_name -> komari.metrics.v1.MetricDefinition
-	47, // 30: komari.metrics.v1.MetricDefinition.metadata:type_name -> komari.metrics.v1.MetricDefinition.MetadataEntry
-	49, // 31: komari.metrics.v1.MetricDefinition.created_at:type_name -> google.protobuf.Timestamp
-	49, // 32: komari.metrics.v1.MetricDefinition.updated_at:type_name -> google.protobuf.Timestamp
-	22, // 33: komari.metrics.v1.ListPingTasksResponse.tasks:type_name -> komari.metrics.v1.PingTask
-	50, // 34: komari.metrics.v1.PingTask.interval:type_name -> google.protobuf.Duration
-	49, // 35: komari.metrics.v1.GetPingStatsRequest.start_time:type_name -> google.protobuf.Timestamp
-	49, // 36: komari.metrics.v1.GetPingStatsRequest.end_time:type_name -> google.protobuf.Timestamp
-	49, // 37: komari.metrics.v1.GetPingStatsResponse.start_time:type_name -> google.protobuf.Timestamp
-	49, // 38: komari.metrics.v1.GetPingStatsResponse.end_time:type_name -> google.protobuf.Timestamp
-	50, // 39: komari.metrics.v1.GetPingStatsResponse.interval:type_name -> google.protobuf.Duration
-	25, // 40: komari.metrics.v1.GetPingStatsResponse.stats:type_name -> komari.metrics.v1.PingStat
-	50, // 41: komari.metrics.v1.PingStat.probe_interval:type_name -> google.protobuf.Duration
-	48, // 42: komari.metrics.v1.PingStat.tags:type_name -> komari.metrics.v1.PingStat.TagsEntry
-	50, // 43: komari.metrics.v1.WatchMetricsRequest.minimum_interval:type_name -> google.protobuf.Duration
-	1,  // 44: komari.metrics.v1.WatchMetricsResponse.point:type_name -> komari.metrics.v1.MetricsPoint
-	19, // 45: komari.metrics.v1.UpdateMetricDefinitionResponse.definition:type_name -> komari.metrics.v1.MetricDefinition
-	34, // 46: komari.metrics.v1.GetDownsamplingPolicyResponse.policy:type_name -> komari.metrics.v1.DownsamplingPolicy
-	34, // 47: komari.metrics.v1.SetDownsamplingPolicyResponse.policy:type_name -> komari.metrics.v1.DownsamplingPolicy
-	35, // 48: komari.metrics.v1.DownsamplingPolicy.tiers:type_name -> komari.metrics.v1.DownsamplingTier
-	42, // 49: komari.metrics.v1.GetMetricMigrationStatusResponse.migration:type_name -> komari.metrics.v1.MetricMigration
-	42, // 50: komari.metrics.v1.StartMetricMigrationResponse.migration:type_name -> komari.metrics.v1.MetricMigration
-	42, // 51: komari.metrics.v1.CancelMetricMigrationResponse.migration:type_name -> komari.metrics.v1.MetricMigration
-	0,  // 52: komari.metrics.v1.MetricMigration.state:type_name -> komari.metrics.v1.MetricMigrationState
-	49, // 53: komari.metrics.v1.MetricMigration.started_at:type_name -> google.protobuf.Timestamp
-	49, // 54: komari.metrics.v1.MetricMigration.finished_at:type_name -> google.protobuf.Timestamp
-	2,  // 55: komari.metrics.v1.MetricsService.SubmitMetrics:input_type -> komari.metrics.v1.SubmitMetricsRequest
-	6,  // 56: komari.metrics.v1.MetricsService.SubmitTrafficSamples:input_type -> komari.metrics.v1.SubmitTrafficSamplesRequest
-	8,  // 57: komari.metrics.v1.MetricsService.UploadMetrics:input_type -> komari.metrics.v1.UploadMetricsRequest
-	10, // 58: komari.metrics.v1.MetricsService.StreamMetrics:input_type -> komari.metrics.v1.StreamMetricsRequest
-	12, // 59: komari.metrics.v1.MetricsService.QueryMetrics:input_type -> komari.metrics.v1.QueryMetricsRequest
-	17, // 60: komari.metrics.v1.MetricsService.ListMetricDefinitions:input_type -> komari.metrics.v1.ListMetricDefinitionsRequest
-	20, // 61: komari.metrics.v1.MetricsService.ListPingTasks:input_type -> komari.metrics.v1.ListPingTasksRequest
-	23, // 62: komari.metrics.v1.MetricsService.GetPingStats:input_type -> komari.metrics.v1.GetPingStatsRequest
-	26, // 63: komari.metrics.v1.MetricsService.WatchMetrics:input_type -> komari.metrics.v1.WatchMetricsRequest
-	28, // 64: komari.metrics.v1.MetricsService.UpdateMetricDefinition:input_type -> komari.metrics.v1.UpdateMetricDefinitionRequest
-	30, // 65: komari.metrics.v1.MetricsService.GetDownsamplingPolicy:input_type -> komari.metrics.v1.GetDownsamplingPolicyRequest
-	32, // 66: komari.metrics.v1.MetricsService.SetDownsamplingPolicy:input_type -> komari.metrics.v1.SetDownsamplingPolicyRequest
-	36, // 67: komari.metrics.v1.MetricsService.GetMetricMigrationStatus:input_type -> komari.metrics.v1.GetMetricMigrationStatusRequest
-	38, // 68: komari.metrics.v1.MetricsService.StartMetricMigration:input_type -> komari.metrics.v1.StartMetricMigrationRequest
-	40, // 69: komari.metrics.v1.MetricsService.CancelMetricMigration:input_type -> komari.metrics.v1.CancelMetricMigrationRequest
-	3,  // 70: komari.metrics.v1.MetricsService.SubmitMetrics:output_type -> komari.metrics.v1.SubmitMetricsResponse
-	7,  // 71: komari.metrics.v1.MetricsService.SubmitTrafficSamples:output_type -> komari.metrics.v1.SubmitTrafficSamplesResponse
-	9,  // 72: komari.metrics.v1.MetricsService.UploadMetrics:output_type -> komari.metrics.v1.UploadMetricsResponse
-	11, // 73: komari.metrics.v1.MetricsService.StreamMetrics:output_type -> komari.metrics.v1.StreamMetricsResponse
-	13, // 74: komari.metrics.v1.MetricsService.QueryMetrics:output_type -> komari.metrics.v1.QueryMetricsResponse
-	18, // 75: komari.metrics.v1.MetricsService.ListMetricDefinitions:output_type -> komari.metrics.v1.ListMetricDefinitionsResponse
-	21, // 76: komari.metrics.v1.MetricsService.ListPingTasks:output_type -> komari.metrics.v1.ListPingTasksResponse
-	24, // 77: komari.metrics.v1.MetricsService.GetPingStats:output_type -> komari.metrics.v1.GetPingStatsResponse
-	27, // 78: komari.metrics.v1.MetricsService.WatchMetrics:output_type -> komari.metrics.v1.WatchMetricsResponse
-	29, // 79: komari.metrics.v1.MetricsService.UpdateMetricDefinition:output_type -> komari.metrics.v1.UpdateMetricDefinitionResponse
-	31, // 80: komari.metrics.v1.MetricsService.GetDownsamplingPolicy:output_type -> komari.metrics.v1.GetDownsamplingPolicyResponse
-	33, // 81: komari.metrics.v1.MetricsService.SetDownsamplingPolicy:output_type -> komari.metrics.v1.SetDownsamplingPolicyResponse
-	37, // 82: komari.metrics.v1.MetricsService.GetMetricMigrationStatus:output_type -> komari.metrics.v1.GetMetricMigrationStatusResponse
-	39, // 83: komari.metrics.v1.MetricsService.StartMetricMigration:output_type -> komari.metrics.v1.StartMetricMigrationResponse
-	41, // 84: komari.metrics.v1.MetricsService.CancelMetricMigration:output_type -> komari.metrics.v1.CancelMetricMigrationResponse
-	70, // [70:85] is the sub-list for method output_type
-	55, // [55:70] is the sub-list for method input_type
-	55, // [55:55] is the sub-list for extension type_name
-	55, // [55:55] is the sub-list for extension extendee
-	0,  // [0:55] is the sub-list for field type_name
+	60, // 8: komari.metrics.v1.TrafficEvidenceHour.hour_utc:type_name -> google.protobuf.Timestamp
+	60, // 9: komari.metrics.v1.TrafficEvidenceHour.through:type_name -> google.protobuf.Timestamp
+	8,  // 10: komari.metrics.v1.TrafficEvidenceHour.observed:type_name -> komari.metrics.v1.TrafficEvidenceBytes
+	54, // 11: komari.metrics.v1.TrafficEvidenceHour.services:type_name -> komari.metrics.v1.TrafficEvidenceHour.ServicesEntry
+	8,  // 12: komari.metrics.v1.TrafficEvidenceHour.unexplained:type_name -> komari.metrics.v1.TrafficEvidenceBytes
+	60, // 13: komari.metrics.v1.TrafficEvidenceIncident.triggered_at:type_name -> google.protobuf.Timestamp
+	60, // 14: komari.metrics.v1.TrafficEvidenceIncident.start:type_name -> google.protobuf.Timestamp
+	60, // 15: komari.metrics.v1.TrafficEvidenceIncident.end:type_name -> google.protobuf.Timestamp
+	60, // 16: komari.metrics.v1.TrafficEvidenceIncident.first_packet_at:type_name -> google.protobuf.Timestamp
+	60, // 17: komari.metrics.v1.TrafficEvidenceIncident.last_packet_at:type_name -> google.protobuf.Timestamp
+	8,  // 18: komari.metrics.v1.TrafficEvidenceIncident.observed:type_name -> komari.metrics.v1.TrafficEvidenceBytes
+	8,  // 19: komari.metrics.v1.TrafficEvidenceIncident.trigger_unexplained:type_name -> komari.metrics.v1.TrafficEvidenceBytes
+	9,  // 20: komari.metrics.v1.TrafficEvidenceIncident.ingress_sources:type_name -> komari.metrics.v1.TrafficEvidencePeer
+	9,  // 21: komari.metrics.v1.TrafficEvidenceIncident.egress_destinations:type_name -> komari.metrics.v1.TrafficEvidencePeer
+	8,  // 22: komari.metrics.v1.TrafficEvidenceIncident.other:type_name -> komari.metrics.v1.TrafficEvidenceBytes
+	10, // 23: komari.metrics.v1.SubmitTrafficEvidenceRequest.hour:type_name -> komari.metrics.v1.TrafficEvidenceHour
+	11, // 24: komari.metrics.v1.SubmitTrafficEvidenceRequest.incident:type_name -> komari.metrics.v1.TrafficEvidenceIncident
+	10, // 25: komari.metrics.v1.ListTrafficEvidenceResponse.hours:type_name -> komari.metrics.v1.TrafficEvidenceHour
+	11, // 26: komari.metrics.v1.ListTrafficEvidenceResponse.incidents:type_name -> komari.metrics.v1.TrafficEvidenceIncident
+	11, // 27: komari.metrics.v1.GetTrafficEvidenceIncidentResponse.incident:type_name -> komari.metrics.v1.TrafficEvidenceIncident
+	2,  // 28: komari.metrics.v1.UploadMetricsRequest.batch:type_name -> komari.metrics.v1.SubmitMetricsRequest
+	2,  // 29: komari.metrics.v1.StreamMetricsRequest.batch:type_name -> komari.metrics.v1.SubmitMetricsRequest
+	60, // 30: komari.metrics.v1.QueryMetricsRequest.start_time:type_name -> google.protobuf.Timestamp
+	60, // 31: komari.metrics.v1.QueryMetricsRequest.end_time:type_name -> google.protobuf.Timestamp
+	55, // 32: komari.metrics.v1.QueryMetricsRequest.tags:type_name -> komari.metrics.v1.QueryMetricsRequest.TagsEntry
+	24, // 33: komari.metrics.v1.QueryMetricsResponse.series:type_name -> komari.metrics.v1.MetricsSeries
+	56, // 34: komari.metrics.v1.MetricsSeries.labels:type_name -> komari.metrics.v1.MetricsSeries.LabelsEntry
+	1,  // 35: komari.metrics.v1.MetricsSeries.points:type_name -> komari.metrics.v1.MetricsPoint
+	26, // 36: komari.metrics.v1.MetricsSeries.query_points:type_name -> komari.metrics.v1.QueryPoint
+	61, // 37: komari.metrics.v1.MetricsSeries.interval:type_name -> google.protobuf.Duration
+	61, // 38: komari.metrics.v1.MetricsSeries.requested_interval:type_name -> google.protobuf.Duration
+	60, // 39: komari.metrics.v1.MetricsSeries.coverage_start:type_name -> google.protobuf.Timestamp
+	60, // 40: komari.metrics.v1.MetricsSeries.coverage_end:type_name -> google.protobuf.Timestamp
+	25, // 41: komari.metrics.v1.MetricsSeries.sources:type_name -> komari.metrics.v1.MetricsSourceSpan
+	25, // 42: komari.metrics.v1.MetricsSeries.gaps:type_name -> komari.metrics.v1.MetricsSourceSpan
+	60, // 43: komari.metrics.v1.MetricsSourceSpan.start_time:type_name -> google.protobuf.Timestamp
+	60, // 44: komari.metrics.v1.MetricsSourceSpan.end_time:type_name -> google.protobuf.Timestamp
+	61, // 45: komari.metrics.v1.MetricsSourceSpan.source_interval:type_name -> google.protobuf.Duration
+	60, // 46: komari.metrics.v1.QueryPoint.observed_at:type_name -> google.protobuf.Timestamp
+	57, // 47: komari.metrics.v1.QueryPoint.labels:type_name -> komari.metrics.v1.QueryPoint.LabelsEntry
+	61, // 48: komari.metrics.v1.QueryPoint.source_interval:type_name -> google.protobuf.Duration
+	29, // 49: komari.metrics.v1.ListMetricDefinitionsResponse.definitions:type_name -> komari.metrics.v1.MetricDefinition
+	58, // 50: komari.metrics.v1.MetricDefinition.metadata:type_name -> komari.metrics.v1.MetricDefinition.MetadataEntry
+	60, // 51: komari.metrics.v1.MetricDefinition.created_at:type_name -> google.protobuf.Timestamp
+	60, // 52: komari.metrics.v1.MetricDefinition.updated_at:type_name -> google.protobuf.Timestamp
+	32, // 53: komari.metrics.v1.ListPingTasksResponse.tasks:type_name -> komari.metrics.v1.PingTask
+	61, // 54: komari.metrics.v1.PingTask.interval:type_name -> google.protobuf.Duration
+	60, // 55: komari.metrics.v1.GetPingStatsRequest.start_time:type_name -> google.protobuf.Timestamp
+	60, // 56: komari.metrics.v1.GetPingStatsRequest.end_time:type_name -> google.protobuf.Timestamp
+	60, // 57: komari.metrics.v1.GetPingStatsResponse.start_time:type_name -> google.protobuf.Timestamp
+	60, // 58: komari.metrics.v1.GetPingStatsResponse.end_time:type_name -> google.protobuf.Timestamp
+	61, // 59: komari.metrics.v1.GetPingStatsResponse.interval:type_name -> google.protobuf.Duration
+	35, // 60: komari.metrics.v1.GetPingStatsResponse.stats:type_name -> komari.metrics.v1.PingStat
+	61, // 61: komari.metrics.v1.PingStat.probe_interval:type_name -> google.protobuf.Duration
+	59, // 62: komari.metrics.v1.PingStat.tags:type_name -> komari.metrics.v1.PingStat.TagsEntry
+	61, // 63: komari.metrics.v1.WatchMetricsRequest.minimum_interval:type_name -> google.protobuf.Duration
+	1,  // 64: komari.metrics.v1.WatchMetricsResponse.point:type_name -> komari.metrics.v1.MetricsPoint
+	29, // 65: komari.metrics.v1.UpdateMetricDefinitionResponse.definition:type_name -> komari.metrics.v1.MetricDefinition
+	44, // 66: komari.metrics.v1.GetDownsamplingPolicyResponse.policy:type_name -> komari.metrics.v1.DownsamplingPolicy
+	44, // 67: komari.metrics.v1.SetDownsamplingPolicyResponse.policy:type_name -> komari.metrics.v1.DownsamplingPolicy
+	45, // 68: komari.metrics.v1.DownsamplingPolicy.tiers:type_name -> komari.metrics.v1.DownsamplingTier
+	52, // 69: komari.metrics.v1.GetMetricMigrationStatusResponse.migration:type_name -> komari.metrics.v1.MetricMigration
+	52, // 70: komari.metrics.v1.StartMetricMigrationResponse.migration:type_name -> komari.metrics.v1.MetricMigration
+	52, // 71: komari.metrics.v1.CancelMetricMigrationResponse.migration:type_name -> komari.metrics.v1.MetricMigration
+	0,  // 72: komari.metrics.v1.MetricMigration.state:type_name -> komari.metrics.v1.MetricMigrationState
+	60, // 73: komari.metrics.v1.MetricMigration.started_at:type_name -> google.protobuf.Timestamp
+	60, // 74: komari.metrics.v1.MetricMigration.finished_at:type_name -> google.protobuf.Timestamp
+	8,  // 75: komari.metrics.v1.TrafficEvidenceHour.ServicesEntry.value:type_name -> komari.metrics.v1.TrafficEvidenceBytes
+	2,  // 76: komari.metrics.v1.MetricsService.SubmitMetrics:input_type -> komari.metrics.v1.SubmitMetricsRequest
+	6,  // 77: komari.metrics.v1.MetricsService.SubmitTrafficSamples:input_type -> komari.metrics.v1.SubmitTrafficSamplesRequest
+	12, // 78: komari.metrics.v1.MetricsService.SubmitTrafficEvidence:input_type -> komari.metrics.v1.SubmitTrafficEvidenceRequest
+	14, // 79: komari.metrics.v1.MetricsService.ListTrafficEvidence:input_type -> komari.metrics.v1.ListTrafficEvidenceRequest
+	16, // 80: komari.metrics.v1.MetricsService.GetTrafficEvidenceIncident:input_type -> komari.metrics.v1.GetTrafficEvidenceIncidentRequest
+	18, // 81: komari.metrics.v1.MetricsService.UploadMetrics:input_type -> komari.metrics.v1.UploadMetricsRequest
+	20, // 82: komari.metrics.v1.MetricsService.StreamMetrics:input_type -> komari.metrics.v1.StreamMetricsRequest
+	22, // 83: komari.metrics.v1.MetricsService.QueryMetrics:input_type -> komari.metrics.v1.QueryMetricsRequest
+	27, // 84: komari.metrics.v1.MetricsService.ListMetricDefinitions:input_type -> komari.metrics.v1.ListMetricDefinitionsRequest
+	30, // 85: komari.metrics.v1.MetricsService.ListPingTasks:input_type -> komari.metrics.v1.ListPingTasksRequest
+	33, // 86: komari.metrics.v1.MetricsService.GetPingStats:input_type -> komari.metrics.v1.GetPingStatsRequest
+	36, // 87: komari.metrics.v1.MetricsService.WatchMetrics:input_type -> komari.metrics.v1.WatchMetricsRequest
+	38, // 88: komari.metrics.v1.MetricsService.UpdateMetricDefinition:input_type -> komari.metrics.v1.UpdateMetricDefinitionRequest
+	40, // 89: komari.metrics.v1.MetricsService.GetDownsamplingPolicy:input_type -> komari.metrics.v1.GetDownsamplingPolicyRequest
+	42, // 90: komari.metrics.v1.MetricsService.SetDownsamplingPolicy:input_type -> komari.metrics.v1.SetDownsamplingPolicyRequest
+	46, // 91: komari.metrics.v1.MetricsService.GetMetricMigrationStatus:input_type -> komari.metrics.v1.GetMetricMigrationStatusRequest
+	48, // 92: komari.metrics.v1.MetricsService.StartMetricMigration:input_type -> komari.metrics.v1.StartMetricMigrationRequest
+	50, // 93: komari.metrics.v1.MetricsService.CancelMetricMigration:input_type -> komari.metrics.v1.CancelMetricMigrationRequest
+	3,  // 94: komari.metrics.v1.MetricsService.SubmitMetrics:output_type -> komari.metrics.v1.SubmitMetricsResponse
+	7,  // 95: komari.metrics.v1.MetricsService.SubmitTrafficSamples:output_type -> komari.metrics.v1.SubmitTrafficSamplesResponse
+	13, // 96: komari.metrics.v1.MetricsService.SubmitTrafficEvidence:output_type -> komari.metrics.v1.SubmitTrafficEvidenceResponse
+	15, // 97: komari.metrics.v1.MetricsService.ListTrafficEvidence:output_type -> komari.metrics.v1.ListTrafficEvidenceResponse
+	17, // 98: komari.metrics.v1.MetricsService.GetTrafficEvidenceIncident:output_type -> komari.metrics.v1.GetTrafficEvidenceIncidentResponse
+	19, // 99: komari.metrics.v1.MetricsService.UploadMetrics:output_type -> komari.metrics.v1.UploadMetricsResponse
+	21, // 100: komari.metrics.v1.MetricsService.StreamMetrics:output_type -> komari.metrics.v1.StreamMetricsResponse
+	23, // 101: komari.metrics.v1.MetricsService.QueryMetrics:output_type -> komari.metrics.v1.QueryMetricsResponse
+	28, // 102: komari.metrics.v1.MetricsService.ListMetricDefinitions:output_type -> komari.metrics.v1.ListMetricDefinitionsResponse
+	31, // 103: komari.metrics.v1.MetricsService.ListPingTasks:output_type -> komari.metrics.v1.ListPingTasksResponse
+	34, // 104: komari.metrics.v1.MetricsService.GetPingStats:output_type -> komari.metrics.v1.GetPingStatsResponse
+	37, // 105: komari.metrics.v1.MetricsService.WatchMetrics:output_type -> komari.metrics.v1.WatchMetricsResponse
+	39, // 106: komari.metrics.v1.MetricsService.UpdateMetricDefinition:output_type -> komari.metrics.v1.UpdateMetricDefinitionResponse
+	41, // 107: komari.metrics.v1.MetricsService.GetDownsamplingPolicy:output_type -> komari.metrics.v1.GetDownsamplingPolicyResponse
+	43, // 108: komari.metrics.v1.MetricsService.SetDownsamplingPolicy:output_type -> komari.metrics.v1.SetDownsamplingPolicyResponse
+	47, // 109: komari.metrics.v1.MetricsService.GetMetricMigrationStatus:output_type -> komari.metrics.v1.GetMetricMigrationStatusResponse
+	49, // 110: komari.metrics.v1.MetricsService.StartMetricMigration:output_type -> komari.metrics.v1.StartMetricMigrationResponse
+	51, // 111: komari.metrics.v1.MetricsService.CancelMetricMigration:output_type -> komari.metrics.v1.CancelMetricMigrationResponse
+	94, // [94:112] is the sub-list for method output_type
+	76, // [76:94] is the sub-list for method input_type
+	76, // [76:76] is the sub-list for extension type_name
+	76, // [76:76] is the sub-list for extension extendee
+	0,  // [0:76] is the sub-list for field type_name
 }
 
 func init() { file_komari_metrics_v1_metrics_proto_init() }
@@ -3649,17 +4550,21 @@ func file_komari_metrics_v1_metrics_proto_init() {
 	if File_komari_metrics_v1_metrics_proto != nil {
 		return
 	}
-	file_komari_metrics_v1_metrics_proto_msgTypes[11].OneofWrappers = []any{}
-	file_komari_metrics_v1_metrics_proto_msgTypes[15].OneofWrappers = []any{}
-	file_komari_metrics_v1_metrics_proto_msgTypes[24].OneofWrappers = []any{}
-	file_komari_metrics_v1_metrics_proto_msgTypes[41].OneofWrappers = []any{}
+	file_komari_metrics_v1_metrics_proto_msgTypes[11].OneofWrappers = []any{
+		(*SubmitTrafficEvidenceRequest_Hour)(nil),
+		(*SubmitTrafficEvidenceRequest_Incident)(nil),
+	}
+	file_komari_metrics_v1_metrics_proto_msgTypes[21].OneofWrappers = []any{}
+	file_komari_metrics_v1_metrics_proto_msgTypes[25].OneofWrappers = []any{}
+	file_komari_metrics_v1_metrics_proto_msgTypes[34].OneofWrappers = []any{}
+	file_komari_metrics_v1_metrics_proto_msgTypes[51].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_komari_metrics_v1_metrics_proto_rawDesc), len(file_komari_metrics_v1_metrics_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   48,
+			NumMessages:   59,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
