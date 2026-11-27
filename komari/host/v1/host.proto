@@ -28,6 +28,7 @@ enum HostAction {
   HOST_ACTION_SET_SERVICE_IDENTITY = 1;
   HOST_ACTION_INSTALL_RESCUE_HELPER = 2;
   HOST_ACTION_REMOVE_RESCUE_HELPER = 3;
+  HOST_ACTION_ENABLE_ROOT_EXECUTION = 4;
 }
 
 // HostOperationPhase is host progress, independent of panel approval.
