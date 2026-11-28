@@ -11,5 +11,14 @@
   },
   "peerDependencies": {
     "@bufbuild/protobuf": "^2.10.0"
+  },
+  "packageManager": "npm@11.19.0",
+  "scripts": {
+    "test": "npm run check:types && node --test tests/privileged-hash.test.mjs",
+    "check:types": "tsc -p tsconfig.validation.json"
+  },
+  "devDependencies": {
+    "@bufbuild/protobuf": "2.10.0",
+    "typescript": "5.8.3"
   }
 }
