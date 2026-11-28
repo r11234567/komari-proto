@@ -237,6 +237,8 @@ enum ExpiryMechanism {
   // Helper reconciliation against a persisted deadline only. Always armed as
   // a backstop, and the sole mechanism when neither of the above exists.
   EXPIRY_MECHANISM_HELPER_RECONCILE = 3;
+  // Kernel-enforced ipset entry timeout. Survives helper restarts.
+  EXPIRY_MECHANISM_IPSET_TIMEOUT = 4;
 }
 
 // RescueAction is deliberately bounded; the helper never exposes an arbitrary shell.
