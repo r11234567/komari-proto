@@ -29,6 +29,8 @@ encode as lowercase hexadecimal:
    when unspecified. Reject invalid enum values before hashing.
 4. Only when root_execution_allowed is true, append the UTF-8 bytes
    `root_execution_allowed` preceded by a zero byte and followed by byte 1.
+5. Only when traffic_monitoring_enabled is true, append the UTF-8 bytes
+   `traffic_monitoring_enabled` preceded by a zero byte and followed by byte 1.
    False or absent appends nothing, preserving existing approved hashes.
 
 The same testdata/privileged-settings-v1.json vectors apply to Go and TS. Hashing

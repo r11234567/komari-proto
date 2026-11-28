@@ -16,10 +16,11 @@ func TestPrivilegedSettingsHashVectors(t *testing.T) {
 		t.Fatal(err)
 	}
 	var vectors []struct {
-		Booleans             [5]byte `json:"booleans"`
-		Mode                 uint32  `json:"required_privilege_mode"`
-		RootExecutionAllowed bool    `json:"root_execution_allowed"`
-		Hash                 string  `json:"sha256"`
+		Booleans                 [5]byte `json:"booleans"`
+		Mode                     uint32  `json:"required_privilege_mode"`
+		RootExecutionAllowed     bool    `json:"root_execution_allowed"`
+		TrafficMonitoringEnabled bool    `json:"traffic_monitoring_enabled"`
+		Hash                     string  `json:"sha256"`
 	}
 	if err := json.Unmarshal(data, &vectors); err != nil {
 		t.Fatal(err)
@@ -31,6 +32,9 @@ func TestPrivilegedSettingsHashVectors(t *testing.T) {
 		if v.RootExecutionAllowed {
 			sawRoot = true
 			payload = append(payload, "\x00root_execution_allowed\x01"...)
+		}
+		if v.TrafficMonitoringEnabled {
+			payload = append(payload, "\x00traffic_monitoring_enabled\x01"...)
 		}
 		hash := sha256.Sum256(payload)
 		if got := hex.EncodeToString(hash[:]); got != v.Hash {

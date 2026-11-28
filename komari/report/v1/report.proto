@@ -163,6 +163,25 @@ message AgentCapabilities {
   repeated uint32 supported_runtime_fields = 14;
   // Reports both approved permission and actual ability to start UID-0 children.
   CapabilityState root_execution = 15;
+  TrafficMonitoringStatus traffic_monitoring = 16;
+}
+
+// TrafficMonitoringStatus reports the managed collector separately from the
+// signed configuration receipt. Presence advertises Linux support.
+message TrafficMonitoringStatus {
+  TrafficMonitoringState state = 1;
+  string interface_name = 2;
+}
+
+enum TrafficMonitoringState {
+  TRAFFIC_MONITORING_STATE_UNSPECIFIED = 0;
+  TRAFFIC_MONITORING_STATE_DISABLED = 1;
+  TRAFFIC_MONITORING_STATE_REQUIRES_ROOT = 2;
+  TRAFFIC_MONITORING_STATE_STARTING = 3;
+  TRAFFIC_MONITORING_STATE_RUNNING = 4;
+  TRAFFIC_MONITORING_STATE_NO_DEFAULT_INTERFACE = 5;
+  TRAFFIC_MONITORING_STATE_CAPTURE_UNAVAILABLE = 6;
+  TRAFFIC_MONITORING_STATE_MANUAL = 7;
 }
 
 // CapabilityState describes whether a feature is available and why it is limited.

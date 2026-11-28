@@ -4,6 +4,7 @@ package komari.metrics.v1;
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+import "komari/report/v1/report.proto";
 
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/metrics/v1;metricsv1";
 
@@ -172,6 +173,9 @@ message ListTrafficEvidenceRequest {
 message ListTrafficEvidenceResponse {
   repeated TrafficEvidenceHour hours = 1;
   repeated TrafficEvidenceIncident incidents = 2;
+  komari.report.v1.TrafficMonitoringStatus monitoring = 3;
+  bool monitoring_enabled = 4;
+  bool agent_online = 5;
 }
 
 message GetTrafficEvidenceIncidentRequest {
