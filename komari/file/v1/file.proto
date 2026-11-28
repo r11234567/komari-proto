@@ -95,6 +95,8 @@ enum FileOperation {
   FILE_OPERATION_UPLOAD_COMMIT = 14;
   // FILE_OPERATION_UPLOAD_CANCEL aborts one chunked upload and cleans up state.
   FILE_OPERATION_UPLOAD_CANCEL = 15;
+  // FILE_OPERATION_REPLACE replaces a small file if its content hash still matches.
+  FILE_OPERATION_REPLACE = 16;
 }
 
 // FileEntry is one directory entry or path metadata record.
@@ -418,9 +420,19 @@ message FileAssignment {
     FileUploadStreamPayload upload_stream = 33;
     FileUploadCommitPayload upload_commit = 34;
     FileUploadCancelPayload upload_cancel = 35;
+    FileReplacePayload replace = 37;
   }
   // The signed body is a FileAssignment with envelope omitted.
   komari.security.v1.SignedEnvelope envelope = 36;
+}
+
+// FileReplacePayload replaces an existing regular file in its workspace.
+message FileReplacePayload {
+  string path = 1;
+  // content is the entire replacement, including a possible empty file.
+  bytes content = 2;
+  // expected_sha256 is the 32-byte digest of the bytes originally read.
+  bytes expected_sha256 = 3;
 }
 
 // FileListPayload lists one directory path.
