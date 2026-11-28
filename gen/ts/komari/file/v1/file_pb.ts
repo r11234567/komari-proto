@@ -2084,10 +2084,8 @@ export const FileOperationSchema: GenEnum<FileOperation> = /*@__PURE__*/
 
 /**
  * FileService owns administrator-facing remote file management for one agent.
- * 
- * The control plane carries metadata and mutations. File contents are not
- * carried here: downloads, uploads, and previews travel over the binary HTTP
- * data plane so browsers can use ordinary URLs and streaming transfers.
+ * Bulk downloads, uploads and previews use the binary HTTP data plane.
+ * Conditional editor saves may carry a bounded replacement with their content digest.
  *
  * @generated from service komari.file.v1.FileService
  */
