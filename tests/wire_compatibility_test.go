@@ -201,8 +201,14 @@ func TestP3CProtocolCleanup_Descriptors(t *testing.T) {
 		t.Fatal("expected FileAssignment.arguments to be marked deprecated")
 	}
 	payloadOneof := assignDesc.Oneofs().ByName("payload")
-	if payloadOneof == nil || payloadOneof.Fields().Len() != 15 {
-		t.Fatalf("expected FileAssignment.payload oneof with 15 typed branches, got %v", payloadOneof)
+	if payloadOneof == nil || payloadOneof.Fields().Len() != 16 {
+		t.Fatalf("expected FileAssignment.payload oneof with 16 typed branches, got %v", payloadOneof)
+	}
+	if replace := payloadOneof.Fields().ByName("replace"); replace == nil || replace.Number() != 37 || replace.Message().Name() != "FileReplacePayload" {
+		t.Fatal("expected conditional replacement at FileAssignment payload tag 37")
+	}
+	if operation := filev1.FileOperation_FILE_OPERATION_REPLACE; operation.Number() != 16 {
+		t.Fatalf("unexpected replacement operation number %d", operation.Number())
 	}
 	leaseRespDesc := (&filev1.LeaseFileOperationsResponse{}).ProtoReflect().Descriptor()
 	if hb := leaseRespDesc.Fields().ByName("heartbeat"); hb == nil || hb.Kind() != protoreflect.BoolKind {
