@@ -45,9 +45,15 @@ const (
 	// MetricsServiceListTrafficEvidenceProcedure is the fully-qualified name of the MetricsService's
 	// ListTrafficEvidence RPC.
 	MetricsServiceListTrafficEvidenceProcedure = "/komari.metrics.v1.MetricsService/ListTrafficEvidence"
+	// MetricsServiceGetTrafficEvidenceOverviewProcedure is the fully-qualified name of the
+	// MetricsService's GetTrafficEvidenceOverview RPC.
+	MetricsServiceGetTrafficEvidenceOverviewProcedure = "/komari.metrics.v1.MetricsService/GetTrafficEvidenceOverview"
 	// MetricsServiceGetTrafficEvidenceIncidentProcedure is the fully-qualified name of the
 	// MetricsService's GetTrafficEvidenceIncident RPC.
 	MetricsServiceGetTrafficEvidenceIncidentProcedure = "/komari.metrics.v1.MetricsService/GetTrafficEvidenceIncident"
+	// MetricsServiceMarkTrafficEvidenceReadProcedure is the fully-qualified name of the
+	// MetricsService's MarkTrafficEvidenceRead RPC.
+	MetricsServiceMarkTrafficEvidenceReadProcedure = "/komari.metrics.v1.MetricsService/MarkTrafficEvidenceRead"
 	// MetricsServiceUploadMetricsProcedure is the fully-qualified name of the MetricsService's
 	// UploadMetrics RPC.
 	MetricsServiceUploadMetricsProcedure = "/komari.metrics.v1.MetricsService/UploadMetrics"
@@ -100,7 +106,9 @@ type MetricsServiceClient interface {
 	SubmitTrafficEvidence(context.Context, *connect.Request[v1.SubmitTrafficEvidenceRequest]) (*connect.Response[v1.SubmitTrafficEvidenceResponse], error)
 	// Administrative browser-session reads. List responses omit peer addresses.
 	ListTrafficEvidence(context.Context, *connect.Request[v1.ListTrafficEvidenceRequest]) (*connect.Response[v1.ListTrafficEvidenceResponse], error)
+	GetTrafficEvidenceOverview(context.Context, *connect.Request[v1.GetTrafficEvidenceOverviewRequest]) (*connect.Response[v1.GetTrafficEvidenceOverviewResponse], error)
 	GetTrafficEvidenceIncident(context.Context, *connect.Request[v1.GetTrafficEvidenceIncidentRequest]) (*connect.Response[v1.GetTrafficEvidenceIncidentResponse], error)
+	MarkTrafficEvidenceRead(context.Context, *connect.Request[v1.MarkTrafficEvidenceReadRequest]) (*connect.Response[v1.MarkTrafficEvidenceReadResponse], error)
 	// UploadMetrics is deprecated. Use unary SubmitMetrics instead.
 	//
 	// Deprecated: do not use.
@@ -165,11 +173,25 @@ func NewMetricsServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		getTrafficEvidenceOverview: connect.NewClient[v1.GetTrafficEvidenceOverviewRequest, v1.GetTrafficEvidenceOverviewResponse](
+			httpClient,
+			baseURL+MetricsServiceGetTrafficEvidenceOverviewProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("GetTrafficEvidenceOverview")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 		getTrafficEvidenceIncident: connect.NewClient[v1.GetTrafficEvidenceIncidentRequest, v1.GetTrafficEvidenceIncidentResponse](
 			httpClient,
 			baseURL+MetricsServiceGetTrafficEvidenceIncidentProcedure,
 			connect.WithSchema(metricsServiceMethods.ByName("GetTrafficEvidenceIncident")),
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		markTrafficEvidenceRead: connect.NewClient[v1.MarkTrafficEvidenceReadRequest, v1.MarkTrafficEvidenceReadResponse](
+			httpClient,
+			baseURL+MetricsServiceMarkTrafficEvidenceReadProcedure,
+			connect.WithSchema(metricsServiceMethods.ByName("MarkTrafficEvidenceRead")),
+			connect.WithIdempotency(connect.IdempotencyIdempotent),
 			connect.WithClientOptions(opts...),
 		),
 		uploadMetrics: connect.NewClient[v1.UploadMetricsRequest, v1.UploadMetricsResponse](
@@ -265,7 +287,9 @@ type metricsServiceClient struct {
 	submitTrafficSamples       *connect.Client[v1.SubmitTrafficSamplesRequest, v1.SubmitTrafficSamplesResponse]
 	submitTrafficEvidence      *connect.Client[v1.SubmitTrafficEvidenceRequest, v1.SubmitTrafficEvidenceResponse]
 	listTrafficEvidence        *connect.Client[v1.ListTrafficEvidenceRequest, v1.ListTrafficEvidenceResponse]
+	getTrafficEvidenceOverview *connect.Client[v1.GetTrafficEvidenceOverviewRequest, v1.GetTrafficEvidenceOverviewResponse]
 	getTrafficEvidenceIncident *connect.Client[v1.GetTrafficEvidenceIncidentRequest, v1.GetTrafficEvidenceIncidentResponse]
+	markTrafficEvidenceRead    *connect.Client[v1.MarkTrafficEvidenceReadRequest, v1.MarkTrafficEvidenceReadResponse]
 	uploadMetrics              *connect.Client[v1.UploadMetricsRequest, v1.UploadMetricsResponse]
 	streamMetrics              *connect.Client[v1.StreamMetricsRequest, v1.StreamMetricsResponse]
 	queryMetrics               *connect.Client[v1.QueryMetricsRequest, v1.QueryMetricsResponse]
@@ -301,9 +325,19 @@ func (c *metricsServiceClient) ListTrafficEvidence(ctx context.Context, req *con
 	return c.listTrafficEvidence.CallUnary(ctx, req)
 }
 
+// GetTrafficEvidenceOverview calls komari.metrics.v1.MetricsService.GetTrafficEvidenceOverview.
+func (c *metricsServiceClient) GetTrafficEvidenceOverview(ctx context.Context, req *connect.Request[v1.GetTrafficEvidenceOverviewRequest]) (*connect.Response[v1.GetTrafficEvidenceOverviewResponse], error) {
+	return c.getTrafficEvidenceOverview.CallUnary(ctx, req)
+}
+
 // GetTrafficEvidenceIncident calls komari.metrics.v1.MetricsService.GetTrafficEvidenceIncident.
 func (c *metricsServiceClient) GetTrafficEvidenceIncident(ctx context.Context, req *connect.Request[v1.GetTrafficEvidenceIncidentRequest]) (*connect.Response[v1.GetTrafficEvidenceIncidentResponse], error) {
 	return c.getTrafficEvidenceIncident.CallUnary(ctx, req)
+}
+
+// MarkTrafficEvidenceRead calls komari.metrics.v1.MetricsService.MarkTrafficEvidenceRead.
+func (c *metricsServiceClient) MarkTrafficEvidenceRead(ctx context.Context, req *connect.Request[v1.MarkTrafficEvidenceReadRequest]) (*connect.Response[v1.MarkTrafficEvidenceReadResponse], error) {
+	return c.markTrafficEvidenceRead.CallUnary(ctx, req)
 }
 
 // UploadMetrics calls komari.metrics.v1.MetricsService.UploadMetrics.
@@ -386,7 +420,9 @@ type MetricsServiceHandler interface {
 	SubmitTrafficEvidence(context.Context, *connect.Request[v1.SubmitTrafficEvidenceRequest]) (*connect.Response[v1.SubmitTrafficEvidenceResponse], error)
 	// Administrative browser-session reads. List responses omit peer addresses.
 	ListTrafficEvidence(context.Context, *connect.Request[v1.ListTrafficEvidenceRequest]) (*connect.Response[v1.ListTrafficEvidenceResponse], error)
+	GetTrafficEvidenceOverview(context.Context, *connect.Request[v1.GetTrafficEvidenceOverviewRequest]) (*connect.Response[v1.GetTrafficEvidenceOverviewResponse], error)
 	GetTrafficEvidenceIncident(context.Context, *connect.Request[v1.GetTrafficEvidenceIncidentRequest]) (*connect.Response[v1.GetTrafficEvidenceIncidentResponse], error)
+	MarkTrafficEvidenceRead(context.Context, *connect.Request[v1.MarkTrafficEvidenceReadRequest]) (*connect.Response[v1.MarkTrafficEvidenceReadResponse], error)
 	// UploadMetrics is deprecated. Use unary SubmitMetrics instead.
 	//
 	// Deprecated: do not use.
@@ -447,11 +483,25 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	metricsServiceGetTrafficEvidenceOverviewHandler := connect.NewUnaryHandler(
+		MetricsServiceGetTrafficEvidenceOverviewProcedure,
+		svc.GetTrafficEvidenceOverview,
+		connect.WithSchema(metricsServiceMethods.ByName("GetTrafficEvidenceOverview")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	metricsServiceGetTrafficEvidenceIncidentHandler := connect.NewUnaryHandler(
 		MetricsServiceGetTrafficEvidenceIncidentProcedure,
 		svc.GetTrafficEvidenceIncident,
 		connect.WithSchema(metricsServiceMethods.ByName("GetTrafficEvidenceIncident")),
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	metricsServiceMarkTrafficEvidenceReadHandler := connect.NewUnaryHandler(
+		MetricsServiceMarkTrafficEvidenceReadProcedure,
+		svc.MarkTrafficEvidenceRead,
+		connect.WithSchema(metricsServiceMethods.ByName("MarkTrafficEvidenceRead")),
+		connect.WithIdempotency(connect.IdempotencyIdempotent),
 		connect.WithHandlerOptions(opts...),
 	)
 	metricsServiceUploadMetricsHandler := connect.NewClientStreamHandler(
@@ -548,8 +598,12 @@ func NewMetricsServiceHandler(svc MetricsServiceHandler, opts ...connect.Handler
 			metricsServiceSubmitTrafficEvidenceHandler.ServeHTTP(w, r)
 		case MetricsServiceListTrafficEvidenceProcedure:
 			metricsServiceListTrafficEvidenceHandler.ServeHTTP(w, r)
+		case MetricsServiceGetTrafficEvidenceOverviewProcedure:
+			metricsServiceGetTrafficEvidenceOverviewHandler.ServeHTTP(w, r)
 		case MetricsServiceGetTrafficEvidenceIncidentProcedure:
 			metricsServiceGetTrafficEvidenceIncidentHandler.ServeHTTP(w, r)
+		case MetricsServiceMarkTrafficEvidenceReadProcedure:
+			metricsServiceMarkTrafficEvidenceReadHandler.ServeHTTP(w, r)
 		case MetricsServiceUploadMetricsProcedure:
 			metricsServiceUploadMetricsHandler.ServeHTTP(w, r)
 		case MetricsServiceStreamMetricsProcedure:
@@ -601,8 +655,16 @@ func (UnimplementedMetricsServiceHandler) ListTrafficEvidence(context.Context, *
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.ListTrafficEvidence is not implemented"))
 }
 
+func (UnimplementedMetricsServiceHandler) GetTrafficEvidenceOverview(context.Context, *connect.Request[v1.GetTrafficEvidenceOverviewRequest]) (*connect.Response[v1.GetTrafficEvidenceOverviewResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.GetTrafficEvidenceOverview is not implemented"))
+}
+
 func (UnimplementedMetricsServiceHandler) GetTrafficEvidenceIncident(context.Context, *connect.Request[v1.GetTrafficEvidenceIncidentRequest]) (*connect.Response[v1.GetTrafficEvidenceIncidentResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.GetTrafficEvidenceIncident is not implemented"))
+}
+
+func (UnimplementedMetricsServiceHandler) MarkTrafficEvidenceRead(context.Context, *connect.Request[v1.MarkTrafficEvidenceReadRequest]) (*connect.Response[v1.MarkTrafficEvidenceReadResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.metrics.v1.MetricsService.MarkTrafficEvidenceRead is not implemented"))
 }
 
 func (UnimplementedMetricsServiceHandler) UploadMetrics(context.Context, *connect.ClientStream[v1.UploadMetricsRequest]) (*connect.Response[v1.UploadMetricsResponse], error) {
