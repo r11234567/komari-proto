@@ -10,10 +10,8 @@ import "komari/security/v1/security.proto";
 option go_package = "github.com/r11234567/komari-proto/gen/go/komari/file/v1;filev1";
 
 // FileService owns administrator-facing remote file management for one agent.
-//
-// The control plane carries metadata and mutations. File contents are not
-// carried here: downloads, uploads, and previews travel over the binary HTTP
-// data plane so browsers can use ordinary URLs and streaming transfers.
+// Bulk downloads, uploads and previews use the binary HTTP data plane.
+// Conditional editor saves may carry a bounded replacement with their content digest.
 service FileService {
   // ListDirectory returns the entries of one directory.
   rpc ListDirectory(ListDirectoryRequest) returns (ListDirectoryResponse) {
@@ -95,6 +93,8 @@ enum FileOperation {
   FILE_OPERATION_UPLOAD_COMMIT = 14;
   // FILE_OPERATION_UPLOAD_CANCEL aborts one chunked upload and cleans up state.
   FILE_OPERATION_UPLOAD_CANCEL = 15;
+  // FILE_OPERATION_REPLACE replaces a small file if its content hash still matches.
+  FILE_OPERATION_REPLACE = 16;
 }
 
 // FileEntry is one directory entry or path metadata record.
@@ -125,6 +125,8 @@ message FileEntry {
   google.protobuf.Timestamp modified_at = 12;
   // target is the link target for symbolic links.
   string target = 13;
+  // instance_id identifies this file across appends and changes on rotation.
+  string instance_id = 14;
 }
 
 // DirectoryListing is one directory response.
@@ -418,9 +420,19 @@ message FileAssignment {
     FileUploadStreamPayload upload_stream = 33;
     FileUploadCommitPayload upload_commit = 34;
     FileUploadCancelPayload upload_cancel = 35;
+    FileReplacePayload replace = 37;
   }
   // The signed body is a FileAssignment with envelope omitted.
   komari.security.v1.SignedEnvelope envelope = 36;
+}
+
+// FileReplacePayload replaces an existing regular file in its workspace.
+message FileReplacePayload {
+  string path = 1;
+  // content is the entire replacement, including a possible empty file.
+  bytes content = 2;
+  // expected_sha256 is the 32-byte digest of the bytes originally read.
+  bytes expected_sha256 = 3;
 }
 
 // FileListPayload lists one directory path.
@@ -502,6 +514,8 @@ message FileDownloadStreamPayload {
   int64 chunk_index = 6;
   int64 file_size = 7;
   google.protobuf.Timestamp modified_at = 8;
+  // follow_instance_id permits growth of this exact file during a tail read.
+  string follow_instance_id = 9;
 }
 
 // FileUploadStreamPayload pulls one uploaded chunk from the control plane relay.
