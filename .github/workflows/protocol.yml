@@ -29,20 +29,7 @@ jobs:
       - name: Format, lint, breaking and generated client consistency
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-          # Reviewed main baseline after the Phase 3C transition.
-          PROTOCOL_BASELINE: d89e88d8ae3e416563e4345fd653a10f67d89053
-        run: |
-          set -euo pipefail
-          mkdir -p ci-artifacts
-          buf format --diff --exit-code 2>&1 | tee ci-artifacts/format.log
-          buf lint 2>&1 | tee ci-artifacts/lint.log
-          buf breaking --against ".git#ref=${PROTOCOL_BASELINE}" 2>&1 | tee ci-artifacts/breaking.log
-          if [[ -n "$BASE_SHA" && "$BASE_SHA" != 0000000000000000000000000000000000000000 && "$BASE_SHA" != "$PROTOCOL_BASELINE" ]]; then
-            buf breaking --against ".git#ref=${BASE_SHA}" 2>&1 | tee -a ci-artifacts/breaking.log
-          fi
-          buf generate 2>&1 | tee ci-artifacts/generate.log
-          git add --intent-to-add -- gen
-          git diff --exit-code -- gen 2>&1 | tee ci-artifacts/generated-diff.log
+        run: bash scripts/ci/check-contracts.sh "$BASE_SHA"
       - name: Go protocol compatibility tests
         if: success() || failure()
         run: scripts/ci/run-go-tests.sh ./...
