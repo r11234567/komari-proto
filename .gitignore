@@ -5,3 +5,5 @@
 .DS_Store
 
 /ci-artifacts/
+
+/node_modules/

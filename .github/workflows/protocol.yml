@@ -17,55 +17,22 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Read the pinned Buf version
+        id: buf
+        run: printf 'version=%s\n' "$(cat .buf-version)" >> "$GITHUB_OUTPUT"
       - uses: bufbuild/buf-setup-action@v1
         with:
-          version: 1.57.0
+          version: ${{ steps.buf.outputs.version }}
       - uses: actions/setup-go@v5
         with:
-          go-version-file: go.mod
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
+          go-version-file: .go-version
       - name: Format, lint, breaking and generated client consistency
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-          # Reviewed main baseline after the Phase 3C transition.
-          PROTOCOL_BASELINE: d89e88d8ae3e416563e4345fd653a10f67d89053
-        run: |
-          set -euo pipefail
-          mkdir -p ci-artifacts
-          buf format --diff --exit-code 2>&1 | tee ci-artifacts/format.log
-          buf lint 2>&1 | tee ci-artifacts/lint.log
-          buf breaking --against ".git#ref=${PROTOCOL_BASELINE}" 2>&1 | tee ci-artifacts/breaking.log
-          if [[ -n "$BASE_SHA" && "$BASE_SHA" != 0000000000000000000000000000000000000000 && "$BASE_SHA" != "$PROTOCOL_BASELINE" ]]; then
-            buf breaking --against ".git#ref=${BASE_SHA}" 2>&1 | tee -a ci-artifacts/breaking.log
-          fi
-          buf generate 2>&1 | tee ci-artifacts/generate.log
-          git add --intent-to-add -- gen
-          git diff --exit-code -- gen 2>&1 | tee ci-artifacts/generated-diff.log
+        run: bash scripts/ci/check-contracts.sh "$BASE_SHA"
       - name: Go protocol compatibility tests
         if: success() || failure()
         run: scripts/ci/run-go-tests.sh ./...
-      - name: TypeScript clients and hash vectors
-        if: success() || failure()
-        run: |
-          set -euo pipefail
-          mkdir -p ci-artifacts
-          npm install --ignore-scripts --no-save --package-lock=false typescript@5.8.3 @bufbuild/protobuf@2.10.0 2>&1 | tee ci-artifacts/npm-install.log
-          npx tsc --noEmit --module esnext --moduleResolution bundler --target es2022 --skipLibCheck $(find gen/ts -name '*.ts') 2>&1 | tee ci-artifacts/typescript.log
-          node --test tests/privileged-hash.test.mjs 2>&1 | tee ci-artifacts/hash-ts.log
-          npm pack --dry-run 2>&1 | tee ci-artifacts/npm-pack.log
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-      - name: Verify generated clients and hash vectors on Node 24
-        run: |-
-          set -euo pipefail
-          mapfile -d '' -t sources < <(find gen/ts -name '*.ts' -print0)
-          (( ${#sources[@]} > 0 ))
-          node node_modules/typescript/bin/tsc --noEmit --module esnext --moduleResolution bundler --target es2022 --skipLibCheck "${sources[@]}"
-          node --test tests/privileged-hash.test.mjs
-          npm pack --dry-run
       - name: Package generated clients even on failure
         if: always()
         run: |
@@ -77,7 +44,26 @@ jobs:
           name: protocol-${{ github.run_id }}-${{ github.run_attempt }}
           path: ci-artifacts/
           retention-days: 30
-    name: Contracts, Go and TypeScript
+    name: Contracts, generation and Go
+  typescript:
+    name: TypeScript / Node ${{ matrix.node || '24 (pinned)' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['', '22.22.0']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node }}
+          node-version-file: .node-version
+          cache: npm
+      - name: Set up the repository npm version
+        run: npm install --global "npm@$(cat .npm-version)"
+      - run: npm ci --ignore-scripts
+      - run: npm test
+      - run: npm pack --dry-run
 concurrency:
   group: ci-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
