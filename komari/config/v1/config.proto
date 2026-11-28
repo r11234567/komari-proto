@@ -315,6 +315,8 @@ message PrivilegedConfig {
   // root_execution_allowed permits explicitly selected UID-0 WebSSH/exec
   // children independently of the daemon identity. Missing means denied.
   optional bool root_execution_allowed = 7;
+  // traffic_monitoring_enabled starts automatic anomaly monitoring on a Linux root Agent.
+  optional bool traffic_monitoring_enabled = 8;
 }
 
 // UpgradePlan states how one delivered revision may be adopted.
@@ -465,6 +467,7 @@ message GetNodeConfigStateResponse {
   optional komari.host.v1.DaemonObservation observation = 6;
   optional komari.host.v1.HostOperation host_operation = 7;
   repeated komari.host.v1.HostAction supported_host_actions = 8;
+  bool traffic_monitoring_supported = 9;
 }
 
 // InitializeNodeConfigRequest reports the installation's already-authorized

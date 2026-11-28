@@ -10,6 +10,7 @@ for (const vector of vectors) {
     const hash = createHash('sha256').update(Buffer.concat([
       Buffer.from('komari.privileged-settings.v1\0'), Buffer.from(vector.booleans), mode,
       ...(vector.root_execution_allowed ? [Buffer.from('\0root_execution_allowed\x01')] : []),
+      ...(vector.traffic_monitoring_enabled ? [Buffer.from('\0traffic_monitoring_enabled\x01')] : []),
     ])).digest('hex');
     assert.equal(hash, vector.sha256);
   });

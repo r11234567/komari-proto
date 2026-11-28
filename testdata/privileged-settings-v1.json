@@ -66,5 +66,12 @@
     "required_privilege_mode": 1,
     "root_execution_allowed": true,
     "sha256": "905ed93eb53892e1f086adcd3c2cd46ad0cdcd913568879d0275c501790e01fa"
+  },
+  {
+    "booleans": [1, 1, 1, 0, 0],
+    "required_privilege_mode": 1,
+    "root_execution_allowed": true,
+    "traffic_monitoring_enabled": true,
+    "sha256": "9fac27079c0987ed4ef907b1fc467d5abd8aad67a05ac0d117d7a11b4d07a404"
   }
 ]
