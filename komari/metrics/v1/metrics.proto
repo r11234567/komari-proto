@@ -23,8 +23,14 @@ service MetricsService {
   rpc ListTrafficEvidence(ListTrafficEvidenceRequest) returns (ListTrafficEvidenceResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
+  rpc GetTrafficEvidenceOverview(GetTrafficEvidenceOverviewRequest) returns (GetTrafficEvidenceOverviewResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   rpc GetTrafficEvidenceIncident(GetTrafficEvidenceIncidentRequest) returns (GetTrafficEvidenceIncidentResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc MarkTrafficEvidenceRead(MarkTrafficEvidenceReadRequest) returns (MarkTrafficEvidenceReadResponse) {
+    option idempotency_level = IDEMPOTENT;
   }
   // UploadMetrics is deprecated. Use unary SubmitMetrics instead.
   rpc UploadMetrics(stream UploadMetricsRequest) returns (UploadMetricsResponse) {
@@ -129,6 +135,26 @@ message TrafficEvidenceHour {
   map<string, TrafficEvidenceBytes> services = 4;
   TrafficEvidenceBytes unexplained = 5;
   bool partial = 6;
+  TrafficEvidenceCoverage coverage = 7;
+  // Attributed bytes are bounded by the observed bytes in each direction.
+  // Detector tolerances are excluded from this map.
+  map<string, TrafficEvidenceBytes> attributed_services = 8;
+}
+
+// TrafficEvidenceCoverage distinguishes the collected traffic from the
+// collector's runtime state and the quality of attribution.
+message TrafficEvidenceCoverage {
+  string sampler = 1;
+  string interface_name = 2;
+  google.protobuf.Timestamp observed_since = 3;
+  uint32 covered_seconds = 4;
+  repeated string attribution_sources = 5;
+  repeated string issues = 6;
+  repeated string latest_issues = 7;
+  uint64 unmatched_ip_bytes = 8;
+  // Host address or interface IP traffic, as reported by the sampler.
+  string observation_scope = 9;
+  uint64 invalid_ip_bytes = 10;
 }
 
 message TrafficEvidenceIncident {
@@ -150,6 +176,8 @@ message TrafficEvidenceIncident {
   repeated TrafficEvidencePeer ingress_sources = 16;
   repeated TrafficEvidencePeer egress_destinations = 17;
   TrafficEvidenceBytes other = 18;
+  // Populated only on administrator reads, relative to that account.
+  bool read = 19;
 }
 
 message SubmitTrafficEvidenceRequest {
@@ -168,6 +196,9 @@ message SubmitTrafficEvidenceResponse {
 
 message ListTrafficEvidenceRequest {
   string agent_id = 1;
+  // Zero preserves the original seven day window. The server may further
+  // restrict it by its retention policy.
+  uint32 hour_limit = 2;
 }
 
 message ListTrafficEvidenceResponse {
@@ -176,7 +207,37 @@ message ListTrafficEvidenceResponse {
   komari.report.v1.TrafficMonitoringStatus monitoring = 3;
   bool monitoring_enabled = 4;
   bool agent_online = 5;
+  google.protobuf.Timestamp last_reported_at = 6;
+  uint32 hour_retention_days = 7;
+  uint32 incident_retention_hours = 8;
+  uint32 incidents_in_72_hours = 9;
+  uint32 unread_incidents_in_72_hours = 10;
 }
+
+message GetTrafficEvidenceOverviewRequest {}
+
+message GetTrafficEvidenceOverviewResponse {
+  repeated TrafficEvidenceNode nodes = 1;
+}
+
+message TrafficEvidenceNode {
+  string agent_id = 1;
+  bool agent_online = 2;
+  komari.report.v1.TrafficMonitoringStatus monitoring = 3;
+  google.protobuf.Timestamp data_through = 4;
+  google.protobuf.Timestamp last_reported_at = 5;
+  TrafficEvidenceCoverage coverage = 6;
+  uint32 incidents_in_72_hours = 7;
+  uint32 unread_incidents_in_72_hours = 8;
+  bool monitoring_enabled = 9;
+}
+
+message MarkTrafficEvidenceReadRequest {
+  string agent_id = 1;
+  string incident_id = 2;
+}
+
+message MarkTrafficEvidenceReadResponse {}
 
 message GetTrafficEvidenceIncidentRequest {
   string agent_id = 1;

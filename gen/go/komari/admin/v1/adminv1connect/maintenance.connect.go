@@ -66,6 +66,9 @@ const (
 	// MaintenanceServiceGetDatabaseStatusProcedure is the fully-qualified name of the
 	// MaintenanceService's GetDatabaseStatus RPC.
 	MaintenanceServiceGetDatabaseStatusProcedure = "/komari.admin.v1.MaintenanceService/GetDatabaseStatus"
+	// MaintenanceServiceUpdateTrafficMonitoringRetentionProcedure is the fully-qualified name of the
+	// MaintenanceService's UpdateTrafficMonitoringRetention RPC.
+	MaintenanceServiceUpdateTrafficMonitoringRetentionProcedure = "/komari.admin.v1.MaintenanceService/UpdateTrafficMonitoringRetention"
 	// MaintenanceServiceVacuumDatabaseProcedure is the fully-qualified name of the MaintenanceService's
 	// VacuumDatabase RPC.
 	MaintenanceServiceVacuumDatabaseProcedure = "/komari.admin.v1.MaintenanceService/VacuumDatabase"
@@ -95,6 +98,8 @@ type MaintenanceServiceClient interface {
 	ClearRecords(context.Context, *connect.Request[v1.ClearRecordsRequest]) (*connect.Response[v1.ClearRecordsResponse], error)
 	// GetDatabaseStatus reports driver, location and size for both stores.
 	GetDatabaseStatus(context.Context, *connect.Request[v1.GetDatabaseStatusRequest]) (*connect.Response[v1.GetDatabaseStatusResponse], error)
+	// UpdateTrafficMonitoringRetention changes the expiry of stored monitoring data.
+	UpdateTrafficMonitoringRetention(context.Context, *connect.Request[v1.UpdateTrafficMonitoringRetentionRequest]) (*connect.Response[v1.UpdateTrafficMonitoringRetentionResponse], error)
 	// VacuumDatabase reclaims storage and reports per-store outcomes.
 	VacuumDatabase(context.Context, *connect.Request[v1.VacuumDatabaseRequest]) (*connect.Response[v1.VacuumDatabaseResponse], error)
 }
@@ -181,6 +186,12 @@ func NewMaintenanceServiceClient(httpClient connect.HTTPClient, baseURL string, 
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		updateTrafficMonitoringRetention: connect.NewClient[v1.UpdateTrafficMonitoringRetentionRequest, v1.UpdateTrafficMonitoringRetentionResponse](
+			httpClient,
+			baseURL+MaintenanceServiceUpdateTrafficMonitoringRetentionProcedure,
+			connect.WithSchema(maintenanceServiceMethods.ByName("UpdateTrafficMonitoringRetention")),
+			connect.WithClientOptions(opts...),
+		),
 		vacuumDatabase: connect.NewClient[v1.VacuumDatabaseRequest, v1.VacuumDatabaseResponse](
 			httpClient,
 			baseURL+MaintenanceServiceVacuumDatabaseProcedure,
@@ -192,18 +203,19 @@ func NewMaintenanceServiceClient(httpClient connect.HTTPClient, baseURL string, 
 
 // maintenanceServiceClient implements MaintenanceServiceClient.
 type maintenanceServiceClient struct {
-	listSessions           *connect.Client[v1.ListSessionsRequest, v1.ListSessionsResponse]
-	deleteSession          *connect.Client[v1.DeleteSessionRequest, v1.DeleteSessionResponse]
-	deleteAllSessions      *connect.Client[v1.DeleteAllSessionsRequest, v1.DeleteAllSessionsResponse]
-	listAuditLogs          *connect.Client[v1.ListAuditLogsRequest, v1.ListAuditLogsResponse]
-	listClipboardEntries   *connect.Client[v1.ListClipboardEntriesRequest, v1.ListClipboardEntriesResponse]
-	getClipboardEntry      *connect.Client[v1.GetClipboardEntryRequest, v1.GetClipboardEntryResponse]
-	createClipboardEntry   *connect.Client[v1.CreateClipboardEntryRequest, v1.CreateClipboardEntryResponse]
-	updateClipboardEntry   *connect.Client[v1.UpdateClipboardEntryRequest, v1.UpdateClipboardEntryResponse]
-	deleteClipboardEntries *connect.Client[v1.DeleteClipboardEntriesRequest, v1.DeleteClipboardEntriesResponse]
-	clearRecords           *connect.Client[v1.ClearRecordsRequest, v1.ClearRecordsResponse]
-	getDatabaseStatus      *connect.Client[v1.GetDatabaseStatusRequest, v1.GetDatabaseStatusResponse]
-	vacuumDatabase         *connect.Client[v1.VacuumDatabaseRequest, v1.VacuumDatabaseResponse]
+	listSessions                     *connect.Client[v1.ListSessionsRequest, v1.ListSessionsResponse]
+	deleteSession                    *connect.Client[v1.DeleteSessionRequest, v1.DeleteSessionResponse]
+	deleteAllSessions                *connect.Client[v1.DeleteAllSessionsRequest, v1.DeleteAllSessionsResponse]
+	listAuditLogs                    *connect.Client[v1.ListAuditLogsRequest, v1.ListAuditLogsResponse]
+	listClipboardEntries             *connect.Client[v1.ListClipboardEntriesRequest, v1.ListClipboardEntriesResponse]
+	getClipboardEntry                *connect.Client[v1.GetClipboardEntryRequest, v1.GetClipboardEntryResponse]
+	createClipboardEntry             *connect.Client[v1.CreateClipboardEntryRequest, v1.CreateClipboardEntryResponse]
+	updateClipboardEntry             *connect.Client[v1.UpdateClipboardEntryRequest, v1.UpdateClipboardEntryResponse]
+	deleteClipboardEntries           *connect.Client[v1.DeleteClipboardEntriesRequest, v1.DeleteClipboardEntriesResponse]
+	clearRecords                     *connect.Client[v1.ClearRecordsRequest, v1.ClearRecordsResponse]
+	getDatabaseStatus                *connect.Client[v1.GetDatabaseStatusRequest, v1.GetDatabaseStatusResponse]
+	updateTrafficMonitoringRetention *connect.Client[v1.UpdateTrafficMonitoringRetentionRequest, v1.UpdateTrafficMonitoringRetentionResponse]
+	vacuumDatabase                   *connect.Client[v1.VacuumDatabaseRequest, v1.VacuumDatabaseResponse]
 }
 
 // ListSessions calls komari.admin.v1.MaintenanceService.ListSessions.
@@ -261,6 +273,12 @@ func (c *maintenanceServiceClient) GetDatabaseStatus(ctx context.Context, req *c
 	return c.getDatabaseStatus.CallUnary(ctx, req)
 }
 
+// UpdateTrafficMonitoringRetention calls
+// komari.admin.v1.MaintenanceService.UpdateTrafficMonitoringRetention.
+func (c *maintenanceServiceClient) UpdateTrafficMonitoringRetention(ctx context.Context, req *connect.Request[v1.UpdateTrafficMonitoringRetentionRequest]) (*connect.Response[v1.UpdateTrafficMonitoringRetentionResponse], error) {
+	return c.updateTrafficMonitoringRetention.CallUnary(ctx, req)
+}
+
 // VacuumDatabase calls komari.admin.v1.MaintenanceService.VacuumDatabase.
 func (c *maintenanceServiceClient) VacuumDatabase(ctx context.Context, req *connect.Request[v1.VacuumDatabaseRequest]) (*connect.Response[v1.VacuumDatabaseResponse], error) {
 	return c.vacuumDatabase.CallUnary(ctx, req)
@@ -290,6 +308,8 @@ type MaintenanceServiceHandler interface {
 	ClearRecords(context.Context, *connect.Request[v1.ClearRecordsRequest]) (*connect.Response[v1.ClearRecordsResponse], error)
 	// GetDatabaseStatus reports driver, location and size for both stores.
 	GetDatabaseStatus(context.Context, *connect.Request[v1.GetDatabaseStatusRequest]) (*connect.Response[v1.GetDatabaseStatusResponse], error)
+	// UpdateTrafficMonitoringRetention changes the expiry of stored monitoring data.
+	UpdateTrafficMonitoringRetention(context.Context, *connect.Request[v1.UpdateTrafficMonitoringRetentionRequest]) (*connect.Response[v1.UpdateTrafficMonitoringRetentionResponse], error)
 	// VacuumDatabase reclaims storage and reports per-store outcomes.
 	VacuumDatabase(context.Context, *connect.Request[v1.VacuumDatabaseRequest]) (*connect.Response[v1.VacuumDatabaseResponse], error)
 }
@@ -372,6 +392,12 @@ func NewMaintenanceServiceHandler(svc MaintenanceServiceHandler, opts ...connect
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	maintenanceServiceUpdateTrafficMonitoringRetentionHandler := connect.NewUnaryHandler(
+		MaintenanceServiceUpdateTrafficMonitoringRetentionProcedure,
+		svc.UpdateTrafficMonitoringRetention,
+		connect.WithSchema(maintenanceServiceMethods.ByName("UpdateTrafficMonitoringRetention")),
+		connect.WithHandlerOptions(opts...),
+	)
 	maintenanceServiceVacuumDatabaseHandler := connect.NewUnaryHandler(
 		MaintenanceServiceVacuumDatabaseProcedure,
 		svc.VacuumDatabase,
@@ -402,6 +428,8 @@ func NewMaintenanceServiceHandler(svc MaintenanceServiceHandler, opts ...connect
 			maintenanceServiceClearRecordsHandler.ServeHTTP(w, r)
 		case MaintenanceServiceGetDatabaseStatusProcedure:
 			maintenanceServiceGetDatabaseStatusHandler.ServeHTTP(w, r)
+		case MaintenanceServiceUpdateTrafficMonitoringRetentionProcedure:
+			maintenanceServiceUpdateTrafficMonitoringRetentionHandler.ServeHTTP(w, r)
 		case MaintenanceServiceVacuumDatabaseProcedure:
 			maintenanceServiceVacuumDatabaseHandler.ServeHTTP(w, r)
 		default:
@@ -455,6 +483,10 @@ func (UnimplementedMaintenanceServiceHandler) ClearRecords(context.Context, *con
 
 func (UnimplementedMaintenanceServiceHandler) GetDatabaseStatus(context.Context, *connect.Request[v1.GetDatabaseStatusRequest]) (*connect.Response[v1.GetDatabaseStatusResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.admin.v1.MaintenanceService.GetDatabaseStatus is not implemented"))
+}
+
+func (UnimplementedMaintenanceServiceHandler) UpdateTrafficMonitoringRetention(context.Context, *connect.Request[v1.UpdateTrafficMonitoringRetentionRequest]) (*connect.Response[v1.UpdateTrafficMonitoringRetentionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("komari.admin.v1.MaintenanceService.UpdateTrafficMonitoringRetention is not implemented"))
 }
 
 func (UnimplementedMaintenanceServiceHandler) VacuumDatabase(context.Context, *connect.Request[v1.VacuumDatabaseRequest]) (*connect.Response[v1.VacuumDatabaseResponse], error) {

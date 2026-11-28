@@ -43,6 +43,8 @@ service MaintenanceService {
   rpc GetDatabaseStatus(GetDatabaseStatusRequest) returns (GetDatabaseStatusResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
+  // UpdateTrafficMonitoringRetention changes the expiry of stored monitoring data.
+  rpc UpdateTrafficMonitoringRetention(UpdateTrafficMonitoringRetentionRequest) returns (UpdateTrafficMonitoringRetentionResponse);
   // VacuumDatabase reclaims storage and reports per-store outcomes.
   rpc VacuumDatabase(VacuumDatabaseRequest) returns (VacuumDatabaseResponse);
 }
@@ -166,6 +168,33 @@ message GetDatabaseStatusResponse {
   // DashboardDatabase is reused verbatim: the console and the dashboard read
   // the same store status, and duplicating it would let the two drift.
   DashboardDatabase status = 1;
+  TrafficMonitoringRetention traffic_monitoring_retention = 2;
+  TrafficMonitoringStorage traffic_monitoring_storage = 3;
+}
+
+message TrafficMonitoringRetention {
+  uint32 hour_days = 1;
+  uint32 incident_hours = 2;
+}
+
+message TrafficMonitoringStorage {
+  string path = 1;
+  uint64 bytes = 2;
+  google.protobuf.Timestamp oldest_hour = 3;
+  google.protobuf.Timestamp last_cleanup_at = 4;
+  bool cleanup_failed = 5;
+}
+
+message UpdateTrafficMonitoringRetentionRequest {
+  TrafficMonitoringRetention retention = 1;
+  bool preview = 2;
+  TrafficMonitoringRetention expected = 3;
+}
+
+message UpdateTrafficMonitoringRetentionResponse {
+  TrafficMonitoringRetention retention = 1;
+  uint64 hours_to_delete = 2;
+  uint64 incidents_to_delete = 3;
 }
 
 message VacuumDatabaseRequest {}
