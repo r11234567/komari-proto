@@ -127,6 +127,8 @@ message FileEntry {
   google.protobuf.Timestamp modified_at = 12;
   // target is the link target for symbolic links.
   string target = 13;
+  // instance_id identifies this file across appends and changes on rotation.
+  string instance_id = 14;
 }
 
 // DirectoryListing is one directory response.
@@ -514,6 +516,8 @@ message FileDownloadStreamPayload {
   int64 chunk_index = 6;
   int64 file_size = 7;
   google.protobuf.Timestamp modified_at = 8;
+  // follow_instance_id permits growth of this exact file during a tail read.
+  string follow_instance_id = 9;
 }
 
 // FileUploadStreamPayload pulls one uploaded chunk from the control plane relay.
